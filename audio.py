@@ -19,3 +19,7 @@ class Audio():
     def load_audio(self):
         audio, sr = torchaudio.load(self.filepath+self.filename+'.wav')
         return audio, sr
+
+def load_audio(filepath, filename):
+    audio, sr = torchaudio.load(filepath+filename+'.wav')
+    return audio, sr

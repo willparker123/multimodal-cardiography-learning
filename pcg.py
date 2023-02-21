@@ -2,7 +2,8 @@ from audio import Audio
 import torch
 import torchaudio.transforms as transforms
 import pandas as pd
-from helpers import get_filtered_df, inputpath_physionet, outputpath, seg_factor, butterworth_bandpass_filter
+from config import inputpath_physionet, outputpath
+from helpers import get_filtered_df, butterworth_bandpass_filter
 import os
 import matplotlib.pyplot as plt
 import numpy as np
@@ -23,7 +24,7 @@ class PCG():
             audio = Audio(filename, filepath)
         self.audio = audio
         self.audio_sample_rate = audio.sample_rate
-        self.signal = audio.audio
+        signal = audio.audio
         self.savename = savename
         self.sampfrom = sampfrom
         self.sampto = sampto
@@ -35,17 +36,21 @@ class PCG():
         
         if sampfrom is None:
             if sampto is None:
-                self.signal = self.signal
+                signal = signal
             else:
-                self.signal = torch.from_numpy(np.expand_dims(np.squeeze(np.array(self.signal))[0:sampto], axis=0))
+                signal = torch.from_numpy(np.expand_dims(np.squeeze(np.array(signal))[0:sampto], axis=0))
         else:
             if sampto is None:
-                self.signal = torch.from_numpy(np.expand_dims(np.squeeze(np.array(self.signal))[sampfrom:len(self.signal)-1], axis=0))
+                signal = torch.from_numpy(np.expand_dims(np.squeeze(np.array(signal))[sampfrom:len(signal)-1], axis=0))
                 self.start_time = sampfrom/self.sample_rate
             else:
-                self.signal = torch.from_numpy(np.expand_dims(np.squeeze(np.array(self.signal))[sampfrom:sampto], axis=0))
+                signal = torch.from_numpy(np.expand_dims(np.squeeze(np.array(signal))[sampfrom:sampto], axis=0))
                 self.start_time = sampfrom/self.sample_rate
 
+        if not self.audio_sample_rate == sample_rate and resample:
+            print(f"Warning: audio_sample_rate frequency ({self.audio_sample_rate}) does not match sample_rate ({sample_rate}) - resampling to sample_rate")
+            resample = transforms.Resample(self.audio_sample_rate, sample_rate, dtype=signal.dtype)
+            signal = resample(signal[0, :].view(1, -1))
         if apply_filter:
             #[Deep Learning Based Classification of Unsegmented Phonocardiogram Spectrograms Leveraging Transfer Learning]
             #
@@ -55,19 +60,20 @@ class PCG():
             #unwanted frequencies or noise, 4th order Butterworth bandpass filter with cut-off frequencies of 20 to
             #400 Hz was used as shown in Figure 3, which has been found effective in biomedical signals processing
             #especially in PCG signal analysis [59].
-            self.signal = butterworth_bandpass_filter(self.signal.numpy().squeeze(), 20, 400, self.audio_sample_rate, order=4)
-            self.signal = np.expand_dims(self.signal, axis=0).astype(np.float32)
-            self.signal = torch.from_numpy(self.signal)
-        if not self.audio_sample_rate == sample_rate and resample:
-            print(f"Warning: audio_sample_rate frequency ({self.audio_sample_rate}) does not match sample_rate ({sample_rate}) - resampling to sample_rate")
-            resample = transforms.Resample(self.audio_sample_rate, sample_rate, dtype=self.signal.dtype)
-            self.signal = resample(self.signal[0, :].view(1, -1))
+            signal = butterworth_bandpass_filter(signal.numpy().squeeze(), 20, 400, self.audio_sample_rate, order=4)
+            signal = np.expand_dims(signal, axis=0).astype(np.float32)
+            signal = torch.from_numpy(signal)
         if normalise: #normalise to [0, 1]
             if normalise_factor is not None:
-                self.signal = self.signal / normalise_factor
+                signal = signal.numpy() / normalise_factor
+                signal = np.expand_dims(signal, axis=0).astype(np.float32)
+                signal = torch.from_numpy(signal)
             else:
-                self.signal = self.signal / np.linalg.norm(self.signal)
-        self.samples = int(len(self.signal[0, :]))
+                signal = (signal.numpy().squeeze() - np.min(signal.numpy().squeeze()))/np.ptp(signal.numpy().squeeze()) #np.ptp(signal.numpy().squeeze())
+                signal = np.expand_dims(signal, axis=0).astype(np.float32)
+                signal = torch.from_numpy(signal)
+        self.signal = signal
+        self.samples = int(len(signal[0, :]))
         if label is None:
             if not os.path.isfile(csv_path):
                 raise ValueError(f"Error: file '{csv_path}' does not exist - aborting")
@@ -90,7 +96,6 @@ class PCG():
         samples_goal = int(np.floor(self.sample_rate*segment_length))
         if samples_goal < 1:
             raise ValueError("Error: sample_rate*segment_length results in 0; segment_length is too low")
-        #no_segs = ((self.samples//samples_goal)*seg_factor)
         no_segs = int(np.floor((self.samples//samples_goal)*factor))
         inds = np.linspace(0, self.samples-samples_goal, num=no_segs)
         inds = map(lambda x: np.floor(x), inds)

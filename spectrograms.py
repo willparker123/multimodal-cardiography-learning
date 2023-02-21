@@ -2,7 +2,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 import torchaudio
 from scipy import signal as scipysignal
-from helpers import outputpath, bior2_6, ricker
+from config import outputpath
+from helpers import bior2_6, ricker
 import librosa
 import os
 import torch
@@ -55,9 +56,9 @@ class Spectrogram():
 
     def display_spectrogram(self, save=True, just_image=True):
         plt.figure().clear()
+        plt.ylabel('Frequency [Hz]')
+        plt.xlabel('Time [sec]')
         if self.type == "ecg" or self.type == "ecg_log":
-            plt.ylabel('Frequency [Hz]')
-            plt.xlabel('Time [sec]')
             plt.xlim(0,round(self.times[len(self.times)-1], 2))
             plt.ylim(0, self.sample_rate/2)
             range0 = np.arange(0, self.times[len(self.times)-1], step=0.25)
@@ -83,8 +84,6 @@ class Spectrogram():
                         plt.savefig(self.outpath_png+self.filename+f'_{self.type}.png', format="png")
             plt.close()
         elif self.type == "ecg_cwt" or self.type == "ecg_cwtlog":
-            plt.ylabel('Frequency [Hz]')
-            plt.xlabel('Time [sec]')
             plt.xlim([0,len(np.squeeze(self.signal))/self.sample_rate])
             range0 = np.arange(0, self.times[len(self.times)-1], step=0.25)
             range1 = np.fromiter(map(lambda x: x+self.start_time, range0), dtype=np.float)
@@ -109,8 +108,6 @@ class Spectrogram():
                         plt.savefig(self.outpath_png+self.filename+f'_{self.type}.png', format="png", interpolation="none")
             plt.close()
         elif self.type == "pcg" or self.type == "pcg_logmel" or self.type == "pcg_mel":
-            plt.ylabel('Frequency [Hz]')
-            plt.xlabel('Time [sec]')
             plt.xlim([0,len(np.squeeze(self.signal))/self.sample_rate])
             plt.xticks(self.times, self.times+self.start_time)
             plt.ylim(0, self.sample_rate/2)
@@ -160,7 +157,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
             if normalise_factor is not None:
                 spec = spec / normalise_factor
             else:
-                spec = spec / np.linalg.norm(spec)
+                spec = (spec - spec.min())/np.ptp(spec)
         if save:
             if savename is not None:
                 np.savez(outpath_np+savename+'_ecg_spec.npy', spec=spec, freqs=f, times=t)
@@ -176,7 +173,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
             if normalise_factor:
                 spec = spec / normalise_factor
             else:
-                spec = spec / np.linalg.norm(spec)
+                spec = (spec - spec.min())/np.ptp(spec)
         if save:
             if savename is not None:
                 np.savez(outpath_np+savename+'_ecg_log_spec.npy', spec=spec, freqs=f, times=t)
@@ -205,7 +202,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
             if normalise_factor is not None:
                 spec = spec / normalise_factor
             else:
-                spec = spec / np.linalg.norm(spec)
+                spec = (spec - spec.min())/np.ptp(spec)
         if save:
             if savename is not None:
                 np.savez(outpath_np+savename+f'_{type}_spec.npy', spec=spec, freqs=f, times=t)
@@ -233,7 +230,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
                 if normalise_factor:
                     spec = spec / normalise_factor
                 else:
-                    spec = spec / np.linalg.norm(spec)
+                    spec = (spec - spec.min())/np.ptp(spec)
             if save:
                 if savename is not None:
                     np.save(outpath_np+savename+'_pcg_spec.npy', spec.numpy())
@@ -263,7 +260,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
                 if normalise_factor:
                     spec = spec / normalise_factor
                 else:
-                    spec = spec / np.linalg.norm(spec)
+                    spec = (spec - spec.min())/np.ptp(spec)
             if save:
                 if savename is not None:
                     np.save(outpath_np+savename+'_pcg_logmel_spec.npy', spec.numpy())
@@ -292,7 +289,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
                 if normalise_factor:
                     spec = spec / normalise_factor
                 else:
-                    spec = spec / np.linalg.norm(spec)
+                    spec = (spec - spec.min())/np.ptp(spec)
             if save:
                 if savename is not None:
                     np.save(outpath_np+savename+'_pcg_mel_spec.npy', spec.numpy())

@@ -1,12 +1,18 @@
 import os
 from random import sample
 import pandas as pd
+from config import load_config
 import numpy as np
 import wfdb
 from wfdb import processing
 import math
-from helpers import butterworth_bandpass_filter, inputpath_physionet, get_filtered_df, outputpath, inputpath_physionet, seg_factor
+from config import inputpath_physionet, outputpath
+from helpers import butterworth_bandpass_filter, get_filtered_df
 import matplotlib.pyplot as plt
+
+
+
+opts = load_config()
 """
 Class for ECG preprocessing, loading from .dat/.hea (WFDB) /.npy files
 """
@@ -37,10 +43,12 @@ class ECG():
                 self.start_time = sampfrom/sample_rate
 
         signal = record.p_signal[:,0]
-        signal__, locations = processing.resample_sig(signal, record.fs, sample_rate)
-        self.qrs_inds = processing.qrs.gqrs_detect(sig=signal__, fs=record.fs)
         self.normalise_factor = normalise_factor
         
+        if not record.fs == sample_rate and resample:
+            print(f"Warning: record sampling frequency ({record.fs}) does not match ecg_sample_rate ({sample_rate}) - resampling to sample_rate")
+            signal, self.locations = processing.resample_sig(signal, record.fs, sample_rate)
+        self.qrs_inds = processing.qrs.gqrs_detect(sig=signal, fs=record.fs)
         if apply_filter:
             #### UNUSED
             #
@@ -62,14 +70,11 @@ class ECG():
             #Each ECG signal is captured at 360 Hz after passing through a band pass filter at 0.1–100 Hz.
             #print(f"\n\nshape1: {np.shape(signal)}")
             signal = butterworth_bandpass_filter(signal, 0.1, 100, record.fs, order=4)
-        if not record.fs == sample_rate and resample:
-            print(f"Warning: record sampling frequency ({record.fs}) does not match ecg_sample_rate ({sample_rate}) - resampling to sample_rate")
-            signal, locations = processing.resample_sig(signal, record.fs, sample_rate)
         if normalise: #normalise to [0, 1]
             if normalise_factor is not None:
                 signal = signal / normalise_factor
             else:
-                signal = signal / np.linalg.norm(signal)
+                signal = (signal - np.min(signal))/np.ptp(signal)
         self.sample_rate = sample_rate
         self.record = record
         self.signal = signal

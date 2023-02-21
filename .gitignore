@@ -1,8 +1,10 @@
-data/**
-venv/**
+data-before/ephnogram-data/
+data-before/physionet-data/
+data-after/ephnogram/
+data-after/physionet/
+venv/
 __pycache__/
-ephnogram-data/**
-physionet-data/**
-reference-delete-this/**
-ecg-pcg-ga-master/**
-avobjects-master/**
+models-referenced/
+#ephnogram-data/
+#physionet-data/
+reference-code-deleteme/
