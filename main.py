@@ -110,11 +110,6 @@ if __name__ == '__main__':
         globals()[sys.argv[1]]()
     #with args: globals()[sys.argv[1]](sys.argv[2])
     
-    # Unused Functions
-    #move_and_sort_data()
-    #fix_signal_filenames()
-    #fix_physionet_csv()
-    
     # Normal Workflow (as in paper):
     #get_physionet()
     #get_ephnogram()

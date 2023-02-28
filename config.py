@@ -11,18 +11,30 @@ def save_config(args, filename):
         for items in vars(args):
             f.write('%s %s\n' % (items, vars(args)[items]))
 
+# **DEFAULTS - CAN EDIT THESE TWO**
+physionet_cols = ['filename', 'label']
+# Column names in the target input CSV for the Ephnogram dataset
+ephnogram_cols = ['Record Name','Subject ID','Record Duration (min)','Age (years)','Gender','Recording Scenario','Num Channels','ECG Notes','PCG Notes','PCG2 Notes','AUX1 Notes','AUX2 Notes','Database Housekeeping']
+  
 def load_config():
-    # **DEFAULTS**
+    # **DEFAULTS - CAN EDIT THESE**
     system_path = "D:/Uni/Thesis/main/"
-    input_physionet_folderpath = "data-before/physionet-data/training-a"
+    # Folder path of the WFDB data from the Physionet dataset (physionet-data/training-a by default)
+    input_physionet_data_folderpath = "data-before/physionet-data/training-a"
+    # File path of the CSV detailing the records from the Physionet dataset (physionet-data/training-a/REFERENCE.csv by default)
+    input_physionet_target_folderpath = "data-before/physionet-data/training-a/REFERENCE.csv"
+    # Folder name of the WFDB data from the Ephnogram dataset (ephnogram-data/WFDB by default)
+    input_ephnogram_data_folderpath = "data-before/ephnogram-data/WFDB"
+    # Folder name of the WFDB data from the Ephnogram dataset (ephnogram-data/ECGPCGSpreadsheet.csv by default)
+    input_ephnogram_target_folderpath = "data-before/ephnogram-data/ECGPCGSpreadsheet.csv"
     input_ecgpcgnet_folderpath = "models-referenced/ecg-pcg-data"
-    input_ephnogram_folderpath = "data-before/ephnogram-data"
-    input_ephnogram_data_foldername = "WFDB"
-    input_ephnogram_target_filename = "ECGPCGSpreadsheet.csv"
     output_folderpath = "data-after"
+    # Column names in the target input CSV for the Physionet dataset
+    
     drive_folderpath = "Colab Notebooks"
     number_of_processes = 8 #number of processors used for multiprocessing dataset / training model
     mem_limit = 0.9 #value in range [0, 1] percentage of system memory available for processing
+    
     # ecg, ecg_cwt, ecg_log, ecg_cwtlog, pcg, pcg_mel, pcg_logmel
     ecg_type = "ecg_log"
     pcg_type = "pcg_logmel"
@@ -43,10 +55,10 @@ def load_config():
 
     parser.add('-c', '--config', is_config_file=True, help='config file path')
     # --- paths
-    parser.add_argument("--inputpath-physionet", default=input_physionet_folderpath, type=str)
-    parser.add_argument("--inputpath-ephnogram", default=input_ephnogram_folderpath, type=str)
-    parser.add_argument("--inputpath-ephnogram-data", default=input_ephnogram_data_foldername, type=str)
-    parser.add_argument("--inputpath-ephnogram-labels", default=input_ephnogram_target_filename, type=str)
+    parser.add_argument("--inputpath-physionet-data", default=input_physionet_data_folderpath, type=str)
+    parser.add_argument("--inputpath-physionet-labels", default=input_physionet_target_folderpath, type=str)
+    parser.add_argument("--inputpath-ephnogram-data", default=input_ephnogram_data_folderpath, type=str)
+    parser.add_argument("--inputpath-ephnogram-labels", default=input_ephnogram_target_folderpath, type=str)
     parser.add_argument("--outputpath", default=output_folderpath, type=str)
     parser.add_argument("--drive-folderpath", default=drive_folderpath, type=str)
     parser.add_argument("--checkpoint-path", default=f'./checkpoints', type=str)
@@ -216,10 +228,13 @@ opts = load_config()
 
 """## DO NOT EDIT These"""
 drivepath = 'drive/MyDrive/'+opts.drive_folderpath+"/"
-inputpath_physionet = drivepath+opts.inputpath_physionet+"/" if useDrive else opts.inputpath_physionet+"/"
+inputpath_physionet_data = drivepath+opts.inputpath_physionet+"/" if useDrive else opts.inputpath_physionet+"/"
+inputpath_physionet_target = drivepath+opts.inputpath_physionet+"/" if useDrive else opts.inputpath_physionet+"/"
 #inputpath_ecgpcgnet = drivepath+opts.input_ecgpcgnet_folderpath+"/" if useDrive else opts.input_ecgpcgnet_folderpath+"/"
-inputpath_ephnogram_data = drivepath+opts.inputpath_ephnogram+"/" if useDrive else opts.inputpath_ephnogram+"/"+opts.inputpath_ephnogram_data+"/"
-inputpath_ephnogram_target = drivepath+opts.inputpath_ephnogram+"/" if useDrive else opts.inputpath_ephnogram+"/"+opts.inputpath_ephnogram_labels
+input_physionet_data_folderpath_ = drivepath+opts.inputpath_physionet_data+"/" if useDrive else opts.inputpath_physionet_data+"/"
+input_physionet_target_folderpath_ = drivepath+opts.inputpath_physionet_target+"/" if useDrive else opts.inputpath_physionet_target+"/"
+input_ephnogram_data_folderpath_ = drivepath+opts.inputpath_ephnogram_data+"/" if useDrive else opts.inputpath_ephnogram_data+"/"
+input_ephnogram_target_folderpath_ = drivepath+opts.inputpath_ephnogram_target+"/" if useDrive else opts.inputpath_ephnogram_target+"/"
 outputpath = drivepath+opts.outputpath+"/" if useDrive else opts.outputpath+"/"
 spec_win_size_ecg = int(round(opts.window_length_ms * opts.sample_rate_ecg / 1e3)) #[64ms in paper] 40ms window length. converting from ms to samples
 spec_win_size_pcg = int(round(opts.window_length_ms * opts.sample_rate_pcg / 1e3)) #[64ms in paper] 40ms window length. converting from ms to samples
