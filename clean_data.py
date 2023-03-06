@@ -509,10 +509,9 @@ if __name__ == '__main__':
   if len(sys.argv)>1:
     globals()[sys.argv[1]]()
   #with args: globals()[sys.argv[1]](sys.argv[2])
-  
   # Normal Workflow (as in paper): (create_objects=False for better performance but have to use read_data(filepath) to get processed Spectrogram/ECG/PCG data)
   data_p, ratio_data_p = get_dataset(dataset="physionet", inputpath_data=input_physionet_data_folderpath_, inputpath_target=input_ephnogram_target_folderpath_, outputpath_folder=outputpath, create_objects=False)
-  data_e, ratio_data_e = get_dataset(dataset="ephnogram", inputpath_data=input_ephnogram_data_folderpath_, inputpath_target=input_ephnogram_target_folderpath_, outputpath_folder=outputpath create_objects=False)
+  data_e, ratio_data_e = get_dataset(dataset="ephnogram", inputpath_data=input_ephnogram_data_folderpath_, inputpath_target=input_ephnogram_target_folderpath_, outputpath_folder=outputpath, create_objects=False)
   print("*** Cleaning and Postprocessing Data [3/3] ***")
   num_data_p, num_data_e = get_total_num_segments(outputpath)
   hists, signal_stats = create_histograms_data_values_distribution(outputpath)
