@@ -81,13 +81,15 @@ def main():
     
     log_dir = get_summary_writer_log_dir()
     print(f"Writing logs to {log_dir}")
-    if opts.resume_checkpoint is not None:
-        checkpoint = load_checkpoint(opts.resume_checkpoint, model)
-        
+    logger, ostdout = start_logger(log_dir)
     summary_writer = SummaryWriter(
             str(log_dir),
             flush_secs=5
     )
+    if opts.resume_checkpoint is not None:
+        checkpoint = load_checkpoint(opts.resume_checkpoint, model)
+        
+    
     trainer = ECGPCGVisTrainer(
         model, train_loader, test_loader, criterion, optimizer, summary_writer, device
     )
@@ -105,7 +107,6 @@ def main():
 
 if __name__ == '__main__':
     #memory_limit() 
-    logger, ostdout = start_logger()
     if len(sys.argv)>1:
         globals()[sys.argv[1]]()
     #with args: globals()[sys.argv[1]](sys.argv[2])

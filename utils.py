@@ -102,7 +102,7 @@ def start_logger(path="logs/log"):
   h_t = os.path.split(path)
   create_new_folder(h_t[0])
   old_stdout = sys.stdout
-  log_file = open("log.log","w")
+  log_file = open(f"{path}.log","w")
   sys.stdout = log_file
   return log_file, old_stdout
 

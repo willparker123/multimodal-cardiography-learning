@@ -7,7 +7,7 @@ import wfdb
 from wfdb import processing
 import math
 from config import inputpath_physionet, outputpath
-from helpers import butterworth_bandpass_filter, get_filtered_df
+from helpers import butterworth_bandpass_filter, get_filtered_df, create_new_folder
 import matplotlib.pyplot as plt
 
 
@@ -17,7 +17,8 @@ opts = load_config()
 Class for ECG preprocessing, loading from .dat/.hea (WFDB) /.npy files
 """
 class ECG():
-    def __init__(self, filename, savename=None, label=None, filepath=inputpath_physionet, csv_path=inputpath_physionet+'REFERENCE.csv', sample_rate=2000, sampfrom=None, sampto=None, resample=True, normalise=True, apply_filter=True, normalise_factor=None, chan=0):
+    def __init__(self, filename, savename=None, label=None, filepath=inputpath_physionet, csv_path=inputpath_physionet+'REFERENCE.csv', 
+                 sample_rate=2000, sampfrom=None, sampto=None, resample=True, normalise=True, apply_filter=True, normalise_factor=None, chan=0):
         #super().__init__()
         self.filepath = filepath
         self.filename = filename
@@ -45,10 +46,14 @@ class ECG():
         signal = record.p_signal[:,0]
         self.normalise_factor = normalise_factor
         
+        self.qrs_inds = processing.qrs.gqrs_detect(sig=signal, fs=record.fs)
+        create_new_folder("results/gqrs_peaks")
+        peaks_hr(sig=record.p_signal[:,0], peak_inds=sorted(self.qrs_inds), fs=record.fs,
+         title="Corrected GQRS peak detection", saveto=f"results/gqrs_peaks/{self.savename if self.savename is not None else self.filename}.png")
+  
         if not record.fs == sample_rate and resample:
             print(f"Warning: record sampling frequency ({record.fs}) does not match ecg_sample_rate ({sample_rate}) - resampling to sample_rate")
             signal, self.locations = processing.resample_sig(signal, record.fs, sample_rate)
-        self.qrs_inds = processing.qrs.gqrs_detect(sig=signal, fs=record.fs)
         if apply_filter:
             #### UNUSED
             #
@@ -114,6 +119,7 @@ class ECG():
         inds = map(lambda x: np.floor(x), inds)
         inds = np.fromiter(inds, dtype=np.int)
         for i in range(no_segs):
+            segment = None
             if self.savename is not None:
                 segment = ECG(self.filename, filepath=self.filepath, label=self.label, savename=f'{self.savename}_seg_{i}', csv_path=self.csv_path, sample_rate=self.sample_rate, sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter)
             else:
@@ -121,7 +127,7 @@ class ECG():
             segments.append(segment)
         return segments
         
-def save_signal(filename, signal, outpath=outputpath+'physionet/', savename=None, type_="ecg_log"):
+def save_ecg_signal(filename, signal, outpath=outputpath+'physionet/', savename=None, type_="ecg_log"):
     if savename is not None:
         np.save(outpath+savename+f'_{type_}_signal.npy', signal)
     else:
@@ -139,9 +145,9 @@ def peaks_hr(sig, peak_inds, fs, title, figsize=(20, 10), saveto=None):
     hrs = processing.hr.compute_hr(sig_len=sig.shape[0], qrs_inds=peak_inds, fs=fs)
     
     N = sig.shape[0]
-    
     fig, ax_left = plt.subplots(figsize=figsize)
     ax_right = ax_left.twinx()
+    # Display results
     
     ax_left.plot(sig, color='#3979f0', label='Signal')
     ax_left.plot(peak_inds, sig[peak_inds], 'rx', marker='x', 
@@ -159,3 +165,26 @@ def peaks_hr(sig, peak_inds, fs, title, figsize=(20, 10), saveto=None):
     if saveto is not None:
         plt.savefig(saveto, dpi=600)
     plt.show()
+    
+def get_ecg_segments_from_array(data, sample_rate, segment_length, factor=1, normalise=True):
+    segments = []
+    start_times = []
+    samples_goal = int(np.floor(sample_rate*segment_length))
+    samples = int(len(data))
+    if samples_goal < 1:
+        raise ValueError("Error: sample_rate*segment_length results in 0; segment_length is too low")
+    no_segs = int(np.floor((samples//samples_goal)*factor))
+    
+    inds = np.linspace(0, samples-samples_goal, num=no_segs)
+    inds = map(lambda x: np.floor(x), inds)
+    inds = np.fromiter(inds, dtype=np.int)
+    for i in range(no_segs):
+        sampfrom = inds[i]
+        sampto=inds[i]+samples_goal
+        start_time = sampfrom/sample_rate
+        start_times.append(start_time)
+        segment = np.array(data)[sampfrom:sampto]
+        if normalise:
+            segment = (segment - np.min(segment))/np.ptp(segment)
+        segments.append(segment)
+    return segments, start_times

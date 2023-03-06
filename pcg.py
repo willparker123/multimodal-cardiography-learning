@@ -120,7 +120,7 @@ class PCG():
         plt.figure().clear()
         plt.close()
         
-def save_signal(filename, signal, outpath=outputpath+'physionet/', savename=None, type_="pcg_logmel"):
+def save_pcg_signal(filename, signal, outpath=outputpath+'physionet/', savename=None, type_="pcg_logmel"):
     try:
         signal = signal.numpy().squeeze()
     except:
@@ -129,3 +129,31 @@ def save_signal(filename, signal, outpath=outputpath+'physionet/', savename=None
         np.save(outpath+savename+f'{type_}_signal.npy', signal.numpy().squeeze())
     else:
         np.save(outpath+filename+f'{type_}_signal.npy', signal.numpy().squeeze())
+        
+def get_pcg_segments_from_array(data, sample_rate, segment_length, factor=1, normalise=True):
+    segments = []
+    start_times = []
+    samples_goal = int(np.floor(sample_rate*segment_length))
+    samples = int(len(data))
+    if samples_goal < 1:
+        raise ValueError("Error: sample_rate*segment_length results in 0; segment_length is too low")
+    no_segs = int(np.floor((samples//samples_goal)*factor))
+    
+    inds = np.linspace(0, samples-samples_goal, num=no_segs)
+    inds = map(lambda x: np.floor(x), inds)
+    inds = np.fromiter(inds, dtype=np.int)
+    for i in range(no_segs):
+        sampfrom = inds[i]
+        sampto=inds[i]+samples_goal
+        start_time = sampfrom/sample_rate
+        start_times.append(start_time)
+        segment = np.array(data)[sampfrom:sampto]
+        if normalise:
+            segment = (segment - np.min(segment))/np.ptp(segment)
+        segments.append(segment)
+        #segment = torch.from_numpy(np.expand_dims(np.squeeze(np.array(data))[sampfrom:sampto], axis=0))
+        #if normalise:
+            #segment = (segment.numpy().squeeze() - np.min(segment.numpy().squeeze()))/np.ptp(segment.numpy().squeeze())
+            #segment = np.expand_dims(segment, axis=0).astype(np.float32)
+            #segment = torch.from_numpy(segment)
+    return segments

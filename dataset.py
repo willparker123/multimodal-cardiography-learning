@@ -26,8 +26,8 @@ class ECGPCGDataset(Dataset):
     def __init__(self, pathtype="spec_and_mp4", path_videos_physionet=outputpath+f'physionet/spectrograms_{opts.ecg_type}/', path_audios_physionet=outputpath+f'physionet/spectrograms_{opts.pcg_type}/', path_audios_all=None, \
                  path_videos_ephnogram=outputpath+f'ephnogram/spectrograms_{opts.ecg_type}/', path_audios_ephnogram=outputpath+f'ephnogram/spectrograms_{opts.pcg_type}/', path_videos_all=None, \
                  path_csv_physionet=outputpath+f'data_physionet_raw', path_csv_ephnogram=outputpath+f'data_ephnogram_raw', path_csv_all=None, clip_length=opts.segment_length, ecg_sample_rate=opts.sample_rate_ecg, pcg_sample_rate=opts.sample_rate_pcg):
-        if pathtype not in {"mp4", "wav_and_mp4", "spec_and_mp4", "npy_and_mp4", "wav_and_wfdb"}:
-            raise ValueError(f"Error: {pathtype} is not 'mp4', 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4' or 'wav_and_wfdb'") 
+        if pathtype not in {"npy_and_npy", "mp4", "wav_and_mp4", "spec_and_mp4", "npy_and_mp4", "wav_and_wfdb"}:
+            raise ValueError(f"Error: {pathtype} is not 'npy_and_npy', 'mp4', 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4' or 'wav_and_wfdb'") 
         self.clip_length = clip_length
         self.pathtype = pathtype
         # Paths for the scrolling spectrogram video data (.mp4 videos or wfdb data) - [0] is Physionet, [1] is Ephnogram
@@ -69,8 +69,8 @@ class ECGPCGDataset(Dataset):
             raise ValueError(f"Error: csv '{path_csv_all}' must have columns {dataframe_cols}")
         print(f"HEAD OF DATA: {self.df_all.head()}")
         self.df_all = self.df_all.iloc[1: , :]
-        if pathtype not in {"wav_and_mp4", "spec_and_mp4", "npy_and_mp4", "wav_and_wfdb", "mp4"}:
-            raise ValueError("Error: argument 'pathtype' must be 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4', 'mp4' or 'wav_and_wfdb'")
+        if pathtype not in {"wav_and_mp4", "spec_and_mp4", "npy_and_mp4", "wav_and_wfdb", "mp4", "npy_and_npy"}:
+            raise ValueError("Error: argument 'pathtype' must be 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4', 'mp4', 'npy_and_npy' or 'wav_and_wfdb'")
         else:
             self.zipped_indexes = []
             ddirs = []
@@ -120,7 +120,7 @@ class ECGPCGDataset(Dataset):
                     temp_files = next(os.walk(path_vs+f'{dir}/{dir_}/'))[2]
                     if len(temp_files) == 0:
                         #raise ValueError(f"Error: no .mp4 file found in '{path_vs}{dir}/{dir_}/'")
-                        print(f"Error: no .mp4 file found in '{path_vs}{dir}/{dir_}/' - SKIPPED")
+                        print(f"Error: no video/full spectrogram file found in '{path_vs}{dir}/{dir_}/' - SKIPPED")
                     if pathtype == "wav_and_wfdb":
                         hea = None
                         dat = None
@@ -131,11 +131,19 @@ class ECGPCGDataset(Dataset):
                                 hea = path_vs+f'{dir}/{dir_}/{t}'
                             elif t.endswith(".dat"):
                                 dat = path_vs+f'{dir}/{dir_}/{t}'
+                            if hea is not None and dat is not None:
+                                found = True
+                                break
+                        elif pathtype == "npy_and_npy":
+                            if t_a.endswith(".npy"):
+                                self.video_paths.append(path_as+f'{dir}/{dir_}/{t}')
+                                found = True
+                                break
                         else:
                             if t.endswith(".mp4"):
                                 self.video_paths.append(path_vs+f'{dir}/{dir_}/{t}')
                                 if pathtype == "mp4":
-                                    self.audio_paths.append(path_vs+f'{dir}/{dir_}/{t}')
+                                    self.video_paths.append(path_vs+f'{dir}/{dir_}/{t}')
                                 found = True
                                 break
                     if pathtype == "wav_and_wfdb":
@@ -171,13 +179,12 @@ class ECGPCGDataset(Dataset):
                             temp_files_a = next(os.walk(path_as+f'{dir_a}/{dir_a_}/'))[2]
                             if len(temp_files_a) == 0:
                                 if pathtype == "wav_and_mp4":
-                                    #raise ValueError(f"Error: no .wav file found in '{path_as}{dir_a}/{dir_a_}/'")
                                     print(f"Error: no .wav file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
                                 if pathtype == "spec_and_mp4":
-                                    #raise ValueError(f"Error: no .png file found in '{path_as}{dir_a}/{dir_a_}/'")
                                     print(f"Error: no .png file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
                                 if pathtype == "npy_and_mp4":
-                                    #raise ValueError(f"Error: no .npy file found in '{path_as}{dir_a}/{dir_a_}/'")
+                                    print(f"Error: no .npy file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
+                                if pathtype == "npy_and_npy":
                                     print(f"Error: no .npy file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
                             found = False
                             if pathtype == "wav_and_mp4":
@@ -187,7 +194,6 @@ class ECGPCGDataset(Dataset):
                                         found = True
                                         break
                                 if not found:
-                                    #raise ValueError(f"Error: no .wav file found in '{path_as}{dir_a}/{dir_a_}/'")
                                     print(f"Error: no .wav file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
                             elif pathtype == "spec_and_mp4":
                                 for t_a in temp_files_a:
@@ -196,7 +202,6 @@ class ECGPCGDataset(Dataset):
                                         found = True
                                         break
                                 if not found:
-                                    #raise ValueError(f"Error: no .png file found in '{path_as}{dir_a}/{dir_a_}/'")
                                     print(f"Error: no .png file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
                             elif pathtype == "npy_and_mp4":
                                 for t_a in temp_files_a:
@@ -205,7 +210,14 @@ class ECGPCGDataset(Dataset):
                                         found = True
                                         break
                                 if not found:
-                                    #raise ValueError(f"Error: no .npy file found in '{path_as}{dir_a}/{dir_a_}/'")
+                                    print(f"Error: no .npy file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
+                            elif pathtype == "npy_and_npy":
+                                for t_a in temp_files_a:
+                                    if t_a.endswith(".npy"):
+                                        self.audio_paths.append(path_as+f'{dir_a}/{dir_a_}/{t_a}')
+                                        found = True
+                                        break
+                                if not found:
                                     print(f"Error: no .npy file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
         print(f"HEAD OF DATA: {self.df_all.head()}")
         self.labels = self.df_all[['filename', 'label']].copy()
@@ -244,6 +256,9 @@ class ECGPCGDataset(Dataset):
         sr_a = opts.sample_rate_ecg
         if vext == ".mp4":
             video_specs, sr_v, size = load_video(vh, os.path.splitext(vt)[0])
+        elif vext == ".npy":
+            mat = np.load(video_path+vext)
+            video_specs = mat
         elif vext == ".wfdb":
             #CREATE SPECTROGRAM FROM WFDB
             if index_of_parent < 409:  
@@ -322,7 +337,7 @@ class ECGPCGDataset(Dataset):
                 ecg_seg_video = create_video(imagespath=outputpath_+f'ephnogram/spectrograms_{opts.ecg_type}/{filename}/{index_e}/frames/', outpath=outputpath_+f'ephnogram/spectrograms_{opts.ecg_type}/{filename}/{index_e}/', filename=ecg.savename, framerate=opts.fps)
             video_specs = ecg_seg_video
         else:
-            raise ValueError(f"Error: extension of scrolling ECG spectrogram videos / ECG signals is not .mp4 or .dat/.hea") 
+            raise ValueError(f"Error: extension of scrolling ECG spectrogram videos / ECG signals is not .npy, .mp4 or .dat/.hea") 
         if aext == ".wav":
             audio, sr = load_audio(ah, os.path.splitext(at)[0])
             if index_of_parent < 409:
@@ -374,13 +389,13 @@ class ECGPCGDataset(Dataset):
                 pcg_seg_spectrogram.display_spectrogram(save=True, just_image=True)
             audio_spec = pcg_seg_spectrogram.spec
         elif aext == ".png":
-            img = cv2.imread(audio_path)
+            img = cv2.imread(audio_path+aext)
             audio_spec = img
         elif aext == ".npy":
-            mat = np.load(audio_path)
+            mat = np.load(audio_path+aext)
             audio_spec = mat
         elif aext == ".npz":
-            with np.load(audio_path) as data:
+            with np.load(audio_path+aext) as data:
                 mat = data[colname]
             audio_spec = mat
         else:
