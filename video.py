@@ -2,12 +2,9 @@ from config import load_config
 import cv2
 import glob
 import re
+import config
 
-
-
-opts = load_config()
-
-def create_video(imagespath, outpath, filename, images=None, framerate=opts.fps):
+def create_video(imagespath, outpath, filename, images=None, framerate=config.global_opts.fps):
     #out, _ = (
     #    ffmpeg.input(imagespath+'*.png', pattern_type='glob', framerate=framerate)
     #    .output(outpath+filename+'.mp4')

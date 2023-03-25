@@ -325,6 +325,8 @@ def display_spectrogram(filename, sample_rate, outpath_png, spec, savename=None,
                     plt.savefig(outpath_png+filename+f'_{type}_spec.png', format="png", interpolation="none", bbox_inches='tight', pad_inches=0)
                 else:
                     plt.savefig(outpath_png+filename+f'_{type}_spec.png', format="png", interpolation="none")
+        if show:
+            plt.show()
         plt.figure().clear()
         plt.close()
     else:

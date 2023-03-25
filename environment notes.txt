@@ -20,13 +20,48 @@ pip3 install seaborn
 pip3 install tqdm
 pip3 intall librosa
 
+# install python3.8.1, then conda, then make virtualenv using path to python3.8.1, then install packages
+
 ECGPCG
-conda update -n base -c defaults conda
+# WINDOWS
+conda clean --all -y
+conda install virtualenv
+python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38-32/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
+D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/activate.bat
+deactivate 
+
+#LINUX TODO
+conda clean --all -y
+conda install virtualenv
+python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38-32/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
+python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python37/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
+python -m virtualenv D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/activate.bat
+python -m virtualenv D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/Activate.ps1
+deactivate 
+
+pip install torch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0
+pip install matplotlib
+pip install pywavelets
+pip install wfdb
+pip install opencv-python
+pip install pandas
+pip install seaborn
+pip install tqdm
+pip install --upgrade pip setuptools wheel
+python setup.py bdist_wheel
+pip install pillow==6.2
+pip install librosa==0.8
+pip install numba==0.53
+pip install configargparse
+pip install regex
+
+pip install scikit-build
+pip install scipy
+
+pip install cudatoolkit
 conda env create -n ecgpcg-new2 python=3.8.1
 
-conda create -n py38 python=3.8 anaconda
-
-
+ECGPCG
 conda create -n ecgpcg --file=environment.yml python=3.8.1
 conda install pytorch==1.10.1 torchvision==0.11.2 torchaudio==0.10.1 cudatoolkit=10.2 -c pytorch
 conda install -c conda-forge matplotlib==3.3.4

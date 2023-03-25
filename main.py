@@ -104,6 +104,7 @@ def main():
     #with torch.no_grad():  
     #    trainer.eval(train_loader, test_loader)
     summary_writer.close()
+    stop_logger(logger, ostdout)
 
 if __name__ == '__main__':
     #memory_limit() 
@@ -122,5 +123,4 @@ if __name__ == '__main__':
     #print("*** Done - all Data cleaned ***")
     
     main()
-    stop_logger(logger, ostdout)
     

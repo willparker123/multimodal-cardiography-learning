@@ -1,7 +1,6 @@
 import configargparse
 
 
-
 """# Global Variables / Paths"""
 
 useDrive = False
@@ -11,49 +10,55 @@ def save_config(args, filename):
         for items in vars(args):
             f.write('%s %s\n' % (items, vars(args)[items]))
 
-# **DEFAULTS - CAN EDIT THESE TWO**
+# **DEFAULT COLUMNS IN DATASET LABEL CSVs**
 physionet_cols = ['filename', 'label']
 # Column names in the target input CSV for the Ephnogram dataset
 ephnogram_cols = ['Record Name','Subject ID','Record Duration (min)','Age (years)','Gender','Recording Scenario','Num Channels','ECG Notes','PCG Notes','PCG2 Notes','AUX1 Notes','AUX2 Notes','Database Housekeeping']
-  
+
+# **DEFAULTS - CAN EDIT THESE**
+system_path = "D:/Uni/Thesis/main/"
+# Folder path of the WFDB data from the Physionet dataset (physionet-data/training-a by default)
+input_physionet_data_folderpath = "data-before/physionet-data/training-a"
+# File path of the CSV detailing the records from the Physionet dataset (physionet-data/training-a/REFERENCE.csv by default)
+input_physionet_target_folderpath = "data-before/physionet-data/training-a/REFERENCE.csv"
+# Folder name of the WFDB data from the Ephnogram dataset (ephnogram-data/WFDB by default)
+input_ephnogram_data_folderpath = "data-before/ephnogram-data/WFDB"
+# Folder name of the WFDB data from the Ephnogram dataset (ephnogram-data/ECGPCGSpreadsheet.csv by default)
+input_ephnogram_target_folderpath = "data-before/ephnogram-data/ECGPCGSpreadsheet.csv"
+# UNUSED MULTIMODAL MODEL
+input_ecgpcgnet_folderpath = "models-referenced/ecg-pcg-data"
+output_folderpath = "data-after"
+# Column names in the target input CSV for the Physionet dataset
+
+drive_folderpath = "Colab Notebooks"
+number_of_processes = 8 #number of processors used for multiprocessing dataset / training model
+mem_limit = 0.8 #value in range [0, 1] percentage of system memory available for processing
+
+# ecg, ecg_cwt, ecg_log, ecg_cwtlog, pcg, pcg_mel, pcg_logmel
+ecg_type = "ecg_cwt"
+pcg_type = "pcg_logmel"
+
+# ricker, bior2.6, customricker
+cwt_function = "ricker"
+
+sample_rate_ecg = 2000
+sample_rate_pcg = 2000
+
+#[64ms in paper] 40ms window length. converting from ms to samples
+window_length_ms = 64 #64, 40
+nmels = 60 #60; must be < nfft//2-1
+seg_factor_fps = 24 #video fps
+segment_length = 8
+frame_length = 2  
+    
 def load_config():
-    # **DEFAULTS - CAN EDIT THESE**
-    system_path = "D:/Uni/Thesis/main/"
-    # Folder path of the WFDB data from the Physionet dataset (physionet-data/training-a by default)
-    input_physionet_data_folderpath = "data-before/physionet-data/training-a"
-    # File path of the CSV detailing the records from the Physionet dataset (physionet-data/training-a/REFERENCE.csv by default)
-    input_physionet_target_folderpath = "data-before/physionet-data/training-a/REFERENCE.csv"
-    # Folder name of the WFDB data from the Ephnogram dataset (ephnogram-data/WFDB by default)
-    input_ephnogram_data_folderpath = "data-before/ephnogram-data/WFDB"
-    # Folder name of the WFDB data from the Ephnogram dataset (ephnogram-data/ECGPCGSpreadsheet.csv by default)
-    input_ephnogram_target_folderpath = "data-before/ephnogram-data/ECGPCGSpreadsheet.csv"
-    input_ecgpcgnet_folderpath = "models-referenced/ecg-pcg-data"
-    output_folderpath = "data-after"
-    # Column names in the target input CSV for the Physionet dataset
-    
-    drive_folderpath = "Colab Notebooks"
-    number_of_processes = 8 #number of processors used for multiprocessing dataset / training model
-    mem_limit = 0.9 #value in range [0, 1] percentage of system memory available for processing
-    
-    # ecg, ecg_cwt, ecg_log, ecg_cwtlog, pcg, pcg_mel, pcg_logmel
-    ecg_type = "ecg_log"
-    pcg_type = "pcg_logmel"
-    # ricker, bior2.6, customricker
-    cwt_function = "ricker"
-
-    sample_rate_ecg = 2000
-    sample_rate_pcg = 2000
-    #[64ms in paper] 40ms window length. converting from ms to samples
-    window_length_ms = 64 #64, 40
-    nmels = 60 #60; must be < nfft//2-1
-    seg_factor_fps = 24 #video fps
-    segment_length = 8
-    frame_length = 2
-
-
     parser = configargparse.ArgumentParser(description="main", default_config_files=['/*.conf', '/.my_settings'])
 
     parser.add('-c', '--config', is_config_file=True, help='config file path')
+    # --- environment
+    #TODO only in Pytorch currently
+    parser.add_argument("--use-tensorflow", default=False, type=bool)
+    parser.add_argument("--use-googledrive", default=useDrive, type=bool)
     # --- paths
     parser.add_argument("--inputpath-physionet-data", default=input_physionet_data_folderpath, type=str)
     parser.add_argument("--inputpath-physionet-labels", default=input_physionet_target_folderpath, type=str)
@@ -133,14 +138,14 @@ def load_config():
                         default=ecg_type,
                         type=str,
                         help='Type of transform to use when creating ECG spectrograms [ecg, ecg_cwt, ecg_log, ecg_cwtlog]')
-    parser.add_argument('--cwt-function',
-                        default=cwt_function,
-                        type=str,
-                        help='Function to use when creating Wavelets using CWT (for ECG videos) [ricker, bior2.6, customricker]')
     parser.add_argument('--sample-rate-ecg',
                         default=sample_rate_ecg,
                         type=int,
                         help='Sample rate of the desired ECG signal after preprocessing')
+    parser.add_argument('--cwt-function',
+                        default=cwt_function,
+                        type=str,
+                        help='Function to use when creating Wavelets using CWT (for ECG videos) [ricker, bior2.6, customricker]')
     
     # --- pcg
     parser.add_argument('--pcg-type',
@@ -164,8 +169,8 @@ def load_config():
     parser.add_argument('--fps', type=int, default=seg_factor_fps, help='Video input fps')
     parser.add_argument('--frame-length', type=float, default=frame_length, help='Length in seconds in view for each video frame')
     
-    
-    parser.add_argument("--train-split", default=0.8, type=float, help="Train/Test split on the training dataset for validation in non-full training")
+    # --- model
+    parser.add_argument("--train-split", default=0.7, type=float, help="Train/Test split on the training dataset for validation in non-full training")
     parser.add_argument("--learning-rate", default=1e-1, type=float, help="Learning rate")
     parser.add_argument("--sgd-momentum", default=0.9, type=float, help="SGD Momentum parameter Beta")
     parser.add_argument(
@@ -217,26 +222,21 @@ def load_config():
                         type=int,
                         default=80,
                         help='Size of bounding box in visualization')
-
-    args = parser.parse_args()
     #print(args.format_help())
     #print(args.format_values()) 
     
-    return args
-
-opts = load_config()
+    return parser
 
 """## DO NOT EDIT These"""
-drivepath = 'drive/MyDrive/'+opts.drive_folderpath+"/"
-inputpath_physionet_data = drivepath+opts.inputpath_physionet+"/" if useDrive else opts.inputpath_physionet+"/"
-inputpath_physionet_target = drivepath+opts.inputpath_physionet+"/" if useDrive else opts.inputpath_physionet+"/"
-#inputpath_ecgpcgnet = drivepath+opts.input_ecgpcgnet_folderpath+"/" if useDrive else opts.input_ecgpcgnet_folderpath+"/"
-input_physionet_data_folderpath_ = drivepath+opts.inputpath_physionet_data+"/" if useDrive else opts.inputpath_physionet_data+"/"
-input_physionet_target_folderpath_ = drivepath+opts.inputpath_physionet_target+"/" if useDrive else opts.inputpath_physionet_target+"/"
-input_ephnogram_data_folderpath_ = drivepath+opts.inputpath_ephnogram_data+"/" if useDrive else opts.inputpath_ephnogram_data+"/"
-input_ephnogram_target_folderpath_ = drivepath+opts.inputpath_ephnogram_target+"/" if useDrive else opts.inputpath_ephnogram_target+"/"
-outputpath = drivepath+opts.outputpath+"/" if useDrive else opts.outputpath+"/"
-spec_win_size_ecg = int(round(opts.window_length_ms * opts.sample_rate_ecg / 1e3)) #[64ms in paper] 40ms window length. converting from ms to samples
-spec_win_size_pcg = int(round(opts.window_length_ms * opts.sample_rate_pcg / 1e3)) #[64ms in paper] 40ms window length. converting from ms to samples
-nfft_ecg = 2*opts.window_length_ms #2*window_length_ms
-nfft_pcg = 2*opts.window_length_ms  #2*window_length_ms
+global_opts = load_config().parse_args()
+
+drivepath = 'drive/MyDrive/'+global_opts.drive_folderpath+"/"
+input_physionet_data_folderpath_ = drivepath+global_opts.inputpath_physionet_data+"/" if useDrive else global_opts.inputpath_physionet_data+"/"
+input_physionet_target_folderpath_ = drivepath+global_opts.inputpath_physionet_labels+"/" if useDrive else global_opts.inputpath_physionet_labels+"/"
+input_ephnogram_data_folderpath_ = drivepath+global_opts.inputpath_ephnogram_data+"/" if useDrive else global_opts.inputpath_ephnogram_data+"/"
+input_ephnogram_target_folderpath_ = drivepath+global_opts.inputpath_ephnogram_labels+"/" if useDrive else global_opts.inputpath_ephnogram_labels+"/"
+outputpath = drivepath+global_opts.outputpath+"/" if useDrive else global_opts.outputpath+"/"
+spec_win_size_ecg = int(round(global_opts.window_length_ms * global_opts.sample_rate_ecg / 1e3)) #[64ms in paper] 40ms window length. converting from ms to samples
+spec_win_size_pcg = int(round(global_opts.window_length_ms * global_opts.sample_rate_pcg / 1e3)) #[64ms in paper] 40ms window length. converting from ms to samples
+nfft_ecg = 2*global_opts.window_length_ms #2*window_length_ms
+nfft_pcg = 2*global_opts.window_length_ms  #2*window_length_ms

@@ -2,9 +2,14 @@ data-before/ephnogram-data/
 data-before/physionet-data/
 data-after/ephnogram/
 data-after/physionet/
+data-after/ephnogram/results/
+data-after/physionet/results/
+envs/
+Scripts/
+.vscode/
+results/
+Lib/
 venv/
 __pycache__/
 models-referenced/
-#ephnogram-data/
-#physionet-data/
 reference-code-deleteme/
