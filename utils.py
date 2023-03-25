@@ -1,34 +1,31 @@
-not_unix = False
-try:
-    import resource
-except:
-    not_unix = True
 from helpers import create_new_folder
 import os
-from config import load_config
+import config
 import sys
 import torch
 import numpy as np
 
-
-
 global device
 
-opts = load_config()
+opts = config.global_opts
 
-if not not_unix:
-    def memory_limit():
-        soft, hard = resource.getrlimit(resource.RLIMIT_AS)
-        resource.setrlimit(resource.RLIMIT_AS, (get_memory() * 1024 *opts.mem_limit, hard))
+def memory_limit():
+    try:
+        import resource
+    except:
+        return False
+    soft, hard = resource.getrlimit(resource.RLIMIT_AS)
+    resource.setrlimit(resource.RLIMIT_AS, (get_memory() * 1024 *opts.mem_limit, hard))
+    return True
 
-    def get_memory():
-        with open('/proc/meminfo', 'r') as mem:
-            free_memory = 0
-            for i in mem:
-                sline = i.split()
-                if str(sline[0]) in ('MemFree:', 'Buffers:', 'Cached:'):
-                    free_memory += int(sline[1])
-        return free_memory
+def get_memory():
+    with open('/proc/meminfo', 'r') as mem:
+        free_memory = 0
+        for i in mem:
+            sline = i.split()
+            if str(sline[0]) in ('MemFree:', 'Buffers:', 'Cached:'):
+                free_memory += int(sline[1])
+    return free_memory
 
 def initialise_gpu(gpu_id, enable_gpu=True):
     if enable_gpu:
@@ -102,7 +99,7 @@ def start_logger(path="logs/log"):
   h_t = os.path.split(path)
   create_new_folder(h_t[0])
   old_stdout = sys.stdout
-  log_file = open("log.log","w")
+  log_file = open(f"{path}.log","w")
   sys.stdout = log_file
   return log_file, old_stdout
 

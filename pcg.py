@@ -2,7 +2,7 @@ from audio import Audio
 import torch
 import torchaudio.transforms as transforms
 import pandas as pd
-from config import inputpath_physionet, outputpath
+from config import input_physionet_data_folderpath_, input_physionet_target_folderpath_, outputpath
 from helpers import get_filtered_df, butterworth_bandpass_filter
 import os
 import matplotlib.pyplot as plt
@@ -12,7 +12,7 @@ import numpy as np
 Class for PCG preprocessing, loading from .wav /.npy files
 """
 class PCG():
-    def __init__(self, filename, savename=None, filepath=None, label=None, audio: Audio=None, sample_rate=2000, sampfrom=None, sampto=None, resample=True, normalise=True, apply_filter=True, csv_path=inputpath_physionet+'REFERENCE.csv', normalise_factor=None):
+    def __init__(self, filename, savename=None, filepath=input_physionet_data_folderpath_, label=None, audio: Audio=None, sample_rate=2000, sampfrom=None, sampto=None, resample=True, normalise=True, apply_filter=True, csv_path=input_physionet_target_folderpath_, normalise_factor=None):
         self.filepath = filepath
         self.filename = filename
         self.csv_path = csv_path
@@ -60,7 +60,11 @@ class PCG():
             #unwanted frequencies or noise, 4th order Butterworth bandpass filter with cut-off frequencies of 20 to
             #400 Hz was used as shown in Figure 3, which has been found effective in biomedical signals processing
             #especially in PCG signal analysis [59].
-            signal = butterworth_bandpass_filter(signal.numpy().squeeze(), 20, 400, self.audio_sample_rate, order=4)
+            
+            # 20 Hz to 400 [6 in MODEL]
+            # 25 Hz to 400 [1 in MODEL]
+            # 100 Hz to 600 [2 in MODEL]
+            signal = butterworth_bandpass_filter(np.squeeze(signal), 20, 400, self.audio_sample_rate, order=4)
             signal = np.expand_dims(signal, axis=0).astype(np.float32)
             signal = torch.from_numpy(signal)
         if normalise: #normalise to [0, 1]
@@ -69,7 +73,8 @@ class PCG():
                 signal = np.expand_dims(signal, axis=0).astype(np.float32)
                 signal = torch.from_numpy(signal)
             else:
-                signal = (signal.numpy().squeeze() - np.min(signal.numpy().squeeze()))/np.ptp(signal.numpy().squeeze()) #np.ptp(signal.numpy().squeeze())
+                squeezed_signal = signal.numpy().squeeze()
+                signal = (squeezed_signal - np.min(squeezed_signal))/np.ptp(squeezed_signal) #np.ptp(signal.numpy().squeeze())
                 signal = np.expand_dims(signal, axis=0).astype(np.float32)
                 signal = torch.from_numpy(signal)
         self.signal = signal
@@ -87,9 +92,9 @@ class PCG():
             
     def save_signal(self, outpath=outputpath+'physionet/'):
         if self.savename is not None:
-            np.save(outpath+self.savename+'_pcg_signal.npy', self.signal.numpy().squeeze())
+            np.save(outpath+self.savename+'_pcg_signal.npy', np.squeeze(self.signal))
         else:
-            np.save(outpath+self.filename+'_pcg_signal.npy', self.signal.numpy().squeeze())
+            np.save(outpath+self.filename+'_pcg_signal.npy', np.squeeze(self.signal))
     
     def get_segments(self, segment_length, factor=1, normalise=True):
         segments = []
@@ -108,7 +113,7 @@ class PCG():
             segments.append(segment)
         return segments
         
-    def plot_resampled_audio(self, save=True, outpath_png=outputpath+'physionet/spectrograms'):
+    def plot_resampled_audio(self, save=True, outpath_png=outputpath+'physionet/spectrograms', show=False):
         plt.figure()
         plt.plot(self.signal)
         if save:
@@ -116,16 +121,45 @@ class PCG():
                 plt.savefig(outpath_png+self.savename+'_ecg_spec.png', format="png")
             else:
                 plt.savefig(outpath_png+self.filename+'_ecg_spec.png', format="png")
-        plt.show()
+        if show:
+            plt.show()
         plt.figure().clear()
         plt.close()
         
-def save_signal(filename, signal, outpath=outputpath+'physionet/', savename=None, type_="pcg_logmel"):
+def save_pcg_signal(filename, signal, outpath=outputpath+'physionet/', savename=None, type_="pcg_logmel"):
     try:
-        signal = signal.numpy().squeeze()
+        signal = np.squeeze(signal)
     except:
         signal = signal.squeeze()
     if savename is not None:
-        np.save(outpath+savename+f'{type_}_signal.npy', signal.numpy().squeeze())
+        np.save(outpath+savename+f'{type_}_signal.npy', np.squeeze(signal))
     else:
-        np.save(outpath+filename+f'{type_}_signal.npy', signal.numpy().squeeze())
+        np.save(outpath+filename+f'{type_}_signal.npy', np.squeeze(signal))
+        
+def get_pcg_segments_from_array(data, sample_rate, segment_length, factor=1, normalise=True):
+    segments = []
+    start_times = []
+    samples_goal = int(np.floor(sample_rate*segment_length))
+    samples = int(len(data))
+    if samples_goal < 1:
+        raise ValueError("Error: sample_rate*segment_length results in 0; segment_length is too low")
+    no_segs = int(np.floor((samples//samples_goal)*factor))
+    
+    inds = np.linspace(0, samples-samples_goal, num=no_segs)
+    inds = map(lambda x: np.floor(x), inds)
+    inds = np.fromiter(inds, dtype=np.int)
+    for i in range(no_segs):
+        sampfrom = inds[i]
+        sampto=inds[i]+samples_goal
+        start_time = sampfrom/sample_rate
+        start_times.append(start_time)
+        segment = np.array(data)[sampfrom:sampto]
+        if normalise:
+            segment = (segment - np.min(segment))/np.ptp(segment)
+        segments.append(segment)
+        #segment = torch.from_numpy(np.expand_dims(np.squeeze(np.array(data))[sampfrom:sampto], axis=0))
+        #if normalise:
+            #segment = (segment.numpy().squeeze() - np.min(segment.numpy().squeeze()))/np.ptp(segment.numpy().squeeze())
+            #segment = np.expand_dims(segment, axis=0).astype(np.float32)
+            #segment = torch.from_numpy(segment)
+    return segments

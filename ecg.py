@@ -6,18 +6,17 @@ import numpy as np
 import wfdb
 from wfdb import processing
 import math
-from config import inputpath_physionet, outputpath
-from helpers import butterworth_bandpass_filter, get_filtered_df
+import config
+from helpers import butterworth_bandpass_filter, get_filtered_df, create_new_folder
 import matplotlib.pyplot as plt
 
 
-
-opts = load_config()
 """
 Class for ECG preprocessing, loading from .dat/.hea (WFDB) /.npy files
 """
 class ECG():
-    def __init__(self, filename, savename=None, label=None, filepath=inputpath_physionet, csv_path=inputpath_physionet+'REFERENCE.csv', sample_rate=2000, sampfrom=None, sampto=None, resample=True, normalise=True, apply_filter=True, normalise_factor=None, chan=0):
+    def __init__(self, filename, savename=None, label=None, filepath=config.input_physionet_data_folderpath_, csv_path=config.input_physionet_target_folderpath_, 
+                 sample_rate=2000, sampfrom=None, sampto=None, resample=True, normalise=True, apply_filter=True, normalise_factor=None, chan=0):
         #super().__init__()
         self.filepath = filepath
         self.filename = filename
@@ -29,6 +28,8 @@ class ECG():
         self.normalise = normalise
         self.apply_filter = apply_filter
         self.start_time = 0
+        print(filepath)
+        print(filename)
         if sampfrom is None:
             if sampto is None:
                 record = wfdb.rdrecord(filepath+filename, channels=[chan])
@@ -45,10 +46,16 @@ class ECG():
         signal = record.p_signal[:,0]
         self.normalise_factor = normalise_factor
         
+        #self.qrs_inds = processing.qrs.gqrs_detect(sig=signal, fs=record.fs)
+        self.qrs_inds = processing.qrs.xqrs_detect(sig=signal, fs=record.fs)
+        if filename == "a0001":
+            print(f"SQRS: {self.qrs_inds}")
+        self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=record.fs, #sorted(self.qrs_inds)
+        title="Corrected GQRS peak detection", saveto=f"results/gqrs_peaks/{self.savename if self.savename is not None else self.filename}.png")
+  
         if not record.fs == sample_rate and resample:
             print(f"Warning: record sampling frequency ({record.fs}) does not match ecg_sample_rate ({sample_rate}) - resampling to sample_rate")
             signal, self.locations = processing.resample_sig(signal, record.fs, sample_rate)
-        self.qrs_inds = processing.qrs.gqrs_detect(sig=signal, fs=record.fs)
         if apply_filter:
             #### UNUSED
             #
@@ -69,6 +76,10 @@ class ECG():
             #
             #Each ECG signal is captured at 360 Hz after passing through a band pass filter at 0.1–100 Hz.
             #print(f"\n\nshape1: {np.shape(signal)}")
+            
+            # 0 Hz to 20 [1 in MODEL]
+            # 0.1 Hz to 100 [5 in MODEL]
+            # 15 Hz to 150 [3 in MODEL]
             signal = butterworth_bandpass_filter(signal, 0.1, 100, record.fs, order=4)
         if normalise: #normalise to [0, 1]
             if normalise_factor is not None:
@@ -91,13 +102,13 @@ class ECG():
             label = 1
         self.label = label
             
-    def save_signal(self, outpath=outputpath+'physionet/'):
+    def save_signal(self, outpath=config.outputpath+'physionet/'):
         if self.savename is not None:
             np.save(outpath+self.savename+'_ecg_signal.npy', self.signal)
         else:
             np.save(outpath+self.filename+'_ecg_signal.npy', self.signal)
         
-    def save_qrs_inds(self, outpath=outputpath+'physionet/'):
+    def save_qrs_inds(self, outpath=config.outputpath+'physionet/'):
         if self.savename is not None:
             np.save(outpath+self.savename+'_qrs_inds.npy', self.qrs_inds)
         else:
@@ -114,6 +125,7 @@ class ECG():
         inds = map(lambda x: np.floor(x), inds)
         inds = np.fromiter(inds, dtype=np.int)
         for i in range(no_segs):
+            segment = None
             if self.savename is not None:
                 segment = ECG(self.filename, filepath=self.filepath, label=self.label, savename=f'{self.savename}_seg_{i}', csv_path=self.csv_path, sample_rate=self.sample_rate, sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter)
             else:
@@ -121,30 +133,26 @@ class ECG():
             segments.append(segment)
         return segments
         
-def save_signal(filename, signal, outpath=outputpath+'physionet/', savename=None, type_="ecg_log"):
+def save_ecg_signal(filename, signal, outpath=config.outputpath+'physionet/', savename=None, type_="ecg_log"):
     if savename is not None:
         np.save(outpath+savename+f'_{type_}_signal.npy', signal)
     else:
         np.save(outpath+filename+f'_{type_}_signal.npy', signal)
     
-def save_qrs_inds(filename, qrs_inds, outpath=outputpath+'physionet/', savename=None):
-    if savename is not None:
-        np.save(outpath+savename+'_qrs_inds.npy', qrs_inds)
-    else:
-        np.save(outpath+filename+'_qrs_inds.npy', qrs_inds)
+def save_qrs_inds(filename, qrs_inds, outpath=config.outputpath+'physionet/'):
+    np.save(outpath+filename+'_qrs_inds.npy', qrs_inds)
         
-def peaks_hr(sig, peak_inds, fs, title, figsize=(20, 10), saveto=None):
+def get_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), saveto=None, show=False, save_hrs=False):
     "Plot a signal with its peaks and heart rate"
     # Calculate heart rate
     hrs = processing.hr.compute_hr(sig_len=sig.shape[0], qrs_inds=peak_inds, fs=fs)
-    
     N = sig.shape[0]
-    
     fig, ax_left = plt.subplots(figsize=figsize)
     ax_right = ax_left.twinx()
+    # Display results
     
     ax_left.plot(sig, color='#3979f0', label='Signal')
-    ax_left.plot(peak_inds, sig[peak_inds], 'rx', marker='x', 
+    ax_left.plot(peak_inds, sig[peak_inds.astype(int)], 'rx', marker='x', 
                  color='#8b0000', label='Peak', markersize=12)
     ax_right.plot(np.arange(N), hrs, label='Heart rate', color='m', linewidth=2)
 
@@ -158,4 +166,31 @@ def peaks_hr(sig, peak_inds, fs, title, figsize=(20, 10), saveto=None):
     ax_right.tick_params('y', colors='m')
     if saveto is not None:
         plt.savefig(saveto, dpi=600)
-    plt.show()
+    if show:
+        plt.show()
+    if save_hrs:
+        np.save(saveto)
+    return hrs
+    
+def get_ecg_segments_from_array(data, sample_rate, segment_length, factor=1, normalise=True):
+    segments = []
+    start_times = []
+    samples_goal = int(np.floor(sample_rate*segment_length))
+    samples = int(len(data))
+    if samples_goal < 1:
+        raise ValueError("Error: sample_rate*segment_length results in 0; segment_length is too low")
+    no_segs = int(np.floor((samples//samples_goal)*factor))
+    
+    inds = np.linspace(0, samples-samples_goal, num=no_segs)
+    inds = map(lambda x: np.floor(x), inds)
+    inds = np.fromiter(inds, dtype=np.int)
+    for i in range(no_segs):
+        sampfrom = inds[i]
+        sampto=inds[i]+samples_goal
+        start_time = sampfrom/sample_rate
+        start_times.append(start_time)
+        segment = np.array(data)[sampfrom:sampto]
+        if normalise:
+            segment = (segment - np.min(segment))/np.ptp(segment)
+        segments.append(segment)
+    return segments, start_times

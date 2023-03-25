@@ -6,10 +6,11 @@ import pywt.data
 import numpy as np
 from typing import NamedTuple
 
-#drivepath = 'drive\\MyDrive\\'+drive_folderpath+"\\"
-#inputpath = drivepath+input_folderpath+"\\" if useDrive else input_folderpath+"\\"
-#outputpath = drivepath+output_folderpath+"\\" if useDrive else output_folderpath+"\\"
-dataframe_cols = ['filename', 'og_filename', 'label', 'record_duration', 'num_channels', 'qrs_inds', 'signal', 'samples', 'qrs_count', 'seg_num']
+dataframe_cols = ['filename', 'og_filename', 'label', 'record_duration', 'num_channels', 'qrs_inds', 'signal', 'samples_ecg','samples_pcg', 'qrs_count', 'seg_num']
+
+
+def read_signal(filepath):
+    return np.load(filepath)
 
 def get_filtered_df(df, column, value):
     df = df[df[column] == value]

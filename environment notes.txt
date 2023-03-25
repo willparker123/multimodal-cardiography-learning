@@ -1,8 +1,7 @@
-<<<<<<< HEAD
 alias python='python3'
 alias pip='pip3'
 
-[apt-get install libjpeg-dev zlib1g-dev]
+[apt-get install libjpeg-dev zlib1g-dev libpng-dev]
 pip3 install --upgrade torchvision==0.11.0
 pip3 install --upgrade torch==1.10.0
 pip3 install --upgrade matplotlib==3.2
@@ -20,6 +19,47 @@ pip3 install pandas
 pip3 install seaborn
 pip3 install tqdm
 pip3 intall librosa
+
+# install python3.8.1, then conda, then make virtualenv using path to python3.8.1, then install packages
+
+ECGPCG
+# WINDOWS
+conda clean --all -y
+conda install virtualenv
+python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38-32/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
+D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/activate.bat
+deactivate 
+
+#LINUX TODO
+conda clean --all -y
+conda install virtualenv
+python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38-32/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
+python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python37/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
+python -m virtualenv D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/activate.bat
+python -m virtualenv D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/Activate.ps1
+deactivate 
+
+pip install torch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0
+pip install matplotlib
+pip install pywavelets
+pip install wfdb
+pip install opencv-python
+pip install pandas
+pip install seaborn
+pip install tqdm
+pip install --upgrade pip setuptools wheel
+python setup.py bdist_wheel
+pip install pillow==6.2
+pip install librosa==0.8
+pip install numba==0.53
+pip install configargparse
+pip install regex
+
+pip install scikit-build
+pip install scipy
+
+pip install cudatoolkit
+conda env create -n ecgpcg-new2 python=3.8.1
 
 ECGPCG
 conda create -n ecgpcg --file=environment.yml python=3.8.1
@@ -104,93 +144,4 @@ wget https://developer.download.nvidia.com/compute/cuda/11.4.0/local_installers/
 sudo dpkg -i cuda-repo-wsl-ubuntu-11-4-local_11.4.0-1_amd64.deb
 sudo apt-key add /var/cuda-repo-wsl-ubuntu-11-4-local/7fa2af80.pub
 sudo apt-get update
-=======
-alias python='python3'
-alias pip='pip3'
-
-[apt-get install libjpeg-dev zlib1g-dev]
-pip3 install --upgrade torchvision==0.11.0
-pip3 install --upgrade torch==1.10.0
-pip3 install --upgrade matplotlib==3.2
-pip3 install torchaudio
-pip3 install PyWavelets
-pip3 install scipy
-pip3 install wfdb
-###pip install ffmpeg-python
-pip3 install scikit-build
-pip3 install cmake
-pip3 install --upgrade pip setuptools wheel
-pip3 install opencv-python
-pip3 install pandas
-pip3 install matplotlib
-pip3 install seaborn
-pip3 install tqdm
-pip3 intall librosa
-
-apt-get install libjpeg-dev zlib1g-dev
-pip3 install --user --upgrade torchvision==0.11.0
-pip3 install --user --upgrade torch==1.10.0
-pip3 install --user --upgrade matplotlib==3.2
-pip3 install --user torchaudio
-pip3 install --user PyWavelets
-pip3 install --user scipy
-pip3 install --user wfdb
-pip3 install --user scikit-build
-pip3 install --user cmake
-pip3 install --user --upgrade pip setuptools wheel
-pip3 install --user opencv-python
-pip3 install --user pandas
-pip3 install --user matplotlib
-pip3 install --user seaborn
-pip3 install --user tqdm
-pip3 intall --user librosa
-
-pip install google-colab
-
-pip3 install configargparse
-
-MZdBGGg738kzd5mE
-
-ssh -X gg18045@bc4login.acrc.bris.ac.uk
-
-GA+CL-ECG-NET+CL-PCG-NET
-http://dx.doi.org/10.13005/bbra/2610
-https://github.com/Aolibaba/ecg_pcg_ga
-
-	ECG-PCG Data (Abnormal + Normal)
-	https://zenodo.org/record/4263528#.YjoW203P2Uk
-PCG - 2000Hz
-ECG - 1000Hz
-Environments: Ubuntu 18.04, Python3.6, tensorflow-gpu==1.10.1, keras==2.2.5, scikit-learn==0.23.2
-
-AVOBJECTS LWTNet
-https://doi.org/10.48550/arXiv.2008.04237
-https://github.com/afourast/avobjects
-Environments: check environment.yml
-
-EPHNOGRAM ECG-PCG-Data (Normal)
-https://physionet.org/content/ephnogram/1.0.0/
-https://doi.org/10.13026/tjtq-5911
-PCG - 8000Hz
-ECG - 8000Hz
-
-PHYSIONET ECG-PCG Data (Abnormal + Normal)
-https://physionet.org/content/challenge-2016/1.0.0/#files
-PCG - 2000Hz
-ECG - 2000Hz
-
-
-
-
-
-
-
-
-wget https://developer.download.nvidia.com/compute/cuda/repos/wsl-ubuntu/x86_64/cuda-wsl-ubuntu.pin
-sudo mv cuda-wsl-ubuntu.pin /etc/apt/preferences.d/cuda-repository-pin-600
-wget https://developer.download.nvidia.com/compute/cuda/11.4.0/local_installers/cuda-repo-wsl-ubuntu-11-4-local_11.4.0-1_amd64.deb
-sudo dpkg -i cuda-repo-wsl-ubuntu-11-4-local_11.4.0-1_amd64.deb
-sudo apt-key add /var/cuda-repo-wsl-ubuntu-11-4-local/7fa2af80.pub
-sudo apt-get update
->>>>>>> 84a2ae2499ddec0ab9f7335a101045c6071fd3aa
 sudo apt-get -y install cuda

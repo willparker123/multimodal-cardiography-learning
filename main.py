@@ -81,13 +81,15 @@ def main():
     
     log_dir = get_summary_writer_log_dir()
     print(f"Writing logs to {log_dir}")
-    if opts.resume_checkpoint is not None:
-        checkpoint = load_checkpoint(opts.resume_checkpoint, model)
-        
+    logger, ostdout = start_logger(log_dir)
     summary_writer = SummaryWriter(
             str(log_dir),
             flush_secs=5
     )
+    if opts.resume_checkpoint is not None:
+        checkpoint = load_checkpoint(opts.resume_checkpoint, model)
+        
+    
     trainer = ECGPCGVisTrainer(
         model, train_loader, test_loader, criterion, optimizer, summary_writer, device
     )
@@ -102,18 +104,13 @@ def main():
     #with torch.no_grad():  
     #    trainer.eval(train_loader, test_loader)
     summary_writer.close()
+    stop_logger(logger, ostdout)
 
 if __name__ == '__main__':
     #memory_limit() 
-    logger, ostdout = start_logger()
     if len(sys.argv)>1:
         globals()[sys.argv[1]]()
     #with args: globals()[sys.argv[1]](sys.argv[2])
-    
-    # Unused Functions
-    #move_and_sort_data()
-    #fix_signal_filenames()
-    #fix_physionet_csv()
     
     # Normal Workflow (as in paper):
     #get_physionet()
@@ -126,5 +123,4 @@ if __name__ == '__main__':
     #print("*** Done - all Data cleaned ***")
     
     main()
-    stop_logger(logger, ostdout)
     
