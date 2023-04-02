@@ -4,18 +4,19 @@ import config
 import sys
 import torch
 import numpy as np
+import math
 
 global device
 
 opts = config.global_opts
 
-def memory_limit():
+def memory_limit(mem_limit):
     try:
         import resource
     except:
         return False
     soft, hard = resource.getrlimit(resource.RLIMIT_AS)
-    resource.setrlimit(resource.RLIMIT_AS, (get_memory() * 1024 *opts.mem_limit, hard))
+    resource.setrlimit(resource.RLIMIT_AS, (get_memory() * 1024 *mem_limit, hard))
     return True
 
 def get_memory():
@@ -26,6 +27,80 @@ def get_memory():
             if str(sline[0]) in ('MemFree:', 'Buffers:', 'Cached:'):
                 free_memory += int(sline[1])
     return free_memory
+
+
+g_hjob = None
+
+def memory_limit_windows(mem_limit):
+    try:
+        import winerror
+        import win32api
+        import win32job
+        import psutil
+    except:
+        return 'Error: could not import modules "winerror", "win32api", "win32job" or "psutil".'
+    def create_job(job_name='', breakaway='silent'):
+        hjob = win32job.CreateJobObject(None, job_name)
+        if breakaway:
+            info = win32job.QueryInformationJobObject(hjob,win32job.JobObjectExtendedLimitInformation)
+            if breakaway == 'silent':
+                info['BasicLimitInformation']['LimitFlags'] |= (win32job.JOB_OBJECT_LIMIT_SILENT_BREAKAWAY_OK)
+            else:
+                info['BasicLimitInformation']['LimitFlags'] |= (win32job.JOB_OBJECT_LIMIT_BREAKAWAY_OK)
+            win32job.SetInformationJobObject(hjob, win32job.JobObjectExtendedLimitInformation, info)
+        return hjob
+
+    def assign_job(hjob):
+        global g_hjob
+        hprocess = win32api.GetCurrentProcess()
+        try:
+            win32job.AssignProcessToJobObject(hjob, hprocess)
+            g_hjob = hjob
+            return ''
+        except win32job.error as e:
+            if (e.winerror != winerror.ERROR_ACCESS_DENIED or sys.getwindowsversion() >= (6, 2) or not win32job.IsProcessInJob(hprocess, None)):
+                return 'Error: The process is already in a job. Nested jobs are not supported prior to Windows 8.'
+
+    def limit_memory(memory_limit):
+        if g_hjob is None:
+            return False
+        try:
+            info = win32job.QueryInformationJobObject(g_hjob,win32job.JobObjectExtendedLimitInformation)
+            info['ProcessMemoryLimit'] = memory_limit
+            info['BasicLimitInformation']['LimitFlags'] |= (win32job.JOB_OBJECT_LIMIT_PROCESS_MEMORY)
+            try:
+                win32job.SetInformationJobObject(g_hjob,win32job.JobObjectExtendedLimitInformation, info)
+            except Exception as e:
+                print("Error: "+e)
+                return False
+            return True
+        except:
+            return False
+
+
+
+    hjob = create_job()
+    if hjob is None:
+        return 'Error: could not create Windows job for process.'
+    assign_job_message = assign_job(hjob)
+    if assign_job_message != '':
+        return assign_job_message
+    total_memory = psutil.virtual_memory().total
+    total_memory_mb = total_memory / (1024.0 ** 2) #MB
+    memory_limit = math.floor(total_memory * mem_limit)
+    limit_memory_success = limit_memory(memory_limit)
+    if not limit_memory_success:
+        return f'Error: could not limit process memory to {memory_limit}% of total RAM ({total_memory_mb})'
+    try:
+        bytearray(memory_limit)
+    except MemoryError:
+        print('Success: available memory is limited.')
+        return True
+    else:
+        print('Error: available memory is not limited.')
+        return False
+
+
 
 def initialise_gpu(gpu_id, enable_gpu=True):
     if enable_gpu:

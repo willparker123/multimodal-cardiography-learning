@@ -47,13 +47,22 @@ pip install opencv-python
 pip install pandas
 pip install seaborn
 pip install tqdm
-pip install --upgrade pip setuptools wheel
-python setup.py bdist_wheel
 pip install pillow==6.2
 pip install librosa==0.8
 pip install numba==0.53
 pip install configargparse
 pip install regex
+
+#LINUX
+	pip install resource
+
+#WINDOWS
+    pip install pywin32
+	pip install psutil
+		import winerror
+        import win32api
+        import win32job
+
 
 pip install scikit-build
 pip install scipy

@@ -2,6 +2,7 @@ from audio import Audio
 import torch
 import torchaudio.transforms as transforms
 import pandas as pd
+import config
 from config import input_physionet_data_folderpath_, input_physionet_target_folderpath_, outputpath
 from helpers import get_filtered_df, butterworth_bandpass_filter
 import os
@@ -92,9 +93,9 @@ class PCG():
             
     def save_signal(self, outpath=outputpath+'physionet/'):
         if self.savename is not None:
-            np.save(outpath+self.savename+'_pcg_signal.npy', np.squeeze(self.signal))
+            np.save(outpath+self.savename+f'_{config.global_opts.pcg_type}_signal.npy', np.squeeze(self.signal))
         else:
-            np.save(outpath+self.filename+'_pcg_signal.npy', np.squeeze(self.signal))
+            np.save(outpath+self.filename+f'_{config.global_opts.pcg_type}_signal.npy', np.squeeze(self.signal))
     
     def get_segments(self, segment_length, factor=1, normalise=True):
         segments = []
@@ -118,9 +119,9 @@ class PCG():
         plt.plot(self.signal)
         if save:
             if self.savename is not None:
-                plt.savefig(outpath_png+self.savename+'_ecg_spec.png', format="png")
+                plt.savefig(outpath_png+self.savename+'_pcg_audio.png', format="png")
             else:
-                plt.savefig(outpath_png+self.filename+'_ecg_spec.png', format="png")
+                plt.savefig(outpath_png+self.filename+'_pcg_audio.png', format="png")
         if show:
             plt.show()
         plt.figure().clear()
