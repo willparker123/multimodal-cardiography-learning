@@ -103,7 +103,7 @@ def get_cleaned_ephnogram_csv(ref_csv):
       ref_csv_temp = ref_csv_temp.append({'Record Name':name, 'Record Duration (min)':duration, 'Num Channels':chan_num}, ignore_index=True)
   return ref_csv_temp
   
-def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate, pcg_sample_rate, dataset="physionet", sample_clip_len=config.global_opts.segment_length, create_objects=True, outputpath_save=None):
+def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate, pcg_sample_rate, dataset="physionet", sample_clip_len=config.global_opts.segment_length, create_objects=True, outputpath_save=None, skipExisting=True):
   if not create_objects and outputpath_save is None:
     raise ValueError("Error: Parameter 'outputpath_save' must be supplied if 'create_objects' is False")
   print(f"Processing Data Item: {data_list}")
@@ -111,12 +111,27 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
   index = ref[1]
   filename = ""
   duration = 0
-  channel_num = 1
+  channel_num = 1 if dataset=="physionet" else ref[0][2]
   label = 0 if dataset=="ephnogram" else ref[0][1]
+  if skipExisting:
+    filename = ref[0][0]
+    if dataset=="ephnogram":
+      filename = 'b0000'[:-len(str(index))]+str(index)
+    if os.path.exists(f'{outputpath_save}data_{config.global_opts.ecg_type}/{filename}/{filename}_{config.global_opts.ecg_type}_signal.npy') and \
+      os.path.exists(f'{outputpath_save}data_{config.global_opts.ecg_type}/{filename}/{filename}_{config.global_opts.ecg_type}_qrs_inds.npy') and \
+      os.path.exists(f'{outputpath_save}data_{config.global_opts.pcg_type}/{filename}/{filename}_{config.global_opts.pcg_type}_signal.npy'):
+      #if create_objects:
+        #TODO
+      ecg_sig = np.load(f'{outputpath_save}data_{config.global_opts.ecg_type}/{filename}/{filename}_{config.global_opts.ecg_type}_signal.npy')
+      ecg_qrs = np.load(f'{outputpath_save}data_{config.global_opts.ecg_type}/{filename}/{filename}_{config.global_opts.ecg_type}_qrs_inds.npy')
+      pcg_sig = np.load(f'{outputpath_save}data_{config.global_opts.pcg_type}/{filename}/{filename}_{config.global_opts.pcg_type}_signal.npy')
+      seg_num = get_segment_num(ecg_sample_rate, int(len(ecg_sig)), sample_clip_len, factor=1) 
+      duration = len(ecg_sig)/ecg_sample_rate
+      data = {'filename':filename, 'og_filename':ref[0][0], 'label':label, 'record_duration':duration, 'num_channels':channel_num, 'qrs_inds':filename+'_qrs_inds', 'signal':filename+'_signal', 'samples_ecg':int(len(ecg_sig)), 'samples_pcg':int(len(pcg_sig)), 'qrs_count':int(len(ecg_qrs)), 'seg_num':seg_num}
+      return data
   if dataset=="ephnogram":
     filename = ref[0][0] #data_list[0][0]
     duration = ref[0][1]
-    channel_num = ref[0][2]
     sn = 'b0000'[:-len(str(index))]+str(index)
     ecg = ECG(filename=filename, savename=sn, filepath=inputpath_data, label=label, chan=0, csv_path=inputpath_target, sample_rate=ecg_sample_rate, normalise=True, apply_filter=True)
     pcg_record = wfdb.rdrecord(inputpath_data+filename, channels=[1])
@@ -133,10 +148,12 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
   if not create_objects:
     create_new_folder(outputpath_save+f'data_{config.global_opts.ecg_type}/{filename}')
     create_new_folder(outputpath_save+f'data_{config.global_opts.pcg_type}/{filename}')
-    save_qrs_inds(ecg.filename if ecg.savename == None else ecg.savename, ecg.qrs_inds, outpath=f'{outputpath_save}data_{config.global_opts.ecg_type}/{filename}/')
-    save_ecg_signal(ecg.filename if ecg.savename == None else ecg.savename, ecg.signal, outpath=f'{outputpath_save}data_{config.global_opts.ecg_type}/{filename}/', type_=config.global_opts.ecg_type)
-    save_pcg_signal(pcg.filename if pcg.savename == None else pcg.savename, pcg.signal, outpath=f'{outputpath_save}data_{config.global_opts.pcg_type}/{filename}/', type_=config.global_opts.pcg_type)
-  data = {'filename':ecg.filename if ecg.savename == None else ecg.savename, 'og_filename':filename, 'label':0, 'record_duration':duration, 'num_channels':channel_num, 'qrs_inds':ecg.filename+'_qrs_inds', 'signal':ecg.filename+'_signal', 'samples_ecg':int(len(ecg.signal)), 'samples_pcg':int(len(pcg.signal)), 'qrs_count':int(len(ecg.qrs_inds)), 'seg_num':seg_num}
+    ecg_save_name = ecg.filename if ecg.savename == None else ecg.savename
+    pcg_save_name = pcg.filename if pcg.savename == None else pcg.savename
+    save_qrs_inds(ecg_save_name, ecg.qrs_inds, outpath=f'{outputpath_save}data_{config.global_opts.ecg_type}/{ecg_save_name}/')
+    save_ecg_signal(ecg_save_name, ecg.signal, outpath=f'{outputpath_save}data_{config.global_opts.ecg_type}/{ecg_save_name}/', type_=config.global_opts.ecg_type)
+    save_pcg_signal(pcg_save_name, pcg.signal, outpath=f'{outputpath_save}data_{config.global_opts.pcg_type}/{pcg_save_name}/', type_=config.global_opts.pcg_type)
+  data = {'filename':ecg_save_name, 'og_filename':filename, 'label':label, 'record_duration':duration, 'num_channels':channel_num, 'qrs_inds':ecg_save_name+'_qrs_inds', 'signal':ecg_save_name+'_signal', 'samples_ecg':int(len(ecg.signal)), 'samples_pcg':int(len(pcg.signal)), 'qrs_count':int(len(ecg.qrs_inds)), 'seg_num':seg_num}
   if create_objects:
     return data, ecg, pcg, audio
   else:
@@ -296,7 +313,7 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
 
 """# Cleaning Data"""
 def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=config.global_opts.segment_length, ecg_sample_rate=config.global_opts.sample_rate_ecg, pcg_sample_rate=config.global_opts.sample_rate_pcg,
-                         skipDataCSV = False, skipECGSpectrogram = False, skipPCGSpectrogram = False, skipSegments = False, create_objects=True, dataset="physionet"):
+                         skipDataCSV = False, skipECGSpectrogram = False, skipPCGSpectrogram = False, skipSegments = False, create_objects=True, dataset="physionet", skipExisting=True):
   steps_taken = 1
   total_steps = 4 if dataset == "physionet" else 5
   dataset = format_dataset_name(dataset)
@@ -342,16 +359,22 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
     # Zip of (Values, Index)
     data_list = zip(ref_csv.values.tolist(), range(len(ref_csv)))
     pool = Pool(config.global_opts.number_of_processes)
-    results = pool.map(partial(get_data_serial, inputpath_data=inputpath_data, inputpath_target=inputpath_target, ecg_sample_rate=ecg_sample_rate, pcg_sample_rate=pcg_sample_rate, create_objects=create_objects, outputpath_save=outputpath_save), data_list)
-    data = pd.DataFrame.from_records(list(map(lambda x: x[0], results)))
-    if not create_objects:
+    results = pool.map(partial(get_data_serial, inputpath_data=inputpath_data, inputpath_target=inputpath_target, ecg_sample_rate=ecg_sample_rate, pcg_sample_rate=pcg_sample_rate, create_objects=create_objects, outputpath_save=outputpath_save, skipExisting=skipExisting), data_list)
+    if create_objects:
+      data = pd.DataFrame.from_records(list(map(lambda x: x[0], results)))
       for result in results:
         ecgs.append(result[1])
         pcgs.append(result[2])
         audios.append(result[3])
+    data = pd.DataFrame.from_records(results)
     #Create data_physionet_raw.csv with info about each record
     data.reset_index(inplace = True)
     data.to_csv(outputpath_+dataset+"/"+"data_"+dataset+"_raw.csv",index=False)
+  else:
+    try:
+      data = pd.read_csv(outputpath_+f"data_{dataset}_raw.csv", names=list(dataframe_cols))
+    except:
+      raise ValueError(f"Error: CSV file '{outputpath_}data_{dataset}_raw.csv' could not be read / found.")
     
   print(f'* Cleaning {dataset.capitalize()} Data - Creating ECG segments, Spectrograms/Wavelets and Videos [{steps_taken}/{total_steps}] *')
   new_data_list = data.values.tolist()
@@ -382,14 +405,14 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
     return data
 
 
-def get_dataset(dataset="physionet", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_, outputpath_folder=config.outputpath, create_objects=False, get_balance_diff=True):
+def get_dataset(dataset="physionet", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_, outputpath_folder=config.outputpath, create_objects=False, get_balance_diff=True, skipDataCSV=False, skipExisting=True):
   dataset = format_dataset_name(dataset)
   print(f'*** Cleaning Data [{1 if dataset == "physionet" else 2}/3] ***')
   print(f'** Cleaning {dataset.capitalize()} Data **')
   if not create_objects:
-    data = clean_data(inputpath_data, inputpath_target, outputpath_folder, skipSegments=False, create_objects=create_objects, dataset=dataset)
+    data = clean_data(inputpath_data, inputpath_target, outputpath_folder, skipSegments=False, create_objects=create_objects, dataset=dataset, skipDataCSV=skipDataCSV, skipExisting=skipExisting)
   else:
-    data, ecgs, pcgs, ecg_segments, pcg_segments, spectrograms_ecg, spectrograms_pcg, spectrograms_ecg_segs, spectrograms_pcg_segs = clean_data(inputpath_data, inputpath_target, outputpath_folder, skipSegments=False, create_objects=create_objects, dataset=dataset)
+    data, ecgs, pcgs, ecg_segments, pcg_segments, spectrograms_ecg, spectrograms_pcg, spectrograms_ecg_segs, spectrograms_pcg_segs = clean_data(inputpath_data, inputpath_target, outputpath_folder, skipSegments=False, create_objects=create_objects, dataset=dataset, skipDataCSV=skipDataCSV, skipExisting=skipExisting)
   print(f'{dataset.upper()}: Head')
   print(data.head())
   print(f'{dataset.upper()}: Samples (PCG)')
@@ -495,14 +518,17 @@ def get_data_from_files(fn, data, index, path):
           return None
 
 if __name__ == "__main__":
-    
+  log_filename = config.global_opts.log_filename
+  print(f'clean_data started: logging to "{config.global_opts.log_path+"/"+log_filename}"')
+  logger, ostdout = start_logger(config.global_opts.log_path+"/"+log_filename)
   # Load options
   global_opts = config.global_opts
   
-  print(config.outputpath)
-  print(config.global_opts.outputpath)
-  print(config.global_opts.mem_limit)
-  print(config.global_opts.outputpath)
+  print(f"Output Path: {config.global_opts.outputpath}")
+  print(f"Input Path (Physionet) Data: {config.global_opts.inputpath_physionet_data}")
+  print(f"Input Path (Physionet) Labels: {config.global_opts.inputpath_physionet_labels}")
+  print(f"Input Path (Ephnogram) Data: {config.global_opts.inputpath_ephnogram_data}")
+  print(f"Input Path (Ephnogram) Labels: {config.global_opts.inputpath_ephnogram_labels}")
   
   if global_opts.use_googledrive: 
     try:
@@ -533,18 +559,33 @@ if __name__ == "__main__":
     # import keras
     # import tensorflow]
     
-  bigmemorywarning = f"** Warning: RAM usage not set due to failed import - this may cause your computer to utilise {global_opts.mem_limit * 100}% of the maximum system RAM and cause other processes to slow or crash **"
+  bigmemorywarning = f"** Warning: RAM usage not set - this may cause your computer to utilise {global_opts.mem_limit * 100}% of the maximum system RAM and cause other processes to slow or crash **"
   # Try imposing memory limit according to options
   try:
     print(f"Attempting to set RAM usage to {global_opts.mem_limit * 100}%")
-    from utils import memory_limit
-    memory_limit_success = memory_limit(global_opts.mem_limit) 
-    if not memory_limit_success:
-      print(bigmemorywarning)
+    
+    is_windows = False
+    try:
+        import resource
+    except:
+        is_windows = True
+        
+    if not is_windows:
+      from utils import memory_limit
+      memory_limit_success = memory_limit(global_opts.mem_limit) 
+      if not memory_limit_success:
+        print(bigmemorywarning)
+    else:
+      print(f"Warning: Linux memory_limit function failed - trying Windows")
+      try:
+        from utils import memory_limit_windows
+        memory_limit_success = memory_limit_windows(global_opts.mem_limit) 
+        if not memory_limit_success:
+          print(bigmemorywarning)
+      except:
+        print(bigmemorywarning)
   except:
     print(bigmemorywarning)
-  
-  logger, ostdout = start_logger(config.global_opts.log_path+"/newlog")
   
   #   - 'create_objects=False' for better performance; uses 'np.load(filepath_to_saved_spectogram_or_cwt)' to get processed ECG/PCG data
   
@@ -552,11 +593,17 @@ if __name__ == "__main__":
   data_p, ratio_data_p = get_dataset(dataset="physionet", 
                                      inputpath_data=config.input_physionet_data_folderpath_, 
                                      inputpath_target=config.input_physionet_target_folderpath_, 
-                                     outputpath_folder=config.outputpath, create_objects=False)
+                                     outputpath_folder=config.outputpath, create_objects=False,
+                                     
+                                     ##skipDataCSV=True,
+                                     skipExisting=True) #TODO remove - skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
   data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
                                      inputpath_data=config.input_ephnogram_data_folderpath_, 
                                      inputpath_target=config.input_ephnogram_target_folderpath_, 
-                                     outputpath_folder=config.outputpath, create_objects=False)
+                                     outputpath_folder=config.outputpath, create_objects=False,
+                                     
+                                     #skipDataCSV=True,
+                                     skipExisting=True) #TODO remove - skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
   print("*** Cleaning and Postprocessing Data [3/3] ***")
   num_data_p, num_data_e = get_total_num_segments(config.outputpath)
   hists, signal_stats = create_histograms_data_values_distribution(config.outputpath)

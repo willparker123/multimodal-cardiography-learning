@@ -68,6 +68,7 @@ def load_config():
     parser.add_argument("--drive-folderpath", default=drive_folderpath, type=str)
     parser.add_argument("--checkpoint-path", default=f'./checkpoints', type=str)
     parser.add_argument("--log-path", default=str("logs"), type=str)
+    parser.add_argument("--log-filename", default=str("log"), type=str)
     parser.add_argument('--output_dir',
                         type=str,
                         default="./results/save",
