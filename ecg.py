@@ -47,13 +47,13 @@ class ECG():
         self.normalise_factor = normalise_factor
         
         
-        if filename == "a0001":
+        #if filename == "a0001":
             #self.qrs_inds = processing.qrs.gqrs_detect(sig=signal, fs=record.fs)
-            self.qrs_inds = processing.qrs.xqrs_detect(sig=signal, fs=record.fs)
-            print(f"SQRS: {self.qrs_inds}")
-            if get_qrs_and_hrs_png:    
-                self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=record.fs, #sorted(self.qrs_inds)
-                    title="Corrected GQRS peak detection", saveto=f"results/gqrs_peaks/{self.savename if self.savename is not None else self.filename}.png")
+        self.qrs_inds = processing.qrs.xqrs_detect(sig=signal, fs=record.fs)
+        print(f"SQRS: {self.qrs_inds}")
+        if get_qrs_and_hrs_png:    
+            self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=record.fs, #sorted(self.qrs_inds)
+                title="Corrected GQRS peak detection", saveto=f"results/gqrs_peaks/{self.savename if self.savename is not None else self.filename}.png")
   
         if not record.fs == sample_rate and resample:
             print(f"Warning: record sampling frequency ({record.fs}) does not match ecg_sample_rate ({sample_rate}) - resampling to sample_rate")
