@@ -91,11 +91,11 @@ class PCG():
             label = 1
         self.label = label
             
-    def save_signal(self, outpath=outputpath+'physionet/'):
+    def save_signal(self, outpath=outputpath+'physionet/', type_=config.global_opts.pcg_type):
         if self.savename is not None:
-            np.save(outpath+self.savename+f'_{config.global_opts.pcg_type}_signal.npy', np.squeeze(self.signal))
+            np.save(outpath+self.savename+f'_{type_}_signal.npy', np.squeeze(self.signal))
         else:
-            np.save(outpath+self.filename+f'_{config.global_opts.pcg_type}_signal.npy', np.squeeze(self.signal))
+            np.save(outpath+self.filename+f'_{type_}_signal.npy', np.squeeze(self.signal))
     
     def get_segments(self, segment_length, factor=1, normalise=True):
         segments = []
@@ -133,9 +133,9 @@ def save_pcg_signal(filename, signal, outpath=outputpath+'physionet/', savename=
     except:
         signal = signal.squeeze()
     if savename is not None:
-        np.save(outpath+savename+f'{type_}_signal.npy', np.squeeze(signal))
+        np.save(outpath+savename+f'_{type_}_signal.npy', np.squeeze(signal))
     else:
-        np.save(outpath+filename+f'{type_}_signal.npy', np.squeeze(signal))
+        np.save(outpath+filename+f'_{type_}_signal.npy', np.squeeze(signal))
         
 def get_pcg_segments_from_array(data, sample_rate, segment_length, factor=1, normalise=True):
     segments = []
