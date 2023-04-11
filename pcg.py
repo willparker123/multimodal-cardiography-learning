@@ -163,4 +163,4 @@ def get_pcg_segments_from_array(data, sample_rate, segment_length, factor=1, nor
             #segment = (segment.numpy().squeeze() - np.min(segment.numpy().squeeze()))/np.ptp(segment.numpy().squeeze())
             #segment = np.expand_dims(segment, axis=0).astype(np.float32)
             #segment = torch.from_numpy(segment)
-    return segments
+    return segments, start_times
