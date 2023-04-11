@@ -104,11 +104,11 @@ class ECG():
             label = 1
         self.label = label
             
-    def save_signal(self, outpath=config.outputpath+'physionet/'):
+    def save_signal(self, outpath=config.outputpath+'physionet/', type_=config.global_opts.ecg_type):
         if self.savename is not None:
-            np.save(outpath+self.savename+'_ecg_signal.npy', self.signal)
+            np.save(outpath+self.savename+f'_{type_}_signal.npy', self.signal)
         else:
-            np.save(outpath+self.filename+'_ecg_signal.npy', self.signal)
+            np.save(outpath+self.filename+f'_{type_}_signal.npy', self.signal)
         
     def save_qrs_inds(self, outpath=config.outputpath+'physionet/'):
         if self.savename is not None:
