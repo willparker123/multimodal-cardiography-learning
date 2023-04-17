@@ -5,6 +5,7 @@ alias pip='pip3'
 pip3 install --upgrade torchvision==0.11.0
 pip3 install --upgrade torch==1.10.0
 pip3 install --upgrade matplotlib==3.2
+pip3 install cudatoolkit=11.3
 pip3 install pytorch==1.10.0
 pip3 install torchaudio
 pip3 install PyWavelets
@@ -22,17 +23,53 @@ pip3 intall librosa
 
 # install python3.8.1, then conda, then make virtualenv using path to python3.8.1, then install packages
 
-ECGPCG
-# WINDOWS
 conda clean --all -y
 conda install virtualenv
-python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38-32/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
+conda create -n py37 python=3.7.9 anaconda
+# CUDA 10.2
+conda install pytorch==1.10.0 torchvision==0.11.0 torchaudio==0.10.0 cudatoolkit=10.2 -c pytorch
+# CUDA 11.3
+conda install pytorch==1.10.0 torchvision==0.11.0 torchaudio==0.10.0 cudatoolkit=11.3 -c pytorch -c conda-forge
+# CPU Only
+conda install pytorch==1.10.0 torchvision==0.11.0 torchaudio==0.10.0 cpuonly -c pytorch
+conda install -c conda-forge matplotlib
+conda install -c conda-forge pywavelets
+conda install -c conda-forge wfdb
+conda install -c conda-forge scikit-build
+conda install -c conda-forge scipy
+conda install -c conda-forge opencv
+conda install -c anaconda pandas
+conda install -c anaconda seaborn
+conda install -c conda-forge tqdm
+conda install -c conda-forge librosa
+conda install -c conda-forge configargparse
+conda install -c conda-forge regex
+#conda install pillow=6.1
+conda install -c anaconda cmake
+conda install -c conda-forge scipy
+
+conda install -c anaconda pandas seaborn cmake
+conda install -c conda-forge wfdb scikit-build opencv tqdm librosa configargparse regex scipy
+
+ECGPCG
+# WINDOWS
+{installation_directory_path}\python.exe -V
+ADD TO PATH ^
+python -m virtualenv --python="{installation_directory_path}\python.exe" "{path_to_environment}/{environment_name}"
+e.g. python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38-32/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
 D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/activate.bat
 deactivate 
 
 #LINUX TODO
-conda clean --all -y
-conda install virtualenv
+sudo apt-get install python3.7.9
+	or
+wget https://www.python.org/ftp/python/3.7.9/Python-3.7.9.tgz
+tar -xf Python-3.7.9.tgz
+cd Python-3.7.9
+./configure --enable-optimizations
+make -j {processor_count}
+sudo make altinstall
+python3.7 --version
 python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38-32/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
 python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python37/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
 python -m virtualenv D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/activate.bat
@@ -142,7 +179,9 @@ ECG - 2000Hz
 
 
 
-
+BC4:
+module add libs/cuda/10.2
+module add languages/anaconda3/3.7
 
 
 

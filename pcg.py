@@ -4,7 +4,7 @@ import torchaudio.transforms as transforms
 import pandas as pd
 import config
 from config import input_physionet_data_folderpath_, input_physionet_target_folderpath_, outputpath
-from helpers import get_filtered_df, butterworth_bandpass_filter
+from helpers import get_filtered_df, butterworth_bandpass_filter, check_filter_bounds
 import os
 import matplotlib.pyplot as plt
 import numpy as np
@@ -13,7 +13,9 @@ import numpy as np
 Class for PCG preprocessing, loading from .wav /.npy files
 """
 class PCG():
-    def __init__(self, filename, savename=None, filepath=input_physionet_data_folderpath_, label=None, audio: Audio=None, sample_rate=2000, sampfrom=None, sampto=None, resample=True, normalise=True, apply_filter=True, csv_path=input_physionet_target_folderpath_, normalise_factor=None):
+    def __init__(self, filename, savename=None, filepath=input_physionet_data_folderpath_, label=None, audio: Audio=None, sample_rate=2000, sampfrom=None, 
+                 sampto=None, resample=True, normalise=True, apply_filter=True, csv_path=input_physionet_target_folderpath_, normalise_factor=None,
+                 filter_lower=config.global_opts.pcg_filter_lower_bound, filter_upper=config.global_opts.pcg_filter_upper_bound):
         self.filepath = filepath
         self.filename = filename
         self.csv_path = csv_path
@@ -65,7 +67,8 @@ class PCG():
             # 20 Hz to 400 [6 in MODEL]
             # 25 Hz to 400 [1 in MODEL]
             # 100 Hz to 600 [2 in MODEL]
-            signal = butterworth_bandpass_filter(np.squeeze(signal), 20, 400, self.audio_sample_rate, order=4)
+            check_filter_bounds(filter_lower, filter_upper)
+            signal = butterworth_bandpass_filter(np.squeeze(signal), filter_lower, filter_upper, sample_rate, order=4)
             signal = np.expand_dims(signal, axis=0).astype(np.float32)
             signal = torch.from_numpy(signal)
         if normalise: #normalise to [0, 1]
@@ -115,7 +118,6 @@ class PCG():
         return segments
         
     def plot_resampled_audio(self, save=True, outpath_png=outputpath+'physionet/spectrograms', show=False):
-        plt.figure()
         plt.plot(self.signal)
         if save:
             if self.savename is not None:
@@ -125,7 +127,7 @@ class PCG():
         if show:
             plt.show()
         plt.figure().clear()
-        plt.close()
+        plt.close('all')
         
 def save_pcg_signal(filename, signal, outpath=outputpath+'physionet/', savename=None, type_="pcg_logmel"):
     try:

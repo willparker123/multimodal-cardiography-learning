@@ -1,0 +1,63 @@
+[13988] Output Path: data-after
+[13988] Input Path (Physionet) Data: data-before/physionet-data/training-a
+[13988] Input Path (Physionet) Labels: data-before/physionet-data/training-a/REFERENCE.csv
+[13988] Input Path (Ephnogram) Data: data-before/ephnogram-data/WFDB
+[13988] Input Path (Ephnogram) Labels: data-before/ephnogram-data/ECGPCGSpreadsheet.csv
+[13988] ****************MMTF-ECGPCGNet*****************
+[13988] ***          ECGPCG Data Cleaning           ***
+[13988] ***********************************************
+[13988] *** OPTIONS:                               ***
+[13988]         RAM usage: 80.0%
+[13988]         Number of Processes: 18   [Available: 18]
+[13988]         GPU Enabled: True  GPU ID: 0
+[13988]         Google Drive Enabled (unprocessed dataset storage): False
+[13988]  UNUSED Tensorflow Enabled: False
+[13988] ***********************************************
+[13988] Attempting to set RAM usage to 80.0%
+[13988] Warning: Linux memory_limit function failed - trying Windows
+[13988] *** Cleaning Data [1/3] ***
+[13988] ** Cleaning Physionet Data **
+[13988] * Cleaning Physionet Data - Creating References [1/4] *
+[13988] Unprocessed label CSV for PHYSIONET:   filename  label
+0    a0002      1
+1    a0003      1
+2    a0004      1
+3    a0005      1
+4    a0006      1
+[13988] * Cleaning Physionet Data - Creating CSV "data-after/physionet/data_physionet_raw.csv" - QRS, ECGs and PCGs [2/4] *
+[2448] Processing Data Item: (['a0080', -1], 78)
+[7692] Processing Data Item: (['a0098', 1], 96)
+[10388] Processing Data Item: (['a0050', -1], 48)
+[11152] Processing Data Item: (['a0008', 1], 6)
+[16480] Processing Data Item: (['a0068', -1], 66)
+[7180] Processing Data Item: (['a0032', -1], 30)
+[18348] Processing Data Item: (['a0020', 1], 18)
+[19216] Processing Data Item: (['a0056', 1], 54)
+[21804] Processing Data Item: (['a0062', 1], 60)
+[15488] Processing Data Item: (['a0038', -1], 36)
+[10008] Processing Data Item: (['a0074', 1], 72)
+[20348] Processing Data Item: (['a0044', 1], 42)
+[8172] Processing Data Item: (['a0002', 1], 0)
+[21384] Processing Data Item: (['a0092', 1], 90)
+[5548] Processing Data Item: (['a0026', 1], 24)
+[9032] Processing Data Item: (['a0014', 1], 12)
+[16872] Processing Data Item: (['a0086', -1], 84)
+[8172] Processing Data Item: (['a0003', 1], 1)
+[10008] Processing Data Item: (['a0075', 1], 73)
+[5548] Processing Data Item: (['a0027', -1], 25)
+[10388] Processing Data Item: (['a0051', 1], 49)
+[19216] Processing Data Item: (['a0057', 1], 55)
+[2448] Processing Data Item: (['a0081', -1], 79)
+[11152] Processing Data Item: (['a0009', -1], 7)
+[7180] Processing Data Item: (['a0033', 1], 31)
+[16872] Processing Data Item: (['a0087', 1], 85)
+[21804] Processing Data Item: (['a0063', 1], 61)
+[16480] Processing Data Item: (['a0069', -1], 67)
+[9032] Processing Data Item: (['a0015', 1], 13)
+[7692] Processing Data Item: (['a0099', 1], 97)
+[21384] Processing Data Item: (['a0093', -1], 91)
+[15488] Processing Data Item: (['a0039', 1], 37)
+[18348] Processing Data Item: (['a0021', 1], 19)
+[20348] Processing Data Item: (['a0045', 1], 43)
+[8172] Processing Data Item: (['a0004', 1], 2)
+[10008] Processing Data Item: (['a0076', 1], 74)

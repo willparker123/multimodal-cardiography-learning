@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 #SBATCH --account=cosc024002
-#SBATCH --time 36:00:00
+#SBATCH --time 02:00:00
 #SBATCH --mem 64GB
 #SBATCH --job-name cleandata-p
 #SBATCH --nodes 1

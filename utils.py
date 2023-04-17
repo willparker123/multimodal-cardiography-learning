@@ -5,6 +5,8 @@ import sys
 import torch
 import numpy as np
 import math
+import multiprocessing as mp
+import time
 
 global device
 
@@ -181,3 +183,71 @@ def start_logger(path="logs/log"):
 def stop_logger(log_file, old_stdout):
   sys.stdout = old_stdout
   log_file.close()
+
+
+
+# Borrowed from https://stackoverflow.com/questions/13446445/python-multiprocessing-safely-writing-to-a-file
+def worker(arg, q):
+    start_T = time.clock()
+    # DO PROCESS
+    end_T = time.clock() - start_T
+    with open(config.log_fullpath, 'rb') as f:
+        size = len(f.read())
+    printStrings = 'Process' + str(arg), str(size), end_T
+    q.put(printStrings)
+    return printStrings
+
+def worker_write(printme, i, q):
+    with open(config.log_fullpath, 'rb') as f:
+        size = len(f.read())
+    printString = f"[{str(i)}] {printme}"
+    q.put(printString)
+    return printString
+
+def listener(q):
+    '''listens for messages on the q, writes to file. '''
+
+    with open(config.log_fullpath, 'w') as f:
+        while 1:
+            m = q.get()
+            if m == 'kill':
+                f.write('killed')
+                break
+            f.write(str(m) + '\n')
+            f.flush()
+
+
+
+# Function to write to shared log file using a worker process (apply_async)
+def write_to_logger(printstring, pool, q, process_index=os.getpid()):
+    return pool.apply_async(worker_write, (printstring, process_index, q)).get()
+
+def write_to_logger_from_worker(printstring, q, process_index=os.getpid()):
+    return worker_write(printstring, process_index, q)
+
+
+
+# UNUSED EXAMPLE OF MULTIPROCESS LOGGING
+#def main():
+#    #must use Manager queue here, or will not work
+#    manager = mp.Manager()
+#    q = manager.Queue()    
+#    pool = mp.Pool(mp.cpu_count() + 2)
+#
+#    #put listener to work first
+#    watcher = pool.apply_async(listener, (q,))
+#
+#    #fire off workers
+#    jobs = []
+#    for i in range(80):
+#        job = pool.apply_async(worker, (i, q))
+#        jobs.append(job)
+#
+#    # collect results from the workers through the pool result queue
+#    for job in jobs: 
+#        job.get()
+#
+#    #now we are done, kill the listener
+#    q.put('kill')
+#    pool.close()
+#    pool.join()
