@@ -1,4 +1,6 @@
 import configargparse
+import multiprocessing as mp
+from multiprocessing import Pool, Manager, freeze_support
 
 
 """# Global Variables / Paths"""
@@ -27,15 +29,15 @@ input_ephnogram_data_folderpath = "data-before/ephnogram-data/WFDB"
 input_ephnogram_target_folderpath = "data-before/ephnogram-data/ECGPCGSpreadsheet.csv"
 # UNUSED MULTIMODAL MODEL
 input_ecgpcgnet_folderpath = "models-referenced/ecg-pcg-data"
-output_folderpath = "data-after"
+output_folderpath = "data-after-TEST"
 # Column names in the target input CSV for the Physionet dataset
 
 drive_folderpath = "Colab Notebooks"
-number_of_processes = 8 #number of processors used for multiprocessing dataset / training model
+number_of_processes = mp.cpu_count()+2 #number of processors used for multiprocessing dataset / training model
 mem_limit = 0.8 #value in range [0, 1] percentage of system memory available for processing
 
 # ecg, ecg_cwt, ecg_log, ecg_cwtlog, pcg, pcg_mel, pcg_logmel
-ecg_type = "ecg_cwt"
+ecg_type = "ecg"
 pcg_type = "pcg_logmel"
 
 # ricker, bior2.6, customricker
@@ -50,6 +52,12 @@ nmels = 60 #60; must be < nfft//2-1
 seg_factor_fps = 24 #video fps
 segment_length = 8
 frame_length = 2  
+# Limits of the Butterworth bandpass filters applied to the ECG/PCG (Hz)
+ecg_filter_lim = [0.1, 100]
+pcg_filter_lim = [20, 400]
+
+    #ECG: data, signal, qrs, hrs
+    #PCG: data, signal
     
 def load_config():
     parser = configargparse.ArgumentParser(description="main", default_config_files=['/*.conf', '/.my_settings'])
@@ -107,7 +115,7 @@ def load_config():
         "--number-of-processes",
         default=number_of_processes,
         type=int,
-        help="Number of worker processes used to load data.",
+        help=f"Number of worker processes used to load data. Must be less than [{mp.cpu_count()+2}]",
     )
     parser.add_argument(
         "-M",
@@ -133,6 +141,10 @@ def load_config():
                         default=window_length_ms,
                         type=int,
                         help='Length in milliseconds of the Hamming window used in spectrogram transform')
+    parser.add_argument('--cwt-function',
+                        default=cwt_function,
+                        type=str,
+                        help='Function to use when creating Wavelets using CWT [ricker, bior2.6, customricker]')
     
     # --- ecg
     parser.add_argument('--ecg-type',
@@ -143,10 +155,14 @@ def load_config():
                         default=sample_rate_ecg,
                         type=int,
                         help='Sample rate of the desired ECG signal after preprocessing')
-    parser.add_argument('--cwt-function',
-                        default=cwt_function,
-                        type=str,
-                        help='Function to use when creating Wavelets using CWT (for ECG videos) [ricker, bior2.6, customricker]')
+    parser.add_argument('--ecg-filter-lower-bound',
+                        default=ecg_filter_lim[0],
+                        type=float,
+                        help='Lower bound for the Butterworth bandpass filter applied to the ECG')
+    parser.add_argument('--ecg-filter-upper-bound',
+                        default=ecg_filter_lim[1],
+                        type=float,
+                        help='Upper bound for the Butterworth bandpass filter applied to the ECG')
     
     # --- pcg
     parser.add_argument('--pcg-type',
@@ -161,6 +177,14 @@ def load_config():
                         default=nmels,
                         type=int,
                         help='Number of bins to use when using the Mel scale for spectrograms (must be < nfft//2-1)')
+    parser.add_argument('--pcg-filter-lower-bound',
+                        default=pcg_filter_lim[0],
+                        type=float,
+                        help='Lower bound for the Butterworth bandpass filter applied to the PCG')
+    parser.add_argument('--pcg-filter-upper-bound',
+                        default=pcg_filter_lim[1],
+                        type=float,
+                        help='Upper bound for the Butterworth bandpass filter applied to the PCG')
 
     # --- video
     parser.add_argument('--resize',
@@ -228,8 +252,13 @@ def load_config():
     
     return parser
 
+
+
 """## DO NOT EDIT These"""
 global_opts = load_config().parse_args()
+log_filename = global_opts.log_filename
+log_path = global_opts.log_path
+log_fullpath = log_path+"/"+log_filename+".log"
 
 drivepath = 'drive/MyDrive/'+global_opts.drive_folderpath+"/"
 input_physionet_data_folderpath_ = drivepath+global_opts.inputpath_physionet_data+"/" if useDrive else global_opts.inputpath_physionet_data+"/"

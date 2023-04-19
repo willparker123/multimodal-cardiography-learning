@@ -5,8 +5,9 @@ import pywt
 import pywt.data
 import numpy as np
 from typing import NamedTuple
+import re
 
-dataframe_cols = ['filename', 'og_filename', 'label', 'record_duration', 'num_channels', 'qrs_inds', 'signal_ecg', 'signal_pcg', 'samples_ecg','samples_pcg', 'qrs_count', 'seg_num']
+dataframe_cols = ['filename', 'og_filename', 'label', 'record_duration', 'num_channels', 'qrs_inds', 'signal_ecg', 'signal_pcg', 'samples_ecg', 'samples_pcg', 'qrs_count', 'seg_num', 'avg_hr']
 
 
 def read_signal(filepath):
@@ -19,11 +20,34 @@ def get_filtered_df(df, column, value):
 
 def create_new_folder(path):
     if not os.path.exists(path):
-        os.makedirs(path)
+        access = 0o755
+        try:
+            os.makedirs(path, access)
+        except Exception as e:
+            print(eeee)
+            raise ValueError(e)
+            return False
         return True
     else:
         # Only create the folder if it is not already there
         return False
+    
+# Get index '00123' from a directoryname e.g. 'ECGPCG00123' => 123
+def get_index_from_directory(directoryname):
+    matches = re.findall(r'^\D*(\d+)', directoryname)
+    str_ = matches[0].lstrip('0')
+    if len(str_) == 0:
+        str_ = '0'
+    index = int(str_)
+    return index
+
+def check_filter_bounds(low, high):
+    if high <= low:
+        raise ValueError(f"Error: Upper bound supplied to filter ({high}) must be higher than the lower bound ({low})")
+    if low < 0:
+        raise ValueError(f"Error: Lower bound supplied to filter ({low}) must be >= 0")
+    if high <= 0:
+        raise ValueError(f"Error: Upper bound supplied to filter ({high}) must be > 0")
 
 def butterworth_bandpass(lowcut, highcut, sample_rate, order=4):
                     nyq = sample_rate/2

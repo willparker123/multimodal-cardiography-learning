@@ -7,14 +7,13 @@ import numpy as np
 import pandas as pd
 from config import global_opts, spec_win_size_ecg, spec_win_size_pcg, outputpath, nfft_pcg, nfft_ecg, input_ephnogram_data_folderpath \
     , load_config, useDrive
-from helpers import dataframe_cols
+from helpers import dataframe_cols, get_index_from_directory
 from clean_data import get_data_physionet, get_data_ephnogram
 import os
 from audio import load_audio
 from video import load_video, resample_video, create_video
 import cv2
 from PIL import Image
-import re
 import tqdm
 from spectrograms import Spectrogram
 
@@ -38,15 +37,6 @@ class ECGPCGDataset(Dataset):
             path_vs = path_ecgs_ephnogram
             path_as = path_pcgs_ephnogram
         return path_vs, path_as
-    
-    # Get index '00123' from a directoryname e.g. 'ECGPCG00123' => 123
-    def get_index_from_directory(directoryname):
-        matches = re.findall(r'^\D*(\d+)', directoryname)
-        str_ = matches[0].lstrip('0')
-        if len(str_) == 0:
-            str_ = '0'
-        index = int(str_)
-        return index
     
     def __init__(self, ecg_and_pcg_filetype="spec_and_mp4", path_ecgs_physionet=outputpath+f'physionet/spectrograms_{global_opts.ecg_type}/', path_pcgs_physionet=outputpath+f'physionet/spectrograms_{global_opts.pcg_type}/', path_pcgs_all=None, \
                  path_ecgs_ephnogram=outputpath+f'ephnogram/spectrograms_{global_opts.ecg_type}/', path_pcgs_ephnogram=outputpath+f'ephnogram/spectrograms_{global_opts.pcg_type}/', path_ecgs_all=None, \
@@ -113,7 +103,7 @@ class ECGPCGDataset(Dataset):
                 raise ValueError(f"Error: Number of ECG and PCG directories do not match")
             record_dirs.extend(dirs_vs)
             for d in dirs_vs:
-                index = self.get_index_from_directory(d)
+                index = sget_index_from_directory(d)
                 if dataset_num == 0:
                     index -= 1
                 else:
