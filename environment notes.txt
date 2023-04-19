@@ -9,7 +9,7 @@ conda install -c anaconda pandas
 conda install -c anaconda seaborn
 conda install -c conda-forge tqdm
 conda install -c conda-forge librosa
-conda install -c conda-forge argparse
+conda install -c conda-forge configargparse
 conda install -c conda-forge regex
 
 conda install -c conda-forge opencv

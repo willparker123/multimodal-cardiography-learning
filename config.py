@@ -65,8 +65,6 @@ pcg_filter_lim = [20, 400]
     
 def load_config():
     parser = argparse.ArgumentParser()
-
-    parser.add('-c', '--config', is_config_file=True, help='config file path')
     # --- environment
     #TODO only in Pytorch currently
     parser.add_argument("--use-tensorflow", default=False, type=bool)
