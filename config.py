@@ -29,7 +29,7 @@ input_ephnogram_data_folderpath = "data-before/ephnogram-data/WFDB"
 input_ephnogram_target_folderpath = "data-before/ephnogram-data/ECGPCGSpreadsheet.csv"
 # UNUSED MULTIMODAL MODEL
 input_ecgpcgnet_folderpath = "models-referenced/ecg-pcg-data"
-output_folderpath = "data-after"
+output_folderpath = "data-after-TEST"
 # Column names in the target input CSV for the Physionet dataset
 
 drive_folderpath = "Colab Notebooks"
@@ -56,6 +56,9 @@ frame_length = 2
 ecg_filter_lim = [0.1, 100]
 pcg_filter_lim = [20, 400]
 
+    #ECG: data, signal, qrs, hrs
+    #PCG: data, signal
+    
 def load_config():
     parser = configargparse.ArgumentParser(description="main", default_config_files=['/*.conf', '/.my_settings'])
 

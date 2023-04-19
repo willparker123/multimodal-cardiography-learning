@@ -2,8 +2,10 @@ data-before/ephnogram-data/
 data-before/physionet-data/
 data-after/ephnogram/
 data-after/physionet/
+data-after/results/
 data-after/ephnogram/results/
 data-after/physionet/results/
+data-after-TEST/
 envs/
 Scripts/
 .vscode/

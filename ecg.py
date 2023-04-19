@@ -45,23 +45,18 @@ class ECG():
         signal = record.p_signal[:,0]
         self.normalise_factor = normalise_factor
         
-        
         #if filename == "a0001":
             #self.qrs_inds = processing.qrs.gqrs_detect(sig=signal, fs=record.fs)
+        if not record.fs == sample_rate and resample:
+            print(f"Warning: record sampling frequency ({record.fs}) does not match ecg_sample_rate ({sample_rate}) - resampling to sample_rate")
+            signal, self.locations = processing.resample_sig(signal, record.fs, sample_rate)
+        self.signal_preproc = signal
         self.qrs_inds = processing.qrs.xqrs_detect(sig=signal, fs=record.fs)
         if get_qrs_and_hrs_png:    
             self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=record.fs,
                 title="Corrected GQRS peak detection", saveto=f"{config.outputpath}results/gqrs_peaks/{self.savename if self.savename is not None else self.filename}.png")
             self.hr_avg = np.average(self.hrs)
-  
-        if not record.fs == sample_rate and resample:
-            print(f"Warning: record sampling frequency ({record.fs}) does not match ecg_sample_rate ({sample_rate}) - resampling to sample_rate")
-            signal, self.locations = processing.resample_sig(signal, record.fs, sample_rate)
-        self.qrs_inds_resampled = processing.qrs.xqrs_detect(sig=signal, fs=sample_rate)
-        if get_qrs_and_hrs_png:    
-            self.hrs_resampled = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds_resampled, fs=sample_rate,
-                title="Corrected GQRS peak detection (after resampling)", saveto=f"{config.outputpath}results/gqrs_peaks_resampled/{self.savename if self.savename is not None else self.filename}.png")
-            self.hr_avg_resampled = np.average(self.hrs)
+            
         if apply_filter:
             #### UNUSED
             #
@@ -109,11 +104,11 @@ class ECG():
             label = 1
         self.label = label
             
-    def save_signal(self, outpath=config.outputpath+'physionet/', type_=config.global_opts.ecg_type):
+    def save_signal(self, outpath=config.outputpath+'physionet/', type_=config.global_opts.ecg_type, preproc=False):
         if self.savename is not None:
-            np.save(outpath+self.savename+f'_{type_}_signal.npy', self.signal)
+            np.save(outpath+self.savename+f'_{type_}_signal.npy', self.signal if not preproc else self.signal_preproc)
         else:
-            np.save(outpath+self.filename+f'_{type_}_signal.npy', self.signal)
+            np.save(outpath+self.filename+f'_{type_}_signal.npy', self.signal if not preproc else self.signal_preproc)
         
     def save_qrs_inds(self, outpath=config.outputpath+'physionet/', resampled=False):
         if resampled:
@@ -145,17 +140,24 @@ class ECG():
                 segment = ECG(self.filename, filepath=self.filepath, label=self.label, savename=f'{self.filename}_seg_{i}', csv_path=self.csv_path, sample_rate=self.sample_rate, sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter)
             segments.append(segment)
         return segments
+    
+def save_ecg(filename, signal, signal_preproc, qrs_inds, hrs, outpath=config.outputpath+'physionet/', savename=None, type_="ecg_log"):
+    f = filename
+    if savename is not None:
+        f = savename
+    np.savez(outpath+f'{f}_{type_}.npz', data=signal, signal=signal_preproc, qrs=qrs_inds, hrs=hrs)
         
 def save_ecg_signal(filename, signal, outpath=config.outputpath+'physionet/', savename=None, type_="ecg_log"):
+    try:
+        signal = np.squeeze(signal)
+    except:
+        signal = signal.squeeze()
+    f = filename
     if savename is not None:
-        np.save(outpath+savename+f'_{type_}_signal.npy', signal)
-    else:
-        np.save(outpath+filename+f'_{type_}_signal.npy', signal)
+        f = savename
+    np.save(outpath+f'{f}_{type_}_signal.npy', signal)
     
-def save_qrs_inds(filename, qrs_inds, outpath=config.outputpath+'physionet/', resampled=False):
-    if resampled:
-        np.save(outpath+filename+'_qrs_inds_resampled.npy', qrs_inds)
-    else:
+def save_qrs_inds(filename, qrs_inds, outpath=config.outputpath+'physionet/'):
         np.save(outpath+filename+'_qrs_inds.npy', qrs_inds)
         
 def get_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), saveto=None, show=False, save_hrs=False):
@@ -192,6 +194,7 @@ def get_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), saveto=Non
 def get_ecg_segments_from_array(data, sample_rate, segment_length, factor=1, normalise=True):
     segments = []
     start_times = []
+    zip_sampfrom_sampto = []
     samples_goal = int(np.floor(sample_rate*segment_length))
     samples = int(len(data))
     if samples_goal < 1:
@@ -210,4 +213,5 @@ def get_ecg_segments_from_array(data, sample_rate, segment_length, factor=1, nor
         if normalise:
             segment = (segment - np.min(segment))/np.ptp(segment)
         segments.append(segment)
-    return segments, start_times
+        zip_sampfrom_sampto.append([sampfrom, sampto])
+    return segments, start_times, zip_sampfrom_sampto

@@ -29,18 +29,18 @@ class Spectrogram():
             try:
                 if type=="ecg" or type=="ecg_log" or type=="ecg_cwt" or type=="ecg_cwtlog":
                     if savename is not None:
-                        signal = np.load(filepath+savename+f'_{type}_signal.npy')
+                        signal = np.load(filepath+savename+f'_{type}.npz')['data']
                     else:
-                        signal = np.load(filepath+filename+f'_{type}_signal.npy')
+                        signal = np.load(filepath+filename+f'_{type}.npz')['data']
                     signal = np.squeeze(signal)
                 if type=="pcg" or type=="pcg_logmel" or type=="pcg_mel":
                     if savename is not None:
-                        signal = np.load(filepath+savename+f'_{type}_signal.npy')
+                        signal = np.load(filepath+savename+f'_{type}.npz')['data']
                     else:
-                        signal = np.load(filepath+filename+f'_{type}_signal.npy')
+                        signal = np.load(filepath+filename+f'_{type}.npz')['data']
                     signal = np.squeeze(signal)
             except:
-                raise ValueError("Error: signal must be saved as filepath+filename+'_pcg_signal.npy' or provide argument 'signal' (Audio.audio or ECG signal)")
+                raise ValueError("Error: signal must be saved as filepath+filename+'_pcg_signal.npz' or provide argument 'signal' (Audio.audio or ECG signal)")
         self.sample_rate = sample_rate
         self.signal = signal
         self.outpath_png = outpath_png
@@ -51,7 +51,7 @@ class Spectrogram():
         if spec is not None and freqs is not None and times is not None and image is not None:
             self.spec, self.freqs, self.times, self.image = spec, freqs, times, image
         else:
-            self.spec, self.freqs, self.times, self.image = create_spectrogram(filepath, filename, sample_rate, signal=self.signal, save=save, type=type, 
+            self.spec, self.freqs, self.times, self.image = create_spectrogram(filepath, savename if savename is not None else filename, sample_rate, signal=self.signal, save=save, type=type, 
                                              window=window, window_size=window_size, NFFT=NFFT, NMels=NMels, hop_length=hop_length, outpath_np=outpath_np, outpath_png=outpath_png, normalise=normalise, normalise_factor=normalise_factor, start_time=self.start_time, wavelet_function=self.wavelet_function)
         if save:
             self.display_spectrogram()
@@ -145,9 +145,9 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
         signal = np.squeeze(signal)
     else:
         if savename is not None:
-            signal = np.load(filepath+savename+f'_{type}_signal.npy')
+            signal = np.load(filepath+savename+f'_{type}.npz')['data']
         else:
-            signal = np.load(filepath+filename+f'_{type}_signal.npy')
+            signal = np.load(filepath+filename+f'_{type}.npz')['data']
         signal = np.squeeze(signal) 
     if signal is None:
         raise ValueError("Error: no 'signal' variable supplied - please provide to create_spectrogram")
@@ -230,9 +230,9 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
                 np.savez(outpath_np+filename+f'_{type}_spec', spec=spec, freqs=f, times=t)
         else:
             if savename is not None:
-                np.save(outpath_np+savename+f'_{type}_spec', spec)
+                np.savez(outpath_np+savename+f'_{type}_spec', spec=spec)
             else:
-                np.save(outpath_np+filename+f'_{type}_spec', spec)
+                np.savez(outpath_np+filename+f'_{type}_spec', spec=spec)
     #print(f"spec: {spec}")
     #print(f"specshape: {np.shape(spec)}")
     #print(f"f: {f}")

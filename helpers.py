@@ -7,7 +7,7 @@ import numpy as np
 from typing import NamedTuple
 import re
 
-dataframe_cols = ['filename', 'og_filename', 'label', 'record_duration', 'num_channels', 'qrs_inds', 'signal_ecg', 'signal_pcg', 'samples_ecg','samples_pcg', 'qrs_count', 'seg_num']
+dataframe_cols = ['filename', 'og_filename', 'label', 'record_duration', 'num_channels', 'qrs_inds', 'signal_ecg', 'signal_pcg', 'samples_ecg', 'samples_pcg', 'qrs_count', 'seg_num', 'avg_hr']
 
 
 def read_signal(filepath):
