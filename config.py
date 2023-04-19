@@ -64,7 +64,7 @@ pcg_filter_lim = [20, 400]
     #PCG: data, signal
     
 def load_config():
-    parser = argparse.ArgumentParser(description="main", default_config_files=['/*.conf', '/.my_settings'])
+    parser = argparse.ArgumentParser()
 
     parser.add('-c', '--config', is_config_file=True, help='config file path')
     # --- environment
