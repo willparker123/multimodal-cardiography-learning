@@ -137,6 +137,8 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
       duration = len(ecg_sig)/ecg_sample_rate
       data = {'filename':filename, 'og_filename':ref[0][0], 'label':label, 'record_duration':duration, 'num_channels':channel_num, 'qrs_inds':filename+'_qrs_inds', 'signal_ecg':filename+f'_{config.global_opts.ecg_type}', 'signal_pcg':filename+f'_{config.global_opts.pcg_type}', 'samples_ecg':int(len(ecg_sig)), 'samples_pcg':int(len(pcg_sig)), 'qrs_count':int(len(ecg_qrs)), 'seg_num':seg_num, 'avg_hr':np.average(hrs)}
       return data
+  
+  #WFDB records - channel 0 is ECG, channel 1 is PCG
   if dataset=="ephnogram":
     filename = ref[0][0] #data_list[0][0]
     duration = ref[0][1]
@@ -144,24 +146,31 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
     ecg = ECG(filename=filename, savename=sn, filepath=inputpath_data, label=label, chan=0, csv_path=inputpath_target, sample_rate=ecg_sample_rate, normalise=True, apply_filter=True)
     pcg_record = wfdb.rdrecord(inputpath_data+filename, channels=[1])
     audio_sig = torch.from_numpy(np.expand_dims(np.squeeze(np.array(pcg_record.p_signal[:, 0])), axis=0))
-    audio = Audio(filename=filename, filepath=inputpath_data, audio=audio_sig, sample_rate=8000)
+    audio = Audio(filename=filename, filepath=inputpath_data, audio=audio_sig, sample_rate=config.base_wfdb_pcg_sample_rate)
     pcg = PCG(filename=filename, savename=sn, audio=audio, sample_rate=pcg_sample_rate, label=label, normalise=True, apply_filter=True)
+  #ECG is WFDB channel 0, PCG is .wav
+  if dataset=="physionet":
+    filename = ref[0][0]
+    ecg = ECG(filename=filename, filepath=inputpath_data, label=label, csv_path=inputpath_target, sample_rate=ecg_sample_rate, normalise=True, apply_filter=True)
+    duration = len(ecg.signal)/ecg.sample_rate
+    audio = Audio(filename=filename, filepath=inputpath_data)
+    pcg = PCG(filename=filename, audio=audio, sample_rate=pcg_sample_rate, label=label, normalise=True, apply_filter=True)
+  #ECG is WFDB channel 0, PCG is .wav
   else:
     filename = ref[0][0]
     ecg = ECG(filename=filename, filepath=inputpath_data, label=label, csv_path=inputpath_target, sample_rate=ecg_sample_rate, normalise=True, apply_filter=True)
     duration = len(ecg.signal)/ecg.sample_rate
     audio = Audio(filename=filename, filepath=inputpath_data)
     pcg = PCG(filename=filename, audio=audio, sample_rate=pcg_sample_rate, label=label, normalise=True, apply_filter=True)
+    
   seg_num = get_segment_num(ecg.sample_rate, int(len(ecg.signal)), sample_clip_len, factor=1)      
   if not create_objects:
     create_new_folder(outputpath_save+f'data_{config.global_opts.ecg_type}/{filename}')
     create_new_folder(outputpath_save+f'data_{config.global_opts.pcg_type}/{filename}')
     ecg_save_name = ecg.filename if ecg.savename == None else ecg.savename
     pcg_save_name = pcg.filename if pcg.savename == None else pcg.savename
-    write_to_logger_from_worker(f"FFFFFFFFFFFFFFFFFFFFFFFFFFFFF", q=q)
     save_ecg(ecg_save_name, ecg.signal, ecg.signal_preproc, ecg.qrs_inds, ecg.hrs, outpath=f'{outputpath_save}data_{config.global_opts.ecg_type}/{ecg_save_name}/', type_=config.global_opts.ecg_type)
     save_pcg(pcg_save_name, pcg.signal, pcg.signal_preproc, outpath=f'{outputpath_save}data_{config.global_opts.pcg_type}/{pcg_save_name}/', type_=config.global_opts.pcg_type)
-    write_to_logger_from_worker(f"EEEEEEEEEEEEEEEEEEEEE", q=q)
     #save_qrs_inds(ecg_save_name, ecg.qrs_inds, outpath=f'{outputpath_save}data_{config.global_opts.ecg_type}/{ecg_save_name}/')
     #save_ecg_signal(ecg_save_name, ecg.signal, outpath=f'{outputpath_save}data_{config.global_opts.ecg_type}/{ecg_save_name}/', type_=config.global_opts.ecg_type)
     #save_pcg_signal(pcg_save_name, pcg.signal, outpath=f'{outputpath_save}data_{config.global_opts.pcg_type}/{pcg_save_name}/', type_=config.global_opts.pcg_type)
@@ -374,7 +383,8 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
   if dataset == "ephnogram":
     cols_d = config.ephnogram_cols
   ref_csv = pd.read_csv(inputpath_target, names=cols_d, skipinitialspace=True)
-  
+  ref_csv.tail(-1)
+  write_to_logger(f"READMEREF: {ref_csv}", pool, q=q)
   steps_taken += 1
   write_to_logger(f"Unprocessed label CSV for {dataset.upper()}: {ref_csv.head()}", pool, q=q)
   reflen = 0
@@ -382,7 +392,6 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
   if dataset == "ephnogram":
     ref_csv = get_cleaned_ephnogram_csv(ref_csv, pool=pool, q=q)
     steps_taken += 1
-  ref_csv.tail(-1)
   if not skipDataCSVAndFiles:
     write_to_logger(f'* Cleaning {dataset.capitalize()} Data - Creating CSV "{outputpath_save}data_{dataset.lower()}_raw.csv" - QRS, ECGs and PCGs [{steps_taken}/{total_steps}] *', pool, q=q)
     # Zip of (Values, Index)
@@ -646,17 +655,17 @@ if __name__ == "__main__":
   #   - 'create_objects=False' for better performance; uses 'np.load(filepath_to_saved_spectogram_or_cwt)' to get processed ECG/PCG data
   
   # Normal Workflow (as in paper): 
-  #data_p, ratio_data_p = get_dataset(dataset="physionet", 
-  #                                   inputpath_data=config.input_physionet_data_folderpath_, 
-  #                                   inputpath_target=config.input_physionet_target_folderpath_, 
-  #                                   outputpath_folder=config.outputpath,
-  #                                   pool=pool, q=manager_q,
-  #                                   
-  #                                   create_objects=False,
-  #                                   get_balance_diff=True,
-  #                                   skipDataCSVAndFiles=False,
-  #                                   skipExisting=False, #TODO remove - skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
-  #)
+  data_p, ratio_data_p = get_dataset(dataset="physionet", 
+                                     inputpath_data=config.input_physionet_data_folderpath_, 
+                                     inputpath_target=config.input_physionet_target_folderpath_, 
+                                     outputpath_folder=config.outputpath,
+                                     pool=pool, q=manager_q,
+                                     
+                                     create_objects=False,
+                                     get_balance_diff=True,
+                                     skipDataCSVAndFiles=False,
+                                     skipExisting=False, #TODO remove - skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+  )
   data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
                                      inputpath_data=config.input_ephnogram_data_folderpath_, 
                                      inputpath_target=config.input_ephnogram_target_folderpath_, 

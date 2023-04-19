@@ -1,7 +1,6 @@
 from termios import VSTART
 import torch
 from torch.utils.data.dataset import Dataset
-from torchvision import transforms
 
 import numpy as np
 import pandas as pd
@@ -20,7 +19,8 @@ from spectrograms import Spectrogram
 
 """
 Can supply paths to ECGs, PCGs and label CSVs (with cols {global_opts.dataframe_cols})
-    (path_ecgs_physionet, path_pcgs_physionet, path_csv_physionet, path_ecgs_ephnogram, path_pcgs_ephnogram, path_csv_ephnogram)
+    (path_ecgs_physionet, path_pcgs_physionet, path_csv_physionet, 
+    path_ecgs_ephnogram, path_pcgs_ephnogram, path_csv_ephnogram)
  or 
  
 Supply (path_ecgs_all, path_pcgs_all, path_csv_all) which contain all ECG, PCG and label data in one directory.
@@ -31,18 +31,24 @@ class ECGPCGDataset(Dataset):
     # Get ECG, PCG paths for a given record index
     def get_ecg_pcg_paths_for_record(index, path_ecgs_physionet, path_ecgs_ephnogram, path_pcgs_physionet, path_pcgs_ephnogram):
         if index < 409:
-            path_vs = path_ecgs_physionet
-            path_as = path_pcgs_physionet
+            path_ecg = path_ecgs_physionet
+            path_pcg = path_pcgs_physionet
         else:
-            path_vs = path_ecgs_ephnogram
-            path_as = path_pcgs_ephnogram
-        return path_vs, path_as
+            path_ecg = path_ecgs_ephnogram
+            path_pcg = path_pcgs_ephnogram
+        return path_ecg, path_pcg
     
-    def __init__(self, ecg_and_pcg_filetype="spec_and_mp4", path_ecgs_physionet=outputpath+f'physionet/spectrograms_{global_opts.ecg_type}/', path_pcgs_physionet=outputpath+f'physionet/spectrograms_{global_opts.pcg_type}/', path_pcgs_all=None, \
-                 path_ecgs_ephnogram=outputpath+f'ephnogram/spectrograms_{global_opts.ecg_type}/', path_pcgs_ephnogram=outputpath+f'ephnogram/spectrograms_{global_opts.pcg_type}/', path_ecgs_all=None, \
-                 path_csv_physionet=outputpath+f'data_physionet_raw', path_csv_ephnogram=outputpath+f'data_ephnogram_raw', path_csv_all=None, clip_length=global_opts.segment_length, ecg_sample_rate=global_opts.sample_rate_ecg, pcg_sample_rate=global_opts.sample_rate_pcg):
-        if ecg_and_pcg_filetype not in {"npy_and_npy", "mp4", "wav_and_mp4", "spec_and_mp4", "npy_and_mp4", "wav_and_wfdb"}:
-            raise ValueError(f"Error: {ecg_and_pcg_filetype} is not 'npy_and_npy', 'mp4', 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4' or 'wav_and_wfdb'") 
+    def __init__(self, ecg_filetype="", clip_length=global_opts.segment_length, data_type="spec",
+                path_ecgs_physionet=outputpath+f'physionet/spectrograms_{global_opts.ecg_type}/', path_pcgs_physionet=outputpath+f'physionet/spectrograms_{global_opts.pcg_type}/', path_csv_physionet=outputpath+f'data_physionet_raw', \
+                path_ecgs_ephnogram=outputpath+f'ephnogram/spectrograms_{global_opts.ecg_type}/', path_pcgs_ephnogram=outputpath+f'ephnogram/spectrograms_{global_opts.pcg_type}/', path_csv_ephnogram=outputpath+f'data_ephnogram_raw', \
+                path_pcgs_all=None, path_ecgs_all=None, path_csv_all=None, 
+                ecg_sample_rate=global_opts.sample_rate_ecg, pcg_sample_rate=global_opts.sample_rate_pcg):
+        if data_type not in {"spec", "signal", "video"}:
+            raise ValueError(f"Error: {ecg_filetype} is not 'npy_and_npy', 'mp4', 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4' or 'wav_and_wfdb'") 
+        if ecg_filetype not in {"npz", "png", "wfdb", "mp4"}:
+            raise ValueError(f"Error: {ecg_filetype} is not 'npy_and_npy', 'mp4', 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4' or 'wav_and_wfdb'") 
+        if pcg_filetype not in {"npz", "png", "wav"}:
+            raise ValueError(f"Error: {ecg_filetype} is not 'npy_and_npy', 'mp4', 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4' or 'wav_and_wfdb'") 
         # If the 'All' paths are supplied, ECG, PCG and label must be suppplied
         # If the 'Physionet/Ephnogram' paths are not supplied and there is a missing parameter
         use_all_paths = not (None == path_ecgs_all == path_pcgs_all == path_csv_all)
@@ -103,7 +109,7 @@ class ECGPCGDataset(Dataset):
                 raise ValueError(f"Error: Number of ECG and PCG directories do not match")
             record_dirs.extend(dirs_vs)
             for d in dirs_vs:
-                index = sget_index_from_directory(d)
+                index = get_index_from_directory(d)
                 if dataset_num == 0:
                     index -= 1
                 else:

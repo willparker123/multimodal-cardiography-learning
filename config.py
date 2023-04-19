@@ -1,4 +1,4 @@
-import configargparse
+import configargparse as argparse
 import multiprocessing as mp
 from multiprocessing import Pool, Manager, freeze_support
 
@@ -12,10 +12,14 @@ def save_config(args, filename):
         for items in vars(args):
             f.write('%s %s\n' % (items, vars(args)[items]))
 
+# DEFAULT FORMAT FOR NEW DATASETS IN 'clean_data' - ECG: WFDB channel 0, PCG: .wav AUDIO FILE
+
 # **DEFAULT COLUMNS IN DATASET LABEL CSVs**
 physionet_cols = ['filename', 'label']
 # Column names in the target input CSV for the Ephnogram dataset
 ephnogram_cols = ['Record Name','Subject ID','Record Duration (min)','Age (years)','Gender','Recording Scenario','Num Channels','ECG Notes','PCG Notes','PCG2 Notes','AUX1 Notes','AUX2 Notes','Database Housekeeping']
+
+base_wfdb_pcg_sample_rate = 8000
 
 # **DEFAULTS - CAN EDIT THESE**
 system_path = "D:/Uni/Thesis/main/"
@@ -60,7 +64,7 @@ pcg_filter_lim = [20, 400]
     #PCG: data, signal
     
 def load_config():
-    parser = configargparse.ArgumentParser(description="main", default_config_files=['/*.conf', '/.my_settings'])
+    parser = argparse.ArgumentParser(description="main", default_config_files=['/*.conf', '/.my_settings'])
 
     parser.add('-c', '--config', is_config_file=True, help='config file path')
     # --- environment
