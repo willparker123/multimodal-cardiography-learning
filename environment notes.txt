@@ -4,16 +4,16 @@ module load languages/anaconda3/2022.12-3.9.13-torch-cuda-11.7
 conda install -c conda-forge matplotlib
 conda install -c conda-forge pywavelets
 conda install -c conda-forge wfdb
-conda install -c conda-forge scikit-build
 conda install -c conda-forge scipy
 conda install -c anaconda pandas
 conda install -c anaconda seaborn
 conda install -c conda-forge tqdm
 conda install -c conda-forge librosa
-conda install -c conda-forge configargparse
+conda install -c conda-forge argparse
 conda install -c conda-forge regex
 
 conda install -c conda-forge opencv
+conda install -c conda-forge scikit-build
 
 
 
