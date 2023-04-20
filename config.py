@@ -5,6 +5,7 @@ from multiprocessing import Pool, Manager, freeze_support
 
 """# Global Variables / Paths / Enums"""
 
+# Options to supply to 'dataset';
 data_types = {"signal", "spec", "vspec", "video"}
 
 useDrive = False
