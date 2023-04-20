@@ -4,8 +4,8 @@ from torch.utils.data.dataset import Dataset
 
 import numpy as np
 import pandas as pd
-from config import global_opts, spec_win_size_ecg, spec_win_size_pcg, outputpath, nfft_pcg, nfft_ecg, input_ephnogram_data_folderpath \
-    , load_config, useDrive
+import config
+from config import global_opts, spec_win_size_ecg, spec_win_size_pcg, outputpath, nfft_pcg, nfft_ecg
 from helpers import dataframe_cols, get_index_from_directory
 from clean_data import get_data_physionet, get_data_ephnogram
 import os
@@ -46,8 +46,8 @@ class ECGPCGDataset(Dataset):
                  path_csv_ephnogram=outputpath+f'data_ephnogram_raw',
                      
                  path_pcgs_all=None, path_ecgs_all=None, path_csv_all=None):
-        if data_type not in {"spec", "signal", "vspec", "video"}:
-            raise ValueError(f"Error: {ecg_filetype} is not 'npy_and_npy', 'mp4', 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4' or 'wav_and_wfdb'") 
+        if data_type not in config.data_types:
+            raise ValueError(f"Error: 'data_type' must be one of {config.data_types}") 
         if ecg_filetype not in {"npz", "png", "wfdb", "mp4"}:
             raise ValueError(f"Error: {ecg_filetype} is not 'npy_and_npy', 'mp4', 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4' or 'wav_and_wfdb'") 
         if pcg_filetype not in {"npz", "png", "wav"}:
