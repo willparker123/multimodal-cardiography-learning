@@ -34,7 +34,6 @@ import gc
 import multiprocessing as mp
 from multiprocessing import freeze_support
 from functools import partial
-from tokenize import String
 from venv import create
 import pandas as pd
 import os
@@ -225,7 +224,6 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
     pcg = pcg_data['data']
     #ecg = read_signal(outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{filename}_{config.global_opts.ecg_type}_signal.npy')
     #pcg = read_signal(outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/{filename}_{config.global_opts.pcg_type}_signal.npy')
-  write_to_logger_from_worker(f"***{filename} ECG: {ecg} PCG: {pcg}", q=q)
   if not skipSegments:
     if create_objects:
       ecg_segments = ecg.get_segments(config.global_opts.segment_length, normalise=ecg.normalise, create_objects=create_objects)
@@ -233,7 +231,6 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
     else:
       ecg_segments, start_times_ecg, zip_sampfrom_sampto_ecg = get_ecg_segments_from_array(ecg, ecg_sample_rate, config.global_opts.segment_length, normalise=True)
       pcg_segments, start_times_pcg, zip_sampfrom_sampto_pcg = get_pcg_segments_from_array(pcg, pcg_sample_rate, config.global_opts.segment_length, normalise=True)
-  write_to_logger_from_worker(f"***{filename} ECGSEG: {ecg_segments}", q=q)
   if not skipSegments:
     for ind, seg in enumerate(ecg_segments):
       create_new_folder(outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{ind}')
@@ -244,13 +241,11 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
         #save_ecg_signal(seg.savename, seg.signal, outpath=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{ind}/', type_=config.global_opts.ecg_type)
         save_ecg(seg.savename, seg.signal, seg.signal_preproc, seg.qrs_inds, seg.hrs, outpath=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{ind}/', type_=config.global_opts.ecg_type)
       else:
-        write_to_logger_from_worker(f"FILENAME: {filename}  NO: {ind}  SEG: {seg}", q=q)
-        write_to_logger_from_worker(f"ARR: {zip_sampfrom_sampto_ecg}\n\nIND: {ind} LEN: {len(zip_sampfrom_sampto_ecg)} LENSEGS: {len(ecg_segments)}", q=q)
         sampfrom_ecg, sampto_ecg, sampfrom_pcg, sampto_pcg = 0,0,0,0
-        try:
-          sampfrom_ecg, sampto_ecg, sampfrom_pcg, sampto_pcg = int(zip_sampfrom_sampto_ecg[ind][0]), int(zip_sampfrom_sampto_ecg[ind][1]), int(zip_sampfrom_sampto_pcg[ind][0]), int(zip_sampfrom_sampto_pcg[ind][1])
-        except:
-          write_to_logger_from_worker(f"READMEREADME: {zip_sampfrom_sampto_ecg}\n\nIND: {ind}", q=q)
+        if ind < len(zip_sampfrom_sampto_ecg):
+          sampfrom_ecg, sampto_ecg = int(zip_sampfrom_sampto_ecg[ind][0]), int(zip_sampfrom_sampto_ecg[ind][1])
+        else:
+          write_to_logger_from_worker(f"Warning: Could not find entry for sampfrom/sampto in zip_sampfrom_sampto_ecg: \n{zip_sampfrom_sampto_ecg}\n for Segment {ind}.", q=q)
         seg_preproc = ecg_data['signal'][sampfrom_ecg:sampto_ecg]
         qrs = [x for x in ecg_data['qrs'] if x >= sampfrom_ecg and x < sampto_ecg]
         index_list = []
@@ -266,6 +261,10 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
       if create_objects:
         save_pcg(seg_.savename, seg_.signal, seg_.signal_preproc, outpath=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/{ind_}/', type_=config.global_opts.pcg_type)
       else:
+        if ind_ < len(zip_sampfrom_sampto_pcg):
+          sampfrom_pcg, sampto_pcg = int(zip_sampfrom_sampto_pcg[ind][0]), int(zip_sampfrom_sampto_pcg[ind][1])
+        else:
+          write_to_logger_from_worker(f"Warning: Could not find entry for sampfrom/sampto in zip_sampfrom_sampto_pcg: \n{zip_sampfrom_sampto_pcg}\n for Segment {ind_}.", q=q)
         seg_pcg_preproc = pcg_data['signal'][sampfrom_pcg:sampto_pcg]
         save_pcg(f'{filename}_seg_{ind_}', seg_, seg_pcg_preproc, outpath=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/{ind_}/', type_=config.global_opts.pcg_type)
 

@@ -3,7 +3,9 @@ import multiprocessing as mp
 from multiprocessing import Pool, Manager, freeze_support
 
 
-"""# Global Variables / Paths"""
+"""# Global Variables / Paths / Enums"""
+
+data_types = {"signal", "spec", "vspec", "video"}
 
 useDrive = False
 

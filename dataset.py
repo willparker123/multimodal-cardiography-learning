@@ -18,32 +18,35 @@ from spectrograms import Spectrogram
 
 
 """
-Can supply paths to ECGs, PCGs and label CSVs (with cols {global_opts.dataframe_cols})
+Paths to ECGs, PCGs and label CSVs (with global_opts.dataframe_cols)
     (path_ecgs_physionet, path_pcgs_physionet, path_csv_physionet, 
     path_ecgs_ephnogram, path_pcgs_ephnogram, path_csv_ephnogram)
- or 
- 
-Supply (path_ecgs_all, path_pcgs_all, path_csv_all) which contain all ECG, PCG and label data in one directory.
+or 
+    (path_ecgs_all, path_pcgs_all, path_csv_all) which contain all ECG, PCG and label data in one directory.
 """
 class ECGPCGDataset(Dataset):
     #self, video_path, resize, fps, sample_rate
     
     # Get ECG, PCG paths for a given record index
     def get_ecg_pcg_paths_for_record(index, path_ecgs_physionet, path_ecgs_ephnogram, path_pcgs_physionet, path_pcgs_ephnogram):
-        if index < 409:
-            path_ecg = path_ecgs_physionet
-            path_pcg = path_pcgs_physionet
-        else:
-            path_ecg = path_ecgs_ephnogram
-            path_pcg = path_pcgs_ephnogram
-        return path_ecg, path_pcg
+        return path_ecgs_physionet, path_pcgs_physionet if index < 409 else path_ecgs_ephnogram, path_pcgs_ephnogram
     
-    def __init__(self, ecg_filetype="", clip_length=global_opts.segment_length, data_type="spec",
-                path_ecgs_physionet=outputpath+f'physionet/spectrograms_{global_opts.ecg_type}/', path_pcgs_physionet=outputpath+f'physionet/spectrograms_{global_opts.pcg_type}/', path_csv_physionet=outputpath+f'data_physionet_raw', \
-                path_ecgs_ephnogram=outputpath+f'ephnogram/spectrograms_{global_opts.ecg_type}/', path_pcgs_ephnogram=outputpath+f'ephnogram/spectrograms_{global_opts.pcg_type}/', path_csv_ephnogram=outputpath+f'data_ephnogram_raw', \
-                path_pcgs_all=None, path_ecgs_all=None, path_csv_all=None, 
-                ecg_sample_rate=global_opts.sample_rate_ecg, pcg_sample_rate=global_opts.sample_rate_pcg):
-        if data_type not in {"spec", "signal", "video"}:
+    def __init__(self, ecg_filetype="", 
+                 clip_length=global_opts.segment_length, 
+                 data_type="spec",
+                 ecg_sample_rate=global_opts.sample_rate_ecg, 
+                 pcg_sample_rate=global_opts.sample_rate_pcg,
+                 
+                 path_ecgs_physionet=outputpath+f'physionet/spectrograms_{global_opts.ecg_type}/', 
+                 path_pcgs_physionet=outputpath+f'physionet/spectrograms_{global_opts.pcg_type}/', 
+                 path_csv_physionet=outputpath+f'data_physionet_raw', 
+                 
+                 path_ecgs_ephnogram=outputpath+f'ephnogram/spectrograms_{global_opts.ecg_type}/', 
+                 path_pcgs_ephnogram=outputpath+f'ephnogram/spectrograms_{global_opts.pcg_type}/', 
+                 path_csv_ephnogram=outputpath+f'data_ephnogram_raw',
+                     
+                 path_pcgs_all=None, path_ecgs_all=None, path_csv_all=None):
+        if data_type not in {"spec", "signal", "vspec", "video"}:
             raise ValueError(f"Error: {ecg_filetype} is not 'npy_and_npy', 'mp4', 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4' or 'wav_and_wfdb'") 
         if ecg_filetype not in {"npz", "png", "wfdb", "mp4"}:
             raise ValueError(f"Error: {ecg_filetype} is not 'npy_and_npy', 'mp4', 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4' or 'wav_and_wfdb'") 
