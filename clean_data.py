@@ -136,7 +136,7 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
       duration = len(ecg_sig)/ecg_sample_rate
       data = {'filename':filename, 'og_filename':ref[0][0], 'label':label, 'record_duration':duration, 'num_channels':channel_num, 'qrs_inds':filename+'_qrs_inds', 'signal_ecg':filename+f'_{config.global_opts.ecg_type}', 'signal_pcg':filename+f'_{config.global_opts.pcg_type}', 'samples_ecg':int(len(ecg_sig)), 'samples_pcg':int(len(pcg_sig)), 'qrs_count':int(len(ecg_qrs)), 'seg_num':seg_num, 'avg_hr':np.average(hrs)}
       return data
-  
+
   #WFDB records - channel 0 is ECG, channel 1 is PCG
   if dataset=="ephnogram":
     filename = ref[0][0] #data_list[0][0]
@@ -202,13 +202,6 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
   frames = []
   ecg_seg_video = None
   
-  spec_win_size_ecg = config.spec_win_size_ecg
-  hop_length_ecg = spec_win_size_ecg//2
-  nfft_ecg = config.nfft_ecg
-  spec_win_size_pcg = config.spec_win_size_pcg
-  hop_length_pcg = spec_win_size_pcg//2
-  nfft_pcg = config.nfft_pcg
-  
   # check if spectrogram already exists
   #if os.path.exists(outputpath_+f'ephnogram/spectrograms_{config.global_opts.ecg_type}/{filename}/{len(ecg_segments)-1}/{filename}_seg_{len(ecg_segments)-1}_{config.global_opts.ecg_type}.mp4') and os.path.exists(outputpath_+f'ephnogram/spectrograms_{config.global_opts.pcg_type}/{filename}/{len(pcg_segments)-1}/{filename}_seg_{len(pcg_segments)-1}_{config.global_opts.pcg_type}.png'):
   #  return filename, None, specs, None, None, frames
@@ -273,24 +266,24 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
   if not skipECGSpectrogram:
     create_new_folder(outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}')
     if create_objects:
-      spectrogram = Spectrogram(ecg.filename, filepath=outputpath_+f'', sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
-                                                signal=ecg.signal, window=np.hamming, window_size=spec_win_size_ecg, NFFT=nfft_ecg, hop_length=hop_length_ecg, 
+      spectrogram = Spectrogram(ecg.filename, savename=ecg.filename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
+                                                signal=ecg.signal, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                                 outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/', normalise=True, start_time=ecg.start_time, wavelet_function=config.global_opts.cwt_function)
     else:
-      Spectrogram(filename, filepath=outputpath_+f'', sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
-                                                signal=ecg, window=np.hamming, window_size=spec_win_size_ecg, NFFT=nfft_ecg, hop_length=hop_length_ecg, 
+      Spectrogram(filename, savename=filename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
+                                                signal=ecg, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                                 outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/', normalise=True, start_time=0, wavelet_function=config.global_opts.cwt_function)
     if not skipSegments:
       for index_e, seg in enumerate(ecg_segments):
         write_to_logger_from_worker(f"* Processing Segment {index_e} ({index_e+1} / {len(ecg_segments)}) *", q=q)
         create_new_folder(outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}')
         if create_objects:
-          seg_spectrogram = Spectrogram(filename, savename=seg.savename, filepath=outputpath_+f'', sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
-                                              signal=seg.signal, window=np.hamming, window_size=spec_win_size_ecg, NFFT=nfft_ecg, hop_length=hop_length_ecg, 
+          seg_spectrogram = Spectrogram(filename, savename=seg.savename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
+                                              signal=seg.signal, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                               outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{index_e}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/', normalise=True, start_time=seg.start_time, wavelet_function=config.global_opts.cwt_function)
         else:
-          Spectrogram(filename, savename=f'{filename}_seg_{index_e}', filepath=outputpath_+f'', sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
-                                              signal=seg, window=np.hamming, window_size=spec_win_size_ecg, NFFT=nfft_ecg, hop_length=hop_length_ecg, 
+          Spectrogram(filename, savename=f'{filename}_seg_{index_e}_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
+                                              signal=seg, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                               outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{index_e}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/', normalise=True, start_time=start_times_ecg[index_e], wavelet_function=config.global_opts.cwt_function)
         if split_into_video:
           write_to_logger_from_worker(f"* Processing Frames for Segment {index_e} *", q=q)
@@ -303,13 +296,13 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
             for i in tqdm.trange(len(ecg_frames)):
               ecg_frame = ecg_frames[i]
               if create_objects:
-                frame_spectrogram = Spectrogram(filename, savename=ecg_frame.savename, filepath=outputpath_+f'', sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
-                                                  signal=ecg_frame.signal, window=np.hamming, window_size=spec_win_size_ecg, NFFT=nfft_ecg, hop_length=hop_length_ecg, 
+                frame_spectrogram = Spectrogram(filename, savename=ecg_frame.savename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
+                                                  signal=ecg_frame.signal, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                                   outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', normalise=True, normalise_factor=np.linalg.norm(seg_spectrogram.spec), start_time=ecg_frame.start_time, wavelet_function=config.global_opts.cwt_function)
                 frames.append(frame_spectrogram)
               else:
-                Spectrogram(filename, savename=f'{filename}_seg_{index_e}_seg_{i}', filepath=outputpath_+f'', sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
-                                                  signal=ecg_frame, window=np.hamming, window_size=spec_win_size_ecg, NFFT=nfft_ecg, hop_length=hop_length_ecg, 
+                Spectrogram(filename, savename=f'{filename}_seg_{index_e}_seg_{i}_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
+                                                  signal=ecg_frame, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                                   outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', normalise=True, normalise_factor=np.linalg.norm(seg_spectrogram.spec), start_time=start_times_frames[i], wavelet_function=config.global_opts.cwt_function)
             write_to_logger_from_worker(f"* Creating .mp4 for Segment {index_e} / {len(ecg_segments)} *", q=q)
             ecg_seg_video = create_video(imagespath=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/', filename=seg.savename if create_objects else f'{filename}_seg_{index_e}', framerate=config.global_opts.fps)
@@ -319,12 +312,12 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
   if not skipPCGSpectrogram:
     create_new_folder(outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}')
     if create_objects:
-      pcg_spectrogram = Spectrogram(pcg.filename, filepath=outputpath_, sample_rate=pcg_sample_rate, type=config.global_opts.pcg_type,
-                                  signal=pcg.signal, window=torch.hamming_window, window_size=spec_win_size_pcg, NFFT=nfft_pcg, hop_length=hop_length_pcg, NMels=config.global_opts.nmels,
+      pcg_spectrogram = Spectrogram(pcg.filename, savename=pcg.filename+'_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, type=config.global_opts.pcg_type,
+                                  signal=pcg.signal, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
                                   outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/', normalise=True, start_time=pcg.start_time)
     else:
-      Spectrogram(filename, filepath=outputpath_, sample_rate=pcg_sample_rate, type=config.global_opts.pcg_type,
-                                  signal=pcg, window=torch.hamming_window, window_size=spec_win_size_pcg, NFFT=nfft_pcg, hop_length=hop_length_pcg, NMels=config.global_opts.nmels,
+      Spectrogram(filename, savename=filename+'_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, type=config.global_opts.pcg_type,
+                                  signal=pcg, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
                                   outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/', normalise=True, start_time=0)
 
     if not skipSegments:
@@ -332,13 +325,13 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
         create_new_folder(outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/{index_p}')
         write_to_logger_from_worker(f"* Processing Segment {index_p} ({index_p+1} / {len(pcg_segments)}) *", q=q)
         if create_objects:
-          pcg_seg_spectrogram = Spectrogram(filename, savename=pcg_seg.savename, filepath=outputpath_+f'', sample_rate=pcg_sample_rate, type=config.global_opts.pcg_type,
-                                    signal=pcg_seg.signal, window=torch.hamming_window, window_size=spec_win_size_pcg, NFFT=nfft_pcg, hop_length=hop_length_pcg, NMels=config.global_opts.nmels,
+          pcg_seg_spectrogram = Spectrogram(filename, savename=pcg_seg.savename+'_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, type=config.global_opts.pcg_type,
+                                    signal=pcg_seg.signal, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
                                     outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/{index_p}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/{index_p}/', normalise=True, start_time=pcg_seg.start_time)
           specs_pcg.append(pcg_seg_spectrogram)
         else:
-          Spectrogram(filename, savename=f'{filename}_seg_{index_p}', filepath=outputpath_+f'', sample_rate=pcg_sample_rate, type=config.global_opts.pcg_type,
-                                    signal=pcg_seg, window=torch.hamming_window, window_size=spec_win_size_pcg, NFFT=nfft_pcg, hop_length=hop_length_pcg, NMels=config.global_opts.nmels,
+          Spectrogram(filename, savename=f'{filename}_seg_{index_p}_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, type=config.global_opts.pcg_type,
+                                    signal=pcg_seg, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
                                     outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/{index_p}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/{index_p}/', normalise=True, start_time=start_times_pcg[index_p])
         gc.collect()
     gc.collect()
@@ -374,9 +367,9 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
   create_new_folder(outputpath_save+f'data_{config.global_opts.ecg_type}')
   create_new_folder(outputpath_save+f'data_{config.global_opts.pcg_type}')
   if not os.path.isfile(inputpath_target):
-      raise ValueError(f'Error: input file path for data labels does not exist at path "{inputpath_target}" - aborting', pool, q=q)
+      raise ValueError(f"Error: input file path for data labels does not exist at path '{inputpath_target}' - aborting")
   if not os.path.exists(inputpath_data):
-      raise ValueError(f'Error: input file path for WFDB data does not exist at path "{inputpath_data}" - aborting', pool, q=q)
+      raise ValueError(f"Error: input file path for WFDB data does not exist at path '{inputpath_data}' - aborting")
   if dataset == "physionet":
     cols_d = config.physionet_cols 
   if dataset == "ephnogram":
@@ -652,7 +645,10 @@ if __name__ == "__main__":
     write_to_logger(bigmemorywarning, pool, manager_q)
   
   #   - 'create_objects=False' for better performance; uses 'np.load(filepath_to_saved_spectogram_or_cwt)' to get processed ECG/PCG data
-  
+  write_to_logger(str(os.path.exists(config.input_physionet_data_folderpath_)), pool, manager_q)
+  write_to_logger(str(os.path.exists(config.input_physionet_target_folderpath_)), pool, manager_q)
+  write_to_logger(str(os.path.exists(config.input_ephnogram_data_folderpath_)), pool, manager_q)
+  write_to_logger(str(os.path.exists(config.input_ephnogram_target_folderpath_)), pool, manager_q)
   # Normal Workflow (as in paper): 
   data_p, ratio_data_p = get_dataset(dataset="physionet", 
                                      inputpath_data=config.input_physionet_data_folderpath_, 

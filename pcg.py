@@ -130,7 +130,7 @@ class PCG():
         plt.figure().clear()
         plt.close('all')
 
-def save_pcg(filename, signal, signal_preproc, outpath=outputpath+'physionet/', savename=None, type_="ecg_log"):
+def save_pcg(filename, signal, signal_preproc, outpath=outputpath+'physionet/', savename=None, type_="pcg_logmel"):
     f = filename
     if savename is not None:
         f = savename

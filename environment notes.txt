@@ -14,11 +14,11 @@ conda install -c anaconda seaborn
 conda install -c conda-forge tqdm
 conda install -c conda-forge configargparse
 conda install -c conda-forge regex
+--VIDEO conda install -c conda-forge opencv
 
---UNUSED conda install -c conda-forge opencv
 --UNUSED conda install -c conda-forge scikit-build
 
-
+--IF No module named XXX:	pip install -U pip setuptools
 
 
 
@@ -191,8 +191,8 @@ GA+CL-ECG-NET+CL-PCG-NET
 http://dx.doi.org/10.13005/bbra/2610
 https://github.com/Aolibaba/ecg_pcg_ga
 
-	ECG-PCG Data (Abnormal + Normal)
-	https://zenodo.org/record/4263528#.YjoW203P2Uk
+ECG-PCG Data (Abnormal + Normal)
+https://zenodo.org/record/4263528#.YjoW203P2Uk
 PCG - 2000Hz
 ECG - 1000Hz
 Environments: Ubuntu 18.04, Python3.6, tensorflow-gpu==1.10.1, keras==2.2.5, scikit-learn==0.23.2

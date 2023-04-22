@@ -161,7 +161,7 @@ def save_qrs_inds(filename, qrs_inds, outpath=config.outputpath+'physionet/'):
         np.save(outpath+filename+'_qrs_inds.npy', qrs_inds)
         
 def get_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), saveto=None, show=False, save_hrs=False):
-    "Plot a signal with its peaks and heart rate"
+    print("Plot a signal with its peaks and heart rate")
     # Calculate heart rate
     hrs = processing.hr.compute_hr(sig_len=sig.shape[0], qrs_inds=peak_inds, fs=fs)
     N = sig.shape[0]

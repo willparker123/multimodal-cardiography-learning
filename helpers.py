@@ -4,10 +4,72 @@ import math
 import pywt
 import pywt.data
 import numpy as np
+import config
 from typing import NamedTuple
 import re
+import cv2
+from audio import load_audio
+from video import load_video, resample_video
+from PIL import Image
 
 dataframe_cols = ['filename', 'og_filename', 'label', 'record_duration', 'num_channels', 'qrs_inds', 'signal_ecg', 'signal_pcg', 'samples_ecg', 'samples_pcg', 'qrs_count', 'seg_num', 'avg_hr']
+
+def check_datatype_and_filetype(datatype, filetype):
+    if filetype not in config.file_types_ecg.union(config.file_types_pcg):
+        raise ValueError(f"Error: 'filetype' is not one of {config.file_types_ecg.union(config.file_types_pcg)}")
+    if datatype not in config.data_types_ecg.union(config.data_types_pcg):
+        raise ValueError(f"Error: 'datatype' is not one of {config.data_types_ecg.union(config.data_types_pcg)}")
+    if filetype == 'npz' and datatype not in {'signal', 'spec', 'video_noaudio'}:
+        raise ValueError(f"Error: filetype '{filetype}' is not valid for datatype '{datatype}': must be one of {{'signal', 'spec', 'video_noaudio'}}")
+    elif filetype == 'png' and datatype not in {'spec'}:
+        raise ValueError(f"Error: filetype '{filetype}' is not valid for datatype '{datatype}': must be one of {{'spec'}}")
+    elif filetype == 'wfdb' and datatype not in {'signal'}:
+        raise ValueError(f"Error: filetype '{filetype}' is not valid for datatype '{datatype}': must be one of {{'signal'}}")
+    elif filetype == 'mp4' and datatype not in {'video', 'video_noaudio'}:
+        raise ValueError(f"Error: filetype '{filetype}' is not valid for datatype '{datatype}': must be one of {{'video', 'video_noaudio'}}")
+    elif filetype == 'wav' and datatype not in {'signal'}:
+        raise ValueError(f"Error: filetype '{filetype}' is not valid for datatype '{datatype}': must be one of {{'signal'}}")
+    else:
+        return True
+
+def read_file(filepath, datatype, filetype, both_in_wfdb=False):
+    check_datatype_and_filetype(datatype, filetype)
+    return_data = None
+    return_data_pcg = None
+    if filetype == "mp4":
+        video_specs, fps, size = load_video(filepath)
+        if not config.global_opts.fps == fps:
+            print(f"Warning: specified fps ({config.global_opts.fps}) is different from video fps ({fps}); resampling to {config.global_opts.fps}fps")
+            resample_video(filepath, config.global_opts.fps)
+            video_specs, fps, size = load_video(filepath)
+        return_data = video_specs
+        if datatype == 'video':
+            return_data_pcg = [] #TODO
+    elif filetype == "npz":
+        if datatype == "signal":
+            df = np.load(filepath)
+            return_data = df
+        elif datatype == "spec":
+            df = np.load(filepath)
+            return_data = df
+    elif filetype == "wfdb":
+        if both_in_wfdb:
+            return_data = return_data#TODO
+            return_data_pcg = return_data#TODO
+        else:
+            return_data = return_data#TODO
+    elif filetype == "png":
+        img = cv2.imread(filepath)
+        return_data = img
+    elif filetype == "wav":
+        wav, sr = load_audio(filepath)
+        return_data = wav
+    else:
+        raise ValueError(f"Error: 'filetype' is not one of {config.file_types_ecg.union(config.file_types_pcg)}")
+    if return_data_pcg is None:
+        return return_data
+    else:
+        return return_data, return_data_pcg
 
 
 def read_signal(filepath):

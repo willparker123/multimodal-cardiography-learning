@@ -38,9 +38,9 @@ def create_video(imagespath, outpath, filename, images=None, framerate=config.gl
     return img_array
 
 def resample_video(videopath, fps):
-    cap = cv2.VideoCapture(videopath+f".mp4")
+    cap = cv2.VideoCapture(videopath)
     size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
-    out = cv2.VideoWriter(videopath+f"_{fps}fps.mp4", cv2.VideoWriter_fourcc(*'mp4v'), fps, size)
+    out = cv2.VideoWriter(videopath.replace('.mp4', '')+f"_{fps}fps.mp4", cv2.VideoWriter_fourcc(*'mp4v'), fps, size)
     while(cap.isOpened()):
         ret, frame = cap.read()
         if ret==True:
@@ -57,8 +57,8 @@ def resample_video(videopath, fps):
     #cmd = command.split(' ')
     #call(cmd, shell=True)
 
-def load_video(filepath, filename):
-    cap = cv2.VideoCapture(filepath+filename+f".mp4")
+def load_video(filepath):
+    cap = cv2.VideoCapture(filepath)
     size = (int(cap.get(cv2.CAP_PROP_FRAME_WIDTH)),int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT)))
     fps = int(cap.get(cv2.CAP_PROP_FPS))
     img_array = []

@@ -140,7 +140,7 @@ class Spectrogram():
         else:
             raise ValueError("Error: Invalid type for 'type': must be 'ecg', 'pcg' or 'pcg_logmel'")
     
-def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=None, signal=None, save=True, normalise=True, type="ecg", window=np.hamming, window_size=128, NMels=128, NFFT=128, hop_length=128//2, outpath_np=outputpath+'physionet/data', outpath_png=outputpath+'physionet/spectrograms', start_time=0, wavelet_function="ricker", save_ft=True):
+def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=None, signal=None, save=True, normalise=True, type="ecg", window=np.hamming, window_size=128, NMels=128, NFFT=128, hop_length=128//2, outpath_np=outputpath+'physionet/data', outpath_png=outputpath+'physionet/spectrograms', start_time=0, wavelet_function="ricker"):
     if signal is not None:
         signal = np.squeeze(signal)
     else:
@@ -188,6 +188,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
             hop_length=hop_length, 
             window_fn=window,
             power=2,
+            win_length=window_size
             )
             transformed_sig = spec_transform(signal)
             spec = np.squeeze(transformed_sig)
@@ -202,6 +203,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
             hop_length=hop_length, 
             window_fn=window,
             power=2,
+            win_length=window_size
             )
             if type=="pcg_mel":
                spec = np.squeeze(spec_transform(signal))
@@ -223,16 +225,10 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
         else:
             spec = np.linalg.norm(spec) #(spec - spec.min())/np.ptp(spec)
     if save:
-        if save_ft:
-            if savename is not None:
-                np.savez(outpath_np+savename+f'_{type}_spec', spec=spec, freqs=f, times=t)
-            else:
-                np.savez(outpath_np+filename+f'_{type}_spec', spec=spec, freqs=f, times=t)
+        if savename is not None:
+            np.savez(outpath_np+savename+f'_{type}_spec', spec=spec, freqs=f, times=t)
         else:
-            if savename is not None:
-                np.savez(outpath_np+savename+f'_{type}_spec', spec=spec)
-            else:
-                np.savez(outpath_np+filename+f'_{type}_spec', spec=spec)
+            np.savez(outpath_np+filename+f'_{type}_spec', spec=spec, freqs=f, times=t)
     #print(f"spec: {spec}")
     #print(f"specshape: {np.shape(spec)}")
     #print(f"f: {f}")
@@ -240,6 +236,8 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
     #print(f"t: {t}")
     #print(f"tshape: {np.shape(t)}")
     #print(f"image: {image}")
+    print(f"FREQSS: {len(f)}")
+    print(f"TIMESSS: {len(t)}")
     return spec, f, t, image
 
 def display_spectrogram(filename, sample_rate, outpath_png, spec, savename=None, signal=None, times=None, freqs=None, type="ecg", save=True, start_time=0, just_image=True, show=False):

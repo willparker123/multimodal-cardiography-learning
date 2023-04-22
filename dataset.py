@@ -5,450 +5,326 @@ from torch.utils.data.dataset import Dataset
 import numpy as np
 import pandas as pd
 import config
-from config import global_opts, spec_win_size_ecg, spec_win_size_pcg, outputpath, nfft_pcg, nfft_ecg
-from helpers import dataframe_cols, get_index_from_directory
+from config import global_opts, outputpath
+from helpers import dataframe_cols, get_index_from_directory, read_file, check_datatype_and_filetype
 from clean_data import get_data_physionet, get_data_ephnogram
 import os
-from audio import load_audio
-from video import load_video, resample_video, create_video
-import cv2
-from PIL import Image
+from video import resample_video, create_video
 import tqdm
 from spectrograms import Spectrogram
 
-
-"""
-Paths to ECGs, PCGs and label CSVs (with global_opts.dataframe_cols)
-    (path_ecgs_physionet, path_pcgs_physionet, path_csv_physionet, 
-    path_ecgs_ephnogram, path_pcgs_ephnogram, path_csv_ephnogram)
-or 
-    (path_ecgs_all, path_pcgs_all, path_csv_all) which contain all ECG, PCG and label data in one directory.
-"""
+def get_total_filecount(df, include_parents=True):
+    c = 0
+    for i in range(len(df.index)):
+        c += df.iloc[[i]]['seg_num']
+        if include_parents:
+            c += 1
+        
 class ECGPCGDataset(Dataset):
-    #self, video_path, resize, fps, sample_rate
-    
-    # Get ECG, PCG paths for a given record index
-    def get_ecg_pcg_paths_for_record(index, path_ecgs_physionet, path_ecgs_ephnogram, path_pcgs_physionet, path_pcgs_ephnogram):
-        return path_ecgs_physionet, path_pcgs_physionet if index < 409 else path_ecgs_ephnogram, path_pcgs_ephnogram
-    
-    def __init__(self, ecg_filetype="", 
+    def __init__(self, 
+                 samples_in_directories=True,
+                 file_type_ecg="npz",
+                 file_type_pcg="npz",  
                  clip_length=global_opts.segment_length, 
-                 data_type="spec",
+                 data_type_ecg="spec",
+                 data_type_pcg="spec",
                  ecg_sample_rate=global_opts.sample_rate_ecg, 
                  pcg_sample_rate=global_opts.sample_rate_pcg,
                  
-                 path_ecgs_physionet=outputpath+f'physionet/spectrograms_{global_opts.ecg_type}/', 
-                 path_pcgs_physionet=outputpath+f'physionet/spectrograms_{global_opts.pcg_type}/', 
-                 path_csv_physionet=outputpath+f'data_physionet_raw', 
-                 
-                 path_ecgs_ephnogram=outputpath+f'ephnogram/spectrograms_{global_opts.ecg_type}/', 
-                 path_pcgs_ephnogram=outputpath+f'ephnogram/spectrograms_{global_opts.pcg_type}/', 
-                 path_csv_ephnogram=outputpath+f'data_ephnogram_raw',
-                     
-                 path_pcgs_all=None, path_ecgs_all=None, path_csv_all=None):
-        if data_type not in config.data_types:
-            raise ValueError(f"Error: 'data_type' must be one of {config.data_types}") 
-        if ecg_filetype not in {"npz", "png", "wfdb", "mp4"}:
-            raise ValueError(f"Error: {ecg_filetype} is not 'npy_and_npy', 'mp4', 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4' or 'wav_and_wfdb'") 
-        if pcg_filetype not in {"npz", "png", "wav"}:
-            raise ValueError(f"Error: {ecg_filetype} is not 'npy_and_npy', 'mp4', 'wav_and_mp4', 'spec_and_mp4', 'npy_and_mp4' or 'wav_and_wfdb'") 
-        # If the 'All' paths are supplied, ECG, PCG and label must be suppplied
-        # If the 'Physionet/Ephnogram' paths are not supplied and there is a missing parameter
-        use_all_paths = not (None == path_ecgs_all == path_pcgs_all == path_csv_all)
-        if use_all_paths and None in (path_ecgs_all, path_pcgs_all, path_csv_all):
-            raise ValueError(f"Error: path_csv_all, path_ecgs_all and path_pcgs_all must all be supplied if one is supplied - csv must have columns {dataframe_cols}")
+                 paths_ecgs=[outputpath+f'physionet/spectrograms_{global_opts.ecg_type}/', outputpath+f'ephnogram/spectrograms_{global_opts.ecg_type}/'], 
+                 paths_pcgs=[outputpath+f'physionet/spectrograms_{global_opts.pcg_type}/', outputpath+f'ephnogram/spectrograms_{global_opts.pcg_type}/'], 
+                 paths_csv=[outputpath+f'data_physionet_raw', outputpath+f'data_ephnogram_raw'],
+                 qrs=[],
+                 hrs=[],
+                 freqs_ecg=[],
+                 freqs_pcg=[],
+                 times_ecg=[],
+                 times_pcg=[]
+                 ):
+        if data_type_ecg not in config.data_types_ecg:
+            raise ValueError(f"Error: 'data_type_ecg' must be one of {config.data_types_ecg}") 
+        if data_type_pcg not in config.data_types_pcg:
+            raise ValueError(f"Error: 'data_type_pcg' must be one of {config.data_types_pcg}") 
+        if file_type_ecg not in config.file_types_ecg:
+            raise ValueError(f"Error: file_type_ecg '{file_type_ecg}' must be one of {config.file_types_ecg}") 
+        if file_type_pcg not in config.file_types_pcg:
+            raise ValueError(f"Error: file_type_pcg '{file_type_pcg}' must be one of {config.file_types_pcg}") 
+        if not (len(paths_ecgs) == len(paths_pcgs) == len(paths_csv)):
+            raise ValueError(f"Error: paths_ecgs, paths_pcgs and paths_csv must be the same length.")
+        check_datatype_and_filetype(data_type_ecg, file_type_ecg)
+        check_datatype_and_filetype(data_type_pcg, file_type_pcg)
+        self.dataset_count = len(paths_csv)
         self.clip_length = clip_length
-        self.ecg_and_pcg_filetype = ecg_and_pcg_filetype
-        # Paths for the scrolling spectrogram video data (.mp4 videos or wfdb data) - [0] is Physionet, [1] is Ephnogram
-        self.path_ecgs = []
-        # Paths for the audio data (.wav audio files, .png spectrogram or .npy signal data) - [0] is Physionet, [1] is Ephnogram
-        self.path_pcgs = []
-        self.path_ecgs_physionet = path_ecgs_physionet
-        self.path_ecgs_ephnogram = path_ecgs_ephnogram
-        self.path_pcgs_physionet = path_pcgs_physionet
-        self.path_pcgs_ephnogram = path_pcgs_ephnogram
-        self.path_csv_physionet = path_csv_physionet
-        self.path_csv_ephnogram = path_csv_ephnogram
-        self.audio_paths = []
-        self.video_paths = []
-        self.parent_indexes = []
-        self.pis = []
-        if use_all_paths:
-            self.path_csv_all = path_csv_all
-            self.df_physionet = None
-            self.df_ephnogram = None
-            self.df_all = pd.read_csv(path_csv_all+'.csv', names=dataframe_cols)
-            if not set(dataframe_cols).issubset(self.df_all.columns):
-                raise ValueError(f"Error: csv '{path_csv_all}' must have columns {dataframe_cols}")
-        else: 
-            if not set(dataframe_cols).issubset(self.df_physionet.columns):
-                raise ValueError(f"Error: csv '{path_csv_physionet}' must have columns {dataframe_cols}")
-            if not set(dataframe_cols).issubset(self.df_ephnogram.columns):
-                raise ValueError(f"Error: csv '{path_csv_ephnogram}' must have columns {dataframe_cols}")
-            self.df_physionet = pd.read_csv(path_csv_physionet+'.csv', names=dataframe_cols)
-            self.df_ephnogram = pd.read_csv(path_csv_ephnogram+'.csv', names=dataframe_cols)
-            #self.df_physionet = self.df_physionet.iloc[1: , :]
-            self.df_ephnogram = self.df_ephnogram.iloc[1: , :]
-            df = pd.DataFrame(columns=dataframe_cols)
-            df = pd.concat([df, self.df_physionet, self.df_ephnogram])
-            self.df_all = df
-            
-        print(f"** ECG_PCG_DATASET HEAD: {self.df_all.head()} **")
-        self.df_all = self.df_all.iloc[1: , :]
-        self.zipped_indexes = []
-        record_dirs = []
-        # For Physionet/Ephnogram
-        for dataset_num in range(2):
-            if dataset_num == 0:
-                path_vs = self.path_ecgs_physionet
-                path_as = self.path_pcgs_physionet
+        self.data_type_ecg = data_type_ecg
+        self.data_type_pcg = data_type_pcg
+        self.file_type_ecg = file_type_ecg
+        self.file_type_pcg = file_type_pcg
+        # no_samples x no_segments
+        self.ecg_paths = []
+        self.pcg_paths = []
+        self.data_ecg = []
+        self.data_pcg = []
+        self.dfs = []
+        for ind_csv, path_csv in enumerate(paths_csv):
+            df_temp = pd.read_csv(path_csv+'.csv', names=dataframe_cols)
+            if not set(dataframe_cols).issubset(df_temp.columns):
+                raise ValueError(f"Error: csv '{path_csv}' must have columns {dataframe_cols}")
+            self.dfs.append(df_temp)
+        df = pd.DataFrame(columns=dataframe_cols)
+        df = pd.concat(self.dfs)
+        self.df_data = df
+        no_pcg_paths = len(paths_pcgs) == 0
+        self.no_pcg_paths = no_pcg_paths
+        self.freqs_ecg = freqs_ecg
+        self.times_ecg = times_ecg
+        self.freqs_pcg = freqs_pcg
+        self.times_pcg = times_pcg
+        print(f"** ECGPCG DATASET HEAD: {self.df_all.head()} **")
+        
+        # Validate that all directories and files exist
+        print(f"* Validating directories and files for: \n{paths_ecgs}\n{paths_pcgs}\n{paths_csv}\n\n")
+        
+        for i in range(self.dataset_count):
+            ecg_paths_samples = []
+            pcg_paths_samples = []
+            if samples_in_directories:
+                dirs_ecg = next(os.walk(paths_ecgs[i]))[1]
+                if not len(dirs_ecg) == len(self.dfs[i].index):
+                    raise ValueError(f"Error: Number of ECG directories does not match records in '{paths_csv[i]}.csv'")
+                if data_type_ecg is not "video" and not no_pcg_paths:
+                    dirs_pcg = next(os.walk(paths_pcgs[i]))[1]
+                    if not (len(dirs_ecg) == len(dirs_pcg)):
+                        raise ValueError(f"Error: Number of ECG and PCG directories do not match")
+                    if not len(dirs_pcg) == len(self.dfs[i].index):
+                        raise ValueError(f"Error: Number of PCG directories does not match records in '{paths_csv[i]}.csv'")
+                for j, dir in dirs_ecg:
+                    ecg_paths_sample_segments = []
+                    pcg_paths_sample_segments = []
+                    # Check segment direectories
+                    dirs_inner = next(os.walk(paths_ecgs[i]+f'{dir}/'))[1]
+                    record = paths_csv[i].iloc[[j]]
+                    if not len(dirs_inner) == record['seg_num']:
+                        raise ValueError(f"Error: Missing segment directories for '{dir}': expected {record['seg_num']}, found {len(dirs_inner)}.")
+                    for k, dir_inner in dirs_inner:
+                        # Files in paths_ecgs[i]/sample_filename/segment_index/
+                        files_ecg = next(os.walk(paths_ecgs[i]+f'{dir}/{dir_inner}/'))[2]
+                        if len(files_ecg) == 0:
+                            raise ValueError(f"Error: no files found in directory '{paths_ecgs[i]}{dir}/{dir_inner}/'.")
+                        valid_files_ecg = [f for f in files_ecg if (f.endswith(f".{self.file_type_ecg}") if self.file_type_ecg is not 'wfdb' else (f.endswith(f".hea") or f.endswith(f".dat"))) \
+                            and ('spec' in f if data_type_ecg=='spec' else True)]
+                        if len(valid_files_ecg) == 0:
+                            raise ValueError(f"Error: no valid files found with extension '.{self.file_type_ecg if self.file_type_ecg is not 'wfdb' else 'dat'}'")
+                        
+                        if data_type_ecg is not "video" and not no_pcg_paths:
+                            files_pcg = next(os.walk(paths_pcgs[i]+f'{dir}/{dir_inner}/'))[2]
+                            if len(files_pcg) == 0:
+                                raise ValueError(f"Error: no files found in directory '{paths_pcgs[i]}{dir}/{dir_inner}/'.")
+                            valid_files_pcg = [f for f in files_pcg if f.endswith(f".{self.file_type_pcg}") and ('spec' in f if data_type_ecg=='spec' else True)]
+
+                            if len(valid_files_pcg) == 0:
+                                raise ValueError(f"Error: no valid files found with extension '.{self.file_type_pcg}'")
+                            filepath_pcg = f'{paths_pcgs[i]}{dir}/{dir_inner}/{valid_files_pcg[0]}'
+                            pcg_paths_sample_segments.append(filepath_pcg) #self.pcg_paths[sample_index][segment_index]
+                        
+                        # filepath_ecg is array if self.file_type_ecg == 'wfdb' otherwise single value
+                        if self.file_type_ecg is not 'wfdb':
+                            filepath_ecg = f'{paths_ecgs[i]}{dir}/{dir_inner}/{valid_files_ecg[0]}'
+                        else:
+                            if len([x for x in valid_files_ecg if x.endswith(".hea")]) > 0 and len([x for x in valid_files_ecg if x.endswith(".dat")]) > 0:
+                                valid_file_hea = [x for x in valid_files_ecg if x.endswith(".hea")][0]
+                                valid_file_dat = [x for x in valid_files_ecg if x.endswith(".dat")][0]
+                                filepath_ecg = [f'{paths_ecgs[i]}{dir}/{dir_inner}/{valid_file_hea}', f'{paths_ecgs[i]}{dir}/{dir_inner}/{valid_file_dat}']
+                            else:
+                                raise ValueError(f"Error: .dat and .hea file must be present in directory '{paths_ecgs[i]}{dir}/{dir_inner}/'")
+                        # Append np array to list of ECGs
+                        ecg_paths_sample_segments.append(filepath_ecg) #self.ecg_paths[sample_index][segment_index]
+                        
+                        #self.ecgs.append(read_file(filepath, self.file_type_ecg))
+                        #self.pcgs.append(read_file(filepath, self.file_type_pcg))
+                    ecg_paths_samples.append(ecg_paths_sample_segments)
+                    if data_type_ecg is not "video" and not no_pcg_paths:
+                        pcg_paths_samples.append(pcg_paths_sample_segments)
             else:
-                path_vs = self.path_ecgs_ephnogram
-                path_as = self.path_pcgs_ephnogram
-            # Iterate over directories in path
-            dirs_vs = next(os.walk(path_vs))[1]
-            dirs_as = next(os.walk(path_as))[1]
-            if (len(dirs_vs) == len(dirs_as)):
-                raise ValueError(f"Error: Number of ECG and PCG directories do not match")
-            record_dirs.extend(dirs_vs)
-            for d in dirs_vs:
-                index = get_index_from_directory(d)
-                if dataset_num == 0:
-                    index -= 1
-                else:
-                    index += 409
-                dict__ = self.df_all.iloc[index].to_dict()
-                self.pis.append(index)
-        self.zipped_indexes = list(zip(record_dirs, self.pis))
-        self.zipped_indexes = sorted(self.zipped_indexes, key = lambda x: x[1])
-        for zipp in self.zipped_indexes:
-            dir = zipp[0]
-            ii = zipp[1]
-            self.get_ecg_pcg_paths_for_record(ii, self.path_ecgs_physionet, self.path_ecgs_ephnogram, self.path_pcgs_physionet, self.path_pcgs_ephnogram)
-            dict_ = self.df_all.iloc[ii].to_dict()
-            dirs_inner = next(os.walk(path_vs+f'{dir}/'))[1]
-            inds_inner = []
-            for d_ in dirs_inner:
-                inds_inner.append(int(d_))
-            self.zipped_indexes_ = list(zip(dirs_inner, inds_inner))
-            self.zipped_indexes_ = sorted(self.zipped_indexes_, key = lambda x: x[1])
-            for zipp_ in self.zipped_indexes_:
-                dir_ = zipp_[0]
-                iii = zipp_[1]
-                self.parent_indexes.append(ii)
-                temp_files = next(os.walk(path_vs+f'{dir}/{dir_}/'))[2]
-                if len(temp_files) == 0:
-                    #raise ValueError(f"Error: no .mp4 file found in '{path_vs}{dir}/{dir_}/'")
-                    print(f"Error: no video/full spectrogram file found in '{path_vs}{dir}/{dir_}/' - SKIPPED")
-                if ecg_and_pcg_filetype == "wav_and_wfdb":
-                    hea = None
-                    dat = None
-                found = False
-                for t in temp_files:
-                    if ecg_and_pcg_filetype == "wav_and_wfdb":
-                        if t.endswith(".hea"):
-                            hea = path_vs+f'{dir}/{dir_}/{t}'
-                        elif t.endswith(".dat"):
-                            dat = path_vs+f'{dir}/{dir_}/{t}'
-                        if hea is not None and dat is not None:
-                            found = True
-                            break
-                    elif ecg_and_pcg_filetype == "npy_and_npy":
-                        if t_a.endswith(".npy"):
-                            self.video_paths.append(path_as+f'{dir}/{dir_}/{t}')
-                            found = True
-                            break
+                all_files_ecg = next(os.walk(paths_ecgs[i]))[2]
+                if len(all_files_ecg) == 0:
+                    raise ValueError(f"Error: no files found in directory '{paths_ecgs[i]}/'.")
+                for ind in len(self.dfs[i].index):
+                    ecg_paths_sample_segments = []
+                    pcg_paths_sample_segments = []
+                    seg_num = int(len(self.dfs[i].iloc[[ind]]['seg_num']))
+                    valid_files_ecg = [f for f in all_files_ecg if self.dfs[i].iloc[[ind]]['filename'] in f and (f.endswith(f".{self.file_type_ecg}") if self.file_type_ecg is not 'wfdb' else (f.endswith(f".hea") or f.endswith(f".dat"))) \
+                            and ('spec' in f if data_type_ecg=='spec' else True)]
+                    fileswithfilenameandseg_ecg = [y for y in valid_files_ecg if '_seg_' in y]
+                    if len(valid_files_ecg) == 0:
+                        raise ValueError(f"Error: no valid files found with extension '.{self.file_type_ecg if self.file_type_ecg is not 'wfdb' else 'dat'}'")
+                    if not len(fileswithfilenameandseg_ecg) == (seg_num if data_type_ecg is not 'wfdb' else seg_num*2):
+                        raise ValueError(f"Error: Number of PCG files does not match records in '{paths_csv[i]}.csv'")
+                    
+                    if data_type_ecg is not "video" and not no_pcg_paths:
+                        all_files_pcg = next(os.walk(paths_pcgs[i]))[2]
+                        if len(all_files_pcg) == 0:
+                            raise ValueError(f"Error: no files found in directory '{paths_pcgs[i]}/'.")
+                        
+                        valid_files_pcg = [f for f in files_pcg if self.dfs[i].iloc[[ind]]['filename'] in f and f.endswith(f".{self.file_type_pcg}") and ('spec' in f if data_type_ecg=='spec' else True)]
+                        fileswithfilenameandseg_pcg = [y for y in valid_files_pcg if '_seg_' in y]
+                        if len(valid_files_pcg) == 0:
+                            raise ValueError(f"Error: no valid files found with extension '.{self.file_type_pcg}'")
+                        
+                        if not (len(valid_files_ecg)  == (len(valid_files_pcg) if data_type_ecg is not 'wfdb' else len(valid_files_pcg)*2)):
+                            raise ValueError(f"Error: Number of ECG and PCG directories do not match")
+                        if not len(fileswithfilenameandseg_pcg) == (seg_num):
+                            raise ValueError(f"Error: Number of PCG files does not match records in '{paths_csv[i]}.csv'")
+                        
+                        filepaths_pcg = [f'{paths_pcgs[i]}/{x}' for x in fileswithfilenameandseg_pcg]
+                        pcg_paths_sample_segments = filepaths_pcg
+                            
+                    # each filepath_ecg is array if self.file_type_ecg == 'wfdb' otherwise single value
+                    if self.file_type_ecg is not 'wfdb':
+                        filepaths_ecg = [f'{paths_ecgs[i]}/{x}' for x in fileswithfilenameandseg_ecg]
+                        ecg_paths_sample_segments = filepaths_ecg
                     else:
-                        if t.endswith(".mp4"):
-                            self.video_paths.append(path_vs+f'{dir}/{dir_}/{t}')
-                            if ecg_and_pcg_filetype == "mp4":
-                                self.video_paths.append(path_vs+f'{dir}/{dir_}/{t}')
-                            #TODO get audio from video
-                            found = True
-                            break
-                if ecg_and_pcg_filetype == "wav_and_wfdb":
-                    if hea is None or dat is None:
-                        raise ValueError(f"Error: no {'.hea or .dat' if hea is None and dat is None else ''}{'.hea' if hea is None else ''}{'.dat' if dat is None else ''} file found in '{path_vs}{dir}/{dir_}/'")
-                    assert dat[:-4] == hea[:-4]
-                    self.video_paths.append(path_vs+f'{dir}/{dir_}/{hea[:-4]}')
-                else:
-                    if not found:
-                        #raise ValueError(f"Error: no .mp4 file found in '{path_vs}{dir}/{dir_}/'")
-                        print(f"Error: no .mp4 file found in '{path_vs}{dir}/{dir_}/' - SKIPPED")
-            if not ecg_and_pcg_filetype == "mp4":
-                dirs_a = next(os.walk(path_as))[1]      
-                for zipp in self.zipped_indexes:
-                    dir_a = zipp[0]
-                    index_a = zipp[1]
-                    self.get_ecg_pcg_paths_for_record(index_a, self.path_ecgs_physionet, self.path_ecgs_ephnogram, self.path_pcgs_physionet, self.path_pcgs_ephnogram)
-                    dict_a = self.df_all.iloc[index_a].to_dict()
-                    dirs_inner_a = next(os.walk(path_as+f'{dir_a}/'))[1]
-                    inds_inner_a = []
-                    for d_a in dirs_inner_a:
-                        inds_inner_a.append(int(d_a))
-                    self.zipped_indexes_ = list(zip(dirs_inner_a, inds_inner_a))
-                    self.zipped_indexes_ = sorted(self.zipped_indexes_, key = lambda x: x[1])
-                    for zipp_ in self.zipped_indexes_:
-                        dir_a_ = zipp_[0]
-                        index_a_ = zipp_[1]
-                        temp_files_a = next(os.walk(path_as+f'{dir_a}/{dir_a_}/'))[2]
-                        if len(temp_files_a) == 0:
-                            if ecg_and_pcg_filetype == "wav_and_mp4":
-                                print(f"Error: no .wav file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
-                            if ecg_and_pcg_filetype == "spec_and_mp4":
-                                print(f"Error: no .png file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
-                            if ecg_and_pcg_filetype == "npy_and_mp4":
-                                print(f"Error: no .npy file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
-                            if ecg_and_pcg_filetype == "npy_and_npy":
-                                print(f"Error: no .npy file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
-                        found = False
-                        if ecg_and_pcg_filetype == "wav_and_mp4":
-                            for t_a in temp_files_a:
-                                if t_a.endswith(".wav"):
-                                    self.audio_paths.append(path_as+f'{dir_a}/{dir_a_}/{t_a}')
-                                    found = True
-                                    break
-                            if not found:
-                                print(f"Error: no .wav file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
-                        elif ecg_and_pcg_filetype == "spec_and_mp4":
-                            for t_a in temp_files_a:
-                                if t_a.endswith(".png"):
-                                    self.audio_paths.append(path_as+f'{dir_a}/{dir_a_}/{t_a}')
-                                    found = True
-                                    break
-                            if not found:
-                                print(f"Error: no .png file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
-                        elif ecg_and_pcg_filetype == "npy_and_mp4":
-                            for t_a in temp_files_a:
-                                if t_a.endswith(".npy"):
-                                    self.audio_paths.append(path_as+f'{dir_a}/{dir_a_}/{t_a}')
-                                    found = True
-                                    break
-                            if not found:
-                                print(f"Error: no .npy file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
-                        elif ecg_and_pcg_filetype == "npy_and_npy":
-                            for t_a in temp_files_a:
-                                if t_a.endswith(".npy"):
-                                    self.audio_paths.append(path_as+f'{dir_a}/{dir_a_}/{t_a}')
-                                    found = True
-                                    break
-                            if not found:
-                                print(f"Error: no .npy file found in '{path_as}{dir_a}/{dir_a_}/' - SKIPPED")
-        print(f"HEAD OF DATA: {self.df_all.head()}")
-        self.labels = self.df_all[['filename', 'label']].copy()
-        #self.labels['label'] = self.labels.label.astype('category').cat.codes.astype('int') #create categorical labels
+                        if len([x for x in fileswithfilenameandseg_ecg if x.endswith(".hea")]) > 0 and len([x for x in fileswithfilenameandseg_ecg if x.endswith(".dat")]) > 0:
+                            valid_files_hea = [f'{paths_ecgs[i]}/{x}' for x in fileswithfilenameandseg_ecg if x.endswith(".hea")]
+                            valid_files_dat = [f'{paths_ecgs[i]}/{x}' for x in fileswithfilenameandseg_ecg if x.endswith(".dat")]
+                            if not len(valid_files_hea) == len(valid_files_dat):
+                                raise ValueError("Error: different number of valid files found for '.dat' and '.hea' - must have one .dat and one .hea file per segment")
+                            filepaths_ecg = [[f'{paths_ecgs[i]}/{valid_files_hea[i]}', f'{paths_ecgs[i]}/{valid_files_dat[i]}'] for i in range(len(valid_files_hea))]
+                            ecg_paths_sample_segments = filepaths_ecg
+                        else:
+                            raise ValueError(f"Error: .dat and .hea file must be present in directory '{paths_ecgs[i]}/'")
+                    
+                    #self.ecgs.append(read_file(filepath, self.file_type_ecg))
+                    #self.pcgs.append(read_file(filepath, self.file_type_pcg))
+                    ecg_paths_samples.append(ecg_paths_sample_segments)
+                    if data_type_ecg is not "video" and not no_pcg_paths:
+                        pcg_paths_samples.append(pcg_paths_sample_segments)
+            self.ecg_paths = ecg_paths_samples
+            if data_type_ecg is not "video" and not no_pcg_paths:
+                self.pcg_paths = pcg_paths_samples
+        print(f"* Successfully validated all ECG and PCG directories and files.")
+                  
+        self.labels = self.df_data[['filename', 'label']].copy()
         self.data_len = len(self.labels)
         self.ecg_sample_rate = ecg_sample_rate
         self.pcg_sample_rate = pcg_sample_rate
-        print(f"HEAD OF LABELS: {self.labels.head()}")
+        print(f"ECGPCG DATASET LABELS HEAD: {self.labels.head()}")
         
-    def __getitem__(self, index, normalise=False, colname='spec', print_short=False, inputpath_training_p=inputpath_physionet, inputpath_training_e=inputpath_ephnogram_data, inputpath_target_e=inputpath_ephnogram_target, outputpath_=outputpath):
-        ecg_sample_rate = self.ecg_sample_rate
-        pcg_sample_rate = self.pcg_sample_rate
-        video_path = self.video_paths[index]
-        audio_path = self.audio_paths[index]
-        vh, vt = os.path.split(video_path)
-        ah, at = os.path.split(audio_path)
-        vh += "/"
-        ah += "/"
-        vext = os.path.splitext(vt)[1]
-        if vext == "":
-            vext = ".wfdb"
-        aext = os.path.splitext(at)[1]
-        index_of_parent = self.parent_indexes[index]
+    def get_child_and_parent_index(self, index):
         c = 0
-        if index_of_parent == 0:
-            c = index
+        for i in range(len(self.df_data.index)):
+            c += self.df_data.iloc[[i]]['seg_num']
+            if c >= index:
+                if c == index: 
+                    return 0, i
+                else:
+                    d = c - self.df_data.iloc[[i]]['seg_num']
+                    return index - d - 1, i
+                
+    def __getitem__(self, index, print_df=True, print_short=False, parent_index=None, child_index=None):
+        if parent_index is not None and child_index is None or parent_index is None and child_index is not None:
+            raise ValueError("Error: must provide both 'parent_index' (sample) and 'child_index' (segment) to override 'index'")
+        if parent_index is not None and child_index is not None:
+            filepath_ecg = self.ecg_paths[parent_index][child_index]
+            filepath_pcg = self.pcg_paths[parent_index][child_index]
+            index_of_segment = child_index
+            index_of_parent = parent_index
         else:
-            index_ = index-1
-            while self.parent_indexes[index_] == index_of_parent:
-                index_ -= 1
-                c += 1
-        index_of_segment = c
-        index_e = index_of_segment
-        index_p = index_e
-        dict_ = self.df_all.iloc[index_of_parent].to_dict()
-        sr_a = global_opts.sample_rate_ecg
-        if vext == ".mp4":
-            video_specs, sr_v, size = load_video(vh, os.path.splitext(vt)[0])
-        elif vext == ".npy":
-            mat = np.load(video_path+vext)
-            video_specs = mat
-        elif vext == ".wfdb":
-            #CREATE SPECTROGRAM FROM WFDB
-            if index_of_parent < 409:  
-                ref_csv = pd.read_csv(inputpath_training_p+'REFERENCE.csv', names=['filename', 'label'])
-                data_list = ref_csv.values.tolist()[index_of_parent]
-                data, ecg, pcg, audio = get_data_physionet(data_list, inputpath_training_p, ecg_sample_rate, pcg_sample_rate)
-                reflen = len(list(ref_csv.iterrows()))
-                filename = data_list[0]
-                label = data_list[1]
-                ecg_segments = ecg.get_segments(global_opts.segment_length, normalise=True)
-                ecg = ecg_segments[index_of_segment]
-                seg_spectrogram = Spectrogram(filename, savename=ecg.savename, filepath=outputpath_+'physionet/', sample_rate=ecg_sample_rate, type=global_opts.ecg_type,
-                                                signal=ecg.signal, window=np.hamming, window_size=spec_win_size_ecg, NFFT=nfft_ecg, hop_length=spec_win_size_ecg//2, 
-                                                outpath_np=outputpath_+f'physionet/data_{global_opts.ecg_type}/{filename}/{index_e}/', outpath_png=outputpath_+f'physionet/spectrograms_{global_opts.ecg_type}/{filename}/{index_e}/', normalise=True, start_time=ecg.start_time, wavelet_function=global_opts.cwt_function)
-                #specs.append(seg_spectrogram)
-                seg_spectrogram.display_spectrogram(save=True)
-                
-                frames = []
-                print(f"* Processing Frames for Segment {index_e} *")
-                ecg_frames = ecg.get_segments(global_opts.frame_length, factor=global_opts.fps*global_opts.frame_length, normalise=False) #24fps, 42ms between frames, 8ms window, 128/8=16
-                for i in tqdm.trange(len(ecg_frames)):
-                    ecg_frame = ecg_frames[i]
-                    frame_spectrogram = Spectrogram(filename, savename=ecg_frame.savename, filepath=outputpath_+'physionet/', sample_rate=ecg_sample_rate, type=global_opts.ecg_type,
-                                                        signal=ecg_frame.signal, window=np.hamming, window_size=spec_win_size_ecg, NFFT=nfft_ecg, hop_length=spec_win_size_ecg//2, 
-                                                        outpath_np=outputpath_+f'physionet/data_{global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath_png=outputpath_+f'physionet/spectrograms_{global_opts.ecg_type}/{filename}/{index_e}/frames/', normalise=False, start_time=ecg_frame.start_time, wavelet_function=global_opts.cwt_function)
-                    frames.append(frame_spectrogram)
-                    frame_spectrogram.display_spectrogram(save=True, just_image=True)
-                print(f"* Creating .mp4 for Segment {index_e} / {len(ecg_segments)} *")
-                ecg_seg_video = create_video(imagespath=outputpath_+f'physionet/spectrograms_{global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath=outputpath_+f'physionet/spectrograms_{global_opts.ecg_type}/{filename}/{index_e}/', filename=ecg.savename, framerate=global_opts.fps)
-            else:  
-                ephnogram_cols = ['Record Name','Subject ID','Record Duration (min)','Age (years)','Gender','Recording Scenario','Num Channels','ECG Notes','PCG Notes','PCG2 Notes','AUX1 Notes','AUX2 Notes','Database Housekeeping']
-                ref_csv = pd.read_csv(inputpath_target_e, names=ephnogram_cols, header = 0, skipinitialspace=True)
-                data = pd.DataFrame(columns=dataframe_cols)
-                ref_csv_temp = pd.DataFrame(columns=['Record Name', 'Record Duration (min)', 'Num Channels'])
-                for j in range(len(ref_csv)-1):
-                    ind_name = ephnogram_cols.index('Record Name')
-                    ind_rd = ephnogram_cols.index('Record Duration (min)')
-                    ind_nc = ephnogram_cols.index('Num Channels')
-                    ind_ecgn = ephnogram_cols.index('ECG Notes')
-                    ind_pcgn = ephnogram_cols.index('PCG Notes')
-                    ind_recn = ephnogram_cols.index('Recording Scenario')
-                    name = str(ref_csv.iloc[j].name[ind_name])
-                    duration = float(ref_csv.iloc[j].name[ind_rd])
-                    chan_num = int(ref_csv.iloc[j].name[ind_nc])
-                    ecgn = str(ref_csv.iloc[j].name[ind_ecgn])
-                    pcgn = str(ref_csv.iloc[j].name[ind_pcgn])
-                    recn = str(ref_csv.iloc[j].name[ind_recn])
-                    if ecgn == "Good" and pcgn == "Good" and recn.startswith("Rest"):
-                        ref_csv_temp = ref_csv_temp.append({'Record Name':name, 'Record Duration (min)':duration, 'Num Channels':chan_num}, ignore_index=True)
-                data_list = zip(ref_csv_temp.values.tolist(), range(len(ref_csv_temp)))[index_of_parent-409]
-                data, ecg, pcg, audio = get_data_ephnogram(data_list, inputpath_training_p, ecg_sample_rate, pcg_sample_rate)
-                filename = data_list[0]
-                label = data_list[1]
-                reflen = len(list(ref_csv_temp.iterrows()))
-                ecg_segments = ecg.get_segments(global_opts.segment_length, normalise=True)
-                ecg = ecg_segments[index_of_segment]
-                seg_spectrogram = Spectrogram(filename, savename=ecg.savename, filepath=outputpath_+'ephnogram/', sample_rate=ecg_sample_rate, type=global_opts.ecg_type,
-                                              signal=ecg.signal, window=np.hamming, window_size=spec_win_size_ecg, NFFT=nfft_ecg, hop_length=spec_win_size_ecg//2, 
-                                              outpath_np=outputpath_+f'ephnogram/data_{global_opts.ecg_type}/{filename}/{index_e}/', outpath_png=outputpath_+f'ephnogram/spectrograms_{global_opts.ecg_type}/{filename}/{index_e}/', normalise=True, start_time=ecg.start_time, wavelet_function=global_opts.cwt_function)
-                #specs.append(seg_spectrogram)
-                seg_spectrogram.display_spectrogram(save=True)
-                
-                frames = []
-                print(f"* Processing Frames for Segment {index_e} *")
-                ecg_frames = ecg.get_segments(global_opts.frame_length, factor=global_opts.fps*global_opts.frame_length, normalise=False) #24fps, 42ms between frames, 8ms window, 128/8=16
+            filepath_ecg = list(np.concatenate(self.ecg_paths).flat)[index]
+            filepath_pcg = list(np.concatenate(self.pcg_paths).flat)[index]
+            index_of_segment, index_of_parent = self.get_child_and_parent_index(index)
+        if self.no_pcg_paths:
+            ecg, pcg = read_file(filepath_ecg, self.data_type_ecg, self.file_type_ecg, self.no_pcg_paths)
+        else:
+            ecg = read_file(filepath_ecg, self.data_type_ecg, self.file_type_ecg)
+            pcg = read_file(filepath_pcg, self.data_type_pcg, self.file_type_pcg)
 
-                for i in tqdm.trange(len(ecg_frames)):
-                    ecg_frame = ecg_frames[i]
-                    frame_spectrogram = Spectrogram(filename, savename=ecg_frame.savename, filepath=outputpath_+'ephnogram/', sample_rate=ecg_sample_rate, type=global_opts.ecg_type,
-                                                        signal=ecg_frame.signal, window=np.hamming, window_size=spec_win_size_ecg, NFFT=nfft_ecg, hop_length=spec_win_size_ecg//2, 
-                                                        outpath_np=outputpath_+f'ephnogram/data_{global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath_png=outputpath_+f'ephnogram/spectrograms_{global_opts.ecg_type}/{filename}/{index_e}/frames/', normalise=True, normalise_factor=np.linalg.norm(seg_spectrogram.spec), start_time=ecg_frame.start_time, wavelet_function=global_opts.cwt_function)
-                    frames.append(frame_spectrogram)
-                frame_spectrogram.display_spectrogram(save=True, just_image=True)
-                del frame_spectrogram
-                print(f"* Creating .mp4 for Segment {index_e} / {len(ecg_segments)} *")
-                ecg_seg_video = create_video(imagespath=outputpath_+f'ephnogram/spectrograms_{global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath=outputpath_+f'ephnogram/spectrograms_{global_opts.ecg_type}/{filename}/{index_e}/', filename=ecg.savename, framerate=global_opts.fps)
-            video_specs = ecg_seg_video
-        else:
-            raise ValueError(f"Error: extension of scrolling ECG spectrogram videos / ECG signals is not .npy, .mp4 or .dat/.hea") 
-        if aext == ".wav":
-            audio, sr = load_audio(ah, os.path.splitext(at)[0])
-            if index_of_parent < 409:
-                ref_csv = pd.read_csv(inputpath_training_p+'REFERENCE.csv', names=['filename', 'label'])
-                data_list = ref_csv.values.tolist()[index_of_parent]
-                filename = data_list[0]
-                label = data_list[1]
-                data, ecg, pcg, audio = get_data_physionet(data_list, inputpath_training_p, ecg_sample_rate, pcg_sample_rate)
-                reflen = len(list(ref_csv.iterrows()))
-                filename = data_list[0]
-                label = data_list[1]
-                pcg_segments = pcg.get_segments(global_opts.segment_length, normalise=True)
-                pcg = pcg_segments[index_of_segment]
-                pcg_seg_spectrogram = Spectrogram(filename, savename=pcg.savename, filepath=outputpath_+'physionet/', sample_rate=pcg_sample_rate, type=global_opts.pcg_type,
-                                      signal=pcg.signal, window=torch.hamming_window, window_size=spec_win_size_pcg, NFFT=nfft_pcg, hop_length=spec_win_size_pcg//2, NMels=global_opts.nmels,
-                                      outpath_np=outputpath_+f'physionet/data_{global_opts.pcg_type}/{filename}/{index_p}/', outpath_png=outputpath_+f'physionet/spectrograms_{global_opts.pcg_type}/{filename}/{index_p}/', normalise=True, start_time=pcg.start_time)
-                #specs_pcg.append(pcg_seg_spectrogram)
-                pcg_seg_spectrogram.display_spectrogram(save=True)
+        freqs_ecg = self.freqs_ecg
+        times_ecg = self.times_ecg
+        freqs_pcg = self.freqs_pcg
+        times_pcg = self.times_pcg
+        if self.file_type_ecg == 'npz':
+            if self.data_type_ecg == 'signal':
+                qrs = ecg['qrs']
+                hrs = ecg['hrs']
+                ecg_data = ecg['data']
+                pcg_data = pcg['data']
+            elif self.data_type_ecg == 'spec':
+                ecg_d = np.load(filepath_ecg.replace('_spec', ''))
+                qrs = ecg_d['qrs']
+                hrs = ecg_d['hrs']
+                ecg_data = ecg['spec']
+                pcg_data = pcg['spec']
+                freqs_ecg = ecg['freqs']
+                times_ecg = ecg['times']
+                freqs_ecg = pcg['freqs']
+                times_ecg = pcg['times']
             else:
-                ephnogram_cols = ['Record Name','Subject ID','Record Duration (min)','Age (years)','Gender','Recording Scenario','Num Channels','ECG Notes','PCG Notes','PCG2 Notes','AUX1 Notes','AUX2 Notes','Database Housekeeping']
-                ref_csv = pd.read_csv(inputpath_target_e, names=ephnogram_cols, header = 0, skipinitialspace=True)
-                data = pd.DataFrame(columns=dataframe_cols)[index_of_parent-409]
-                ref_csv_temp = pd.DataFrame(columns=['Record Name', 'Record Duration (min)', 'Num Channels'])
-                for j in range(len(ref_csv)-1):
-                    ind_name = ephnogram_cols.index('Record Name')
-                    ind_rd = ephnogram_cols.index('Record Duration (min)')
-                    ind_nc = ephnogram_cols.index('Num Channels')
-                    ind_ecgn = ephnogram_cols.index('ECG Notes')
-                    ind_pcgn = ephnogram_cols.index('PCG Notes')
-                    ind_recn = ephnogram_cols.index('Recording Scenario')
-                    name = str(ref_csv.iloc[j].name[ind_name])
-                    duration = float(ref_csv.iloc[j].name[ind_rd])
-                    chan_num = int(ref_csv.iloc[j].name[ind_nc])
-                    ecgn = str(ref_csv.iloc[j].name[ind_ecgn])
-                    pcgn = str(ref_csv.iloc[j].name[ind_pcgn])
-                    recn = str(ref_csv.iloc[j].name[ind_recn])
-                    if ecgn == "Good" and pcgn == "Good" and recn.startswith("Rest"):
-                        ref_csv_temp = ref_csv_temp.append({'Record Name':name, 'Record Duration (min)':duration, 'Num Channels':chan_num}, ignore_index=True)
-                data_list = zip(ref_csv_temp.values.tolist(), range(len(ref_csv_temp)))
-                filename = data_list[0]
-                label = data_list[1]
-                data, ecg, pcg, audio = get_data_ephnogram(data_list, inputpath_training_p, ecg_sample_rate, pcg_sample_rate)
-                reflen = len(list(ref_csv_temp.iterrows()))
-                pcg_segments = pcg.get_segments(global_opts.segment_length, normalise=True)
-                pcg = pcg_segments[index_of_segment]
-                pcg_seg_spectrogram = Spectrogram(filename, savename=pcg.savename, filepath=outputpath_+'ephnogram/', sample_rate=pcg_sample_rate, type=global_opts.pcg_type,
-                                    signal=pcg.signal, window=torch.hamming_window, window_size=spec_win_size_pcg, NFFT=nfft_pcg, hop_length=spec_win_size_pcg//2, NMels=global_opts.nmels,
-                                    outpath_np=outputpath_+f'ephnogram/data_{global_opts.pcg_type}/{filename}/{index_p}/', outpath_png=outputpath_+f'ephnogram/spectrograms_{global_opts.pcg_type}/{filename}/{index_p}/', normalise=True, start_time=pcg.start_time)
-                pcg_seg_spectrogram.display_spectrogram(save=True, just_image=True)
-            audio_spec = pcg_seg_spectrogram.spec
-        elif aext == ".png":
-            img = cv2.imread(audio_path+aext)
-            audio_spec = img
-        elif aext == ".npy":
-            mat = np.load(audio_path+aext)
-            audio_spec = mat
-        elif aext == ".npz":
-            with np.load(audio_path+aext) as data:
-                mat = data[colname]
-            audio_spec = mat
+                if len(self.qrs) == 0:
+                    qrs = None
+                if len(self.hrs) == 0:
+                    hrs = None
+                if parent_index is not None and child_index is not None:
+                    if not len(self.qrs) == 0:
+                        qrs = self.qrs[parent_index][child_index]
+                    if not len(self.hrs) == 0:
+                        hrs = self.hrs[parent_index][child_index]
+                else:
+                    if not len(self.qrs) == 0:
+                        qrs = list(np.concatenate(self.qrs).flat)[index]
+                    if not len(self.hrs) == 0:
+                        hrs = list(np.concatenate(self.hrs).flat)[index]
+                ecg_data = ecg
+                pcg_data = pcg
         else:
-            raise ValueError(f"Error: extension of audio files is not .wav, .png or .npy") 
-        if normalise:
-            a = img
-            if not type(img) == np.ndarray:
-                a = np.asarray(img)
-            a = (a - np.min(a))/np.ptp(a)
-        assert sr_a == global_opts.sample_rate_ecg
-        if not global_opts.fps == sr_v:
-            print(f"Warning: specified fps ({global_opts.fps}) is different from video fps ({sr_v}); resampling to {global_opts.fps}fps")
-            resample_video(video_path, global_opts.fps)
-
+            if len(self.qrs) == 0:
+                qrs = None
+            if len(self.hrs) == 0:
+                hrs = None
+            if parent_index is not None and child_index is not None:
+                if not len(self.qrs) == 0:
+                    qrs = self.qrs[parent_index][child_index]
+                if not len(self.hrs) == 0:
+                    hrs = self.hrs[parent_index][child_index]
+            else:
+                if not len(self.qrs) == 0:
+                    qrs = list(np.concatenate(self.qrs).flat)[index]
+                if not len(self.hrs) == 0:
+                    hrs = list(np.concatenate(self.hrs).flat)[index]
+            ecg_data = ecg
+            pcg_data = pcg
+            
+        dict_ = self.df_all.iloc[index_of_parent].to_dict()
         out_dict = dict_.copy()
-        vs_ = video_specs
-        as_ = audio_spec
-        if print_short:
-            vs_ = np.shape(video_specs)
-            as_ = np.shape(audio_spec)
         data_dict = {
-        'video_path': video_path,
-        'audio_path': audio_path,
-        'video': vs_,
-        'audio': as_,
+        'ecg_path': filepath_ecg,
+        'pcg_path': filepath_pcg,
+        'ecg': ecg_data,
+        'pcg': pcg_data,
+        'qrs': qrs,
+        'hrs': hrs,
+        'freqs_ecg': freqs_ecg,
+        'times_ecg': times_ecg,
+        'freqs_pcg': freqs_pcg,
+        'times_pcg': times_pcg,
+        'index': index,
         'parent_index': index_of_parent,
         'seg_index': index_of_segment
         }
         out_dict.update(data_dict)
+        if print_df:
+            if print_short:
+                print(data_dict)
+            else:
+                print(out_dict)
         return out_dict
 
     def get_segment_num(self, filename) -> int:
         """
         Gets number of segments the audio and video has been split into
         """
-        if len(self.df_all.loc[self.df_all['filename']==filename]) == 0:
+        if len(self.df_data.loc[self.df_data['filename']==filename]) == 0:
             raise ValueError(f"Error: sample with filename '{filename}' not in Dataset")
-        return self.df_all.loc[self.df_all['filename']==filename]['seg_num'].values[0]
+        return self.df_data.loc[self.df_data['filename']==filename]['seg_num'].values[0]
     
     def __len__(self):
         return self.data_len

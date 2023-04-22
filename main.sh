@@ -11,5 +11,5 @@
 module purge
 # load in the module dependencies for this script
 module load "languages/anaconda3/2022.12-3.9.13-torch-cuda-11.7"
-source activate ecgpcg
+conda activate ecgpcg
 python ./clean_data.py
