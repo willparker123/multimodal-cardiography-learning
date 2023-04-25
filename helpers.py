@@ -9,10 +9,12 @@ from typing import NamedTuple
 import re
 import cv2
 from audio import load_audio
-from video import load_video, resample_video
+from video import load_video, resample_video, convert_video_to_audio_moviepy
 from PIL import Image
+import wfdb
+import matplotlib.pyplot as plt
 
-dataframe_cols = ['filename', 'og_filename', 'label', 'record_duration', 'num_channels', 'qrs_inds', 'signal_ecg', 'signal_pcg', 'samples_ecg', 'samples_pcg', 'qrs_count', 'seg_num', 'avg_hr']
+dataframe_cols = ['filename', 'og_filename', 'label', 'record_duration', 'num_channels', 'samples_ecg', 'samples_pcg', 'qrs_count', 'seg_num', 'avg_hr']
 
 def check_datatype_and_filetype(datatype, filetype):
     if filetype not in config.file_types_ecg.union(config.file_types_pcg):
@@ -44,7 +46,8 @@ def read_file(filepath, datatype, filetype, both_in_wfdb=False):
             video_specs, fps, size = load_video(filepath)
         return_data = video_specs
         if datatype == 'video':
-            return_data_pcg = [] #TODO
+            audio, sr = convert_video_to_audio_moviepy(filepath)
+            return_data_pcg = audio
     elif filetype == "npz":
         if datatype == "signal":
             df = np.load(filepath)
@@ -54,10 +57,15 @@ def read_file(filepath, datatype, filetype, both_in_wfdb=False):
             return_data = df
     elif filetype == "wfdb":
         if both_in_wfdb:
-            return_data = return_data#TODO
-            return_data_pcg = return_data#TODO
+            record = wfdb.rdrecord(filepath, channels=[0,1])
+            signal0 = record.p_signal[:,0]
+            signal1 = record.p_signal[:,1]
+            return_data = signal0
+            return_data_pcg = signal1
         else:
-            return_data = return_data#TODO
+            record = wfdb.rdrecord(filepath, channels=[0])
+            signal = record.p_signal[:,0]
+            return_data = signal
     elif filetype == "png":
         img = cv2.imread(filepath)
         return_data = img
@@ -86,7 +94,6 @@ def create_new_folder(path):
         try:
             os.makedirs(path, access)
         except Exception as e:
-            print(eeee)
             raise ValueError(e)
             return False
         return True
@@ -131,21 +138,26 @@ def ricker(points, width):
         M.append(A*(1 - ((p**2)/(width**2)))*math.exp(-(p**2)/(width**2)))
     return M
 
+bior_family = pywt.wavelist(family='bior', kind='continuous')
+wavelet = pywt.Wavelet(name="bior2.6")
+phi_d, psi_d, phi_r, psi_r, x = wavelet.wavefun(level=6)
 # [Constrained transformer network for ECG signal processing and arrhythmia classification]
 #
 # This paper uses the Biorthogonal 2.6 (bior2.6) Wavelet Function
-def bior2_6(points, a, level=6):
+def bior2_6(points, width):
     #ps = []
     #families = pywt.families(short=False)
-    bior_family = pywt.wavelist(family='bior', kind='continuous')
-    wavelet = pywt.Wavelet(name="bior2.6")
-    phi_d, psi_d, phi_r, psi_r, x = wavelet.wavefun(level=level)
-    print(np.shape(x))
-    #ps = np.convolve(x, p, mode='full')
-    #A = x
-    #for p in points:
-    #    ps.append(A*(1 - ((p/a)**2))*math.exp(-(p**2)/(a**2)))
-    return phi_r
+    mother_wavelet = lambda z : np.exp(-z*z/4)*(2-z*z)/(4*math.sqrt(math.pi))
+
+    def mexican_hat_like(n,scale):
+        x = np.linspace(-n/2,n/2,n)
+        return mother_wavelet(x/scale)
+
+    print(f"XXX: {phi_d}") #psi_d
+    #plt.plot(psi_d, label = 'ricker')
+    #plt.legend(loc = 'best')
+    #plt.show()
+    return psi_d
 
 def get_segment_num(sample_rate, samples, segment_length, factor=1):
     segments = []

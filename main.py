@@ -9,25 +9,63 @@ from model import ECGPCGVisNet
 from trainer import ECGPCGVisTrainer
 import numpy as np
 import math
+import pandas as pd
+import os
+import numpy as np
+from audio import Audio
+from pcg import PCG, get_pcg_segments_from_array, save_pcg
+from ecg import ECG, save_qrs_inds, get_ecg_segments_from_array, get_qrs_peaks_and_hr, save_ecg
+from spectrograms import Spectrogram
+from helpers import get_segment_num, get_filtered_df, create_new_folder, ricker, dataframe_cols, read_signal
+import config
+import wfdb
 from config import load_config
 from utils import start_logger, stop_logger, initialise_gpu, load_checkpoint, get_summary_writer_log_dir
 import sys
 
 
 
-opts = load_config()
-torch.backends.cudnn.benchmark = opts.enable_gpu
+def data_sample(dataset="physionet", filename="a0001", index=1, inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_, label=0):
+    if dataset=="ephnogram":
+        sn = 'b0000'[:-len(str(index))]+str(index)
+        ecg = ECG(filename=filename, savename=sn, filepath=inputpath_data, label=label, chan=0, csv_path=inputpath_target, sample_rate=config.global_opts.sample_rate_ecg, normalise=True, apply_filter=True)
+        pcg_record = wfdb.rdrecord(inputpath_data+filename, channels=[1])
+        audio_sig = np.array(pcg_record.p_signal[:, 0])
+        audio = Audio(filename=filename, filepath=inputpath_data, audio=audio_sig, sample_rate=config.base_wfdb_pcg_sample_rate)
+        pcg = PCG(filename=filename, savename=sn, audio=audio, sample_rate=config.global_opts.sample_rate_pcg, label=label, normalise=True, apply_filter=True)
+    else: #dataset=="physionet"
+        ecg = ECG(filename=filename, filepath=inputpath_data, label=label, csv_path=inputpath_target, sample_rate=config.global_opts.sample_rate_ecg, normalise=True, apply_filter=True)
+        duration = len(ecg.signal)/ecg.sample_rate
+        audio = Audio(filename=filename, filepath=inputpath_data)
+        pcg = PCG(filename=filename, audio=audio, sample_rate=config.global_opts.sample_rate_pcg, label=label, normalise=True, apply_filter=True)
+    seg_num = get_segment_num(ecg.sample_rate, int(len(ecg.signal)), config.global_opts.segment_length, factor=1)      
+    ecg_save_name = ecg.filename if ecg.savename == None else ecg.savename
+    pcg_save_name = pcg.filename if pcg.savename == None else pcg.savename
+    #save_ecg(ecg_save_name, ecg.signal, ecg.signal_preproc, ecg.qrs_inds, ecg.hrs, outpath=f'{outputpath_save}data_{config.global_opts.ecg_type}/{ecg_save_name}/', type_=config.global_opts.ecg_type)
+    #save_pcg(pcg_save_name, pcg.signal, pcg.signal_preproc, outpath=f'{outputpath_save}data_{config.global_opts.pcg_type}/{pcg_save_name}/', type_=config.global_opts.pcg_type)
+    data = {'filename':ecg_save_name, 'og_filename':filename, 'label':ecg.label, 'record_duration':duration, 'samples_ecg':int(len(ecg.signal)), 'samples_pcg':int(len(pcg.signal)), 'qrs_count':int(len(ecg.qrs_inds)), 'seg_num':seg_num, 'avg_hr':ecg.hr_avg}
+    ecg_segments = ecg.get_segments(config.global_opts.segment_length, normalise=ecg.normalise)
+    pcg_segments = pcg.get_segments(config.global_opts.segment_length, normalise=pcg.normalise)
+    create_new_folder("samples-TEST")
+    outputpath_ = "samples-TEST/"
+    spectrogram = Spectrogram(ecg.filename, savename=ecg.filename+'_spec', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, ttype=config.global_opts.ecg_type,
+                                                    signal=ecg.signal, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
+                                                    outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', 
+                                                    normalise=True, start_time=ecg.start_time, wavelet_function=config.global_opts.cwt_function_ecg)
+    spectrogram_pcg = Spectrogram(filename, savename=filename+'_spec', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, ttype=config.global_opts.pcg_type,
+                                  signal=pcg, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
+                                  outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=0, wavelet_function=config.global_opts.cwt_function_pcg)
 
 def main():
     np.random.seed(1)
-    device = initialise_gpu(opts.gpu_id, opts.enable_gpu)
+    device = initialise_gpu(config.global_opts.gpu_id, config.global_opts.enable_gpu)
     torch.cuda.empty_cache()
 
     dataset = ECGPCGDataset(clip_length=8, 
-                            ecg_sample_rate=opts.sample_rate_ecg,
-                            pcg_sample_rate=opts.sample_rate_pcg)
+                            ecg_sample_rate=config.global_opts.sample_rate_ecg,
+                            pcg_sample_rate=config.global_opts.sample_rate_pcg)
     
-    train_len = math.floor(len(dataset)*opts.train_split)
+    train_len = math.floor(len(dataset)*config.global_opts.train_split)
     data_train, data_test = torch.utils.data.random_split(dataset, [train_len, len(dataset)-train_len], generator=torch.Generator().manual_seed(42)) 
     print(f"No. of samples in Training Data: {data_train.__len__()}, Test Data: {data_test.__len__()}")
     normals = 0
@@ -62,22 +100,22 @@ def main():
     print(f"8th ITEM: {dataset.__getitem__(7, print_short=True)}")
     print(f"9th ITEM: {dataset.__getitem__(8, print_short=True)}")
     test_loader = DataLoader(dataset,
-                            batch_size=opts.batch_size,
+                            batch_size=config.global_opts.batch_size,
                             shuffle=True,
-                            num_workers=opts.n_workers)
+                            num_workers=config.global_opts.n_workers)
     train_loader = DataLoader(dataset,
-                            batch_size=opts.batch_size,
+                            batch_size=config.global_opts.batch_size,
                             shuffle=True,
-                            num_workers=opts.n_workers)
+                            num_workers=config.global_opts.n_workers)
     print(f"LENS: TRAIN: {len(train_loader.dataset)}, TEST: {len(test_loader.dataset)}")
     
     model = ECGPCGVisNet()
     
     loss_f = nn.CrossEntropyLoss()
     criterion = loss_f  #lambda logits, labels: torch.tensor(0)
-    optimizer = optim.SGD(model.parameters(), lr=opts.learning_rate, momentum=opts.sgd_momentum)
-    if opts.opt_adam:
-        optimizer = optim.Adam(model.parameters(), lr=opts.learning_rate, betas=(opts.sgd_momentum, 0.999), eps=1e-08, weight_decay=opts.adam_weight_decay, amsgrad=opts.adam_amsgrad)
+    optimizer = optim.SGD(model.parameters(), lr=config.global_opts.learning_rate, momentum=config.global_opts.sgd_momentum)
+    if config.global_opts.opt_adam:
+        optimizer = optim.Adam(model.parameters(), lr=config.global_opts.learning_rate, betas=(config.global_opts.sgd_momentum, 0.999), eps=1e-08, weight_decay=config.global_opts.adam_weight_decay, amsgrad=config.global_opts.adam_amsgrad)
     
     log_dir = get_summary_writer_log_dir()
     print(f"Writing logs to {log_dir}")
@@ -86,18 +124,18 @@ def main():
             str(log_dir),
             flush_secs=5
     )
-    if opts.resume_checkpoint is not None:
-        checkpoint = load_checkpoint(opts.resume_checkpoint, model)
+    if config.global_opts.resume_checkpoint is not None:
+        checkpoint = load_checkpoint(config.global_opts.resume_checkpoint, model)
         
     
     trainer = ECGPCGVisTrainer(
         model, train_loader, test_loader, criterion, optimizer, summary_writer, device
     )
     trainer.train(
-        opts.epochs,
-        opts.val_frequency,
-        print_frequency=opts.print_frequency,
-        log_frequency=opts.log_frequency,
+        config.global_opts.epochs,
+        config.global_opts.val_frequency,
+        print_frequency=config.global_opts.print_frequency,
+        log_frequency=config.global_opts.log_frequency,
     )
     
     #model.eval()
@@ -107,20 +145,14 @@ def main():
     stop_logger(logger, ostdout)
 
 if __name__ == '__main__':
-    #memory_limit() 
-    if len(sys.argv)>1:
-        globals()[sys.argv[1]]()
-    #with args: globals()[sys.argv[1]](sys.argv[2])
+    print(f'**** main started - creating sample data, visualisations and launching model ****\n')
     
-    # Normal Workflow (as in paper):
-    #get_physionet()
-    #get_ephnogram()
-    #print("*** Cleaning and Postprocessing Data [3/3] ***")
-    #num_data_p, num_data_e = get_total_num_segments()
-    #hists, signal_stats = compare_spectrograms()
-    #print(f"Number of Physionet segments (8s): {num_data_p}")
-    #print(f"Number of Ephnogram segments (8s): {num_data_e}")
-    #print("*** Done - all Data cleaned ***")
+    torch.backends.cudnn.benchmark = config.global_opts.enable_gpu
+    # Load options
+    global_opts = config.global_opts
     
+    create_new_folder(config.outputpath+"results")
+  
+    data_sample()
     main()
     

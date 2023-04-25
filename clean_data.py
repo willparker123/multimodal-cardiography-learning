@@ -109,6 +109,7 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
   if not create_objects and outputpath_save is None:
     raise ValueError("Error: Parameter 'outputpath_save' must be supplied if 'create_objects' is False")
   write_to_logger_from_worker(f"Processing Data Item: {data_list}", q=q)
+  dataset = format_dataset_name(dataset)
   ref = data_list
   index = ref[1]
   filename = ""
@@ -134,7 +135,7 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
       hrs = ecg_data['hrs']
       seg_num = get_segment_num(ecg_sample_rate, int(len(ecg_sig)), sample_clip_len, factor=1) 
       duration = len(ecg_sig)/ecg_sample_rate
-      data = {'filename':filename, 'og_filename':ref[0][0], 'label':label, 'record_duration':duration, 'num_channels':channel_num, 'qrs_inds':filename+'_qrs_inds', 'signal_ecg':filename+f'_{config.global_opts.ecg_type}', 'signal_pcg':filename+f'_{config.global_opts.pcg_type}', 'samples_ecg':int(len(ecg_sig)), 'samples_pcg':int(len(pcg_sig)), 'qrs_count':int(len(ecg_qrs)), 'seg_num':seg_num, 'avg_hr':np.average(hrs)}
+      data = {'filename':filename, 'og_filename':ref[0][0], 'label':label, 'record_duration':duration, 'num_channels':channel_num, 'samples_ecg':int(len(ecg_sig)), 'samples_pcg':int(len(pcg_sig)), 'qrs_count':int(len(ecg_qrs)), 'seg_num':seg_num, 'avg_hr':np.average(hrs)}
       return data
 
   #WFDB records - channel 0 is ECG, channel 1 is PCG
@@ -144,11 +145,11 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
     sn = 'b0000'[:-len(str(index))]+str(index)
     ecg = ECG(filename=filename, savename=sn, filepath=inputpath_data, label=label, chan=0, csv_path=inputpath_target, sample_rate=ecg_sample_rate, normalise=True, apply_filter=True)
     pcg_record = wfdb.rdrecord(inputpath_data+filename, channels=[1])
-    audio_sig = torch.from_numpy(np.expand_dims(np.squeeze(np.array(pcg_record.p_signal[:, 0])), axis=0))
+    audio_sig = np.array(pcg_record.p_signal[:, 0])
     audio = Audio(filename=filename, filepath=inputpath_data, audio=audio_sig, sample_rate=config.base_wfdb_pcg_sample_rate)
     pcg = PCG(filename=filename, savename=sn, audio=audio, sample_rate=pcg_sample_rate, label=label, normalise=True, apply_filter=True)
   #ECG is WFDB channel 0, PCG is .wav
-  if dataset=="physionet":
+  elif dataset=="physionet":
     filename = ref[0][0]
     ecg = ECG(filename=filename, filepath=inputpath_data, label=label, csv_path=inputpath_target, sample_rate=ecg_sample_rate, normalise=True, apply_filter=True)
     duration = len(ecg.signal)/ecg.sample_rate
@@ -162,6 +163,7 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
     audio = Audio(filename=filename, filepath=inputpath_data)
     pcg = PCG(filename=filename, audio=audio, sample_rate=pcg_sample_rate, label=label, normalise=True, apply_filter=True)
     
+  
   seg_num = get_segment_num(ecg.sample_rate, int(len(ecg.signal)), sample_clip_len, factor=1)      
   if not create_objects:
     create_new_folder(outputpath_save+f'data_{config.global_opts.ecg_type}/{filename}')
@@ -173,7 +175,8 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
     #save_qrs_inds(ecg_save_name, ecg.qrs_inds, outpath=f'{outputpath_save}data_{config.global_opts.ecg_type}/{ecg_save_name}/')
     #save_ecg_signal(ecg_save_name, ecg.signal, outpath=f'{outputpath_save}data_{config.global_opts.ecg_type}/{ecg_save_name}/', type_=config.global_opts.ecg_type)
     #save_pcg_signal(pcg_save_name, pcg.signal, outpath=f'{outputpath_save}data_{config.global_opts.pcg_type}/{pcg_save_name}/', type_=config.global_opts.pcg_type)
-  data = {'filename':ecg_save_name, 'og_filename':filename, 'label':label, 'record_duration':duration, 'num_channels':channel_num, 'qrs_inds':ecg_save_name+'_qrs_inds', 'signal_ecg':ecg_save_name+f'_{config.global_opts.ecg_type}', 'signal_pcg':pcg_save_name+f'_{config.global_opts.pcg_type}', 'samples_ecg':int(len(ecg.signal)), 'samples_pcg':int(len(pcg.signal)), 'qrs_count':int(len(ecg.qrs_inds)), 'seg_num':seg_num, 'avg_hr':ecg.hr_avg}
+    write_to_logger_from_worker(f"READMETEST: int(len(pcg.signal)): {int(len(pcg.signal))} hr_avg: {ecg.hr_avg}  avg hrs: {np.average(ecg.hrs)}", q=q)
+  data = {'filename':ecg_save_name, 'og_filename':filename, 'label':label, 'record_duration':duration, 'num_channels':channel_num, 'samples_ecg':int(len(ecg.signal)), 'samples_pcg':int(len(pcg.signal)), 'qrs_count':int(len(ecg.qrs_inds)), 'seg_num':seg_num, 'avg_hr':ecg.hr_avg}
   if create_objects:
     return data, ecg, pcg, audio
   else:
@@ -219,8 +222,8 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
     #pcg = read_signal(outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/{filename}_{config.global_opts.pcg_type}_signal.npy')
   if not skipSegments:
     if create_objects:
-      ecg_segments = ecg.get_segments(config.global_opts.segment_length, normalise=ecg.normalise, create_objects=create_objects)
-      pcg_segments = pcg.get_segments(config.global_opts.segment_length, normalise=pcg.normalise, create_objects=create_objects)
+      ecg_segments = ecg.get_segments(config.global_opts.segment_length, normalise=ecg.normalise)
+      pcg_segments = pcg.get_segments(config.global_opts.segment_length, normalise=pcg.normalise)
     else:
       ecg_segments, start_times_ecg, zip_sampfrom_sampto_ecg = get_ecg_segments_from_array(ecg, ecg_sample_rate, config.global_opts.segment_length, normalise=True)
       pcg_segments, start_times_pcg, zip_sampfrom_sampto_pcg = get_pcg_segments_from_array(pcg, pcg_sample_rate, config.global_opts.segment_length, normalise=True)
@@ -234,7 +237,7 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
         #save_ecg_signal(seg.savename, seg.signal, outpath=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{ind}/', type_=config.global_opts.ecg_type)
         save_ecg(seg.savename, seg.signal, seg.signal_preproc, seg.qrs_inds, seg.hrs, outpath=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{ind}/', type_=config.global_opts.ecg_type)
       else:
-        sampfrom_ecg, sampto_ecg, sampfrom_pcg, sampto_pcg = 0,0,0,0
+        sampfrom_ecg, sampto_ecg = 0,0
         if ind < len(zip_sampfrom_sampto_ecg):
           sampfrom_ecg, sampto_ecg = int(zip_sampfrom_sampto_ecg[ind][0]), int(zip_sampfrom_sampto_ecg[ind][1])
         else:
@@ -254,8 +257,9 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
       if create_objects:
         save_pcg(seg_.savename, seg_.signal, seg_.signal_preproc, outpath=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/{ind_}/', type_=config.global_opts.pcg_type)
       else:
+        sampfrom_pcg, sampto_pcg = 0,0
         if ind_ < len(zip_sampfrom_sampto_pcg):
-          sampfrom_pcg, sampto_pcg = int(zip_sampfrom_sampto_pcg[ind][0]), int(zip_sampfrom_sampto_pcg[ind][1])
+          sampfrom_pcg, sampto_pcg = int(zip_sampfrom_sampto_pcg[ind_][0]), int(zip_sampfrom_sampto_pcg[ind_][1])
         else:
           write_to_logger_from_worker(f"Warning: Could not find entry for sampfrom/sampto in zip_sampfrom_sampto_pcg: \n{zip_sampfrom_sampto_pcg}\n for Segment {ind_}.", q=q)
         seg_pcg_preproc = pcg_data['signal'][sampfrom_pcg:sampto_pcg]
@@ -266,25 +270,25 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
   if not skipECGSpectrogram:
     create_new_folder(outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}')
     if create_objects:
-      spectrogram = Spectrogram(ecg.filename, savename=ecg.filename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
+      spectrogram = Spectrogram(ecg.filename, savename=ecg.filename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, ttype=config.global_opts.ecg_type,
                                                 signal=ecg.signal, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
-                                                outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/', normalise=True, start_time=ecg.start_time, wavelet_function=config.global_opts.cwt_function)
+                                                outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/', normalise=True, start_time=ecg.start_time, wavelet_function=config.global_opts.cwt_function_ecg)
     else:
-      Spectrogram(filename, savename=filename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
+      Spectrogram(filename, savename=filename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, ttype=config.global_opts.ecg_type,
                                                 signal=ecg, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
-                                                outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/', normalise=True, start_time=0, wavelet_function=config.global_opts.cwt_function)
+                                                outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/', normalise=True, start_time=0, wavelet_function=config.global_opts.cwt_function_ecg)
     if not skipSegments:
       for index_e, seg in enumerate(ecg_segments):
         write_to_logger_from_worker(f"* Processing Segment {index_e} ({index_e+1} / {len(ecg_segments)}) *", q=q)
         create_new_folder(outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}')
         if create_objects:
-          seg_spectrogram = Spectrogram(filename, savename=seg.savename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
+          seg_spectrogram = Spectrogram(filename, savename=seg.savename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, ttype=config.global_opts.ecg_type,
                                               signal=seg.signal, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
-                                              outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{index_e}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/', normalise=True, start_time=seg.start_time, wavelet_function=config.global_opts.cwt_function)
+                                              outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{index_e}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/', normalise=True, start_time=seg.start_time, wavelet_function=config.global_opts.cwt_function_ecg)
         else:
-          Spectrogram(filename, savename=f'{filename}_seg_{index_e}_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
+          Spectrogram(filename, savename=f'{filename}_seg_{index_e}_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, ttype=config.global_opts.ecg_type,
                                               signal=seg, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
-                                              outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{index_e}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/', normalise=True, start_time=start_times_ecg[index_e], wavelet_function=config.global_opts.cwt_function)
+                                              outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{index_e}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/', normalise=True, start_time=start_times_ecg[index_e], wavelet_function=config.global_opts.cwt_function_ecg)
         if split_into_video:
           write_to_logger_from_worker(f"* Processing Frames for Segment {index_e} *", q=q)
           create_new_folder(outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/frames')
@@ -296,14 +300,14 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
             for i in tqdm.trange(len(ecg_frames)):
               ecg_frame = ecg_frames[i]
               if create_objects:
-                frame_spectrogram = Spectrogram(filename, savename=ecg_frame.savename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
+                frame_spectrogram = Spectrogram(filename, savename=ecg_frame.savename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, ttype=config.global_opts.ecg_type,
                                                   signal=ecg_frame.signal, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
-                                                  outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', normalise=True, normalise_factor=np.linalg.norm(seg_spectrogram.spec), start_time=ecg_frame.start_time, wavelet_function=config.global_opts.cwt_function)
+                                                  outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', normalise=True, normalise_factor=np.linalg.norm(seg_spectrogram.spec), start_time=ecg_frame.start_time, wavelet_function=config.global_opts.cwt_function_ecg)
                 frames.append(frame_spectrogram)
               else:
-                Spectrogram(filename, savename=f'{filename}_seg_{index_e}_seg_{i}_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, type=config.global_opts.ecg_type,
+                Spectrogram(filename, savename=f'{filename}_seg_{index_e}_seg_{i}_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, ttype=config.global_opts.ecg_type,
                                                   signal=ecg_frame, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
-                                                  outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', normalise=True, normalise_factor=np.linalg.norm(seg_spectrogram.spec), start_time=start_times_frames[i], wavelet_function=config.global_opts.cwt_function)
+                                                  outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', normalise=True, normalise_factor=np.linalg.norm(seg_spectrogram.spec), start_time=start_times_frames[i], wavelet_function=config.global_opts.cwt_function_ecg)
             write_to_logger_from_worker(f"* Creating .mp4 for Segment {index_e} / {len(ecg_segments)} *", q=q)
             ecg_seg_video = create_video(imagespath=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/{index_e}/', filename=seg.savename if create_objects else f'{filename}_seg_{index_e}', framerate=config.global_opts.fps)
         gc.collect()
@@ -312,27 +316,28 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
   if not skipPCGSpectrogram:
     create_new_folder(outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}')
     if create_objects:
-      pcg_spectrogram = Spectrogram(pcg.filename, savename=pcg.filename+'_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, type=config.global_opts.pcg_type,
+      pcg_spectrogram = Spectrogram(pcg.filename, savename=pcg.filename+'_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, ttype=config.global_opts.pcg_type,
                                   signal=pcg.signal, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
-                                  outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/', normalise=True, start_time=pcg.start_time)
+                                  outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/', normalise=True, start_time=pcg.start_time, wavelet_function=config.global_opts.cwt_function_pcg)
     else:
-      Spectrogram(filename, savename=filename+'_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, type=config.global_opts.pcg_type,
+      Spectrogram(filename, savename=filename+'_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, ttype=config.global_opts.pcg_type,
                                   signal=pcg, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
-                                  outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/', normalise=True, start_time=0)
+                                  outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/', normalise=True, start_time=0, wavelet_function=config.global_opts.cwt_function_pcg)
 
     if not skipSegments:
       for index_p, pcg_seg in enumerate(pcg_segments):
+        print(f"SEG {index_p}: {pcg_seg}")
         create_new_folder(outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/{index_p}')
         write_to_logger_from_worker(f"* Processing Segment {index_p} ({index_p+1} / {len(pcg_segments)}) *", q=q)
         if create_objects:
-          pcg_seg_spectrogram = Spectrogram(filename, savename=pcg_seg.savename+'_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, type=config.global_opts.pcg_type,
+          pcg_seg_spectrogram = Spectrogram(filename, savename=pcg_seg.savename+'_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, ttype=config.global_opts.pcg_type,
                                     signal=pcg_seg.signal, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
-                                    outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/{index_p}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/{index_p}/', normalise=True, start_time=pcg_seg.start_time)
+                                    outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/{index_p}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/{index_p}/', normalise=True, start_time=pcg_seg.start_time, wavelet_function=config.global_opts.cwt_function_pcg)
           specs_pcg.append(pcg_seg_spectrogram)
         else:
-          Spectrogram(filename, savename=f'{filename}_seg_{index_p}_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, type=config.global_opts.pcg_type,
+          Spectrogram(filename, savename=f'{filename}_seg_{index_p}_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, ttype=config.global_opts.pcg_type,
                                     signal=pcg_seg, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
-                                    outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/{index_p}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/{index_p}/', normalise=True, start_time=start_times_pcg[index_p])
+                                    outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/{index_p}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/{index_p}/', normalise=True, start_time=start_times_pcg[index_p], wavelet_function=config.global_opts.cwt_function_pcg)
         gc.collect()
     gc.collect()
   if create_objects:
@@ -360,6 +365,7 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
   write_to_logger(f'* Cleaning {dataset.capitalize()} Data - Creating References [{steps_taken}/{total_steps}] *', pool, q=q)
   create_new_folder(outputpath_+dataset)
   outputpath_save = outputpath_+dataset+f'/'
+  create_new_folder(outputpath_save+f'spectrograms_pcg_audio')
   if not skipECGSpectrogram:
     create_new_folder(outputpath_save+f'spectrograms_{config.global_opts.ecg_type}')
   if not skipPCGSpectrogram:
@@ -372,10 +378,10 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
       raise ValueError(f"Error: input file path for WFDB data does not exist at path '{inputpath_data}' - aborting")
   if dataset == "physionet":
     cols_d = config.physionet_cols 
+    ref_csv = pd.read_csv(inputpath_target, names=cols_d, skipinitialspace=True)
   if dataset == "ephnogram":
     cols_d = config.ephnogram_cols
-  ref_csv = pd.read_csv(inputpath_target, names=cols_d, skipinitialspace=True)
-  ref_csv.tail(-1)
+    ref_csv = pd.read_csv(inputpath_target, names=cols_d, skipinitialspace=True, header=0)
   write_to_logger(f"READMEREF: {ref_csv}", pool, q=q)
   steps_taken += 1
   write_to_logger(f"Unprocessed label CSV for {dataset.upper()}: {ref_csv.head()}", pool, q=q)
@@ -388,7 +394,7 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
     write_to_logger(f'* Cleaning {dataset.capitalize()} Data - Creating CSV "{outputpath_save}data_{dataset.lower()}_raw.csv" - QRS, ECGs and PCGs [{steps_taken}/{total_steps}] *', pool, q=q)
     # Zip of (Values, Index)
     data_list = zip(ref_csv.values.tolist(), range(len(ref_csv)))
-    results = pool.map(partial(get_data_serial, inputpath_data=inputpath_data, 
+    results = pool.map(partial(get_data_serial, dataset=dataset, inputpath_data=inputpath_data, 
                                inputpath_target=inputpath_target, 
                                ecg_sample_rate=ecg_sample_rate, 
                                pcg_sample_rate=pcg_sample_rate, 
@@ -408,7 +414,7 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
     data.to_csv(f"{outputpath_save}data_{dataset.lower()}_raw.csv",index=False)
   else:
     try:
-      data = pd.read_csv(f"{outputpath_save}data_{dataset.lower()}_raw.csv", names=list(dataframe_cols))
+      data = pd.read_csv(f"{outputpath_save}data_{dataset.lower()}_raw.csv", names=list(dataframe_cols), header=0)
     except:
       raise ValueError(f"Error: CSV file '{outputpath_}data_{dataset}_raw.csv' could not be read / found.")
   reflen = len(data)
@@ -441,14 +447,14 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
     return data
 
 
-def get_dataset(dataset="physionet", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_, outputpath_folder=config.outputpath, create_objects=False, get_balance_diff=True, skipDataCSVAndFiles=False, skipExisting=True, pool=None, q=None):
+def get_dataset(dataset="physionet", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_, outputpath_folder=config.outputpath, create_objects=False, get_balance_diff=True, skipDataCSVAndFiles=False, skipExisting=True, skipECGSpectrogram=False, skipPCGSpectrogram=False, pool=None, q=None):
   dataset = format_dataset_name(dataset)
   write_to_logger(f'*** Cleaning Data [{1 if dataset == "physionet" else 2}/3] ***', pool, q=q)
   write_to_logger(f'** Cleaning {dataset.capitalize()} Data **', pool, q=q)
   if not create_objects:
-    data = clean_data(inputpath_data, inputpath_target, outputpath_folder, skipSegments=False, create_objects=create_objects, dataset=dataset, skipDataCSVAndFiles=skipDataCSVAndFiles, skipExisting=skipExisting, pool=pool, q=q)
+    data = clean_data(inputpath_data, inputpath_target, outputpath_folder, skipSegments=False, create_objects=create_objects, dataset=dataset, skipDataCSVAndFiles=skipDataCSVAndFiles, skipExisting=skipExisting, skipECGSpectrogram=skipECGSpectrogram, skipPCGSpectrogram=skipPCGSpectrogram, pool=pool, q=q)
   else:
-    data, ecgs, pcgs, ecg_segments, pcg_segments, spectrograms_ecg, spectrograms_pcg, spectrograms_ecg_segs, spectrograms_pcg_segs = clean_data(inputpath_data, inputpath_target, outputpath_folder, skipSegments=False, create_objects=create_objects, dataset=dataset, skipDataCSVAndFiles=skipDataCSVAndFiles, skipExisting=skipExisting, pool=pool, q=q)
+    data, ecgs, pcgs, ecg_segments, pcg_segments, spectrograms_ecg, spectrograms_pcg, spectrograms_ecg_segs, spectrograms_pcg_segs = clean_data(inputpath_data, inputpath_target, outputpath_folder, skipSegments=False, create_objects=create_objects, dataset=dataset, skipDataCSVAndFiles=skipDataCSVAndFiles, skipExisting=skipExisting, skipECGSpectrogram=skipECGSpectrogram, skipPCGSpectrogram=skipPCGSpectrogram, pool=pool, q=q)
   write_to_logger(f'{dataset.upper()}: Head', pool, q=q)
   write_to_logger(data.head(), pool, q=q)
   write_to_logger(f'{dataset.upper()}: Samples (PCG)', pool, q=q)
@@ -564,7 +570,6 @@ if __name__ == "__main__":
   
   create_new_folder(config.outputpath+"results")
   create_new_folder(config.outputpath+"results/gqrs_peaks")
-  
   manager = mp.Manager()
   manager_q = manager.Queue()
   pool = mp.Pool(global_opts.number_of_processes, maxtasksperchild=10)
@@ -645,10 +650,6 @@ if __name__ == "__main__":
     write_to_logger(bigmemorywarning, pool, manager_q)
   
   #   - 'create_objects=False' for better performance; uses 'np.load(filepath_to_saved_spectogram_or_cwt)' to get processed ECG/PCG data
-  write_to_logger(str(os.path.exists(config.input_physionet_data_folderpath_)), pool, manager_q)
-  write_to_logger(str(os.path.exists(config.input_physionet_target_folderpath_)), pool, manager_q)
-  write_to_logger(str(os.path.exists(config.input_ephnogram_data_folderpath_)), pool, manager_q)
-  write_to_logger(str(os.path.exists(config.input_ephnogram_target_folderpath_)), pool, manager_q)
   # Normal Workflow (as in paper): 
   data_p, ratio_data_p = get_dataset(dataset="physionet", 
                                      inputpath_data=config.input_physionet_data_folderpath_, 
@@ -658,20 +659,22 @@ if __name__ == "__main__":
                                      
                                      create_objects=False,
                                      get_balance_diff=True,
-                                     skipDataCSVAndFiles=False,
+                                     skipDataCSVAndFiles=True,
+                                     skipECGSpectrogram=False,
+                                     skipPCGSpectrogram=True,
                                      skipExisting=False, #TODO remove - skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
   )
-  data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
-                                     inputpath_data=config.input_ephnogram_data_folderpath_, 
-                                     inputpath_target=config.input_ephnogram_target_folderpath_, 
-                                     outputpath_folder=config.outputpath,
-                                     pool=pool, q=manager_q,
-                                     
-                                     create_objects=False,
-                                     get_balance_diff=True,
-                                     skipDataCSVAndFiles=False,
-                                     skipExisting=False, #TODO remove - skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
-  )
+  #data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
+  #                                   inputpath_data=config.input_ephnogram_data_folderpath_, 
+  #                                   inputpath_target=config.input_ephnogram_target_folderpath_, 
+  #                                   outputpath_folder=config.outputpath,
+  #                                   pool=pool, q=manager_q,
+  #                                   
+  #                                   create_objects=False,
+  #                                   get_balance_diff=True,
+  #                                   skipDataCSVAndFiles=False,
+  #                                   skipExisting=False, #TODO remove - skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+  #)
   write_to_logger("*** Cleaning and Postprocessing Data [3/3] ***", pool, manager_q)
   num_data_p, num_data_e = get_total_num_segments(config.outputpath)
   hists, signal_stats = create_histograms_data_values_distribution(config.outputpath, manager_q)

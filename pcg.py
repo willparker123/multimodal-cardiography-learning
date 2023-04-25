@@ -15,7 +15,7 @@ Class for PCG preprocessing, loading from .wav /.npy files
 class PCG():
     def __init__(self, filename, savename=None, filepath=input_physionet_data_folderpath_, label=None, audio: Audio=None, sample_rate=2000, sampfrom=None, 
                  sampto=None, resample=True, normalise=True, apply_filter=True, csv_path=input_physionet_target_folderpath_, normalise_factor=None,
-                 filter_lower=config.global_opts.pcg_filter_lower_bound, filter_upper=config.global_opts.pcg_filter_upper_bound):
+                 filter_lower=config.global_opts.pcg_filter_lower_bound, filter_upper=config.global_opts.pcg_filter_upper_bound, plot_audio=False):
         self.filepath = filepath
         self.filename = filename
         self.csv_path = csv_path
@@ -36,24 +36,32 @@ class PCG():
         self.apply_filter = apply_filter
         self.start_time = 0
         self.normalise_factor = normalise_factor
-        
+        if torch.is_tensor(signal):
+            signal = signal.numpy()
+        signal = np.squeeze(signal, axis=0)
+        if not self.audio_sample_rate == sample_rate and resample:
+            print(f"Warning: audio_sample_rate frequency ({self.audio_sample_rate}) does not match sample_rate ({sample_rate}) - resampling to sample_rate")
+            if not torch.is_tensor(signal):
+                signal = torch.from_numpy(signal)
+            resample = transforms.Resample(self.audio_sample_rate, sample_rate, dtype=signal.dtype)
+            signal = resample(signal)
+            signal = signal.numpy()
         if sampfrom is None:
             if sampto is None:
                 signal = signal
             else:
-                signal = torch.from_numpy(np.expand_dims(np.squeeze(np.array(signal))[0:sampto], axis=0))
+                signal = np.array(signal)[0:sampto]
         else:
             if sampto is None:
-                signal = torch.from_numpy(np.expand_dims(np.squeeze(np.array(signal))[sampfrom:len(signal)-1], axis=0))
+                signal = np.array(signal)[sampfrom:len(signal)-1]
                 self.start_time = sampfrom/self.sample_rate
             else:
-                signal = torch.from_numpy(np.expand_dims(np.squeeze(np.array(signal))[sampfrom:sampto], axis=0))
+                signal = np.array(signal)[sampfrom:sampto]
                 self.start_time = sampfrom/self.sample_rate
-
-        if not self.audio_sample_rate == sample_rate and resample:
-            print(f"Warning: audio_sample_rate frequency ({self.audio_sample_rate}) does not match sample_rate ({sample_rate}) - resampling to sample_rate")
-            resample = transforms.Resample(self.audio_sample_rate, sample_rate, dtype=signal.dtype)
-            signal = resample(signal[0, :].view(1, -1))
+        try:
+            signal = signal.numpy()
+        except:
+            pass
         self.signal_preproc = signal
         if apply_filter:
             #[Deep Learning Based Classification of Unsegmented Phonocardiogram Spectrograms Leveraging Transfer Learning]
@@ -69,21 +77,14 @@ class PCG():
             # 25 Hz to 400 [1 in MODEL]
             # 100 Hz to 600 [2 in MODEL]
             check_filter_bounds(filter_lower, filter_upper)
-            signal = butterworth_bandpass_filter(np.squeeze(signal), filter_lower, filter_upper, sample_rate, order=4)
-            signal = np.expand_dims(signal, axis=0).astype(np.float32)
-            signal = torch.from_numpy(signal)
+            signal = butterworth_bandpass_filter(signal, filter_lower, filter_upper, sample_rate, order=4)
         if normalise: #normalise to [0, 1]
             if normalise_factor is not None:
-                signal = signal.numpy() / normalise_factor
-                signal = np.expand_dims(signal, axis=0).astype(np.float32)
-                signal = torch.from_numpy(signal)
+                signal = signal / normalise_factor
             else:
-                squeezed_signal = signal.numpy().squeeze()
-                signal = (squeezed_signal - np.min(squeezed_signal))/np.ptp(squeezed_signal) #np.ptp(signal.numpy().squeeze())
-                signal = np.expand_dims(signal, axis=0).astype(np.float32)
-                signal = torch.from_numpy(signal)
+                signal = (signal-np.min(signal))/(np.max(signal)-np.min(signal))
         self.signal = signal
-        self.samples = int(len(signal[0, :]))
+        self.samples = int(len(signal))
         if label is None:
             if not os.path.isfile(csv_path):
                 raise ValueError(f"Error: file '{csv_path}' does not exist - aborting")
@@ -94,7 +95,9 @@ class PCG():
         if label == 1: #abnormal
             label = 1
         self.label = label
-            
+        if plot_audio:
+            self.plot_resampled_audio()
+        
     def save_signal(self, outpath=outputpath+'physionet/', type_=config.global_opts.pcg_type, preproc=False):
         if self.savename is not None:
             np.save(outpath+self.savename+f'_{type_}_signal.npy', np.squeeze(self.signal if not preproc else self.signal_preproc))
@@ -118,13 +121,13 @@ class PCG():
             segments.append(segment)
         return segments
         
-    def plot_resampled_audio(self, save=True, outpath_png=outputpath+'physionet/spectrograms', show=False):
+    def plot_resampled_audio(self, save=True, outpath_png=outputpath+'physionet/spectrograms_pcg_audio', show=False):
         plt.plot(self.signal)
         if save:
             if self.savename is not None:
-                plt.savefig(outpath_png+self.savename+'_pcg_audio.png', format="png")
+                plt.savefig(outpath_png+'/'+self.savename+'_pcg_audio.png', format="png")
             else:
-                plt.savefig(outpath_png+self.filename+'_pcg_audio.png', format="png")
+                plt.savefig(outpath_png+'/'+self.filename+'_pcg_audio.png', format="png")
         if show:
             plt.show()
         plt.figure().clear()
@@ -137,10 +140,6 @@ def save_pcg(filename, signal, signal_preproc, outpath=outputpath+'physionet/', 
     np.savez(outpath+f'{f}_{type_}.npz', data=signal, signal=signal_preproc)
 
 def save_pcg_signal(filename, signal, outpath=outputpath+'physionet/', savename=None, type_="pcg_logmel"):
-    try:
-        signal = np.squeeze(signal)
-    except:
-        signal = signal.squeeze()
     f = filename
     if savename is not None:
         f = savename
@@ -162,11 +161,11 @@ def get_pcg_segments_from_array(data, sample_rate, segment_length, factor=1, nor
     for i in range(no_segs):
         sampfrom = inds[i]
         sampto=inds[i]+samples_goal
-        start_time = sampfrom/sample_rate
+        start_time = sampfrom
         start_times.append(start_time)
         segment = np.array(data)[sampfrom:sampto]
         if normalise:
-            segment = (segment - np.min(segment))/np.ptp(segment)
+            segment = (segment-np.min(segment))/(np.max(segment)-np.min(segment))
         segments.append(segment)
         zip_sampfrom_sampto.append([sampfrom, sampto])
         #segment = torch.from_numpy(np.expand_dims(np.squeeze(np.array(data))[sampfrom:sampto], axis=0))

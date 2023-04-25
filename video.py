@@ -3,7 +3,19 @@ import cv2
 import glob
 import re
 import config
+import os
+import torchaudio
+from moviepy.editor import *
 
+
+def convert_video_to_audio_moviepy(video_file):
+    """Converts video to audio using MoviePy library
+    that uses `ffmpeg` under the hood"""
+    audioclip = AudioFileClip(video_file)
+    audioclip.write_audiofile(video_file[:len(video_file)-3]+'.wav')
+    audio, sr = torchaudio.load(video_file[:len(video_file)-3]+'.wav')
+    return audio, sr
+    
 def create_video(imagespath, outpath, filename, images=None, framerate=config.global_opts.fps):
     #out, _ = (
     #    ffmpeg.input(imagespath+'*.png', pattern_type='glob', framerate=framerate)

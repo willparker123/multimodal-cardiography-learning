@@ -5,7 +5,9 @@ data-after/physionet/
 data-after/results/
 data-after/ephnogram/results/
 data-after/physionet/results/
+data-after/
 data-after-TEST/
+samples-TEST/
 envs/
 Scripts/
 .vscode/

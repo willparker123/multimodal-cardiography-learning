@@ -52,11 +52,12 @@ number_of_processes = mp.cpu_count()+2 #number of processors used for multiproce
 mem_limit = 0.8 #value in range [0, 1] percentage of system memory available for processing
 
 # ecg, ecg_cwt, ecg_log, ecg_cwtlog, pcg, pcg_mel, pcg_logmel
-ecg_type = "ecg"
-pcg_type = "pcg_logmel"
+ecg_type = "ecg_cwt"
+pcg_type = "pcg_cwt"
 
-# ricker, bior2.6, customricker
-cwt_function = "ricker"
+# ricker, bior2.6, customricker, morlet, mexicanhat
+cwt_function_ecg = "mexicanhat"
+cwt_function_pcg = "morlet"
 
 sample_rate_ecg = 2000
 sample_rate_pcg = 2000
@@ -158,10 +159,6 @@ def load_config():
                         default=window_length_ms,
                         type=int,
                         help='Length in milliseconds of the Hamming window used in spectrogram transform')
-    parser.add_argument('--cwt-function',
-                        default=cwt_function,
-                        type=str,
-                        help='Function to use when creating Wavelets using CWT [ricker, bior2.6, customricker]')
     
     # --- ecg
     parser.add_argument('--ecg-type',
@@ -181,13 +178,17 @@ def load_config():
                         type=float,
                         help='Upper bound for the Butterworth bandpass filter applied to the ECG')
     parser.add_argument('--nfft-ecg',
-                        default=spec_win_size_ecg,
+                        default=window_length,
                         type=int,
                         help='Size of FFT applied to ECG: n_fft // 2 + 1 bins')
     parser.add_argument('--hop-length-ecg',
-                        default=spec_win_size_ecg//2,
+                        default=window_length//2,
                         type=int,
                         help='Length of hop between STFT windows')
+    parser.add_argument('--cwt-function-ecg',
+                        default=cwt_function_ecg,
+                        type=str,
+                        help='Function to use when creating ECG using CWT [ricker, bior2.6, customricker, morlet]')
     
     # --- pcg
     parser.add_argument('--pcg-type',
@@ -211,13 +212,17 @@ def load_config():
                         type=float,
                         help='Upper bound for the Butterworth bandpass filter applied to the PCG')
     parser.add_argument('--nfft-pcg',
-                        default=spec_win_size_pcg,
+                        default=window_length,
                         type=int,
                         help='Size of FFT applied to PCG: n_fft // 2 + 1 bins')
     parser.add_argument('--hop-length-pcg',
-                        default=spec_win_size_pcg//2,
+                        default=window_length//2,
                         type=int,
                         help='Length of hop between STFT windows')
+    parser.add_argument('--cwt-function-pcg',
+                        default=cwt_function_pcg,
+                        type=str,
+                        help='Function to use when creating PCG using CWT [ricker, bior2.6, customricker, morlet]')
 
     # --- video
     parser.add_argument('--resize',

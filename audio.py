@@ -10,12 +10,13 @@ class Audio():
         self.filepath = filepath
         if audio is not None and sample_rate is not None:
             self.audio, self.sample_rate = audio, sample_rate
+            return
         else:
             if audio is not None:
                 print("Warning: audio is provided but no sample_rate - trying to read filepath+filename+'.wav'")
             if sample_rate is not None:
                 print("Warning: sample_rate is provided but no audio - trying to read filepath+filename+'.wav'")
-            self.audio, self.sample_rate = torchaudio.load(filepath+filename+'.wav')
+            self.audio, self.sample_rate = self.load_audio()
         
     def load_audio(self):
         audio, sr = torchaudio.load(self.filepath+self.filename+'.wav')
@@ -26,6 +27,10 @@ class Audio():
     
 def load_audio(filepath, filename):
     audio, sr = torchaudio.load(filepath+filename+'.wav')
+    return audio, sr
+
+def load_audio(filepath):
+    audio, sr = torchaudio.load(filepath)
     return audio, sr
 
 def save_signal(filename, signal, outpath=outputpath+'physionet/', savename=None):

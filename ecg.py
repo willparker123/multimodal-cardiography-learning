@@ -10,6 +10,47 @@ import config
 from helpers import butterworth_bandpass_filter, get_filtered_df, create_new_folder, check_filter_bounds
 import matplotlib.pyplot as plt
 
+def get_rr_infos(qrs_inds):
+    rrs = []
+    rr_prev = []
+    rr_post = []
+    rr_ratio = []
+    rr_local = []
+    rr_avg = 0
+    c = 0
+    for i, qrs in enumerate(qrs_inds):
+        if not i == len(qrs_inds)-1:
+            rrs.append(qrs_inds[i+1]-qrs_inds[i])
+            
+        if i == 0:
+            rr_prev.append(0)
+        else:
+            rr_prev.append(rrs[i-1])
+            
+        if i == len(qrs_inds)-1:
+            rr_post.append(0)
+        else:
+            rr_post.append(rrs[i+1])
+            
+        if rr_prev[i] == 0 or rr_post[i] == 0:
+            rr_ratio.append(0)
+        else:
+            rr_ratio.append(rr_prev[i]/rr_post[i])
+        
+        rlim = i+1 if i < 10 else 10
+        rr_l = 0
+        for j in range(rlim):
+            rr_l += rrs[j]
+        rr_local.append(rr_l/rlim)
+        
+        if not rrs[i] == 0:
+            rr_avg += rrs[i]
+            c += 1
+    rr_avg = rr_avg/c
+    rr_prev = [x / rr_avg for x in rr_prev]
+    rr_post = [x / rr_avg for x in rr_post]
+    rr_local = [x / rr_avg for x in rr_local]
+    return rr_prev, rr_post, rr_ratio, rr_local
 
 """
 Class for ECG preprocessing, loading from .dat/.hea (WFDB) /.npy files
@@ -51,11 +92,11 @@ class ECG():
             print(f"Warning: record sampling frequency ({record.fs}) does not match ecg_sample_rate ({sample_rate}) - resampling to sample_rate")
             signal, self.locations = processing.resample_sig(signal, record.fs, sample_rate)
         self.signal_preproc = signal
-        self.qrs_inds = processing.qrs.xqrs_detect(sig=signal, fs=record.fs)
+        self.qrs_inds = processing.qrs.xqrs_detect(sig=signal, fs=sample_rate)
         if get_qrs_and_hrs_png:    
-            self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=record.fs,
+            self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=sample_rate,
                 title="Corrected GQRS peak detection", saveto=f"{config.outputpath}results/gqrs_peaks/{self.savename if self.savename is not None else self.filename}.png")
-            self.hr_avg = np.average(self.hrs)
+            self.hr_avg = np.nanmean(self.hrs)
             
         if apply_filter:
             #### UNUSED
@@ -87,7 +128,7 @@ class ECG():
             if normalise_factor is not None:
                 signal = signal / normalise_factor
             else:
-                signal = (signal - np.min(signal))/np.ptp(signal)
+                signal = (signal-np.min(signal))/(np.max(signal)-np.min(signal))
         self.sample_rate = sample_rate
         self.record = record
         self.signal = signal
@@ -148,10 +189,6 @@ def save_ecg(filename, signal, signal_preproc, qrs_inds, hrs, outpath=config.out
     np.savez(outpath+f'{f}_{type_}.npz', data=signal, signal=signal_preproc, qrs=qrs_inds, hrs=hrs)
         
 def save_ecg_signal(filename, signal, outpath=config.outputpath+'physionet/', savename=None, type_="ecg_log"):
-    try:
-        signal = np.squeeze(signal)
-    except:
-        signal = signal.squeeze()
     f = filename
     if savename is not None:
         f = savename
@@ -199,7 +236,7 @@ def get_ecg_segments_from_array(data, sample_rate, segment_length, factor=1, nor
     samples = int(len(data))
     if samples_goal < 1:
         raise ValueError("Error: sample_rate*segment_length results in 0; segment_length is too low")
-    no_segs = int(np.floor((samples//samples_goal)*factor))
+    no_segs = int(np.floor((samples/samples_goal)*factor))
     
     inds = np.linspace(0, samples-samples_goal, num=no_segs)
     inds = map(lambda x: np.floor(x), inds)
@@ -207,11 +244,11 @@ def get_ecg_segments_from_array(data, sample_rate, segment_length, factor=1, nor
     for i in range(no_segs):
         sampfrom = inds[i]
         sampto=inds[i]+samples_goal
-        start_time = sampfrom/sample_rate
+        start_time = sampfrom
         start_times.append(start_time)
         segment = np.array(data)[sampfrom:sampto]
         if normalise:
-            segment = (segment - np.min(segment))/np.ptp(segment)
+            segment = (segment-np.min(segment))/(np.max(segment)-np.min(segment))
         segments.append(segment)
         zip_sampfrom_sampto.append([sampfrom, sampto])
     return segments, start_times, zip_sampfrom_sampto

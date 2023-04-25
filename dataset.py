@@ -1,4 +1,3 @@
-from termios import VSTART
 import torch
 from torch.utils.data.dataset import Dataset
 
@@ -7,7 +6,6 @@ import pandas as pd
 import config
 from config import global_opts, outputpath
 from helpers import dataframe_cols, get_index_from_directory, read_file, check_datatype_and_filetype
-from clean_data import get_data_physionet, get_data_ephnogram
 import os
 from video import resample_video, create_video
 import tqdm
