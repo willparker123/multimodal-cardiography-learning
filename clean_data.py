@@ -272,7 +272,7 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
     if create_objects:
       spectrogram = Spectrogram(ecg.filename, savename=ecg.filename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, ttype=config.global_opts.ecg_type,
                                                 signal=ecg.signal, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
-                                                outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/', normalise=True, start_time=ecg.start_time, wavelet_function=config.global_opts.cwt_function_ecg)
+                                                outpath_np=outputpath_+f'data_{config.global_opts.ecg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.ecg_type}/{filename}/', normalise=True, start_time=0, wavelet_function=config.global_opts.cwt_function_ecg)
     else:
       Spectrogram(filename, savename=filename+'_spec', filepath=outputpath_, sample_rate=ecg_sample_rate, ttype=config.global_opts.ecg_type,
                                                 signal=ecg, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
@@ -318,7 +318,7 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
     if create_objects:
       pcg_spectrogram = Spectrogram(pcg.filename, savename=pcg.filename+'_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, ttype=config.global_opts.pcg_type,
                                   signal=pcg.signal, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
-                                  outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/', normalise=True, start_time=pcg.start_time, wavelet_function=config.global_opts.cwt_function_pcg)
+                                  outpath_np=outputpath_+f'data_{config.global_opts.pcg_type}/{filename}/', outpath_png=outputpath_+f'spectrograms_{config.global_opts.pcg_type}/{filename}/', normalise=True, start_time=0, wavelet_function=config.global_opts.cwt_function_pcg)
     else:
       Spectrogram(filename, savename=filename+'_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, ttype=config.global_opts.pcg_type,
                                   signal=pcg, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,

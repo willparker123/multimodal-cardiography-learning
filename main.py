@@ -25,7 +25,8 @@ import sys
 
 
 
-def data_sample(dataset="physionet", filename="a0001", index=1, inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_, label=0):
+def data_sample(dataset="physionet", filename="a0001", index=1, inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_, label=0, \
+        ttype_ecg=config.global_opts.ecg_type, ttype_pcg=config.global_opts.pcg_type, wavelet_ecg=config.global_opts.cwt_function_ecg, wavelet_pcg=config.global_opts.cwt_function_pcg):
     if dataset=="ephnogram":
         sn = 'b0000'[:-len(str(index))]+str(index)
         ecg = ECG(filename=filename, savename=sn, filepath=inputpath_data, label=label, chan=0, csv_path=inputpath_target, sample_rate=config.global_opts.sample_rate_ecg, normalise=True, apply_filter=True)
@@ -48,19 +49,27 @@ def data_sample(dataset="physionet", filename="a0001", index=1, inputpath_data=c
     pcg_segments = pcg.get_segments(config.global_opts.segment_length, normalise=pcg.normalise)
     create_new_folder("samples-TEST")
     outputpath_ = "samples-TEST/"
-    spectrogram = Spectrogram(ecg.filename, savename=ecg.filename+'_spec', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, ttype=config.global_opts.ecg_type,
-                                                    signal=ecg.signal, window=np.hamming, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
+    spectrogram = Spectrogram(ecg.filename, savename=ecg.filename+f'_spec_{wavelet_ecg}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, ttype=ttype_ecg,
+                                                    signal=ecg.signal, window=torch.hamming_window, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                                     outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', 
-                                                    normalise=True, start_time=ecg.start_time, wavelet_function=config.global_opts.cwt_function_ecg)
-    spectrogram_pcg = Spectrogram(filename, savename=filename+'_spec', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, ttype=config.global_opts.pcg_type,
-                                  signal=pcg, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
-                                  outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=0, wavelet_function=config.global_opts.cwt_function_pcg)
+                                                    normalise=True, start_time=0, wavelet_function=wavelet_ecg)
+    spectrogram_pcg = Spectrogram(filename, savename=filename+f'_spec_{wavelet_pcg}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, ttype=ttype_pcg,
+                                  signal=pcg.signal, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
+                                  outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=0, wavelet_function=wavelet_pcg)
+    for index_e, seg in enumerate(ecg_segments):
+        print(f"INDEX {index_e}: seg.signal: {seg.signal}")
+        seg_spectrogram = Spectrogram(filename, savename=seg.savename+f'_spec_{wavelet_ecg}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, ttype=ttype_ecg,
+                                            signal=seg.signal, window=torch.hamming_window, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
+                                            outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=seg.start_time, wavelet_function=wavelet_ecg)
+    for index_p, pcg_seg in enumerate(pcg_segments):
+        pcg_seg_spectrogram = Spectrogram(filename, savename=pcg_seg.savename+f'_spec_{wavelet_ecg}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, ttype=ttype_pcg,
+                                signal=pcg_seg.signal, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
+                                outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=pcg_seg.start_time, wavelet_function=wavelet_pcg)
 
 def main():
     np.random.seed(1)
     device = initialise_gpu(config.global_opts.gpu_id, config.global_opts.enable_gpu)
     torch.cuda.empty_cache()
-
     dataset = ECGPCGDataset(clip_length=8, 
                             ecg_sample_rate=config.global_opts.sample_rate_ecg,
                             pcg_sample_rate=config.global_opts.sample_rate_pcg)
@@ -153,6 +162,10 @@ if __name__ == '__main__':
     
     create_new_folder(config.outputpath+"results")
   
-    data_sample()
+    #data_sample()
+    #data_sample(wavelet_ecg="morlet", wavelet_pcg="morlet")
+    #data_sample(wavelet_ecg="ricker", wavelet_pcg="ricker")
+    #data_sample(ttype_ecg="ecg", ttype_pcg="pcg")
+    data_sample(ttype_ecg="ecg", ttype_pcg="pcg_logmel")
     main()
     

@@ -53,7 +53,7 @@ class PCG():
                 signal = np.array(signal)[0:sampto]
         else:
             if sampto is None:
-                signal = np.array(signal)[sampfrom:len(signal)-1]
+                signal = np.array(signal)[sampfrom:len(signal)]
                 self.start_time = sampfrom/self.sample_rate
             else:
                 signal = np.array(signal)[sampfrom:sampto]
@@ -110,8 +110,9 @@ class PCG():
         if samples_goal < 1:
             raise ValueError("Error: sample_rate*segment_length results in 0; segment_length is too low")
         no_segs = int(np.floor((self.samples//samples_goal)*factor))
-        inds = np.linspace(0, self.samples-samples_goal, num=no_segs)
-        inds = map(lambda x: np.floor(x), inds)
+        
+        inds = range(self.samples//samples_goal)
+        inds = map(lambda x: x*samples_goal, inds)
         inds = np.fromiter(inds, dtype=np.int)
         for i in range(no_segs):
             if self.savename is not None:
@@ -155,8 +156,8 @@ def get_pcg_segments_from_array(data, sample_rate, segment_length, factor=1, nor
         raise ValueError("Error: sample_rate*segment_length results in 0; segment_length is too low")
     no_segs = int(np.floor((samples//samples_goal)*factor))
     
-    inds = np.linspace(0, samples-samples_goal, num=no_segs)
-    inds = map(lambda x: np.floor(x), inds)
+    inds = range(samples//samples_goal)
+    inds = map(lambda x: x*samples_goal, inds)
     inds = np.fromiter(inds, dtype=np.int)
     for i in range(no_segs):
         sampfrom = inds[i]

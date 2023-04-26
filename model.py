@@ -94,6 +94,7 @@ class ECGPCGVisNet(nn.Module):
             nn.init.zeros_(layer.bias)
         if hasattr(layer, "weight"):
             nn.init.kaiming_normal_(layer.weight)
+
 class CNN(nn.Module):
     def __init__(self, height: int, width: int, channels: int, class_count: int):
         super().__init__()

@@ -56,7 +56,7 @@ ecg_type = "ecg_cwt"
 pcg_type = "pcg_cwt"
 
 # ricker, bior2.6, customricker, morlet, mexicanhat
-cwt_function_ecg = "mexicanhat"
+cwt_function_ecg = "ricker"
 cwt_function_pcg = "morlet"
 
 sample_rate_ecg = 2000

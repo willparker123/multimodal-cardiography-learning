@@ -170,8 +170,8 @@ class ECG():
             raise ValueError("Error: sample_rate*segment_length results in 0; segment_length is too low")
         no_segs = int(np.floor((self.samples//samples_goal)*factor))
         
-        inds = np.linspace(0, self.samples-samples_goal, num=no_segs)
-        inds = map(lambda x: np.floor(x), inds)
+        inds = range(self.samples//samples_goal)
+        inds = map(lambda x: x*samples_goal, inds)
         inds = np.fromiter(inds, dtype=np.int)
         for i in range(no_segs):
             segment = None
@@ -238,12 +238,12 @@ def get_ecg_segments_from_array(data, sample_rate, segment_length, factor=1, nor
         raise ValueError("Error: sample_rate*segment_length results in 0; segment_length is too low")
     no_segs = int(np.floor((samples/samples_goal)*factor))
     
-    inds = np.linspace(0, samples-samples_goal, num=no_segs)
-    inds = map(lambda x: np.floor(x), inds)
+    inds = range(samples//samples_goal)
+    inds = map(lambda x: x*samples_goal, inds)
     inds = np.fromiter(inds, dtype=np.int)
     for i in range(no_segs):
         sampfrom = inds[i]
-        sampto=inds[i]+samples_goal
+        sampto=inds[i]+samples_goal #-1
         start_time = sampfrom
         start_times.append(start_time)
         segment = np.array(data)[sampfrom:sampto]
