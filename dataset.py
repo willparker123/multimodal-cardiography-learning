@@ -294,19 +294,19 @@ class ECGPCGDataset(Dataset):
         dict_ = self.df_all.iloc[index_of_parent].to_dict()
         out_dict = dict_.copy()
         data_dict = {
-        'ecg_path': filepath_ecg,
-        'pcg_path': filepath_pcg,
-        'ecg': ecg_data,
-        'pcg': pcg_data,
-        'qrs': qrs,
-        'hrs': hrs,
-        'freqs_ecg': freqs_ecg,
-        'times_ecg': times_ecg,
-        'freqs_pcg': freqs_pcg,
-        'times_pcg': times_pcg,
-        'index': index,
-        'parent_index': index_of_parent,
-        'seg_index': index_of_segment
+            'ecg_path': filepath_ecg,
+            'pcg_path': filepath_pcg,
+            'ecg': ecg_data,
+            'pcg': pcg_data,
+            'qrs': qrs,
+            'hrs': hrs,
+            'freqs_ecg': freqs_ecg,
+            'times_ecg': times_ecg,
+            'freqs_pcg': freqs_pcg,
+            'times_pcg': times_pcg,
+            'index': index,
+            'parent_index': index_of_parent,
+            'seg_index': index_of_segment
         }
         out_dict.update(data_dict)
         if print_df:

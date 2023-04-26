@@ -9,6 +9,7 @@ import os
 import torch
 import pywt
 import config
+import skimage.io
 
 """
 Create ECG or PCG spectrograms using matplotlib or torchaudio
@@ -16,9 +17,9 @@ Create ECG or PCG spectrograms using matplotlib or torchaudio
 class Spectrogram():
     def __init__(self, filename, savename=None, filepath=outputpath+'physionet/', signal=None, outpath_np=outputpath+'physionet/', 
                  outpath_png=outputpath+'physionet/spectrograms', sample_rate=2000, 
-                 window=np.hamming, hop_length=128//2 #50% overlapping windows,
+                 window=None, hop_length=128//2 #50% overlapping windows,
                  , NMels=128, window_size=128, NFFT=128, transform_type="stft", normalise=True, normalise_factor=None, save=True,
-                 spec=None, freqs=None, times=None, image=None, start_time=0, wavelet_function="ricker"):
+                 spec=None, freqs=None, times=None, image=None, start_time=0, wavelet_function="ricker", colormap=plt.cm.jet):
         #super().__init__()
         self.filepath = filepath
         self.filename = filename
@@ -48,12 +49,11 @@ class Spectrogram():
         if spec is not None and freqs is not None and times is not None and image is not None:
             self.spec, self.freqs, self.times, self.image = spec, freqs, times, image
         else:
-            self.spec, self.freqs, self.times, self.image = create_spectrogram(filepath, savename if savename is not None else filename, sample_rate, signal=self.signal, save=save, transform_type=transform_type, 
-                                             window=window, window_size=window_size, NFFT=NFFT, NMels=NMels, hop_length=hop_length, outpath_np=outpath_np, outpath_png=outpath_png, normalise=normalise, normalise_factor=normalise_factor, start_time=self.start_time, wavelet_function=self.wavelet_function)
-        if save:
-            self.display_spectrogram()
+            self.spec, self.freqs, self.times, self.image = create_spectrogram(filepath, savename if savename is not None else filename, sample_rate, signal=self.signal, save_np=save, save_img=save, transform_type=transform_type, 
+                                             window=window, window_size=window_size, NFFT=NFFT, NMels=NMels, hop_length=hop_length, outpath_np=outpath_np, outpath_png=outpath_png, normalise=normalise, 
+                                             normalise_factor=normalise_factor, start_time=self.start_time, wavelet_function=self.wavelet_function, colormap=colormap)
 
-    def display_spectrogram(self, save=True, just_image=True, show=False):
+    def display_spectrogram(self, save=True, just_image=True, show=False, colormap='magma'):
         plt.ylabel('Frequency [Hz]')
         plt.xlabel('Time [sec]')
         if self.transform_type == "stft" or self.transform_type == "stft_log":
@@ -64,10 +64,12 @@ class Spectrogram():
             assert len(range0)==len(range1)
             plt.xticks(np.fromiter(map(lambda x: round(x, 2), range0), dtype=np.float), np.fromiter(map(lambda x: round(x, 2), range1), dtype=np.float))
             
-            #if self.transform_type == "ecg_log":
-            #    plt.yscale("log")
+            #   plt.yscale("log")
             #plt.pcolormesh(self.times, self.freqs, self.spec, shading='gouraud')
-            plt.imshow(self.spec, extent=[0, self.times[len(self.times)-1], 0, self.freqs[len(self.freqs)-1]], cmap='magma', aspect='auto', vmax=abs(self.spec).max(), vmin=-abs(self.spec).max(), interpolation="none")
+            if ((self.transform_type=="stft" or self.transform_type=="stft_log") and self.matplotlib_stft):
+                plt.imshow(self.image)
+            else:
+                plt.imshow(self.spec, extent=[self.times[0], self.times[len(self.times)-1], self.freqs[0], self.freqs[len(self.freqs)-1]], cmap=colormap, aspect='auto', vmax=abs(self.spec).max(), vmin=-abs(self.spec).max(), interpolation="none")
             
             if show:
                 plt.show()
@@ -94,7 +96,7 @@ class Spectrogram():
             plt.ylim(0, self.freqs[len(self.freqs)-1])
             #if self.transform_type == "ecg_cwtlog":
             #    plt.yscale("log")
-            plt.imshow(self.spec, extent=[self.times[0], self.times[len(self.times)-1],self.freqs[0], self.freqs[len(self.freqs)-1]], cmap='magma', aspect='auto', vmax=abs(self.spec).max(), vmin=-abs(self.spec).max(), interpolation="none")
+            plt.imshow(self.spec, extent=[self.times[0], self.times[len(self.times)-1],self.freqs[0], self.freqs[len(self.freqs)-1]], cmap=colormap, aspect='auto', vmax=abs(self.spec).max(), vmin=-abs(self.spec).max(), interpolation="none")
             
             if show:
                 plt.show()
@@ -121,7 +123,7 @@ class Spectrogram():
             #if self.transform_type == "ecg_log":
             #    plt.yscale("log")
             #plt.pcolormesh(self.times, self.freqs, self.spec, shading='gouraud')
-            plt.imshow(self.spec, extent=[0, self.times[len(self.times)-1], 1, self.freqs[len(self.freqs)-1]], cmap='magma', aspect='auto', vmax=abs(self.spec).max(), vmin=-abs(self.spec).max(), interpolation="none")
+            plt.imshow(self.spec, extent=[self.times[0], self.times[len(self.times)-1], self.freqs[0], self.freqs[len(self.freqs)-1]], cmap=colormap, aspect='auto', vmax=abs(self.spec).max(), vmin=-abs(self.spec).max(), interpolation="none")
             
             if show:
                 plt.show()
@@ -141,7 +143,9 @@ class Spectrogram():
         else:
             raise ValueError(f"Error: Invalid type for 'transform_type': must be one of {config.transform_types}")
 
-def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=None, signal=None, save=True, normalise=True, transform_type="stft", window=np.hamming, window_size=128, NMels=128, NFFT=128, hop_length=128//2, outpath_np=outputpath+'physionet/data', outpath_png=outputpath+'physionet/spectrograms', start_time=0, wavelet_function="ricker", matplotlib_stft=True, power_coeff=2):
+def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=None, signal=None, save_np=True, save_img=True, normalise=True, transform_type="stft", window=None, window_size=128, NMels=128, NFFT=128, 
+                       hop_length=128//2, outpath_np=outputpath+'physionet/data', outpath_png=outputpath+'physionet/spectrograms', start_time=0, wavelet_function="ricker",
+                       power_coeff=2, colormap=plt.cm.jet, just_image=True):
     if signal is None:
         if savename is not None:
             signal = np.load(filepath+savename+f'_{transform_type}.npz')['data']
@@ -150,33 +154,33 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
     if signal is None:
         raise ValueError("Error: no 'signal' variable supplied - please provide to create_spectrogram")
     if transform_type=="stft" or transform_type=="stft_log":
-        if matplotlib_stft:
-            spec, f, t, image = plt.specgram(signal,Fs=sr, window=window(window_size), NFFT=NFFT, noverlap=hop_length)
-            t[0] = 0
-            f[0] = 0
-            f[len(f)-1] = sr//2
-        else:
-            spec_transform = torchaudio.transforms.Spectrogram(
-                n_fft=NFFT,
-                hop_length=hop_length, 
-                window_fn=window,
-                power=power_coeff,
-                win_length=window_size
-            )
-            if not torch.is_tensor(signal):
-                signal = torch.from_numpy(signal)
-            signal = signal.float()
-            transformed_sig = spec_transform(signal)
-            spec = transformed_sig
-            spec = spec.numpy()
-            f = np.linspace(0, sr//2, num=np.shape(spec)[0])
-            t = np.linspace(0, len(signal)//sr, num=np.shape(spec)[1])
-            f[len(f)-1] = sr//2
-            f[0] = 0
-            t[0] = 0
+        if window == None:
+            window = torch.hamming_window
+        if not window == torch.hamming_window:
+            raise ValueError("Error: need pytorch Hamming window to perform STFT.")
+        spec_transform = torchaudio.transforms.Spectrogram(
+            n_fft=NFFT,
+            hop_length=hop_length, 
+            window_fn=window,
+            power=power_coeff,
+            win_length=window_size
+        )
+        if not torch.is_tensor(signal):
+            signal = torch.from_numpy(signal)
+        signal = signal.float()
+        transformed_sig = spec_transform(signal)
+        spec = transformed_sig
         if transform_type.endswith("log"):
-            spec = np.log2(spec)
-        image=plt.imshow(spec, extent=[start_time, start_time+t[len(t)-1], 0, f[len(f)-1]], cmap='magma', aspect='auto', vmax=abs(spec).max(), vmin=-abs(spec).max(), interpolation="none")
+            spec = spec.log2().detach().numpy()
+        else:
+            spec = spec.detach().numpy()
+        f = np.linspace(0, sr//2, num=np.shape(spec)[0])
+        t = np.linspace(0, len(signal)//sr, num=np.shape(spec)[1])
+        f[0] = 0
+        f[len(f)-1] = sr//2
+        t[0] = 0
+        spec = np.flipud(spec)
+        image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=abs(spec).max(), vmin=-abs(spec).max(), interpolation="none")
     elif transform_type=="cwt" or transform_type=="cwt_log":
         #widths = np.linspace(1, 6, num=6, dtype=int)
         #freq = np.linspace(1, sr/2, 100)
@@ -190,7 +194,6 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
             func = scipysignal.morlet2
             spec = scipysignal.cwt(signal, func, widths)
             spec = spec.real
-        #This is the Wavelet Transform function in the paper
         elif wavelet_function == "bior2.6":
             func = bior2_6
             spec = pywt.cwt(signal, widths, "bior2.6", len(signal)//sr)
@@ -203,17 +206,21 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
             raise ValueError(f"Error: wavelet function '{wavelet_function}' not supported.")
         if transform_type.endswith("log"):
             spec = np.log2(spec)
-        f = np.linspace(1, sr//2, num=np.shape(spec)[0])
+        f = np.linspace(0, sr//2, num=np.shape(spec)[0])
         t = np.linspace(0, len(signal)//sr, num=np.shape(spec)[1])
         t[0] = 0
-        f[0] = 1
-        #spec = np.expand_dims(np.squeeze(spec).view(1, -1), axis=0)
+        f[0] = 0
         f[len(f)-1] = sr//2
+        #spec = np.expand_dims(np.squeeze(spec).view(1, -1), axis=0)
         f = f.astype(int)
         t = t.astype(float)
-        cwtmatr_yflip = np.flipud(spec)
-        image = plt.imshow(cwtmatr_yflip, extent=[start_time, start_time+t[len(t)-1], 1, f[len(f)-1]], cmap='magma', aspect='auto', vmax=abs(spec).max(), vmin=-abs(spec).max(), interpolation="none")
+        spec = np.flipud(spec)
+        image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=abs(spec).max(), vmin=-abs(spec).max(), interpolation="none")
     elif transform_type=="stft_mel" or transform_type=="stft_logmel":
+        if window == None:
+                window = torch.hamming_window
+        if not window == torch.hamming_window:
+            raise ValueError("Error: need pytorch Hamming window to perform STFT.")
         spec_transform = torchaudio.transforms.MelSpectrogram(
             sample_rate=sr,
             n_fft=NFFT,
@@ -228,29 +235,42 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
         signal = signal.float()
         spec = spec_transform(signal)
         if transform_type.endswith("log"):
-            spec = np.log2(spec)
-        spec = spec.numpy()
+            spec = spec.log2()
+        spec = spec.detach().numpy()
         f = librosa.mel_frequencies(fmin=0, fmax=sr//2, n_mels=NMels)
         t = np.linspace(0, len(signal)//sr, num=np.shape(spec)[1])
         f[0] = 0
         t[0] = 0
-        image=plt.imshow(spec, extent=[start_time, start_time+t[len(t)-1], 0, f[len(f)-1]], cmap='magma', aspect='auto', vmax=abs(spec).max(), vmin=-abs(spec).max(), interpolation="none")
+        spec = np.flipud(spec)
+        image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=abs(spec).max(), vmin=-abs(spec).max(), interpolation="none")
     else:
         raise ValueError(f"Error: Invalid transform_type for 'transform_type': must be one of {config.transform_types}")
+    
     if normalise: #normalise to [0, 1]
         if normalise_factor is not None:
             spec = spec / normalise_factor
         else:
             spec = (spec-np.min(spec))/(np.max(spec)-np.min(spec)) #(spec - spec.min())/np.ptp(spec)
-    print(f"SHAPEE: {np.shape(spec)}")
-    if save:
+    if save_np:
         if savename is not None:
             np.savez(outpath_np+savename+f'_{transform_type}_spec', spec=spec, freqs=f, times=t)
         else:
             np.savez(outpath_np+filename+f'_{transform_type}_spec', spec=spec, freqs=f, times=t)
+    if save_img:
+        if savename is not None:
+            if just_image:
+                plt.axis('off')
+                plt.savefig(outpath_png+savename+f'_{transform_type}.png', interpolation="none", format="png", bbox_inches='tight', pad_inches=0)
+            else:
+                plt.savefig(outpath_png+savename+f'_{transform_type}.png', interpolation="none", format="png")
+        else:
+            if just_image:
+                plt.axis('off') 
+                plt.savefig(outpath_png+filename+f'_{transform_type}.png', interpolation="none", format="png", bbox_inches='tight', pad_inches=0)
+            else:
+                plt.savefig(outpath_png+filename+f'_{transform_type}.png', interpolation="none", format="png")
     #print(f"spec: {spec}")
     #print(f"specshape: {np.shape(spec)}")
-    print(f"FILENAME: {filename}, f: {f}, t: {t}")
     #print(f"fshape: {np.shape(f)}")
     #print(f"tshape: {np.shape(t)}")
     #print(f"image: {image}")

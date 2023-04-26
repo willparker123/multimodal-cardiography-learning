@@ -22,13 +22,18 @@ import wfdb
 from config import load_config
 from utils import start_logger, stop_logger, initialise_gpu, load_checkpoint, get_summary_writer_log_dir
 import sys
+import matplotlib.pyplot as plt
 
 
 
-def data_sample(dataset="physionet", filename="a0001", index=1, inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_, label=0, \
-        transform_type_ecg=config.global_opts.ecg_type, transform_type_pcg=config.global_opts.pcg_type, wavelet_ecg=config.global_opts.cwt_function_ecg, wavelet_pcg=config.global_opts.cwt_function_pcg):
+def data_sample(outputfolderpath="samples-TEST", dataset="physionet", filename="a0001", index_ephnogram=1, inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_, label=0, \
+        transform_type_ecg=config.global_opts.ecg_type, transform_type_pcg=config.global_opts.pcg_type, wavelet_ecg=config.global_opts.cwt_function_ecg, 
+        wavelet_pcg=config.global_opts.cwt_function_pcg, window_ecg=None, window_pcg=None, colormap='magma'):
+    colormap_suffix = colormap
+    if colormap == "jet":
+        colormap = plt.cm.jet
     if dataset=="ephnogram":
-        sn = 'b0000'[:-len(str(index))]+str(index)
+        sn = 'b0000'[:-len(str(index_ephnogram))]+str(index_ephnogram)
         ecg = ECG(filename=filename, savename=sn, filepath=inputpath_data, label=label, chan=0, csv_path=inputpath_target, sample_rate=config.global_opts.sample_rate_ecg, normalise=True, apply_filter=True)
         pcg_record = wfdb.rdrecord(inputpath_data+filename, channels=[1])
         audio_sig = np.array(pcg_record.p_signal[:, 0])
@@ -47,24 +52,26 @@ def data_sample(dataset="physionet", filename="a0001", index=1, inputpath_data=c
     data = {'filename':ecg_save_name, 'og_filename':filename, 'label':ecg.label, 'record_duration':duration, 'samples_ecg':int(len(ecg.signal)), 'samples_pcg':int(len(pcg.signal)), 'qrs_count':int(len(ecg.qrs_inds)), 'seg_num':seg_num, 'avg_hr':ecg.hr_avg}
     ecg_segments = ecg.get_segments(config.global_opts.segment_length, normalise=ecg.normalise)
     pcg_segments = pcg.get_segments(config.global_opts.segment_length, normalise=pcg.normalise)
-    create_new_folder("samples-TEST")
-    outputpath_ = "samples-TEST/"
-    spectrogram = Spectrogram(ecg.filename, savename=ecg.filename+f'_spec_{wavelet_ecg}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
-                                                    signal=ecg.signal, window=torch.hamming_window, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
+    create_new_folder(outputfolderpath)
+    outputpath_ = f"{outputfolderpath}/"
+    print(f"BB: {config.global_opts.ecg_filter_upper_bound} {config.global_opts.ecg_filter_lower_bound}")
+    print(f"AA: {config.global_opts.pcg_filter_upper_bound} {config.global_opts.pcg_filter_lower_bound}")
+    spectrogram = Spectrogram(ecg.filename, savename='ecg_'+ecg.filename+f'_spec_{wavelet_ecg}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
+                                                    signal=ecg.signal, window=window_ecg, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                                     outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', 
-                                                    normalise=True, start_time=0, wavelet_function=wavelet_ecg)
-    spectrogram_pcg = Spectrogram(filename, savename=filename+f'_spec_{wavelet_pcg}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, transform_type=transform_type_pcg,
-                                  signal=pcg.signal, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
-                                  outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=0, wavelet_function=wavelet_pcg)
+                                                    normalise=True, start_time=0, wavelet_function=wavelet_ecg, colormap=colormap)
+    spectrogram_pcg = Spectrogram(filename, savename='pcg_'+filename+f'_spec_{wavelet_pcg}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, transform_type=transform_type_pcg,
+                                  signal=pcg.signal, window=window_pcg, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
+                                  outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=0, wavelet_function=wavelet_pcg, colormap=colormap)
     for index_e, seg in enumerate(ecg_segments):
         print(f"INDEX {index_e}: seg.signal: {seg.signal}")
-        seg_spectrogram = Spectrogram(filename, savename=seg.savename+f'_spec_{wavelet_ecg}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
-                                            signal=seg.signal, window=torch.hamming_window, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
-                                            outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=seg.start_time, wavelet_function=wavelet_ecg)
+        seg_spectrogram = Spectrogram(filename, savename='ecg_'+seg.savename+f'_spec_{wavelet_ecg}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
+                                            signal=seg.signal, window=window_ecg, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
+                                            outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=seg.start_time, wavelet_function=wavelet_ecg, colormap=colormap)
     for index_p, pcg_seg in enumerate(pcg_segments):
-        pcg_seg_spectrogram = Spectrogram(filename, savename=pcg_seg.savename+f'_spec_{wavelet_ecg}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, transform_type=transform_type_pcg,
-                                signal=pcg_seg.signal, window=torch.hamming_window, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
-                                outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=pcg_seg.start_time, wavelet_function=wavelet_pcg)
+        pcg_seg_spectrogram = Spectrogram(filename, savename='pcg_'+pcg_seg.savename+f'_spec_{wavelet_ecg}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, transform_type=transform_type_pcg,
+                                signal=pcg_seg.signal, window=window_pcg, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
+                                outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=pcg_seg.start_time, wavelet_function=wavelet_pcg, colormap=colormap)
 
 def main():
     np.random.seed(1)
@@ -162,10 +169,12 @@ if __name__ == '__main__':
     
     create_new_folder(config.outputpath+"results")
   
-    data_sample()
-    data_sample(wavelet_ecg="morlet", wavelet_pcg="morlet")
-    data_sample(wavelet_ecg="ricker", wavelet_pcg="ricker")
-    data_sample(transform_type_ecg="stft", transform_type_pcg="stft")
-    data_sample(transform_type_ecg="stft", transform_type_pcg="stft_logmel")
+    #create_new_folder("samples-TEST")
+    #data_sample()
+    #data_sample(wavelet_ecg="ricker", wavelet_pcg="morlet", colormap="magma")
+    #data_sample(wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma")
+    #data_sample(outputfolderpath="samples-TEST/stft", transform_type_ecg="stft_log", transform_type_pcg="stft_log", colormap="magma")
+    #data_sample(outputfolderpath="samples-TEST/stft", transform_type_ecg="stft_log", transform_type_pcg="stft_log", colormap="jet")
+    #data_sample(outputfolderpath="samples-TEST/stft_logmel", transform_type_ecg="stft_log", transform_type_pcg="stft_logmel")
     main()
     

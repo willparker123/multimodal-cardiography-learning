@@ -1,6 +1,8 @@
 import argparse
 import multiprocessing as mp
 from multiprocessing import Pool, Manager, freeze_support
+import numpy as np
+import torch
 
 transform_types = {"stft", "stft_log", "stft_logmel", "stft_mel", "cwt", "cwt_log"}
 
@@ -56,12 +58,17 @@ mem_limit = 0.8 #value in range [0, 1] percentage of system memory available for
 ecg_type = "cwt"
 pcg_type = "cwt"
 
-# ricker, bior2.6, customricker, morlet, mexicanhat
+#magma, jet
+
+# ricker (mexh), bior2.6, customricker, morlet
 cwt_function_ecg = "ricker"
 cwt_function_pcg = "morlet"
 
 sample_rate_ecg = 2000
 sample_rate_pcg = 2000
+
+window_ecg = np.hamming           # default supplied to create_spectrogram is None - uses np/torch Hamming window by default
+window_pcg = torch.hamming_window # default supplied to create_spectrogram is None - uses np/torch Hamming window by default
 
 # Limits of the Butterworth bandpass filters applied to the ECG/PCG (Hz)
 ecg_filter_lim = [0.5, 100]
@@ -69,12 +76,12 @@ pcg_filter_lim = [20, 400]
 #[64ms in paper] 40ms window length. converting from ms to samples
 window_length_ms = 64 #64, 40
 window_length = 512 #window_length_ms * sample_rate_ecg
-nmels = 60 #60; must be < nfft//2-1
+nmels = 64 #60; must be < nfft//2-1
 segment_length = 8
 seg_factor_fps = 24 #video fps
 frame_length = 2 #length of spectrogram in one frame
-    #ECG: data, signal, qrs, hrs
-    #PCG: data, signal
+#ECG: data, signal, qrs, hrs
+#PCG: data, signal
     
 def load_config():
     parser = argparse.ArgumentParser()

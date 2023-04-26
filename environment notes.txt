@@ -14,6 +14,7 @@ conda install -c anaconda seaborn
 conda install -c conda-forge tqdm
 conda install -c conda-forge configargparse
 conda install -c conda-forge regex
+conda install -c conda-forge scikit-image
 --VIDEO conda install -c conda-forge opencv
 --VIDEO conda install -c conda-forge moviepy
 --MODEL tensorboard
@@ -55,6 +56,7 @@ pip3 install pandas
 pip3 install seaborn
 pip3 install tqdm
 pip3 intall librosa
+pip install scikit-image
 
 # install python3.8.1, then conda, then make virtualenv using path to python3.8.1, then install packages
 
