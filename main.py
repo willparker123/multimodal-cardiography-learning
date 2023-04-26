@@ -162,10 +162,10 @@ if __name__ == '__main__':
     
     create_new_folder(config.outputpath+"results")
   
-    #data_sample()
-    #data_sample(wavelet_ecg="morlet", wavelet_pcg="morlet")
-    #data_sample(wavelet_ecg="ricker", wavelet_pcg="ricker")
-    #data_sample(ttype_ecg="ecg", ttype_pcg="pcg")
+    data_sample()
+    data_sample(wavelet_ecg="morlet", wavelet_pcg="morlet")
+    data_sample(wavelet_ecg="ricker", wavelet_pcg="ricker")
+    data_sample(ttype_ecg="ecg", ttype_pcg="pcg")
     data_sample(ttype_ecg="ecg", ttype_pcg="pcg_logmel")
     main()
     
