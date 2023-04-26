@@ -134,13 +134,13 @@ class PCG():
         plt.figure().clear()
         plt.close('all')
 
-def save_pcg(filename, signal, signal_preproc, outpath=outputpath+'physionet/', savename=None, type_="pcg_logmel"):
+def save_pcg(filename, signal, signal_preproc, outpath=outputpath+'physionet/', savename=None, type_="stft_logmel"):
     f = filename
     if savename is not None:
         f = savename
     np.savez(outpath+f'{f}_{type_}.npz', data=signal, signal=signal_preproc)
 
-def save_pcg_signal(filename, signal, outpath=outputpath+'physionet/', savename=None, type_="pcg_logmel"):
+def save_pcg_signal(filename, signal, outpath=outputpath+'physionet/', savename=None, type_="stft_logmel"):
     f = filename
     if savename is not None:
         f = savename

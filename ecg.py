@@ -182,13 +182,13 @@ class ECG():
             segments.append(segment)
         return segments
     
-def save_ecg(filename, signal, signal_preproc, qrs_inds, hrs, outpath=config.outputpath+'physionet/', savename=None, type_="ecg_log"):
+def save_ecg(filename, signal, signal_preproc, qrs_inds, hrs, outpath=config.outputpath+'physionet/', savename=None, type_="stft_log"):
     f = filename
     if savename is not None:
         f = savename
     np.savez(outpath+f'{f}_{type_}.npz', data=signal, signal=signal_preproc, qrs=qrs_inds, hrs=hrs)
         
-def save_ecg_signal(filename, signal, outpath=config.outputpath+'physionet/', savename=None, type_="ecg_log"):
+def save_ecg_signal(filename, signal, outpath=config.outputpath+'physionet/', savename=None, type_="stft_log"):
     f = filename
     if savename is not None:
         f = savename

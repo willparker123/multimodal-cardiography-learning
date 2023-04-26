@@ -2,6 +2,7 @@ import argparse
 import multiprocessing as mp
 from multiprocessing import Pool, Manager, freeze_support
 
+transform_types = {"stft", "stft_log", "stft_logmel", "stft_mel", "cwt", "cwt_log"}
 
 """# Global Variables / Paths / Enums"""
 
@@ -51,9 +52,9 @@ drive_folderpath = "Colab Notebooks"
 number_of_processes = mp.cpu_count()+2 #number of processors used for multiprocessing dataset / training model
 mem_limit = 0.8 #value in range [0, 1] percentage of system memory available for processing
 
-# ecg, ecg_cwt, ecg_log, ecg_cwtlog, pcg, pcg_mel, pcg_logmel
-ecg_type = "ecg_cwt"
-pcg_type = "pcg_cwt"
+# transform_types
+ecg_type = "cwt"
+pcg_type = "cwt"
 
 # ricker, bior2.6, customricker, morlet, mexicanhat
 cwt_function_ecg = "ricker"
