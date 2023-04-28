@@ -1,9 +1,13 @@
 
 ***WORKING LINUX + CONDA - environment.yml***
 module load languages/anaconda3/2022.12-3.9.13-torch-cuda-11.7 [CANT INSTALL LIBROSA]
+module load languages/anaconda3/2022.11-3.9.13 [TESTING AS BROKEN TORCH WITH ABOVE]
 conda create -n ecgpcg python=3.9.13
 -- check https://pytorch.org/ for cuda/python/conda compatibility
-[e.g. conda install pytorch torchvision torchaudio pytorch-cuda=12.0 -c pytorch -c nvidia]
+[e.g. conda install pytorch torchvision torchaudio pytorch-cuda=11.7 -c pytorch -c nvidia]
+conda update --all
+[conda install -y -c pytorch -c conda-forge cudatoolkit=11.7 pytorch torchvision torchaudio]
+
 conda install -c conda-forge librosa
 conda install -c conda-forge matplotlib
 conda install -c conda-forge pywavelets
@@ -22,13 +26,10 @@ conda install -c conda-forge scikit-image
 
 --IF No module named XXX:	pip install -U pip setuptools
 
-
-
-
-
-
-
-
+conda create --clone pytorch --name ecgpcg
+pip install torch==1.12.1+cu116 torchvision==0.13.1+cu116 torchaudio==0.12.1 --extra-index-url https://download.pytorch.org/whl/cu116
+python -c "import torch; print(torch.__version__)"
+python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.device_count()); print(torch.cuda.get_device_name(0))"
 
 
 
@@ -57,6 +58,18 @@ pip3 install seaborn
 pip3 install tqdm
 pip3 intall librosa
 pip install scikit-image
+
+
+#LINUX
+	pip install resource
+
+#WINDOWS
+    pip install pywin32
+	pip install psutil
+		import winerror
+        import win32api
+        import win32job
+
 
 # install python3.8.1, then conda, then make virtualenv using path to python3.8.1, then install packages
 

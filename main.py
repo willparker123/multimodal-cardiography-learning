@@ -170,11 +170,11 @@ if __name__ == '__main__':
     create_new_folder(config.outputpath+"results")
   
     #create_new_folder("samples-TEST")
-    #data_sample()
-    #data_sample(wavelet_ecg="ricker", wavelet_pcg="morlet", colormap="magma")
-    #data_sample(wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma")
-    #data_sample(outputfolderpath="samples-TEST/stft", transform_type_ecg="stft_log", transform_type_pcg="stft_log", colormap="magma")
-    #data_sample(outputfolderpath="samples-TEST/stft", transform_type_ecg="stft_log", transform_type_pcg="stft_log", colormap="jet")
-    #data_sample(outputfolderpath="samples-TEST/stft_logmel", transform_type_ecg="stft_log", transform_type_pcg="stft_logmel")
+    data_sample()
+    data_sample(wavelet_ecg="ricker", wavelet_pcg="morlet", colormap="magma")
+    data_sample(wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma")
+    data_sample(outputfolderpath="samples-TEST/stft", transform_type_ecg="stft_log", transform_type_pcg="stft_log", colormap="magma")
+    data_sample(outputfolderpath="samples-TEST/stft", transform_type_ecg="stft_log", transform_type_pcg="stft_log", colormap="jet")
+    data_sample(outputfolderpath="samples-TEST/stft_logmel", transform_type_ecg="stft_log", transform_type_pcg="stft_logmel")
     main()
     

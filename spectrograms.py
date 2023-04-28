@@ -19,7 +19,7 @@ class Spectrogram():
                  outpath_png=outputpath+'physionet/spectrograms', sample_rate=2000, 
                  window=None, hop_length=128//2 #50% overlapping windows,
                  , NMels=128, window_size=128, NFFT=128, transform_type="stft", normalise=True, normalise_factor=None, save=True,
-                 spec=None, freqs=None, times=None, image=None, start_time=0, wavelet_function="ricker", colormap=plt.cm.jet):
+                 spec=None, freqs=None, times=None, image=None, start_time=0, wavelet_function="ricker", colormap='magma'):
         #super().__init__()
         self.filepath = filepath
         self.filename = filename
@@ -86,7 +86,7 @@ class Spectrogram():
                         plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', interpolation="none", format="png", bbox_inches='tight', pad_inches=0)
                     else:
                         plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', interpolation="none", format="png")
-        elif self.transform_type == "cwt" or self.transform_type == "cwt_log":
+        elif self.transform_type == "cwt" or self.transform_type == "cwt_log" or self.transform_type == "cwt_sq":
             #plt.xlim([0,len(np.squeeze(self.signal))/self.sample_rate])
             plt.xlim(0,len(self.signal)//self.sample_rate)
             range0 = np.arange(0, self.times[len(self.times)-1], step=0.25)
@@ -148,9 +148,9 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
                        power_coeff=2, colormap=plt.cm.jet, just_image=True):
     if signal is None:
         if savename is not None:
-            signal = np.load(filepath+savename+f'_{transform_type}.npz')['data']
+            signal = np.load(filepath+savename+f'_{transform_type}_spec.npz')['data']
         else:
-            signal = np.load(filepath+filename+f'_{transform_type}.npz')['data']
+            signal = np.load(filepath+filename+f'_{transform_type}_spec.npz')['data']
     if signal is None:
         raise ValueError("Error: no 'signal' variable supplied - please provide to create_spectrogram")
     if transform_type=="stft" or transform_type=="stft_log":
@@ -181,7 +181,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
         t[0] = 0
         spec = np.flipud(spec)
         image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=abs(spec).max(), vmin=-abs(spec).max(), interpolation="none")
-    elif transform_type=="cwt" or transform_type=="cwt_log":
+    elif transform_type=="cwt" or transform_type=="cwt_log" or transform_type=="cwt_sq":
         #widths = np.linspace(1, 6, num=6, dtype=int)
         #freq = np.linspace(1, sr/2, 100)
         #widths = 6.*sr / (2*freq*np.pi)
@@ -206,6 +206,8 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
             raise ValueError(f"Error: wavelet function '{wavelet_function}' not supported.")
         if transform_type.endswith("log"):
             spec = np.log2(spec)
+        if transform_type.endswith("sq"):
+            spec = np.square(spec)
         f = np.linspace(0, sr//2, num=np.shape(spec)[0])
         t = np.linspace(0, len(signal)//sr, num=np.shape(spec)[1])
         t[0] = 0

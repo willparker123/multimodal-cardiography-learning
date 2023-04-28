@@ -4,7 +4,7 @@ from multiprocessing import Pool, Manager, freeze_support
 import numpy as np
 import torch
 
-transform_types = {"stft", "stft_log", "stft_logmel", "stft_mel", "cwt", "cwt_log"}
+transform_types = {"stft", "stft_log", "stft_logmel", "stft_mel", "cwt", "cwt_log", "cwt_sq"}
 
 """# Global Variables / Paths / Enums"""
 
@@ -52,7 +52,7 @@ output_folderpath = "data-after-TEST"
 
 drive_folderpath = "Colab Notebooks"
 number_of_processes = mp.cpu_count()+2 #number of processors used for multiprocessing dataset / training model
-mem_limit = 0.8 #value in range [0, 1] percentage of system memory available for processing
+mem_limit = 0.4 #value in range [0, 1] percentage of system memory available for processing
 
 # transform_types
 ecg_type = "cwt"
