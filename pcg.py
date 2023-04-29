@@ -155,7 +155,7 @@ def get_pcg_segments_from_array(data, sample_rate, segment_length, factor=1, nor
     samples = int(len(data))
     if samples_goal < 1:
         raise ValueError("Error: sample_rate*segment_length results in 0; segment_length is too low")
-    no_segs = int(np.floor((samples//samples_goal)*factor))
+    no_segs = int(np.floor((samples/samples_goal)*factor))
     
     inds = range(samples//samples_goal)
     inds = map(lambda x: x*samples_goal, inds)

@@ -183,8 +183,7 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
   else:
     return data
   
-def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_, sample_clip_len=config.global_opts.segment_length, ecg_sample_rate=config.global_opts.sample_rate_ecg, pcg_sample_rate=config.global_opts.sample_rate_pcg,
-                         skipDataCSVAndFiles = False, skipECGSpectrogram = False, skipPCGSpectrogram = False, skipSegments = False, balance_diff=balance_diff_precalc, create_objects=False, split_into_video=False, q=None, window_ecg=None, window_pcg=None):
+def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_, sample_clip_len=config.global_opts.segment_length, ecg_sample_rate=config.global_opts.sample_rate_ecg, pcg_sample_rate=config.global_opts.sample_rate_pcg, skipECGSpectrogram = False, skipPCGSpectrogram = False, skipSegments = False, balance_diff=balance_diff_precalc, create_objects=False, split_into_video=False, q=None, window_ecg=None, window_pcg=None):
   dataset = format_dataset_name(dataset)
   # data_list.values.tolist() SHOULD RETURN (index,filename,og_filename,label,record_duration,num_channels,qrs_inds,signal,samples,qrs_count,seg_num)
   data_list = full_list[0]
@@ -321,8 +320,8 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
                                                   normalise=True, normalise_factor=np.linalg.norm(seg_spectrogram.spec), start_time=start_times_frames[i], wavelet_function=config.global_opts.cwt_function_ecg)
             write_to_logger_from_worker(f"* Creating .mp4 for Segment {index_e} / {len(ecg_segments)} *", q=q)
             ecg_seg_video = create_video(imagespath=outputpath_+f'spectrograms_ecg_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath=outputpath_+f'spectrograms_ecg_{config.global_opts.ecg_type}/{filename}/{index_e}/', filename=seg.savename if create_objects else f'{filename}_seg_{index_e}', framerate=config.global_opts.fps)
-        gc.collect()
-    gc.collect()
+        
+    
     
   if not skipPCGSpectrogram:
     create_new_folder(outputpath_+f'spectrograms_pcg_{config.global_opts.pcg_type}/{filename}')
@@ -351,8 +350,8 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
           Spectrogram(filename, savename=f'{filename}_seg_{index_p}_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, transform_type=config.global_opts.pcg_type,
                                     signal=pcg_seg, window=window_pcg, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
                                     outpath_np=outputpath_+f'data_pcg_{config.global_opts.pcg_type}/{filename}/{index_p}/', outpath_png=outputpath_+f'spectrograms_pcg_{config.global_opts.pcg_type}/{filename}/{index_p}/', normalise=True, start_time=start_times_pcg[index_p], wavelet_function=config.global_opts.cwt_function_pcg)
-        gc.collect()
-    gc.collect()
+        
+    
   if create_objects:
     return specs, specs_pcg, ecg_seg_video, frames #spectrogram, pcg_spectrogram, 
   else:
@@ -441,7 +440,7 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
     full_list = zip(new_data_list, range(len(new_data_list)))
   results_ = pool.map(partial(get_spectrogram_data, dataset=dataset, reflen=reflen, inputpath_data=inputpath_data, outputpath_=outputpath_+dataset+'/', 
                               sample_clip_len=config.global_opts.segment_length, ecg_sample_rate=config.global_opts.sample_rate_ecg, pcg_sample_rate=config.global_opts.sample_rate_pcg,
-                              skipDataCSVAndFiles = skipDataCSVAndFiles, skipECGSpectrogram = skipECGSpectrogram, skipPCGSpectrogram = skipPCGSpectrogram, 
+                              skipECGSpectrogram = skipECGSpectrogram, skipPCGSpectrogram = skipPCGSpectrogram, 
                               skipSegments = skipSegments, balance_diff=balance_diff_precalc, create_objects=create_objects, q=q), full_list)
   if not skipSegments and create_objects:
     for r in results_:
@@ -668,28 +667,28 @@ if __name__ == "__main__":
                                      inputpath_data=config.input_physionet_data_folderpath_, 
                                      inputpath_target=config.input_physionet_target_folderpath_, 
                                      outputpath_folder=config.outputpath,
-                                    pool=pool, q=manager_q,
-                                     
-                                     create_objects=False,
-                                    get_balance_diff=True,
-                                    skipDataCSVAndFiles=False,
-                                    skipECGSpectrogram=False,
-                                    skipPCGSpectrogram=False,
-                                     skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
-  )
-  data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
-                                     inputpath_data=config.input_ephnogram_data_folderpath_, 
-                                     inputpath_target=config.input_ephnogram_target_folderpath_, 
-                                     outputpath_folder=config.outputpath,
                                      pool=pool, q=manager_q,
                                      
                                      create_objects=False,
-                                      get_balance_diff=True,
-                                      skipDataCSVAndFiles=False,
-                                      skipECGSpectrogram=False,
-                                      skipPCGSpectrogram=False,
-                                      skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+                                     get_balance_diff=True,
+                                     skipDataCSVAndFiles=True,
+                                    skipECGSpectrogram=True,
+                                    skipPCGSpectrogram=False,
+                                     skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
   )
+ #data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
+ #                                   inputpath_data=config.input_ephnogram_data_folderpath_, 
+ #                                   inputpath_target=config.input_ephnogram_target_folderpath_, 
+ #                                   outputpath_folder=config.outputpath,
+ #                                   pool=pool, q=manager_q,
+ #                                   
+ #                                   create_objects=False,
+ #                                    get_balance_diff=True,
+ #                                    skipDataCSVAndFiles=True,
+ #                                    skipECGSpectrogram=False,
+ #                                    skipPCGSpectrogram=False,
+ #                                    skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+ #)
   write_to_logger("*** Cleaning and Postprocessing Data [3/3] ***", pool, manager_q)
   num_data_p, num_data_e = get_total_num_segments(config.outputpath)
   hists, signal_stats = create_histograms_data_values_distribution(config.outputpath, manager_q)
