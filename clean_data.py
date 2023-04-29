@@ -664,19 +664,19 @@ if __name__ == "__main__":
   
   #   - 'create_objects=False' for better performance; uses 'np.load(filepath_to_saved_spectogram_or_cwt)' to get processed ECG/PCG data
   # Normal Workflow (as in paper): 
-  #data_p, ratio_data_p = get_dataset(dataset="physionet", 
-  #                                   inputpath_data=config.input_physionet_data_folderpath_, 
-  #                                   inputpath_target=config.input_physionet_target_folderpath_, 
-  #                                   outputpath_folder=config.outputpath,
-  #                                   pool=pool, q=manager_q,
-   #                                  
-   #                                  create_objects=False,
-    #                                 get_balance_diff=True,
-   #                                  skipDataCSVAndFiles=True,
-  #                                  skipECGSpectrogram=False,
-   #                                 skipPCGSpectrogram=False,
-     #                                skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
-  #)
+  data_p, ratio_data_p = get_dataset(dataset="physionet", 
+                                     inputpath_data=config.input_physionet_data_folderpath_, 
+                                     inputpath_target=config.input_physionet_target_folderpath_, 
+                                     outputpath_folder=config.outputpath,
+                                    pool=pool, q=manager_q,
+                                     
+                                     create_objects=False,
+                                    get_balance_diff=True,
+                                    skipDataCSVAndFiles=False,
+                                    skipECGSpectrogram=False,
+                                    skipPCGSpectrogram=False,
+                                     skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+  )
   data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
                                      inputpath_data=config.input_ephnogram_data_folderpath_, 
                                      inputpath_target=config.input_ephnogram_target_folderpath_, 
@@ -685,7 +685,7 @@ if __name__ == "__main__":
                                      
                                      create_objects=False,
                                       get_balance_diff=True,
-                                      skipDataCSVAndFiles=True,
+                                      skipDataCSVAndFiles=False,
                                       skipECGSpectrogram=False,
                                       skipPCGSpectrogram=False,
                                       skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
