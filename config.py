@@ -308,9 +308,9 @@ log_fullpath = log_path+"/"+log_filename+".log"
 
 drivepath = 'drive/MyDrive/'+global_opts.drive_folderpath+"/"
 input_physionet_data_folderpath_ = drivepath+global_opts.inputpath_physionet_data+"/" if useDrive else global_opts.inputpath_physionet_data+"/"
-input_physionet_target_folderpath_ = drivepath+global_opts.inputpath_physionet_labels+"/" if useDrive else global_opts.inputpath_physionet_labels+"/"
+input_physionet_target_folderpath_ = drivepath+global_opts.inputpath_physionet_labels+"/" if useDrive else global_opts.inputpath_physionet_labels
 input_ephnogram_data_folderpath_ = drivepath+global_opts.inputpath_ephnogram_data+"/" if useDrive else global_opts.inputpath_ephnogram_data+"/"
-input_ephnogram_target_folderpath_ = drivepath+global_opts.inputpath_ephnogram_labels+"/" if useDrive else global_opts.inputpath_ephnogram_labels+"/"
+input_ephnogram_target_folderpath_ = drivepath+global_opts.inputpath_ephnogram_labels+"/" if useDrive else global_opts.inputpath_ephnogram_labels
 outputpath = drivepath+global_opts.outputpath+"/" if useDrive else global_opts.outputpath+"/"
 spec_win_size_ecg = global_opts.window_length#int(round(global_opts.window_length_ms * global_opts.sample_rate_ecg / 1e3)) #[64ms in paper] 40ms window length. converting from ms to samples
 spec_win_size_pcg = global_opts.window_length#int(round(global_opts.window_length_ms * global_opts.sample_rate_pcg / 1e3)) #[64ms in paper] 40ms window length. converting from ms to samples
