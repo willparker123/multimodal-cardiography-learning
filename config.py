@@ -172,7 +172,7 @@ def load_config():
     parser.add_argument('--ecg-type',
                         default=ecg_type,
                         type=str,
-                        help='Type of transform to use when creating ECG spectrograms [ecg, ecg_cwt, ecg_log, ecg_cwtlog]')
+                        help='Type of transform to use when creating ECG spectrograms')
     parser.add_argument('--sample-rate-ecg',
                         default=sample_rate_ecg,
                         type=int,
@@ -202,7 +202,7 @@ def load_config():
     parser.add_argument('--pcg-type',
                         default=pcg_type,
                         type=str,
-                        help='Type of transform to use when creating PCG spectrograms [pcg, pcg_mel, pcg_logmel]')
+                        help='Type of transform to use when creating PCG spectrograms')
     parser.add_argument('--sample-rate-pcg',
                         default=sample_rate_pcg,
                         type=int,

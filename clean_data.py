@@ -197,14 +197,14 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
   pcg_segments = []
   frames = []
   write_to_logger_from_worker(f"*** Processing Signal {index} ({index+1} / {reflen}) [{data_list[0]}] ***", q=q)
-  if dataset == "physionet":
-    filename = data_list[1]
-    og_filename = [2]
-    label = data_list[3]
-  else:
-    filename = data_list[0]
-    og_filename = [1]
-    label = data_list[2]
+  #if dataset == "physionet":
+  filename = data_list[1]
+  og_filename = [2]
+  label = data_list[3]
+  #else:
+  #  filename = data_list[0]
+  #  og_filename = [1]
+  #  label = data_list[2]
   create_new_folder(outputpath_+f'data_ecg_{config.global_opts.ecg_type}/{filename}')
   create_new_folder(outputpath_+f'data_pcg_{config.global_opts.pcg_type}/{filename}')
   frames = []
@@ -381,7 +381,7 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
   if not skipECGSpectrogram:
     create_new_folder(outputpath_save+f'spectrograms_ecg_{config.global_opts.ecg_type}')
   if not skipPCGSpectrogram:
-    create_new_folder(outputpath_+dataset+f'/spectrograms_pcg_{config.global_opts.pcg_type}')
+    create_new_folder(outputpath_save+f'spectrograms_pcg_{config.global_opts.pcg_type}')
   create_new_folder(outputpath_save+f'data_ecg_{config.global_opts.ecg_type}')
   create_new_folder(outputpath_save+f'data_pcg_{config.global_opts.pcg_type}')
   if not os.path.isfile(inputpath_target):
@@ -671,24 +671,24 @@ if __name__ == "__main__":
                                      
                                      create_objects=False,
                                      get_balance_diff=True,
-                                     skipDataCSVAndFiles=True,
-                                    skipECGSpectrogram=True,
+                                     skipDataCSVAndFiles=False,
+                                    skipECGSpectrogram=False,
                                     skipPCGSpectrogram=False,
                                      skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
   )
- #data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
- #                                   inputpath_data=config.input_ephnogram_data_folderpath_, 
- #                                   inputpath_target=config.input_ephnogram_target_folderpath_, 
- #                                   outputpath_folder=config.outputpath,
- #                                   pool=pool, q=manager_q,
- #                                   
- #                                   create_objects=False,
- #                                    get_balance_diff=True,
- #                                    skipDataCSVAndFiles=True,
- #                                    skipECGSpectrogram=False,
- #                                    skipPCGSpectrogram=False,
- #                                    skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
- #)
+  data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
+                                    inputpath_data=config.input_ephnogram_data_folderpath_, 
+                                    inputpath_target=config.input_ephnogram_target_folderpath_, 
+                                    outputpath_folder=config.outputpath,
+                                    pool=pool, q=manager_q,
+                                    
+                                    create_objects=False,
+                                     get_balance_diff=True,
+                                     skipDataCSVAndFiles=False,
+                                     skipECGSpectrogram=False,
+                                     skipPCGSpectrogram=False,
+                                     skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+ )
   write_to_logger("*** Cleaning and Postprocessing Data [3/3] ***", pool, manager_q)
   num_data_p, num_data_e = get_total_num_segments(config.outputpath)
   hists, signal_stats = create_histograms_data_values_distribution(config.outputpath, manager_q)
