@@ -18,7 +18,7 @@ class Spectrogram():
     def __init__(self, filename, savename=None, filepath=outputpath+'physionet/', signal=None, outpath_np=outputpath+'physionet/', 
                  outpath_png=outputpath+'physionet/spectrograms', sample_rate=2000, 
                  window=None, hop_length=128//2 #50% overlapping windows,
-                 , NMels=128, window_size=128, NFFT=128, transform_type="stft", normalise=True, normalise_factor=None, save=True,
+                 , NMels=128, window_size=128, NFFT=128, transform_type="stft", normalise=True, normalise_factor=None, save_np=True, save_img=True,
                  spec=None, freqs=None, times=None, image=None, start_time=0, wavelet_function="ricker", colormap='magma'):
         #super().__init__()
         self.filepath = filepath
@@ -27,7 +27,8 @@ class Spectrogram():
         self.normalise = normalise
         self.start_time = start_time
         self.wavelet_function = wavelet_function
-        self.save = save
+        self.save_np = save_np
+        self.save_img = save_img
         if signal is None:
             try:
                 if savename is not None:
@@ -49,7 +50,7 @@ class Spectrogram():
         if spec is not None and freqs is not None and times is not None and image is not None:
             self.spec, self.freqs, self.times, self.image = spec, freqs, times, image
         else:
-            self.spec, self.freqs, self.times, self.image = create_spectrogram(filepath, savename if savename is not None else filename, sample_rate, signal=self.signal, save_np=save, save_img=save, transform_type=transform_type, 
+            self.spec, self.freqs, self.times, self.image = create_spectrogram(filepath, savename if savename is not None else filename, sample_rate, signal=self.signal, save_np=save_np, save_img=save_img, transform_type=transform_type, 
                                              window=window, window_size=window_size, NFFT=NFFT, NMels=NMels, hop_length=hop_length, outpath_np=outpath_np, outpath_png=outpath_png, normalise=normalise, 
                                              normalise_factor=normalise_factor, start_time=self.start_time, wavelet_function=self.wavelet_function, colormap=colormap)
 
