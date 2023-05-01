@@ -63,6 +63,8 @@ class PCG():
             signal = signal.numpy()
         except:
             pass
+        if signal.ndim != 1:
+            signal = np.squeeze(signal)
         self.signal_preproc = signal
         if apply_filter:
             #[Deep Learning Based Classification of Unsegmented Phonocardiogram Spectrograms Leveraging Transfer Learning]
@@ -85,6 +87,8 @@ class PCG():
             else:
                 signal = (signal-np.min(signal))/(np.max(signal)-np.min(signal))
         self.signal = signal
+        if self.signal.ndim != 1:
+            self.signal = np.squeeze(self.signal)
         self.samples = int(len(signal))
         if label is None:
             if not os.path.isfile(csv_path):

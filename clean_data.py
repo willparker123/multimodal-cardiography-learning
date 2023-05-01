@@ -500,8 +500,8 @@ def get_dataset(dataset="physionet", inputpath_data=config.input_physionet_data_
       return data, ecgs, pcgs, ecg_segments, pcg_segments, spectrograms_ecg, spectrograms_pcg, spectrograms_ecg_segs, spectrograms_pcg_segs
 
 def get_both_dataframes(outputpath_=config.outputpath):
-  data_e = pd.read_csv(outputpath_+"data_ephnogram_raw.csv", names=list(dataframe_cols))
-  data_p = pd.read_csv(outputpath_+"data_physionet_raw.csv", names=list(dataframe_cols))
+  data_e = pd.read_csv(outputpath_+"ephnogram/data_ephnogram_raw.csv", names=list(dataframe_cols))
+  data_p = pd.read_csv(outputpath_+"physionet/data_physionet_raw.csv", names=list(dataframe_cols))
   return data_p, data_e
 
 def get_total_num_segments(datapath=config.outputpath):
@@ -684,7 +684,7 @@ if __name__ == "__main__":
                                     
                                     create_objects=False,
                                      get_balance_diff=True,
-                                     skipDataCSVAndFiles=False,
+                                     skipDataCSVAndFiles=True,
                                      skipECGSpectrogram=False,
                                      skipPCGSpectrogram=False,
                                      skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)

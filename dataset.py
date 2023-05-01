@@ -29,9 +29,11 @@ class ECGPCGDataset(Dataset):
                  ecg_sample_rate=global_opts.sample_rate_ecg, 
                  pcg_sample_rate=global_opts.sample_rate_pcg,
                  
-                 paths_ecgs=[outputpath+f'physionet/spectrograms_{global_opts.ecg_type}/', outputpath+f'ephnogram/spectrograms_{global_opts.ecg_type}/'], 
-                 paths_pcgs=[outputpath+f'physionet/spectrograms_{global_opts.pcg_type}/', outputpath+f'ephnogram/spectrograms_{global_opts.pcg_type}/'], 
-                 paths_csv=[outputpath+f'data_physionet_raw', outputpath+f'data_ephnogram_raw'],
+                 #paths_ecgs=[outputpath+f'physionet/spectrograms_ecg_{global_opts.ecg_type}/', outputpath+f'ephnogram/spectrograms_ecg_{global_opts.ecg_type}/'], 
+                 #paths_pcgs=[outputpath+f'physionet/spectrograms_pcg_{global_opts.pcg_type}/', outputpath+f'ephnogram/spectrograms_pcg_{global_opts.pcg_type}/'], 
+                 paths_ecgs=[outputpath+f'physionet/data_ecg_{global_opts.ecg_type}/', outputpath+f'ephnogram/data_ecg_{global_opts.ecg_type}/'], 
+                 paths_pcgs=[outputpath+f'physionet/data_pcg_{global_opts.pcg_type}/', outputpath+f'ephnogram/data_pcg_{global_opts.pcg_type}/'], 
+                 paths_csv=[outputpath+f'physionet/data_physionet_raw', outputpath+f'ephnogram/data_ephnogram_raw'],
                  qrs=[],
                  hrs=[],
                  freqs_ecg=[],
@@ -64,7 +66,7 @@ class ECGPCGDataset(Dataset):
         self.data_pcg = []
         self.dfs = []
         for ind_csv, path_csv in enumerate(paths_csv):
-            df_temp = pd.read_csv(path_csv+'.csv', names=dataframe_cols)
+            df_temp = pd.read_csv(path_csv+'.csv', names=dataframe_cols, header=0)
             if not set(dataframe_cols).issubset(df_temp.columns):
                 raise ValueError(f"Error: csv '{path_csv}' must have columns {dataframe_cols}")
             self.dfs.append(df_temp)
@@ -77,7 +79,7 @@ class ECGPCGDataset(Dataset):
         self.times_ecg = times_ecg
         self.freqs_pcg = freqs_pcg
         self.times_pcg = times_pcg
-        print(f"** ECGPCG DATASET HEAD: {self.df_all.head()} **")
+        print(f"** ECGPCG DATASET HEAD: {self.df_data.head()} **")
         
         # Validate that all directories and files exist
         print(f"* Validating directories and files for: \n{paths_ecgs}\n{paths_pcgs}\n{paths_csv}\n\n")
@@ -87,6 +89,8 @@ class ECGPCGDataset(Dataset):
             pcg_paths_samples = []
             if samples_in_directories:
                 dirs_ecg = next(os.walk(paths_ecgs[i]))[1]
+                print(dirs_ecg)
+                print(f"dirs_ecg: {len(dirs_ecg)} self.dfs[i].index: {len(self.dfs[i].index)}")
                 if not len(dirs_ecg) == len(self.dfs[i].index):
                     raise ValueError(f"Error: Number of ECG directories does not match records in '{paths_csv[i]}.csv'")
                 if data_type_ecg is not "video" and not no_pcg_paths:
@@ -95,26 +99,32 @@ class ECGPCGDataset(Dataset):
                         raise ValueError(f"Error: Number of ECG and PCG directories do not match")
                     if not len(dirs_pcg) == len(self.dfs[i].index):
                         raise ValueError(f"Error: Number of PCG directories does not match records in '{paths_csv[i]}.csv'")
-                for j, dir in dirs_ecg:
+                for j, dir in enumerate(dirs_ecg):
                     ecg_paths_sample_segments = []
                     pcg_paths_sample_segments = []
                     # Check segment direectories
                     dirs_inner = next(os.walk(paths_ecgs[i]+f'{dir}/'))[1]
-                    record = paths_csv[i].iloc[[j]]
-                    if not len(dirs_inner) == record['seg_num']:
-                        raise ValueError(f"Error: Missing segment directories for '{dir}': expected {record['seg_num']}, found {len(dirs_inner)}.")
-                    for k, dir_inner in dirs_inner:
+                    record = self.dfs[i].iloc[[j]]
+                    print(f"record['seg_num']: {record['seg_num']}")
+                    seg_num = int(record['seg_num'])
+                    print(f"seg_num: {seg_num}")
+                    if not len(dirs_inner) == seg_num:
+                        raise ValueError(f"Error: Missing segment directories for '{dir}': expected {seg_num}, found {len(dirs_inner)}.")
+                    for k, dir_inner in enumerate(dirs_inner):
                         # Files in paths_ecgs[i]/sample_filename/segment_index/
                         files_ecg = next(os.walk(paths_ecgs[i]+f'{dir}/{dir_inner}/'))[2]
+                        print(f"files_ecg: {files_ecg}")
                         if len(files_ecg) == 0:
                             raise ValueError(f"Error: no files found in directory '{paths_ecgs[i]}{dir}/{dir_inner}/'.")
                         valid_files_ecg = [f for f in files_ecg if (f.endswith(f".{self.file_type_ecg}") if self.file_type_ecg is not 'wfdb' else (f.endswith(f".hea") or f.endswith(f".dat"))) \
                             and ('spec' in f if data_type_ecg=='spec' else True)]
+                        print(valid_files_ecg)
                         if len(valid_files_ecg) == 0:
                             raise ValueError(f"Error: no valid files found with extension '.{self.file_type_ecg if self.file_type_ecg is not 'wfdb' else 'dat'}'")
                         
                         if data_type_ecg is not "video" and not no_pcg_paths:
                             files_pcg = next(os.walk(paths_pcgs[i]+f'{dir}/{dir_inner}/'))[2]
+                            print(f"files_pcg: {files_pcg}")
                             if len(files_pcg) == 0:
                                 raise ValueError(f"Error: no files found in directory '{paths_pcgs[i]}{dir}/{dir_inner}/'.")
                             valid_files_pcg = [f for f in files_pcg if f.endswith(f".{self.file_type_pcg}") and ('spec' in f if data_type_ecg=='spec' else True)]
@@ -150,6 +160,7 @@ class ECGPCGDataset(Dataset):
                     ecg_paths_sample_segments = []
                     pcg_paths_sample_segments = []
                     seg_num = int(len(self.dfs[i].iloc[[ind]]['seg_num']))
+                    print(f"int(len(self.dfs[i].iloc[[ind]]['seg_num'])): {int(len(self.dfs[i].iloc[[ind]]['seg_num']))}")
                     valid_files_ecg = [f for f in all_files_ecg if self.dfs[i].iloc[[ind]]['filename'] in f and (f.endswith(f".{self.file_type_ecg}") if self.file_type_ecg is not 'wfdb' else (f.endswith(f".hea") or f.endswith(f".dat"))) \
                             and ('spec' in f if data_type_ecg=='spec' else True)]
                     fileswithfilenameandseg_ecg = [y for y in valid_files_ecg if '_seg_' in y]

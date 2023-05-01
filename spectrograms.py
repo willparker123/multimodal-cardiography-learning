@@ -146,6 +146,8 @@ class Spectrogram():
 def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=None, signal=None, save_np=True, save_img=True, normalise=True, transform_type="stft", window=None, window_size=128, NMels=128, NFFT=128, 
                        hop_length=128//2, outpath_np=outputpath+'physionet/data', outpath_png=outputpath+'physionet/spectrograms', start_time=0, wavelet_function="ricker",
                        power_coeff=2, colormap=plt.cm.jet, just_image=True):
+    if signal.ndim != 1:
+        signal = np.squeeze(signal)
     if signal is None:
         if savename is not None:
             signal = np.load(filepath+savename+f'_{transform_type}_spec.npz')['data']

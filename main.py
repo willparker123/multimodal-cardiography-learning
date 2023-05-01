@@ -168,6 +168,7 @@ if __name__ == '__main__':
     global_opts = config.global_opts
     
     create_new_folder(config.outputpath+"results")
+    main()
   
     #create_new_folder("samples-TEST")
     data_sample()
@@ -176,5 +177,4 @@ if __name__ == '__main__':
     data_sample(outputfolderpath="samples-TEST/stft", transform_type_ecg="stft_log", transform_type_pcg="stft_log", colormap="magma")
     data_sample(outputfolderpath="samples-TEST/stft", transform_type_ecg="stft_log", transform_type_pcg="stft_log", colormap="jet")
     data_sample(outputfolderpath="samples-TEST/stft_logmel", transform_type_ecg="stft_log", transform_type_pcg="stft_logmel")
-    main()
     
