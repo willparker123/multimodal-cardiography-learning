@@ -116,27 +116,27 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
   duration = 0
   channel_num = 1 if dataset=="physionet" else ref[0][2]
   label = 0 if dataset=="ephnogram" else ref[0][1]
-  if skipExisting:
-    filename = ref[0][0] 
+  #if skipExisting:
+  ##  filename = ref[0][0] 
     #ECG: data, sig, qrs, hrs
     #PCG: data, sig
-    if dataset=="ephnogram":
-      filename = 'b0000'[:-len(str(index+1))]+str(index+1)
-    if os.path.exists(f'{outputpath_save}data_ecg_{config.global_opts.ecg_type}/{filename}/{filename}_{config.global_opts.ecg_type}.npz') and \
-      os.path.exists(f'{outputpath_save}data_pcg_{config.global_opts.pcg_type}/{filename}/{filename}_{config.global_opts.pcg_type}.npz'):
-      write_to_logger_from_worker(f"Files found in directories '{outputpath_save}data_ecg_{config.global_opts.ecg_type}/{filename}/' and '{outputpath_save}data_pcg_{config.global_opts.pcg_type}/{filename}/' - skipping", q=q)
-      if create_objects:
-        raise ValueError("Error: Cannot create objects from saved signals. Unimplemented - use with 'create_objects'=False")
-      ecg_data = np.load(f'{outputpath_save}data_ecg_{config.global_opts.ecg_type}/{filename}/{filename}_{config.global_opts.ecg_type}.npz')
-      pcg_data = np.load(f'{outputpath_save}data_pcg_{config.global_opts.pcg_type}/{filename}/{filename}_{config.global_opts.pcg_type}.npz')
-      ecg_sig = ecg_data['data']
-      ecg_qrs = ecg_data['qrs']
-      pcg_sig = pcg_data['data']
-      hrs = ecg_data['hrs']
-      seg_num = get_segment_num(ecg_sample_rate, int(len(ecg_sig)), sample_clip_len, factor=1) 
-      duration = len(ecg_sig)/ecg_sample_rate
-      data = {'filename':filename, 'og_filename':ref[0][0], 'label':label, 'record_duration':duration, 'num_channels':channel_num, 'samples_ecg':int(len(ecg_sig)), 'samples_pcg':int(len(pcg_sig)), 'qrs_count':int(len(ecg_qrs)), 'seg_num':seg_num, 'avg_hr':np.average(hrs)}
-      return data
+  #  if dataset=="ephnogram":
+  #    filename = 'b0000'[:-len(str(index+1))]+str(index+1)
+  #  if os.path.exists(f'{outputpath_save}data_ecg_{config.global_opts.ecg_type}/{filename}/{filename}_{config.global_opts.ecg_type}.npz') and \
+  #    os.path.exists(f'{outputpath_save}data_pcg_{config.global_opts.pcg_type}/{filename}/{filename}_{config.global_opts.pcg_type}.npz'):
+  #    write_to_logger_from_worker(f"Files found in directories '{outputpath_save}data_ecg_{config.global_opts.ecg_type}/{filename}/' and '{outputpath_save}data_pcg_{config.global_opts.pcg_type}/{filename}/' - skipping", q=q)
+  #    if create_objects:
+  #      raise ValueError("Error: Cannot create objects from saved signals. Unimplemented - use with 'create_objects'=False")
+  #    ecg_data = np.load(f'{outputpath_save}data_ecg_{config.global_opts.ecg_type}/{filename}/{filename}_{config.global_opts.ecg_type}.npz')
+  #    pcg_data = np.load(f'{outputpath_save}data_pcg_{config.global_opts.pcg_type}/{filename}/{filename}_{config.global_opts.pcg_type}.npz')
+  #    ecg_sig = ecg_data['data']
+  #    ecg_qrs = ecg_data['qrs']
+  #    pcg_sig = pcg_data['data']
+  #    hrs = ecg_data['hrs']
+  #    seg_num = get_segment_num(ecg_sample_rate, int(len(ecg_sig)), sample_clip_len, factor=1) 
+  #    duration = len(ecg_sig)/ecg_sample_rate
+  #    data = {'filename':filename, 'og_filename':ref[0][0], 'label':label, 'record_duration':duration, 'num_channels':channel_num, 'samples_ecg':int(len(ecg_sig)), 'samples_pcg':int(len(pcg_sig)), 'qrs_count':int(len(ecg_qrs)), 'seg_num':seg_num, 'avg_hr':np.average(hrs)}
+  #    return data
 
   #WFDB records - channel 0 is ECG, channel 1 is PCG
   if dataset=="ephnogram":
@@ -197,14 +197,14 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
   pcg_segments = []
   frames = []
   write_to_logger_from_worker(f"*** Processing Signal {index} ({index+1} / {reflen}) [{data_list[0]}] ***", q=q)
-  #if dataset == "physionet":
-  filename = data_list[1]
-  og_filename = [2]
-  label = data_list[3]
-  #else:
-  #  filename = data_list[0]
-  #  og_filename = [1]
-  #  label = data_list[2]
+  if dataset == "physionet":
+    filename = data_list[1]
+    og_filename = [2]
+    label = data_list[3]
+  else:
+    filename = data_list[0]
+    og_filename = [1]
+    label = data_list[2]
   create_new_folder(outputpath_+f'data_ecg_{config.global_opts.ecg_type}/{filename}')
   create_new_folder(outputpath_+f'data_pcg_{config.global_opts.pcg_type}/{filename}')
   frames = []
@@ -327,7 +327,7 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
                                                   normalise=True, normalise_factor=np.linalg.norm(seg_spectrogram.spec), start_time=start_times_frames[i], wavelet_function=config.global_opts.cwt_function_ecg, save_np=saveData, save_img=saveImage)
             write_to_logger_from_worker(f"* Creating .mp4 for Segment {index_e} / {len(ecg_segments)} *", q=q)
             ecg_seg_video = create_video(imagespath=outputpath_+f'spectrograms_ecg_{config.global_opts.ecg_type}/{filename}/{index_e}/frames/', outpath=outputpath_+f'spectrograms_ecg_{config.global_opts.ecg_type}/{filename}/{index_e}/', filename=seg.savename if create_objects else f'{filename}_seg_{index_e}', framerate=config.global_opts.fps)
-        
+  gc.collect()
     
     
   if not skipPCGSpectrogram:
@@ -360,7 +360,7 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
           Spectrogram(filename, savename=f'{filename}_seg_{index_p}_spec', filepath=outputpath_, sample_rate=pcg_sample_rate, transform_type=config.global_opts.pcg_type,
                                     signal=pcg_seg, window=window_pcg, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
                                     outpath_np=outputpath_+f'data_pcg_{config.global_opts.pcg_type}/{filename}/{index_p}/', outpath_png=outputpath_+f'spectrograms_pcg_{config.global_opts.pcg_type}/{filename}/{index_p}/', normalise=True, start_time=start_times_pcg[index_p], wavelet_function=config.global_opts.cwt_function_pcg, save_np=saveData, save_img=saveImage)
-        
+  gc.collect()    
     
   if create_objects:
     return specs, specs_pcg, ecg_seg_video, frames #spectrogram, pcg_spectrogram, 
@@ -675,20 +675,20 @@ if __name__ == "__main__":
   #   - 'create_objects=False' for better performance; uses 'np.load(filepath_to_saved_spectogram_or_cwt)' to get processed ECG/PCG data
   # Normal Workflow (as in paper): 
   data_p, ratio_data_p = get_dataset(dataset="physionet", 
-                                     inputpath_data=config.input_physionet_data_folderpath_, 
-                                     inputpath_target=config.input_physionet_target_folderpath_, 
-                                     outputpath_folder=config.outputpath,
-                                     pool=pool, q=manager_q,
-                                     
-                                     create_objects=False,
-                                     get_balance_diff=True,
-                                     skipDataCSVAndFiles=False,
-                                    skipECGSpectrogram=False,
-                                    skipPCGSpectrogram=False,
-                                    saveSpecData=True, 
+                                    inputpath_data=config.input_physionet_data_folderpath_, 
+                                    inputpath_target=config.input_physionet_target_folderpath_, 
+                                    outputpath_folder=config.outputpath,
+                                    pool=pool, q=manager_q,
+                                    
+                                    create_objects=False,
+                                    get_balance_diff=True,
+                                    skipDataCSVAndFiles=True,
+                                   skipECGSpectrogram=False,
+                                   skipPCGSpectrogram=False,
+                                   saveSpecData=True, 
                                     saveSpecImage=False,
-                                    saveParent=False,
-                                     skipExisting=True, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+                                   saveParent=False,
+                                    skipExisting=True, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
   )
   data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
                                     inputpath_data=config.input_ephnogram_data_folderpath_, 

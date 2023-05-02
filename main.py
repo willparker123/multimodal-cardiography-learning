@@ -79,7 +79,8 @@ def main():
     torch.cuda.empty_cache()
     dataset = ECGPCGDataset(clip_length=8, 
                             ecg_sample_rate=config.global_opts.sample_rate_ecg,
-                            pcg_sample_rate=config.global_opts.sample_rate_pcg)
+                            pcg_sample_rate=config.global_opts.sample_rate_pcg,
+                            verifyComplete=False)
     
     train_len = math.floor(len(dataset)*config.global_opts.train_split)
     data_train, data_test = torch.utils.data.random_split(dataset, [train_len, len(dataset)-train_len], generator=torch.Generator().manual_seed(42)) 

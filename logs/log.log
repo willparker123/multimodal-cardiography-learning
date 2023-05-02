@@ -1,24 +1,24 @@
-[20576] Output Path: data-after-TEST
-[20576] Input Path (Physionet) Data: data-before/physionet-data/training-a
-[20576] Input Path (Physionet) Labels: data-before/physionet-data/training-a/REFERENCE.csv
-[20576] Input Path (Ephnogram) Data: data-before/ephnogram-data/WFDB
-[20576] Input Path (Ephnogram) Labels: data-before/ephnogram-data/ECGPCGSpreadsheet.csv
-[20576] ****************MMTF-ECGPCGNet*****************
-[20576] ***          ECGPCG Data Cleaning           ***
-[20576] ***********************************************
-[20576] *** OPTIONS:                               ***
-[20576]         RAM usage: 40.0%
-[20576]         Number of Processes: 16   [Available: 18]
-[20576]         GPU Enabled: True  GPU ID: 0
-[20576]         Google Drive Enabled (unprocessed dataset storage): False
-[20576]  UNUSED Tensorflow Enabled: False
-[20576] ***********************************************
-[20576] Attempting to set RAM usage to 40.0%
-[20576] Warning: Linux memory_limit function failed - trying Windows
-[20576] *** Cleaning Data [1/3] ***
-[20576] ** Cleaning Physionet Data **
-[20576] * Cleaning Physionet Data - Creating References [1/4] *
-[20576] READMEREF:     filename  label
+[12436] Output Path: data-after-TEST
+[12436] Input Path (Physionet) Data: data-before/physionet-data/training-a
+[12436] Input Path (Physionet) Labels: data-before/physionet-data/training-a/REFERENCE.csv
+[12436] Input Path (Ephnogram) Data: data-before/ephnogram-data/WFDB
+[12436] Input Path (Ephnogram) Labels: data-before/ephnogram-data/ECGPCGSpreadsheet.csv
+[12436] ****************MMTF-ECGPCGNet*****************
+[12436] ***          ECGPCG Data Cleaning           ***
+[12436] ***********************************************
+[12436] *** OPTIONS:                               ***
+[12436]         RAM usage: 80.0%
+[12436]         Number of Processes: 16   [Available: 18]
+[12436]         GPU Enabled: True  GPU ID: 0
+[12436]         Google Drive Enabled (unprocessed dataset storage): False
+[12436]  UNUSED Tensorflow Enabled: False
+[12436] ***********************************************
+[12436] Attempting to set RAM usage to 80.0%
+[12436] Warning: Linux memory_limit function failed - trying Windows
+[12436] *** Cleaning Data [1/3] ***
+[12436] ** Cleaning Physionet Data **
+[12436] * Cleaning Physionet Data - Creating References [1/4] *
+[12436] READMEREF:     filename  label
 0      a0001      1
 1      a0002      1
 2      a0003      1
@@ -32,928 +32,83 @@
 408    a0409     -1
 
 [409 rows x 2 columns]
-[20576] Unprocessed label CSV for PHYSIONET:   filename  label
+[12436] Unprocessed label CSV for PHYSIONET:   filename  label
 0    a0001      1
 1    a0002      1
 2    a0003      1
 3    a0004      1
 4    a0005      1
-[20576] * Cleaning Physionet Data - Creating CSV "data-after-TEST/physionet/data_physionet_raw.csv" - QRS, ECGs and PCGs [2/4] *
-[28220] Processing Data Item: (['a0029', -1], 28)
-[25280] Processing Data Item: (['a0015', 1], 14)
-[28100] Processing Data Item: (['a0022', 1], 21)
-[27328] Processing Data Item: (['a0001', 1], 0)
-[22572] Processing Data Item: (['a0008', 1], 7)
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0015/' and 'data-after-TEST/physionet/data_pcg_cwt/a0015/' - skipping
-[27328] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0001/' and 'data-after-TEST/physionet/data_pcg_cwt/a0001/' - skipping
-[28220] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0029/' and 'data-after-TEST/physionet/data_pcg_cwt/a0029/' - skipping
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0008/' and 'data-after-TEST/physionet/data_pcg_cwt/a0008/' - skipping
-[28100] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0022/' and 'data-after-TEST/physionet/data_pcg_cwt/a0022/' - skipping
-[27328] Processing Data Item: (['a0002', 1], 1)
-[28220] Processing Data Item: (['a0030', 1], 29)
-[25280] Processing Data Item: (['a0016', -1], 15)
-[22572] Processing Data Item: (['a0009', -1], 8)
-[28100] Processing Data Item: (['a0023', 1], 22)
-[28220] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0030/' and 'data-after-TEST/physionet/data_pcg_cwt/a0030/' - skipping
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0009/' and 'data-after-TEST/physionet/data_pcg_cwt/a0009/' - skipping
-[28100] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0023/' and 'data-after-TEST/physionet/data_pcg_cwt/a0023/' - skipping
-[27328] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0002/' and 'data-after-TEST/physionet/data_pcg_cwt/a0002/' - skipping
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0016/' and 'data-after-TEST/physionet/data_pcg_cwt/a0016/' - skipping
-[25280] Processing Data Item: (['a0017', 1], 16)
-[27328] Processing Data Item: (['a0003', 1], 2)
-[22572] Processing Data Item: (['a0010', 1], 9)
-[28100] Processing Data Item: (['a0024', 1], 23)
-[28220] Processing Data Item: (['a0031', 1], 30)
-[27328] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0003/' and 'data-after-TEST/physionet/data_pcg_cwt/a0003/' - skipping
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0010/' and 'data-after-TEST/physionet/data_pcg_cwt/a0010/' - skipping
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0017/' and 'data-after-TEST/physionet/data_pcg_cwt/a0017/' - skipping
-[28220] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0031/' and 'data-after-TEST/physionet/data_pcg_cwt/a0031/' - skipping
-[28100] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0024/' and 'data-after-TEST/physionet/data_pcg_cwt/a0024/' - skipping
-[22572] Processing Data Item: (['a0011', -1], 10)
-[28220] Processing Data Item: (['a0032', -1], 31)
-[27328] Processing Data Item: (['a0004', 1], 3)
-[25280] Processing Data Item: (['a0018', 1], 17)
-[28100] Processing Data Item: (['a0025', -1], 24)
-[28100] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0025/' and 'data-after-TEST/physionet/data_pcg_cwt/a0025/' - skipping
-[27328] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0004/' and 'data-after-TEST/physionet/data_pcg_cwt/a0004/' - skipping
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0018/' and 'data-after-TEST/physionet/data_pcg_cwt/a0018/' - skipping
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0011/' and 'data-after-TEST/physionet/data_pcg_cwt/a0011/' - skipping
-[28220] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0032/' and 'data-after-TEST/physionet/data_pcg_cwt/a0032/' - skipping
-[25280] Processing Data Item: (['a0019', -1], 18)
-[22572] Processing Data Item: (['a0012', -1], 11)
-[28220] Processing Data Item: (['a0033', 1], 32)
-[28100] Processing Data Item: (['a0026', 1], 25)
-[27328] Processing Data Item: (['a0005', 1], 4)
-[27328] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0005/' and 'data-after-TEST/physionet/data_pcg_cwt/a0005/' - skipping
-[28220] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0033/' and 'data-after-TEST/physionet/data_pcg_cwt/a0033/' - skipping
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0019/' and 'data-after-TEST/physionet/data_pcg_cwt/a0019/' - skipping
-[28100] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0026/' and 'data-after-TEST/physionet/data_pcg_cwt/a0026/' - skipping
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0012/' and 'data-after-TEST/physionet/data_pcg_cwt/a0012/' - skipping
-[22572] Processing Data Item: (['a0013', 1], 12)
-[28100] Processing Data Item: (['a0027', -1], 26)
-[27328] Processing Data Item: (['a0006', 1], 5)
-[28220] Processing Data Item: (['a0034', 1], 33)
-[25280] Processing Data Item: (['a0020', 1], 19)
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0013/' and 'data-after-TEST/physionet/data_pcg_cwt/a0013/' - skipping
-[28220] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0034/' and 'data-after-TEST/physionet/data_pcg_cwt/a0034/' - skipping
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0020/' and 'data-after-TEST/physionet/data_pcg_cwt/a0020/' - skipping
-[27328] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0006/' and 'data-after-TEST/physionet/data_pcg_cwt/a0006/' - skipping
-[28100] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0027/' and 'data-after-TEST/physionet/data_pcg_cwt/a0027/' - skipping
-[28220] Processing Data Item: (['a0035', -1], 34)
-[25280] Processing Data Item: (['a0021', 1], 20)
-[28100] Processing Data Item: (['a0028', -1], 27)
-[27328] Processing Data Item: (['a0007', -1], 6)
-[22572] Processing Data Item: (['a0014', 1], 13)
-[28220] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0035/' and 'data-after-TEST/physionet/data_pcg_cwt/a0035/' - skipping
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0021/' and 'data-after-TEST/physionet/data_pcg_cwt/a0021/' - skipping
-[28100] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0028/' and 'data-after-TEST/physionet/data_pcg_cwt/a0028/' - skipping
-[27328] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0007/' and 'data-after-TEST/physionet/data_pcg_cwt/a0007/' - skipping
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0014/' and 'data-after-TEST/physionet/data_pcg_cwt/a0014/' - skipping
-[25280] Processing Data Item: (['a0036', 1], 35)
-[22572] Processing Data Item: (['a0043', 1], 42)
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0036/' and 'data-after-TEST/physionet/data_pcg_cwt/a0036/' - skipping
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0043/' and 'data-after-TEST/physionet/data_pcg_cwt/a0043/' - skipping
-[22572] Processing Data Item: (['a0044', 1], 43)
-[25280] Processing Data Item: (['a0037', 1], 36)
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0037/' and 'data-after-TEST/physionet/data_pcg_cwt/a0037/' - skipping
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0044/' and 'data-after-TEST/physionet/data_pcg_cwt/a0044/' - skipping
-[22572] Processing Data Item: (['a0045', 1], 44)
-[25280] Processing Data Item: (['a0038', -1], 37)
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0045/' and 'data-after-TEST/physionet/data_pcg_cwt/a0045/' - skipping
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0038/' and 'data-after-TEST/physionet/data_pcg_cwt/a0038/' - skipping
-[25280] Processing Data Item: (['a0039', 1], 38)
-[22572] Processing Data Item: (['a0046', 1], 45)
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0039/' and 'data-after-TEST/physionet/data_pcg_cwt/a0039/' - skipping
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0046/' and 'data-after-TEST/physionet/data_pcg_cwt/a0046/' - skipping
-[25280] Processing Data Item: (['a0040', 1], 39)
-[22572] Processing Data Item: (['a0047', 1], 46)
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0040/' and 'data-after-TEST/physionet/data_pcg_cwt/a0040/' - skipping
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0047/' and 'data-after-TEST/physionet/data_pcg_cwt/a0047/' - skipping
-[22572] Processing Data Item: (['a0048', 1], 47)
-[25280] Processing Data Item: (['a0041', 1], 40)
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0041/' and 'data-after-TEST/physionet/data_pcg_cwt/a0041/' - skipping
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0048/' and 'data-after-TEST/physionet/data_pcg_cwt/a0048/' - skipping
-[25280] Processing Data Item: (['a0042', 1], 41)
-[22572] Processing Data Item: (['a0049', -1], 48)
-[25280] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0042/' and 'data-after-TEST/physionet/data_pcg_cwt/a0042/' - skipping
-[22572] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0049/' and 'data-after-TEST/physionet/data_pcg_cwt/a0049/' - skipping
-[15116] Processing Data Item: (['a0050', -1], 49)
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0050/' and 'data-after-TEST/physionet/data_pcg_cwt/a0050/' - skipping
-[15116] Processing Data Item: (['a0051', 1], 50)
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0051/' and 'data-after-TEST/physionet/data_pcg_cwt/a0051/' - skipping
-[15116] Processing Data Item: (['a0052', 1], 51)
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0052/' and 'data-after-TEST/physionet/data_pcg_cwt/a0052/' - skipping
-[26580] Processing Data Item: (['a0057', 1], 56)
-[15116] Processing Data Item: (['a0053', -1], 52)
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0057/' and 'data-after-TEST/physionet/data_pcg_cwt/a0057/' - skipping
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0053/' and 'data-after-TEST/physionet/data_pcg_cwt/a0053/' - skipping
-[26580] Processing Data Item: (['a0058', 1], 57)
-[15116] Processing Data Item: (['a0054', 1], 53)
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0058/' and 'data-after-TEST/physionet/data_pcg_cwt/a0058/' - skipping
-[26580] Processing Data Item: (['a0059', 1], 58)
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0054/' and 'data-after-TEST/physionet/data_pcg_cwt/a0054/' - skipping
-[15116] Processing Data Item: (['a0055', -1], 54)
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0059/' and 'data-after-TEST/physionet/data_pcg_cwt/a0059/' - skipping
-[26580] Processing Data Item: (['a0060', 1], 59)
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0055/' and 'data-after-TEST/physionet/data_pcg_cwt/a0055/' - skipping
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0060/' and 'data-after-TEST/physionet/data_pcg_cwt/a0060/' - skipping
-[15116] Processing Data Item: (['a0056', 1], 55)
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0056/' and 'data-after-TEST/physionet/data_pcg_cwt/a0056/' - skipping
-[26580] Processing Data Item: (['a0061', 1], 60)
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0061/' and 'data-after-TEST/physionet/data_pcg_cwt/a0061/' - skipping
-[15116] Processing Data Item: (['a0071', -1], 70)
-[26580] Processing Data Item: (['a0062', 1], 61)
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0071/' and 'data-after-TEST/physionet/data_pcg_cwt/a0071/' - skipping
-[19188] Processing Data Item: (['a0064', 1], 63)
-[15116] Processing Data Item: (['a0072', 1], 71)
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0064/' and 'data-after-TEST/physionet/data_pcg_cwt/a0064/' - skipping
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0062/' and 'data-after-TEST/physionet/data_pcg_cwt/a0062/' - skipping
-[19188] Processing Data Item: (['a0065', 1], 64)
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0072/' and 'data-after-TEST/physionet/data_pcg_cwt/a0072/' - skipping
-[26580] Processing Data Item: (['a0063', 1], 62)
-[15116] Processing Data Item: (['a0073', 1], 72)
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0063/' and 'data-after-TEST/physionet/data_pcg_cwt/a0063/' - skipping
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0065/' and 'data-after-TEST/physionet/data_pcg_cwt/a0065/' - skipping
-[19188] Processing Data Item: (['a0066', 1], 65)
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0073/' and 'data-after-TEST/physionet/data_pcg_cwt/a0073/' - skipping
-[26580] Processing Data Item: (['a0078', 1], 77)
-[15116] Processing Data Item: (['a0074', 1], 73)
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0078/' and 'data-after-TEST/physionet/data_pcg_cwt/a0078/' - skipping
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0066/' and 'data-after-TEST/physionet/data_pcg_cwt/a0066/' - skipping
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0074/' and 'data-after-TEST/physionet/data_pcg_cwt/a0074/' - skipping
-[26580] Processing Data Item: (['a0079', 1], 78)
-[19188] Processing Data Item: (['a0067', 1], 66)
-[15116] Processing Data Item: (['a0075', 1], 74)
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0067/' and 'data-after-TEST/physionet/data_pcg_cwt/a0067/' - skipping
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0079/' and 'data-after-TEST/physionet/data_pcg_cwt/a0079/' - skipping
-[2168] Processing Data Item: (['a0085', -1], 84)
-[22636] Processing Data Item: (['a0092', 1], 91)
-[26580] Processing Data Item: (['a0080', -1], 79)
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0092/' and 'data-after-TEST/physionet/data_pcg_cwt/a0092/' - skipping
-[19188] Processing Data Item: (['a0068', -1], 67)
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0085/' and 'data-after-TEST/physionet/data_pcg_cwt/a0085/' - skipping
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0075/' and 'data-after-TEST/physionet/data_pcg_cwt/a0075/' - skipping
-[15116] Processing Data Item: (['a0076', 1], 75)
-[2168] Processing Data Item: (['a0086', -1], 85)
-[22636] Processing Data Item: (['a0093', -1], 92)
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0068/' and 'data-after-TEST/physionet/data_pcg_cwt/a0068/' - skipping
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0080/' and 'data-after-TEST/physionet/data_pcg_cwt/a0080/' - skipping
-[19188] Processing Data Item: (['a0069', -1], 68)
-[26580] Processing Data Item: (['a0081', -1], 80)
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0093/' and 'data-after-TEST/physionet/data_pcg_cwt/a0093/' - skipping
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0076/' and 'data-after-TEST/physionet/data_pcg_cwt/a0076/' - skipping
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0086/' and 'data-after-TEST/physionet/data_pcg_cwt/a0086/' - skipping
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0069/' and 'data-after-TEST/physionet/data_pcg_cwt/a0069/' - skipping
-[15116] Processing Data Item: (['a0077', 1], 76)
-[22636] Processing Data Item: (['a0094', -1], 93)
-[2168] Processing Data Item: (['a0087', 1], 86)
-[19188] Processing Data Item: (['a0070', -1], 69)
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0081/' and 'data-after-TEST/physionet/data_pcg_cwt/a0081/' - skipping
-[26580] Processing Data Item: (['a0082', 1], 81)
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0070/' and 'data-after-TEST/physionet/data_pcg_cwt/a0070/' - skipping
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0087/' and 'data-after-TEST/physionet/data_pcg_cwt/a0087/' - skipping
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0094/' and 'data-after-TEST/physionet/data_pcg_cwt/a0094/' - skipping
-[15116] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0077/' and 'data-after-TEST/physionet/data_pcg_cwt/a0077/' - skipping
-[22636] Processing Data Item: (['a0095', 1], 94)
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0082/' and 'data-after-TEST/physionet/data_pcg_cwt/a0082/' - skipping
-[2168] Processing Data Item: (['a0088', -1], 87)
-[19188] Processing Data Item: (['a0099', 1], 98)
-[26580] Processing Data Item: (['a0083', 1], 82)
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0095/' and 'data-after-TEST/physionet/data_pcg_cwt/a0095/' - skipping
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0099/' and 'data-after-TEST/physionet/data_pcg_cwt/a0099/' - skipping
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0088/' and 'data-after-TEST/physionet/data_pcg_cwt/a0088/' - skipping
-[22636] Processing Data Item: (['a0096', 1], 95)
-[19188] Processing Data Item: (['a0100', 1], 99)
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0083/' and 'data-after-TEST/physionet/data_pcg_cwt/a0083/' - skipping
-[26580] Processing Data Item: (['a0084', 1], 83)
-[2168] Processing Data Item: (['a0089', 1], 88)
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0096/' and 'data-after-TEST/physionet/data_pcg_cwt/a0096/' - skipping
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0100/' and 'data-after-TEST/physionet/data_pcg_cwt/a0100/' - skipping
-[22636] Processing Data Item: (['a0097', 1], 96)
-[19188] Processing Data Item: (['a0101', 1], 100)
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0089/' and 'data-after-TEST/physionet/data_pcg_cwt/a0089/' - skipping
-[26580] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0084/' and 'data-after-TEST/physionet/data_pcg_cwt/a0084/' - skipping
-[2168] Processing Data Item: (['a0090', 1], 89)
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0101/' and 'data-after-TEST/physionet/data_pcg_cwt/a0101/' - skipping
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0097/' and 'data-after-TEST/physionet/data_pcg_cwt/a0097/' - skipping
-[9144] Processing Data Item: (['a0106', -1], 105)
-[22636] Processing Data Item: (['a0098', 1], 97)
-[19188] Processing Data Item: (['a0102', -1], 101)
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0090/' and 'data-after-TEST/physionet/data_pcg_cwt/a0090/' - skipping
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0106/' and 'data-after-TEST/physionet/data_pcg_cwt/a0106/' - skipping
-[9144] Processing Data Item: (['a0107', 1], 106)
-[2168] Processing Data Item: (['a0091', -1], 90)
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0102/' and 'data-after-TEST/physionet/data_pcg_cwt/a0102/' - skipping
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0098/' and 'data-after-TEST/physionet/data_pcg_cwt/a0098/' - skipping
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0091/' and 'data-after-TEST/physionet/data_pcg_cwt/a0091/' - skipping
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0107/' and 'data-after-TEST/physionet/data_pcg_cwt/a0107/' - skipping
-[19188] Processing Data Item: (['a0103', 1], 102)
-[22636] Processing Data Item: (['a0113', 1], 112)
-[9144] Processing Data Item: (['a0108', -1], 107)
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0113/' and 'data-after-TEST/physionet/data_pcg_cwt/a0113/' - skipping
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0103/' and 'data-after-TEST/physionet/data_pcg_cwt/a0103/' - skipping
-[2168] Processing Data Item: (['a0120', 1], 119)
-[19188] Processing Data Item: (['a0104', 1], 103)
-[22636] Processing Data Item: (['a0114', 1], 113)
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0120/' and 'data-after-TEST/physionet/data_pcg_cwt/a0120/' - skipping
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0108/' and 'data-after-TEST/physionet/data_pcg_cwt/a0108/' - skipping
-[9144] Processing Data Item: (['a0109', -1], 108)
-[2168] Processing Data Item: (['a0121', 1], 120)
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0104/' and 'data-after-TEST/physionet/data_pcg_cwt/a0104/' - skipping
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0114/' and 'data-after-TEST/physionet/data_pcg_cwt/a0114/' - skipping
-[22636] Processing Data Item: (['a0115', 1], 114)
-[19188] Processing Data Item: (['a0105', -1], 104)
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0109/' and 'data-after-TEST/physionet/data_pcg_cwt/a0109/' - skipping
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0121/' and 'data-after-TEST/physionet/data_pcg_cwt/a0121/' - skipping
-[2168] Processing Data Item: (['a0122', 1], 121)
-[9144] Processing Data Item: (['a0110', 1], 109)
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0115/' and 'data-after-TEST/physionet/data_pcg_cwt/a0115/' - skipping
-[19188] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0105/' and 'data-after-TEST/physionet/data_pcg_cwt/a0105/' - skipping
-[22636] Processing Data Item: (['a0116', 1], 115)
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0110/' and 'data-after-TEST/physionet/data_pcg_cwt/a0110/' - skipping
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0122/' and 'data-after-TEST/physionet/data_pcg_cwt/a0122/' - skipping
-[2168] Processing Data Item: (['a0123', 1], 122)
-[9144] Processing Data Item: (['a0111', 1], 110)
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0116/' and 'data-after-TEST/physionet/data_pcg_cwt/a0116/' - skipping
-[22636] Processing Data Item: (['a0117', 1], 116)
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0111/' and 'data-after-TEST/physionet/data_pcg_cwt/a0111/' - skipping
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0123/' and 'data-after-TEST/physionet/data_pcg_cwt/a0123/' - skipping
-[9144] Processing Data Item: (['a0112', 1], 111)
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0117/' and 'data-after-TEST/physionet/data_pcg_cwt/a0117/' - skipping
-[2168] Processing Data Item: (['a0124', 1], 123)
-[28232] Processing Data Item: (['a0134', 1], 133)
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0134/' and 'data-after-TEST/physionet/data_pcg_cwt/a0134/' - skipping
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0112/' and 'data-after-TEST/physionet/data_pcg_cwt/a0112/' - skipping
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0124/' and 'data-after-TEST/physionet/data_pcg_cwt/a0124/' - skipping
-[26308] Processing Data Item: (['a0127', -1], 126)
-[2168] Processing Data Item: (['a0125', -1], 124)
-[28232] Processing Data Item: (['a0135', 1], 134)
-[22636] Processing Data Item: (['a0118', -1], 117)
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0127/' and 'data-after-TEST/physionet/data_pcg_cwt/a0127/' - skipping
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0125/' and 'data-after-TEST/physionet/data_pcg_cwt/a0125/' - skipping
-[9144] Processing Data Item: (['a0141', -1], 140)
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0118/' and 'data-after-TEST/physionet/data_pcg_cwt/a0118/' - skipping
-[26308] Processing Data Item: (['a0128', 1], 127)
-[2168] Processing Data Item: (['a0126', 1], 125)
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0135/' and 'data-after-TEST/physionet/data_pcg_cwt/a0135/' - skipping
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0141/' and 'data-after-TEST/physionet/data_pcg_cwt/a0141/' - skipping
-[17548] Processing Data Item: (['a0148', 1], 147)
-[28232] Processing Data Item: (['a0136', -1], 135)
-[9144] Processing Data Item: (['a0142', 1], 141)
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0148/' and 'data-after-TEST/physionet/data_pcg_cwt/a0148/' - skipping
-[22636] Processing Data Item: (['a0119', 1], 118)
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0128/' and 'data-after-TEST/physionet/data_pcg_cwt/a0128/' - skipping
-[2168] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0126/' and 'data-after-TEST/physionet/data_pcg_cwt/a0126/' - skipping
-[26308] Processing Data Item: (['a0129', -1], 128)
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0136/' and 'data-after-TEST/physionet/data_pcg_cwt/a0136/' - skipping
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0142/' and 'data-after-TEST/physionet/data_pcg_cwt/a0142/' - skipping
-[22636] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0119/' and 'data-after-TEST/physionet/data_pcg_cwt/a0119/' - skipping
-[28232] Processing Data Item: (['a0137', 1], 136)
-[9144] Processing Data Item: (['a0143', 1], 142)
-[17548] Processing Data Item: (['a0149', 1], 148)
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0129/' and 'data-after-TEST/physionet/data_pcg_cwt/a0129/' - skipping
-[26308] Processing Data Item: (['a0130', 1], 129)
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0143/' and 'data-after-TEST/physionet/data_pcg_cwt/a0143/' - skipping
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0149/' and 'data-after-TEST/physionet/data_pcg_cwt/a0149/' - skipping
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0137/' and 'data-after-TEST/physionet/data_pcg_cwt/a0137/' - skipping
-[17548] Processing Data Item: (['a0150', 1], 149)
-[28232] Processing Data Item: (['a0138', 1], 137)
-[9144] Processing Data Item: (['a0144', 1], 143)
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0130/' and 'data-after-TEST/physionet/data_pcg_cwt/a0130/' - skipping
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0138/' and 'data-after-TEST/physionet/data_pcg_cwt/a0138/' - skipping
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0150/' and 'data-after-TEST/physionet/data_pcg_cwt/a0150/' - skipping
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0144/' and 'data-after-TEST/physionet/data_pcg_cwt/a0144/' - skipping
-[9144] Processing Data Item: (['a0145', 1], 144)
-[28232] Processing Data Item: (['a0139', -1], 138)
-[26308] Processing Data Item: (['a0131', 1], 130)
-[17548] Processing Data Item: (['a0151', 1], 150)
-[21204] Processing Data Item: (['a0155', -1], 154)
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0151/' and 'data-after-TEST/physionet/data_pcg_cwt/a0151/' - skipping
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0155/' and 'data-after-TEST/physionet/data_pcg_cwt/a0155/' - skipping
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0131/' and 'data-after-TEST/physionet/data_pcg_cwt/a0131/' - skipping
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0139/' and 'data-after-TEST/physionet/data_pcg_cwt/a0139/' - skipping
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0145/' and 'data-after-TEST/physionet/data_pcg_cwt/a0145/' - skipping
-[9144] Processing Data Item: (['a0146', 1], 145)
-[26308] Processing Data Item: (['a0132', 1], 131)
-[28232] Processing Data Item: (['a0140', -1], 139)
-[21204] Processing Data Item: (['a0156', 1], 155)
-[17548] Processing Data Item: (['a0152', 1], 151)
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0132/' and 'data-after-TEST/physionet/data_pcg_cwt/a0132/' - skipping
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0152/' and 'data-after-TEST/physionet/data_pcg_cwt/a0152/' - skipping
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0140/' and 'data-after-TEST/physionet/data_pcg_cwt/a0140/' - skipping
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0146/' and 'data-after-TEST/physionet/data_pcg_cwt/a0146/' - skipping
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0156/' and 'data-after-TEST/physionet/data_pcg_cwt/a0156/' - skipping
-[9144] Processing Data Item: (['a0147', 1], 146)
-[17548] Processing Data Item: (['a0153', -1], 152)
-[26308] Processing Data Item: (['a0133', 1], 132)
-[21204] Processing Data Item: (['a0157', 1], 156)
-[28232] Processing Data Item: (['a0162', 1], 161)
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0133/' and 'data-after-TEST/physionet/data_pcg_cwt/a0133/' - skipping
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0162/' and 'data-after-TEST/physionet/data_pcg_cwt/a0162/' - skipping
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0157/' and 'data-after-TEST/physionet/data_pcg_cwt/a0157/' - skipping
-[9144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0147/' and 'data-after-TEST/physionet/data_pcg_cwt/a0147/' - skipping
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0153/' and 'data-after-TEST/physionet/data_pcg_cwt/a0153/' - skipping
-[21204] Processing Data Item: (['a0158', 1], 157)
-[28232] Processing Data Item: (['a0163', 1], 162)
-[17548] Processing Data Item: (['a0154', -1], 153)
-[26308] Processing Data Item: (['a0169', 1], 168)
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0163/' and 'data-after-TEST/physionet/data_pcg_cwt/a0163/' - skipping
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0158/' and 'data-after-TEST/physionet/data_pcg_cwt/a0158/' - skipping
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0169/' and 'data-after-TEST/physionet/data_pcg_cwt/a0169/' - skipping
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0154/' and 'data-after-TEST/physionet/data_pcg_cwt/a0154/' - skipping
-[26308] Processing Data Item: (['a0170', 1], 169)
-[28232] Processing Data Item: (['a0164', 1], 163)
-[21204] Processing Data Item: (['a0159', 1], 158)
-[17548] Processing Data Item: (['a0176', 1], 175)
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0170/' and 'data-after-TEST/physionet/data_pcg_cwt/a0170/' - skipping
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0159/' and 'data-after-TEST/physionet/data_pcg_cwt/a0159/' - skipping
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0164/' and 'data-after-TEST/physionet/data_pcg_cwt/a0164/' - skipping
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0176/' and 'data-after-TEST/physionet/data_pcg_cwt/a0176/' - skipping
-[17548] Processing Data Item: (['a0177', 1], 176)
-[21204] Processing Data Item: (['a0160', 1], 159)
-[26308] Processing Data Item: (['a0171', -1], 170)
-[28232] Processing Data Item: (['a0165', -1], 164)
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0177/' and 'data-after-TEST/physionet/data_pcg_cwt/a0177/' - skipping
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0160/' and 'data-after-TEST/physionet/data_pcg_cwt/a0160/' - skipping
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0165/' and 'data-after-TEST/physionet/data_pcg_cwt/a0165/' - skipping
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0171/' and 'data-after-TEST/physionet/data_pcg_cwt/a0171/' - skipping
-[26308] Processing Data Item: (['a0172', 1], 171)
-[28232] Processing Data Item: (['a0166', 1], 165)
-[17548] Processing Data Item: (['a0178', -1], 177)
-[21204] Processing Data Item: (['a0161', -1], 160)
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0172/' and 'data-after-TEST/physionet/data_pcg_cwt/a0172/' - skipping
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0161/' and 'data-after-TEST/physionet/data_pcg_cwt/a0161/' - skipping
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0166/' and 'data-after-TEST/physionet/data_pcg_cwt/a0166/' - skipping
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0178/' and 'data-after-TEST/physionet/data_pcg_cwt/a0178/' - skipping
-[28232] Processing Data Item: (['a0167', 1], 166)
-[17548] Processing Data Item: (['a0179', -1], 178)
-[26308] Processing Data Item: (['a0173', 1], 172)
-[21204] Processing Data Item: (['a0183', 1], 182)
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0173/' and 'data-after-TEST/physionet/data_pcg_cwt/a0173/' - skipping
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0179/' and 'data-after-TEST/physionet/data_pcg_cwt/a0179/' - skipping
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0167/' and 'data-after-TEST/physionet/data_pcg_cwt/a0167/' - skipping
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0183/' and 'data-after-TEST/physionet/data_pcg_cwt/a0183/' - skipping
-[26308] Processing Data Item: (['a0174', 1], 173)
-[28232] Processing Data Item: (['a0168', 1], 167)
-[17548] Processing Data Item: (['a0180', 1], 179)
-[21204] Processing Data Item: (['a0184', -1], 183)
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0174/' and 'data-after-TEST/physionet/data_pcg_cwt/a0174/' - skipping
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0184/' and 'data-after-TEST/physionet/data_pcg_cwt/a0184/' - skipping
-[28232] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0168/' and 'data-after-TEST/physionet/data_pcg_cwt/a0168/' - skipping
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0180/' and 'data-after-TEST/physionet/data_pcg_cwt/a0180/' - skipping
-[17548] Processing Data Item: (['a0181', -1], 180)
-[26308] Processing Data Item: (['a0175', 1], 174)
-[21204] Processing Data Item: (['a0185', -1], 184)
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0185/' and 'data-after-TEST/physionet/data_pcg_cwt/a0185/' - skipping
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0181/' and 'data-after-TEST/physionet/data_pcg_cwt/a0181/' - skipping
-[26308] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0175/' and 'data-after-TEST/physionet/data_pcg_cwt/a0175/' - skipping
-[17548] Processing Data Item: (['a0182', 1], 181)
-[21204] Processing Data Item: (['a0186', 1], 185)
-[16940] Processing Data Item: (['a0190', 1], 189)
-[17548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0182/' and 'data-after-TEST/physionet/data_pcg_cwt/a0182/' - skipping
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0190/' and 'data-after-TEST/physionet/data_pcg_cwt/a0190/' - skipping
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0186/' and 'data-after-TEST/physionet/data_pcg_cwt/a0186/' - skipping
-[21204] Processing Data Item: (['a0187', 1], 186)
-[16940] Processing Data Item: (['a0191', 1], 190)
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0187/' and 'data-after-TEST/physionet/data_pcg_cwt/a0187/' - skipping
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0191/' and 'data-after-TEST/physionet/data_pcg_cwt/a0191/' - skipping
-[16940] Processing Data Item: (['a0192', 1], 191)
-[21204] Processing Data Item: (['a0188', 1], 187)
-[27856] Processing Data Item: (['a0204', -1], 203)
-[17272] Processing Data Item: (['a0197', 1], 196)
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0197/' and 'data-after-TEST/physionet/data_pcg_cwt/a0197/' - skipping
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0192/' and 'data-after-TEST/physionet/data_pcg_cwt/a0192/' - skipping
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0188/' and 'data-after-TEST/physionet/data_pcg_cwt/a0188/' - skipping
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0204/' and 'data-after-TEST/physionet/data_pcg_cwt/a0204/' - skipping
-[21204] Processing Data Item: (['a0189', -1], 188)
-[17272] Processing Data Item: (['a0198', 1], 197)
-[16940] Processing Data Item: (['a0193', -1], 192)
-[27856] Processing Data Item: (['a0205', 1], 204)
-[21204] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0189/' and 'data-after-TEST/physionet/data_pcg_cwt/a0189/' - skipping
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0198/' and 'data-after-TEST/physionet/data_pcg_cwt/a0198/' - skipping
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0193/' and 'data-after-TEST/physionet/data_pcg_cwt/a0193/' - skipping
-[16940] Processing Data Item: (['a0194', 1], 193)
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0205/' and 'data-after-TEST/physionet/data_pcg_cwt/a0205/' - skipping
-[17272] Processing Data Item: (['a0199', -1], 198)
-[27856] Processing Data Item: (['a0206', 1], 205)
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0194/' and 'data-after-TEST/physionet/data_pcg_cwt/a0194/' - skipping
-[28192] Processing Data Item: (['a0211', -1], 210)
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0211/' and 'data-after-TEST/physionet/data_pcg_cwt/a0211/' - skipping
-[16940] Processing Data Item: (['a0195', -1], 194)
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0206/' and 'data-after-TEST/physionet/data_pcg_cwt/a0206/' - skipping
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0199/' and 'data-after-TEST/physionet/data_pcg_cwt/a0199/' - skipping
-[17272] Processing Data Item: (['a0200', 1], 199)
-[28192] Processing Data Item: (['a0212', -1], 211)
-[27856] Processing Data Item: (['a0207', 1], 206)
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0195/' and 'data-after-TEST/physionet/data_pcg_cwt/a0195/' - skipping
-[16940] Processing Data Item: (['a0196', -1], 195)
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0207/' and 'data-after-TEST/physionet/data_pcg_cwt/a0207/' - skipping
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0200/' and 'data-after-TEST/physionet/data_pcg_cwt/a0200/' - skipping
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0212/' and 'data-after-TEST/physionet/data_pcg_cwt/a0212/' - skipping
-[17272] Processing Data Item: (['a0201', 1], 200)
-[27856] Processing Data Item: (['a0208', -1], 207)
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0196/' and 'data-after-TEST/physionet/data_pcg_cwt/a0196/' - skipping
-[28192] Processing Data Item: (['a0213', 1], 212)
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0201/' and 'data-after-TEST/physionet/data_pcg_cwt/a0201/' - skipping
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0208/' and 'data-after-TEST/physionet/data_pcg_cwt/a0208/' - skipping
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0213/' and 'data-after-TEST/physionet/data_pcg_cwt/a0213/' - skipping
-[28192] Processing Data Item: (['a0214', 1], 213)
-[17272] Processing Data Item: (['a0202', 1], 201)
-[27856] Processing Data Item: (['a0209', 1], 208)
-[16940] Processing Data Item: (['a0218', 1], 217)
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0209/' and 'data-after-TEST/physionet/data_pcg_cwt/a0209/' - skipping
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0214/' and 'data-after-TEST/physionet/data_pcg_cwt/a0214/' - skipping
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0218/' and 'data-after-TEST/physionet/data_pcg_cwt/a0218/' - skipping
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0202/' and 'data-after-TEST/physionet/data_pcg_cwt/a0202/' - skipping
-[27856] Processing Data Item: (['a0210', -1], 209)
-[28192] Processing Data Item: (['a0215', 1], 214)
-[16940] Processing Data Item: (['a0219', 1], 218)
-[17272] Processing Data Item: (['a0203', 1], 202)
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0210/' and 'data-after-TEST/physionet/data_pcg_cwt/a0210/' - skipping
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0215/' and 'data-after-TEST/physionet/data_pcg_cwt/a0215/' - skipping
-[21368] Processing Data Item: (['a0225', 1], 224)
-[28192] Processing Data Item: (['a0216', 1], 215)
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0219/' and 'data-after-TEST/physionet/data_pcg_cwt/a0219/' - skipping
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0225/' and 'data-after-TEST/physionet/data_pcg_cwt/a0225/' - skipping
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0203/' and 'data-after-TEST/physionet/data_pcg_cwt/a0203/' - skipping
-[21368] Processing Data Item: (['a0226', 1], 225)
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0216/' and 'data-after-TEST/physionet/data_pcg_cwt/a0216/' - skipping
-[27856] Processing Data Item: (['a0232', 1], 231)
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0232/' and 'data-after-TEST/physionet/data_pcg_cwt/a0232/' - skipping
-[28192] Processing Data Item: (['a0217', 1], 216)
-[16940] Processing Data Item: (['a0220', 1], 219)
-[17272] Processing Data Item: (['a0239', 1], 238)
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0226/' and 'data-after-TEST/physionet/data_pcg_cwt/a0226/' - skipping
-[27856] Processing Data Item: (['a0233', 1], 232)
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0217/' and 'data-after-TEST/physionet/data_pcg_cwt/a0217/' - skipping
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0239/' and 'data-after-TEST/physionet/data_pcg_cwt/a0239/' - skipping
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0220/' and 'data-after-TEST/physionet/data_pcg_cwt/a0220/' - skipping
-[21368] Processing Data Item: (['a0227', -1], 226)
-[17272] Processing Data Item: (['a0240', 1], 239)
-[16940] Processing Data Item: (['a0221', 1], 220)
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0233/' and 'data-after-TEST/physionet/data_pcg_cwt/a0233/' - skipping
-[28192] Processing Data Item: (['a0246', 1], 245)
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0246/' and 'data-after-TEST/physionet/data_pcg_cwt/a0246/' - skipping
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0240/' and 'data-after-TEST/physionet/data_pcg_cwt/a0240/' - skipping
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0221/' and 'data-after-TEST/physionet/data_pcg_cwt/a0221/' - skipping
-[27856] Processing Data Item: (['a0234', 1], 233)
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0227/' and 'data-after-TEST/physionet/data_pcg_cwt/a0227/' - skipping
-[16940] Processing Data Item: (['a0222', 1], 221)
-[28192] Processing Data Item: (['a0247', 1], 246)
-[17272] Processing Data Item: (['a0241', -1], 240)
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0234/' and 'data-after-TEST/physionet/data_pcg_cwt/a0234/' - skipping
-[21368] Processing Data Item: (['a0228', 1], 227)
-[27856] Processing Data Item: (['a0235', -1], 234)
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0241/' and 'data-after-TEST/physionet/data_pcg_cwt/a0241/' - skipping
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0247/' and 'data-after-TEST/physionet/data_pcg_cwt/a0247/' - skipping
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0222/' and 'data-after-TEST/physionet/data_pcg_cwt/a0222/' - skipping
-[17272] Processing Data Item: (['a0242', 1], 241)
-[16940] Processing Data Item: (['a0223', 1], 222)
-[28192] Processing Data Item: (['a0248', 1], 247)
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0228/' and 'data-after-TEST/physionet/data_pcg_cwt/a0228/' - skipping
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0235/' and 'data-after-TEST/physionet/data_pcg_cwt/a0235/' - skipping
-[27856] Processing Data Item: (['a0236', 1], 235)
-[21368] Processing Data Item: (['a0229', -1], 228)
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0248/' and 'data-after-TEST/physionet/data_pcg_cwt/a0248/' - skipping
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0242/' and 'data-after-TEST/physionet/data_pcg_cwt/a0242/' - skipping
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0223/' and 'data-after-TEST/physionet/data_pcg_cwt/a0223/' - skipping
-[16940] Processing Data Item: (['a0224', 1], 223)
-[28192] Processing Data Item: (['a0249', 1], 248)
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0236/' and 'data-after-TEST/physionet/data_pcg_cwt/a0236/' - skipping
-[17272] Processing Data Item: (['a0243', -1], 242)
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0229/' and 'data-after-TEST/physionet/data_pcg_cwt/a0229/' - skipping
-[21368] Processing Data Item: (['a0230', 1], 229)
-[27856] Processing Data Item: (['a0237', 1], 236)
-[16940] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0224/' and 'data-after-TEST/physionet/data_pcg_cwt/a0224/' - skipping
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0249/' and 'data-after-TEST/physionet/data_pcg_cwt/a0249/' - skipping
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0243/' and 'data-after-TEST/physionet/data_pcg_cwt/a0243/' - skipping
-[17272] Processing Data Item: (['a0244', 1], 243)
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0230/' and 'data-after-TEST/physionet/data_pcg_cwt/a0230/' - skipping
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0237/' and 'data-after-TEST/physionet/data_pcg_cwt/a0237/' - skipping
-[21368] Processing Data Item: (['a0231', -1], 230)
-[28192] Processing Data Item: (['a0250', -1], 249)
-[27856] Processing Data Item: (['a0238', -1], 237)
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0244/' and 'data-after-TEST/physionet/data_pcg_cwt/a0244/' - skipping
-[17272] Processing Data Item: (['a0245', 1], 244)
-[27856] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0238/' and 'data-after-TEST/physionet/data_pcg_cwt/a0238/' - skipping
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0250/' and 'data-after-TEST/physionet/data_pcg_cwt/a0250/' - skipping
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0231/' and 'data-after-TEST/physionet/data_pcg_cwt/a0231/' - skipping
-[28192] Processing Data Item: (['a0251', 1], 250)
-[17272] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0245/' and 'data-after-TEST/physionet/data_pcg_cwt/a0245/' - skipping
-[21368] Processing Data Item: (['a0253', -1], 252)
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0253/' and 'data-after-TEST/physionet/data_pcg_cwt/a0253/' - skipping
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0251/' and 'data-after-TEST/physionet/data_pcg_cwt/a0251/' - skipping
-[21368] Processing Data Item: (['a0254', 1], 253)
-[28192] Processing Data Item: (['a0252', 1], 251)
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0254/' and 'data-after-TEST/physionet/data_pcg_cwt/a0254/' - skipping
-[21368] Processing Data Item: (['a0255', 1], 254)
-[28192] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0252/' and 'data-after-TEST/physionet/data_pcg_cwt/a0252/' - skipping
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0255/' and 'data-after-TEST/physionet/data_pcg_cwt/a0255/' - skipping
-[21368] Processing Data Item: (['a0256', 1], 255)
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0256/' and 'data-after-TEST/physionet/data_pcg_cwt/a0256/' - skipping
-[21368] Processing Data Item: (['a0257', 1], 256)
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0257/' and 'data-after-TEST/physionet/data_pcg_cwt/a0257/' - skipping
-[21368] Processing Data Item: (['a0258', 1], 257)
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0258/' and 'data-after-TEST/physionet/data_pcg_cwt/a0258/' - skipping
-[21368] Processing Data Item: (['a0259', 1], 258)
-[21368] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0259/' and 'data-after-TEST/physionet/data_pcg_cwt/a0259/' - skipping
-[20256] Processing Data Item: (['a0260', 1], 259)
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0260/' and 'data-after-TEST/physionet/data_pcg_cwt/a0260/' - skipping
-[20256] Processing Data Item: (['a0261', 1], 260)
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0261/' and 'data-after-TEST/physionet/data_pcg_cwt/a0261/' - skipping
-[20256] Processing Data Item: (['a0262', 1], 261)
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0262/' and 'data-after-TEST/physionet/data_pcg_cwt/a0262/' - skipping
-[25916] Processing Data Item: (['a0267', 1], 266)
-[20256] Processing Data Item: (['a0263', 1], 262)
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0267/' and 'data-after-TEST/physionet/data_pcg_cwt/a0267/' - skipping
-[25916] Processing Data Item: (['a0268', 1], 267)
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0263/' and 'data-after-TEST/physionet/data_pcg_cwt/a0263/' - skipping
-[22468] Processing Data Item: (['a0274', -1], 273)
-[20256] Processing Data Item: (['a0264', -1], 263)
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0268/' and 'data-after-TEST/physionet/data_pcg_cwt/a0268/' - skipping
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0274/' and 'data-after-TEST/physionet/data_pcg_cwt/a0274/' - skipping
-[22468] Processing Data Item: (['a0275', 1], 274)
-[25916] Processing Data Item: (['a0269', 1], 268)
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0264/' and 'data-after-TEST/physionet/data_pcg_cwt/a0264/' - skipping
-[20256] Processing Data Item: (['a0265', 1], 264)
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0269/' and 'data-after-TEST/physionet/data_pcg_cwt/a0269/' - skipping
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0275/' and 'data-after-TEST/physionet/data_pcg_cwt/a0275/' - skipping
-[25916] Processing Data Item: (['a0270', -1], 269)
-[22468] Processing Data Item: (['a0276', 1], 275)
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0265/' and 'data-after-TEST/physionet/data_pcg_cwt/a0265/' - skipping
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0276/' and 'data-after-TEST/physionet/data_pcg_cwt/a0276/' - skipping
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0270/' and 'data-after-TEST/physionet/data_pcg_cwt/a0270/' - skipping
-[20256] Processing Data Item: (['a0266', -1], 265)
-[25668] Processing Data Item: (['a0281', 1], 280)
-[25916] Processing Data Item: (['a0271', -1], 270)
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0266/' and 'data-after-TEST/physionet/data_pcg_cwt/a0266/' - skipping
-[22468] Processing Data Item: (['a0277', 1], 276)
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0281/' and 'data-after-TEST/physionet/data_pcg_cwt/a0281/' - skipping
-[25668] Processing Data Item: (['a0282', 1], 281)
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0277/' and 'data-after-TEST/physionet/data_pcg_cwt/a0277/' - skipping
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0271/' and 'data-after-TEST/physionet/data_pcg_cwt/a0271/' - skipping
-[20256] Processing Data Item: (['a0288', 1], 287)
-[22468] Processing Data Item: (['a0278', 1], 277)
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0282/' and 'data-after-TEST/physionet/data_pcg_cwt/a0282/' - skipping
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0288/' and 'data-after-TEST/physionet/data_pcg_cwt/a0288/' - skipping
-[25916] Processing Data Item: (['a0272', 1], 271)
-[20256] Processing Data Item: (['a0289', -1], 288)
-[25668] Processing Data Item: (['a0283', -1], 282)
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0272/' and 'data-after-TEST/physionet/data_pcg_cwt/a0272/' - skipping
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0278/' and 'data-after-TEST/physionet/data_pcg_cwt/a0278/' - skipping
-[25916] Processing Data Item: (['a0273', 1], 272)
-[22468] Processing Data Item: (['a0279', 1], 278)
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0283/' and 'data-after-TEST/physionet/data_pcg_cwt/a0283/' - skipping
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0289/' and 'data-after-TEST/physionet/data_pcg_cwt/a0289/' - skipping
-[25668] Processing Data Item: (['a0284', 1], 283)
-[20256] Processing Data Item: (['a0290', -1], 289)
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0279/' and 'data-after-TEST/physionet/data_pcg_cwt/a0279/' - skipping
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0273/' and 'data-after-TEST/physionet/data_pcg_cwt/a0273/' - skipping
-[22468] Processing Data Item: (['a0280', 1], 279)
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0290/' and 'data-after-TEST/physionet/data_pcg_cwt/a0290/' - skipping
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0284/' and 'data-after-TEST/physionet/data_pcg_cwt/a0284/' - skipping
-[25916] Processing Data Item: (['a0302', -1], 301)
-[24144] Processing Data Item: (['a0295', 1], 294)
-[20256] Processing Data Item: (['a0291', 1], 290)
-[25668] Processing Data Item: (['a0285', -1], 284)
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0302/' and 'data-after-TEST/physionet/data_pcg_cwt/a0302/' - skipping
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0295/' and 'data-after-TEST/physionet/data_pcg_cwt/a0295/' - skipping
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0280/' and 'data-after-TEST/physionet/data_pcg_cwt/a0280/' - skipping
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0291/' and 'data-after-TEST/physionet/data_pcg_cwt/a0291/' - skipping
-[25916] Processing Data Item: (['a0303', 1], 302)
-[20256] Processing Data Item: (['a0292', 1], 291)
-[24144] Processing Data Item: (['a0296', 1], 295)
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0285/' and 'data-after-TEST/physionet/data_pcg_cwt/a0285/' - skipping
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0292/' and 'data-after-TEST/physionet/data_pcg_cwt/a0292/' - skipping
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0303/' and 'data-after-TEST/physionet/data_pcg_cwt/a0303/' - skipping
-[22468] Processing Data Item: (['a0309', -1], 308)
-[25916] Processing Data Item: (['a0304', -1], 303)
-[25668] Processing Data Item: (['a0286', 1], 285)
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0296/' and 'data-after-TEST/physionet/data_pcg_cwt/a0296/' - skipping
-[20256] Processing Data Item: (['a0293', -1], 292)
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0309/' and 'data-after-TEST/physionet/data_pcg_cwt/a0309/' - skipping
-[22468] Processing Data Item: (['a0310', -1], 309)
-[24144] Processing Data Item: (['a0297', 1], 296)
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0286/' and 'data-after-TEST/physionet/data_pcg_cwt/a0286/' - skipping
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0293/' and 'data-after-TEST/physionet/data_pcg_cwt/a0293/' - skipping
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0304/' and 'data-after-TEST/physionet/data_pcg_cwt/a0304/' - skipping
-[25916] Processing Data Item: (['a0305', 1], 304)
-[20256] Processing Data Item: (['a0294', -1], 293)
-[25668] Processing Data Item: (['a0287', -1], 286)
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0297/' and 'data-after-TEST/physionet/data_pcg_cwt/a0297/' - skipping
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0310/' and 'data-after-TEST/physionet/data_pcg_cwt/a0310/' - skipping
-[22468] Processing Data Item: (['a0311', -1], 310)
-[24144] Processing Data Item: (['a0298', -1], 297)
-[20256] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0294/' and 'data-after-TEST/physionet/data_pcg_cwt/a0294/' - skipping
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0305/' and 'data-after-TEST/physionet/data_pcg_cwt/a0305/' - skipping
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0287/' and 'data-after-TEST/physionet/data_pcg_cwt/a0287/' - skipping
-[25916] Processing Data Item: (['a0306', 1], 305)
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0311/' and 'data-after-TEST/physionet/data_pcg_cwt/a0311/' - skipping
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0298/' and 'data-after-TEST/physionet/data_pcg_cwt/a0298/' - skipping
-[22468] Processing Data Item: (['a0312', 1], 311)
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0306/' and 'data-after-TEST/physionet/data_pcg_cwt/a0306/' - skipping
-[25668] Processing Data Item: (['a0323', -1], 322)
-[28044] Processing Data Item: (['a0316', 1], 315)
-[25916] Processing Data Item: (['a0307', 1], 306)
-[24144] Processing Data Item: (['a0299', -1], 298)
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0316/' and 'data-after-TEST/physionet/data_pcg_cwt/a0316/' - skipping
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0323/' and 'data-after-TEST/physionet/data_pcg_cwt/a0323/' - skipping
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0312/' and 'data-after-TEST/physionet/data_pcg_cwt/a0312/' - skipping
-[22468] Processing Data Item: (['a0313', 1], 312)
-[25668] Processing Data Item: (['a0324', 1], 323)
-[28044] Processing Data Item: (['a0317', 1], 316)
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0307/' and 'data-after-TEST/physionet/data_pcg_cwt/a0307/' - skipping
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0299/' and 'data-after-TEST/physionet/data_pcg_cwt/a0299/' - skipping
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0313/' and 'data-after-TEST/physionet/data_pcg_cwt/a0313/' - skipping
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0324/' and 'data-after-TEST/physionet/data_pcg_cwt/a0324/' - skipping
-[22468] Processing Data Item: (['a0314', 1], 313)
-[25916] Processing Data Item: (['a0308', 1], 307)
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0317/' and 'data-after-TEST/physionet/data_pcg_cwt/a0317/' - skipping
-[24144] Processing Data Item: (['a0300', 1], 299)
-[25668] Processing Data Item: (['a0325', -1], 324)
-[28044] Processing Data Item: (['a0318', 1], 317)
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0314/' and 'data-after-TEST/physionet/data_pcg_cwt/a0314/' - skipping
-[25916] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0308/' and 'data-after-TEST/physionet/data_pcg_cwt/a0308/' - skipping
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0325/' and 'data-after-TEST/physionet/data_pcg_cwt/a0325/' - skipping
-[22468] Processing Data Item: (['a0315', 1], 314)
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0300/' and 'data-after-TEST/physionet/data_pcg_cwt/a0300/' - skipping
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0318/' and 'data-after-TEST/physionet/data_pcg_cwt/a0318/' - skipping
-[24144] Processing Data Item: (['a0301', -1], 300)
-[25668] Processing Data Item: (['a0326', 1], 325)
-[22468] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0315/' and 'data-after-TEST/physionet/data_pcg_cwt/a0315/' - skipping
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0301/' and 'data-after-TEST/physionet/data_pcg_cwt/a0301/' - skipping
-[28044] Processing Data Item: (['a0319', 1], 318)
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0326/' and 'data-after-TEST/physionet/data_pcg_cwt/a0326/' - skipping
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0319/' and 'data-after-TEST/physionet/data_pcg_cwt/a0319/' - skipping
-[24144] Processing Data Item: (['a0330', -1], 329)
-[25668] Processing Data Item: (['a0327', 1], 326)
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0330/' and 'data-after-TEST/physionet/data_pcg_cwt/a0330/' - skipping
-[28044] Processing Data Item: (['a0320', 1], 319)
-[24144] Processing Data Item: (['a0331', 1], 330)
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0320/' and 'data-after-TEST/physionet/data_pcg_cwt/a0320/' - skipping
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0327/' and 'data-after-TEST/physionet/data_pcg_cwt/a0327/' - skipping
-[28044] Processing Data Item: (['a0321', 1], 320)
-[25668] Processing Data Item: (['a0328', -1], 327)
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0331/' and 'data-after-TEST/physionet/data_pcg_cwt/a0331/' - skipping
-[24144] Processing Data Item: (['a0332', -1], 331)
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0328/' and 'data-after-TEST/physionet/data_pcg_cwt/a0328/' - skipping
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0321/' and 'data-after-TEST/physionet/data_pcg_cwt/a0321/' - skipping
-[17052] Processing Data Item: (['a0337', -1], 336)
-[28044] Processing Data Item: (['a0322', 1], 321)
-[25668] Processing Data Item: (['a0329', -1], 328)
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0332/' and 'data-after-TEST/physionet/data_pcg_cwt/a0332/' - skipping
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0337/' and 'data-after-TEST/physionet/data_pcg_cwt/a0337/' - skipping
-[17052] Processing Data Item: (['a0338', 1], 337)
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0322/' and 'data-after-TEST/physionet/data_pcg_cwt/a0322/' - skipping
-[25668] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0329/' and 'data-after-TEST/physionet/data_pcg_cwt/a0329/' - skipping
-[24144] Processing Data Item: (['a0333', 1], 332)
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0338/' and 'data-after-TEST/physionet/data_pcg_cwt/a0338/' - skipping
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0333/' and 'data-after-TEST/physionet/data_pcg_cwt/a0333/' - skipping
-[17052] Processing Data Item: (['a0339', 1], 338)
-[28044] Processing Data Item: (['a0344', 1], 343)
-[24144] Processing Data Item: (['a0334', -1], 333)
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0339/' and 'data-after-TEST/physionet/data_pcg_cwt/a0339/' - skipping
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0344/' and 'data-after-TEST/physionet/data_pcg_cwt/a0344/' - skipping
-[28044] Processing Data Item: (['a0345', 1], 344)
-[17052] Processing Data Item: (['a0340', -1], 339)
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0334/' and 'data-after-TEST/physionet/data_pcg_cwt/a0334/' - skipping
-[24144] Processing Data Item: (['a0335', 1], 334)
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0345/' and 'data-after-TEST/physionet/data_pcg_cwt/a0345/' - skipping
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0340/' and 'data-after-TEST/physionet/data_pcg_cwt/a0340/' - skipping
-[11400] Processing Data Item: (['a0351', -1], 350)
-[17052] Processing Data Item: (['a0341', 1], 340)
-[28044] Processing Data Item: (['a0346', 1], 345)
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0351/' and 'data-after-TEST/physionet/data_pcg_cwt/a0351/' - skipping
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0335/' and 'data-after-TEST/physionet/data_pcg_cwt/a0335/' - skipping
-[24144] Processing Data Item: (['a0336', 1], 335)
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0346/' and 'data-after-TEST/physionet/data_pcg_cwt/a0346/' - skipping
-[11400] Processing Data Item: (['a0352', -1], 351)
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0341/' and 'data-after-TEST/physionet/data_pcg_cwt/a0341/' - skipping
-[28044] Processing Data Item: (['a0347', 1], 346)
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0352/' and 'data-after-TEST/physionet/data_pcg_cwt/a0352/' - skipping
-[24144] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0336/' and 'data-after-TEST/physionet/data_pcg_cwt/a0336/' - skipping
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0347/' and 'data-after-TEST/physionet/data_pcg_cwt/a0347/' - skipping
-[17052] Processing Data Item: (['a0342', -1], 341)
-[11400] Processing Data Item: (['a0353', -1], 352)
-[28044] Processing Data Item: (['a0348', 1], 347)
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0342/' and 'data-after-TEST/physionet/data_pcg_cwt/a0342/' - skipping
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0353/' and 'data-after-TEST/physionet/data_pcg_cwt/a0353/' - skipping
-[11548] Processing Data Item: (['a0358', 1], 357)
-[11400] Processing Data Item: (['a0354', 1], 353)
-[17052] Processing Data Item: (['a0343', 1], 342)
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0358/' and 'data-after-TEST/physionet/data_pcg_cwt/a0358/' - skipping
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0348/' and 'data-after-TEST/physionet/data_pcg_cwt/a0348/' - skipping
-[28044] Processing Data Item: (['a0349', 1], 348)
-[11548] Processing Data Item: (['a0359', -1], 358)
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0354/' and 'data-after-TEST/physionet/data_pcg_cwt/a0354/' - skipping
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0343/' and 'data-after-TEST/physionet/data_pcg_cwt/a0343/' - skipping
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0349/' and 'data-after-TEST/physionet/data_pcg_cwt/a0349/' - skipping
-[28044] Processing Data Item: (['a0350', 1], 349)
-[11400] Processing Data Item: (['a0355', -1], 354)
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0359/' and 'data-after-TEST/physionet/data_pcg_cwt/a0359/' - skipping
-[28044] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0350/' and 'data-after-TEST/physionet/data_pcg_cwt/a0350/' - skipping
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0355/' and 'data-after-TEST/physionet/data_pcg_cwt/a0355/' - skipping
-[17052] Processing Data Item: (['a0365', 1], 364)
-[11548] Processing Data Item: (['a0360', 1], 359)
-[11400] Processing Data Item: (['a0356', 1], 355)
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0365/' and 'data-after-TEST/physionet/data_pcg_cwt/a0365/' - skipping
-[17052] Processing Data Item: (['a0366', 1], 365)
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0360/' and 'data-after-TEST/physionet/data_pcg_cwt/a0360/' - skipping
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0356/' and 'data-after-TEST/physionet/data_pcg_cwt/a0356/' - skipping
-[28428] Processing Data Item: (['a0372', 1], 371)
-[11548] Processing Data Item: (['a0361', -1], 360)
-[11400] Processing Data Item: (['a0357', 1], 356)
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0366/' and 'data-after-TEST/physionet/data_pcg_cwt/a0366/' - skipping
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0372/' and 'data-after-TEST/physionet/data_pcg_cwt/a0372/' - skipping
-[28428] Processing Data Item: (['a0373', 1], 372)
-[17052] Processing Data Item: (['a0367', 1], 366)
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0361/' and 'data-after-TEST/physionet/data_pcg_cwt/a0361/' - skipping
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0357/' and 'data-after-TEST/physionet/data_pcg_cwt/a0357/' - skipping
-[11548] Processing Data Item: (['a0362', 1], 361)
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0373/' and 'data-after-TEST/physionet/data_pcg_cwt/a0373/' - skipping
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0367/' and 'data-after-TEST/physionet/data_pcg_cwt/a0367/' - skipping
-[17052] Processing Data Item: (['a0368', 1], 367)
-[28428] Processing Data Item: (['a0374', 1], 373)
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0368/' and 'data-after-TEST/physionet/data_pcg_cwt/a0368/' - skipping
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0374/' and 'data-after-TEST/physionet/data_pcg_cwt/a0374/' - skipping
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0362/' and 'data-after-TEST/physionet/data_pcg_cwt/a0362/' - skipping
-[11400] Processing Data Item: (['a0379', 1], 378)
-[28428] Processing Data Item: (['a0375', 1], 374)
-[17052] Processing Data Item: (['a0369', 1], 368)
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0379/' and 'data-after-TEST/physionet/data_pcg_cwt/a0379/' - skipping
-[11548] Processing Data Item: (['a0363', 1], 362)
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0375/' and 'data-after-TEST/physionet/data_pcg_cwt/a0375/' - skipping
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0369/' and 'data-after-TEST/physionet/data_pcg_cwt/a0369/' - skipping
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0363/' and 'data-after-TEST/physionet/data_pcg_cwt/a0363/' - skipping
-[11548] Processing Data Item: (['a0364', 1], 363)
-[28428] Processing Data Item: (['a0376', 1], 375)
-[17052] Processing Data Item: (['a0370', 1], 369)
-[11400] Processing Data Item: (['a0380', 1], 379)
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0380/' and 'data-after-TEST/physionet/data_pcg_cwt/a0380/' - skipping
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0370/' and 'data-after-TEST/physionet/data_pcg_cwt/a0370/' - skipping
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0376/' and 'data-after-TEST/physionet/data_pcg_cwt/a0376/' - skipping
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0364/' and 'data-after-TEST/physionet/data_pcg_cwt/a0364/' - skipping
-[17052] Processing Data Item: (['a0371', 1], 370)
-[11400] Processing Data Item: (['a0381', 1], 380)
-[28428] Processing Data Item: (['a0377', 1], 376)
-[11548] Processing Data Item: (['a0386', -1], 385)
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0381/' and 'data-after-TEST/physionet/data_pcg_cwt/a0381/' - skipping
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0386/' and 'data-after-TEST/physionet/data_pcg_cwt/a0386/' - skipping
-[17052] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0371/' and 'data-after-TEST/physionet/data_pcg_cwt/a0371/' - skipping
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0377/' and 'data-after-TEST/physionet/data_pcg_cwt/a0377/' - skipping
-[11548] Processing Data Item: (['a0387', 1], 386)
-[11400] Processing Data Item: (['a0382', 1], 381)
-[28428] Processing Data Item: (['a0378', 1], 377)
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0387/' and 'data-after-TEST/physionet/data_pcg_cwt/a0387/' - skipping
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0382/' and 'data-after-TEST/physionet/data_pcg_cwt/a0382/' - skipping
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0378/' and 'data-after-TEST/physionet/data_pcg_cwt/a0378/' - skipping
-[11400] Processing Data Item: (['a0383', 1], 382)
-[11548] Processing Data Item: (['a0388', 1], 387)
-[28428] Processing Data Item: (['a0393', -1], 392)
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0393/' and 'data-after-TEST/physionet/data_pcg_cwt/a0393/' - skipping
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0383/' and 'data-after-TEST/physionet/data_pcg_cwt/a0383/' - skipping
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0388/' and 'data-after-TEST/physionet/data_pcg_cwt/a0388/' - skipping
-[28428] Processing Data Item: (['a0394', 1], 393)
-[11548] Processing Data Item: (['a0389', 1], 388)
-[11400] Processing Data Item: (['a0384', 1], 383)
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0384/' and 'data-after-TEST/physionet/data_pcg_cwt/a0384/' - skipping
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0394/' and 'data-after-TEST/physionet/data_pcg_cwt/a0394/' - skipping
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0389/' and 'data-after-TEST/physionet/data_pcg_cwt/a0389/' - skipping
-[11548] Processing Data Item: (['a0390', 1], 389)
-[11400] Processing Data Item: (['a0385', -1], 384)
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0390/' and 'data-after-TEST/physionet/data_pcg_cwt/a0390/' - skipping
-[11400] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0385/' and 'data-after-TEST/physionet/data_pcg_cwt/a0385/' - skipping
-[28428] Processing Data Item: (['a0395', 1], 394)
-[11548] Processing Data Item: (['a0391', 1], 390)
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0395/' and 'data-after-TEST/physionet/data_pcg_cwt/a0395/' - skipping
-[28428] Processing Data Item: (['a0396', 1], 395)
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0391/' and 'data-after-TEST/physionet/data_pcg_cwt/a0391/' - skipping
-[11548] Processing Data Item: (['a0392', 1], 391)
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0396/' and 'data-after-TEST/physionet/data_pcg_cwt/a0396/' - skipping
-[28428] Processing Data Item: (['a0397', 1], 396)
-[11548] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0392/' and 'data-after-TEST/physionet/data_pcg_cwt/a0392/' - skipping
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0397/' and 'data-after-TEST/physionet/data_pcg_cwt/a0397/' - skipping
-[28428] Processing Data Item: (['a0398', 1], 397)
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0398/' and 'data-after-TEST/physionet/data_pcg_cwt/a0398/' - skipping
-[28428] Processing Data Item: (['a0399', 1], 398)
-[28428] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0399/' and 'data-after-TEST/physionet/data_pcg_cwt/a0399/' - skipping
-[28412] Processing Data Item: (['a0400', 1], 399)
-[28412] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0400/' and 'data-after-TEST/physionet/data_pcg_cwt/a0400/' - skipping
-[28412] Processing Data Item: (['a0401', -1], 400)
-[28412] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0401/' and 'data-after-TEST/physionet/data_pcg_cwt/a0401/' - skipping
-[28412] Processing Data Item: (['a0402', 1], 401)
-[24664] Processing Data Item: (['a0407', -1], 406)
-[24664] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0407/' and 'data-after-TEST/physionet/data_pcg_cwt/a0407/' - skipping
-[28412] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0402/' and 'data-after-TEST/physionet/data_pcg_cwt/a0402/' - skipping
-[28412] Processing Data Item: (['a0403', 1], 402)
-[24664] Processing Data Item: (['a0408', -1], 407)
-[24664] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0408/' and 'data-after-TEST/physionet/data_pcg_cwt/a0408/' - skipping
-[28412] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0403/' and 'data-after-TEST/physionet/data_pcg_cwt/a0403/' - skipping
-[28412] Processing Data Item: (['a0404', 1], 403)
-[24664] Processing Data Item: (['a0409', -1], 408)
-[28412] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0404/' and 'data-after-TEST/physionet/data_pcg_cwt/a0404/' - skipping
-[24664] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0409/' and 'data-after-TEST/physionet/data_pcg_cwt/a0409/' - skipping
-[28412] Processing Data Item: (['a0405', -1], 404)
-[28412] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0405/' and 'data-after-TEST/physionet/data_pcg_cwt/a0405/' - skipping
-[28412] Processing Data Item: (['a0406', -1], 405)
-[28412] Files found in directories 'data-after-TEST/physionet/data_ecg_cwt/a0406/' and 'data-after-TEST/physionet/data_pcg_cwt/a0406/' - skipping
-[20576] * Cleaning Physionet Data - Creating ECG segments, Spectrograms/Wavelets and Videos [2/4] *
-[20576] [[0, 'a0001', 'a0001', 1, 35.666, 1, 71332, 71332, 73, 4, nan], [1, 'a0002', 'a0002', 1, 20.8285, 1, 41657, 41657, 54, 2, nan], [2, 'a0003', 'a0003', 1, 30.72, 1, 61440, 61440, 51, 3, nan], [3, 'a0004', 'a0004', 1, 35.5965, 1, 71193, 71193, 67, 4, nan], [4, 'a0005', 'a0005', 1, 35.666, 1, 71332, 71332, 104, 4, nan], [5, 'a0006', 'a0006', 1, 20.759, 1, 41518, 41518, 61, 2, nan], [6, 'a0007', 'a0007', -1, 35.666, 1, 71332, 71332, 83, 4, nan], [7, 'a0008', 'a0008', 1, 35.8055, 1, 71611, 71611, 89, 4, nan], [8, 'a0009', 'a0009', -1, 35.8055, 1, 71611, 71611, 90, 4, nan], [9, 'a0010', 'a0010', 1, 35.736, 1, 71472, 71472, 89, 4, nan], [10, 'a0011', 'a0011', -1, 35.5965, 1, 71193, 71193, 71, 4, nan], [11, 'a0012', 'a0012', -1, 30.8595, 1, 61719, 61719, 57, 3, nan], [12, 'a0013', 'a0013', 1, 35.666, 1, 71332, 71332, 78, 4, nan], [13, 'a0014', 'a0014', 1, 35.736, 1, 71472, 71472, 0, 4, nan], [14, 'a0015', 'a0015', 1, 35.736, 1, 71472, 71472, 101, 4, nan], [15, 'a0016', 'a0016', -1, 30.79, 1, 61580, 61580, 64, 3, nan], [16, 'a0017', 'a0017', 1, 35.666, 1, 71332, 71332, 56, 4, nan], [17, 'a0018', 'a0018', 1, 20.898, 1, 41796, 41796, 0, 2, nan], [18, 'a0019', 'a0019', -1, 30.8595, 1, 61719, 61719, 48, 3, nan], [19, 'a0020', 'a0020', 1, 35.666, 1, 71332, 71332, 110, 4, nan], [20, 'a0021', 'a0021', 1, 35.5965, 1, 71193, 71193, 61, 4, nan], [21, 'a0022', 'a0022', 1, 36.1535, 1, 72307, 72307, 35, 4, nan], [22, 'a0023', 'a0023', 1, 30.581, 1, 61162, 61162, 67, 3, nan], [23, 'a0024', 'a0024', 1, 20.689, 1, 41378, 41378, 34, 2, nan], [24, 'a0025', 'a0025', -1, 31.138, 1, 62276, 62276, 65, 3, nan], [25, 'a0026', 'a0026', 1, 35.5965, 1, 71193, 71193, 80, 4, nan], [26, 'a0027', 'a0027', -1, 31.138, 1, 62276, 62276, 0, 3, nan], [27, 'a0028', 'a0028', -1, 30.8595, 1, 61719, 61719, 0, 3, nan], [28, 'a0029', 'a0029', -1, 30.72, 1, 61440, 61440, 78, 3, nan], [29, 'a0030', 'a0030', 1, 36.2235, 1, 72447, 72447, 81, 4, nan], [30, 'a0031', 'a0031', 1, 35.5965, 1, 71193, 71193, 79, 4, nan], [31, 'a0032', 'a0032', -1, 35.666, 1, 71332, 71332, 64, 4, nan], [32, 'a0033', 'a0033', 1, 35.666, 1, 71332, 71332, 44, 4, nan], [33, 'a0034', 'a0034', 1, 30.581, 1, 61162, 61162, 66, 3, nan], [34, 'a0035', 'a0035', -1, 28.9825, 1, 57965, 57965, 56, 3, nan], [35, 'a0036', 'a0036', 1, 35.9445, 1, 71889, 71889, 76, 4, nan], [36, 'a0037', 'a0037', 1, 35.736, 1, 71472, 71472, 50, 4, nan], [37, 'a0038', 'a0038', -1, 34.63, 1, 69260, 69260, 94, 4, nan], [38, 'a0039', 'a0039', 1, 30.72, 1, 61440, 61440, 69, 3, nan], [39, 'a0040', 'a0040', 1, 35.666, 1, 71332, 71332, 99, 4, nan], [40, 'a0041', 'a0041', 1, 35.109, 1, 70218, 70218, 78, 4, nan], [41, 'a0042', 'a0042', 1, 36.1535, 1, 72307, 72307, 82, 4, nan], [42, 'a0043', 'a0043', 1, 35.5965, 1, 71193, 71193, 84, 4, nan], [43, 'a0044', 'a0044', 1, 30.6505, 1, 61301, 61301, 71, 3, nan], [44, 'a0045', 'a0045', 1, 35.875, 1, 71750, 71750, 0, 4, nan], [45, 'a0046', 'a0046', 1, 35.736, 1, 71472, 71472, 84, 4, nan], [46, 'a0047', 'a0047', 1, 35.5965, 1, 71193, 71193, 100, 4, nan], [47, 'a0048', 'a0048', 1, 36.2235, 1, 72447, 72447, 51, 4, nan], [48, 'a0049', 'a0049', -1, 30.8595, 1, 61719, 61719, 68, 3, nan], [49, 'a0050', 'a0050', -1, 30.6505, 1, 61301, 61301, 73, 3, nan], [50, 'a0051', 'a0051', 1, 35.5965, 1, 71193, 71193, 101, 4, nan], [51, 'a0052', 'a0052', 1, 35.736, 1, 71472, 71472, 70, 4, nan], [52, 'a0053', 'a0053', -1, 35.875, 1, 71750, 71750, 83, 4, nan], [53, 'a0054', 'a0054', 1, 35.666, 1, 71332, 71332, 53, 4, nan], [54, 'a0055', 'a0055', -1, 35.666, 1, 71332, 71332, 0, 4, nan], [55, 'a0056', 'a0056', 1, 30.79, 1, 61580, 61580, 66, 3, nan], [56, 'a0057', 'a0057', 1, 35.9445, 1, 71889, 71889, 0, 4, nan], [57, 'a0058', 'a0058', 1, 20.6195, 1, 41239, 41239, 46, 2, nan], [58, 'a0059', 'a0059', 1, 35.666, 1, 71332, 71332, 56, 4, nan], [59, 'a0060', 'a0060', 1, 35.666, 1, 71332, 71332, 71, 4, nan], [60, 'a0061', 'a0061', 1, 30.79, 1, 61580, 61580, 77, 3, nan], [61, 'a0062', 'a0062', 1, 36.084, 1, 72168, 72168, 76, 4, nan], [62, 'a0063', 'a0063', 1, 35.666, 1, 71332, 71332, 82, 4, nan], [63, 'a0064', 'a0064', 1, 35.5965, 1, 71193, 71193, 74, 4, nan], [64, 'a0065', 'a0065', 1, 35.736, 1, 71472, 71472, 79, 4, nan], [65, 'a0066', 'a0066', 1, 35.5965, 1, 71193, 71193, 89, 4, nan], [66, 'a0067', 'a0067', 1, 20.8285, 1, 41657, 41657, 49, 2, nan], [67, 'a0068', 'a0068', -1, 35.736, 1, 71472, 71472, 0, 4, nan], [68, 'a0069', 'a0069', -1, 30.999, 1, 61998, 61998, 68, 3, nan], [69, 'a0070', 'a0070', -1, 30.79, 1, 61580, 61580, 0, 3, nan], [70, 'a0071', 'a0071', -1, 29.6295, 1, 59259, 59259, 43, 3, nan], [71, 'a0072', 'a0072', 1, 36.293, 1, 72586, 72586, 78, 4, nan], [72, 'a0073', 'a0073', 1, 35.666, 1, 71332, 71332, 86, 4, nan], [73, 'a0074', 'a0074', 1, 35.5965, 1, 71193, 71193, 104, 4, nan], [74, 'a0075', 'a0075', 1, 35.736, 1, 71472, 71472, 0, 4, nan], [75, 'a0076', 'a0076', 1, 35.666, 1, 71332, 71332, 57, 4, nan], [76, 'a0077', 'a0077', 1, 35.736, 1, 71472, 71472, 86, 4, nan], [77, 'a0078', 'a0078', 1, 35.736, 1, 71472, 71472, 78, 4, nan], [78, 'a0079', 'a0079', 1, 30.6505, 1, 61301, 61301, 76, 3, nan], [79, 'a0080', 'a0080', -1, 30.999, 1, 61998, 61998, 84, 3, nan], [80, 'a0081', 'a0081', -1, 35.666, 1, 71332, 71332, 97, 4, nan], [81, 'a0082', 'a0082', 1, 30.6505, 1, 61301, 61301, 65, 3, nan], [82, 'a0083', 'a0083', 1, 35.666, 1, 71332, 71332, 74, 4, nan], [83, 'a0084', 'a0084', 1, 30.79, 1, 61580, 61580, 59, 3, nan], [84, 'a0085', 'a0085', -1, 30.8595, 1, 61719, 61719, 78, 3, nan], [85, 'a0086', 'a0086', -1, 36.2235, 1, 72447, 72447, 84, 4, nan], [86, 'a0087', 'a0087', 1, 20.6195, 1, 41239, 41239, 48, 2, nan], [87, 'a0088', 'a0088', -1, 36.0145, 1, 72029, 72029, 90, 4, nan], [88, 'a0089', 'a0089', 1, 20.968, 1, 41936, 41936, 58, 2, nan], [89, 'a0090', 'a0090', 1, 20.4105, 1, 40821, 40821, 45, 2, nan], [90, 'a0091', 'a0091', -1, 30.6505, 1, 61301, 61301, 55, 3, nan], [91, 'a0092', 'a0092', 1, 35.875, 1, 71750, 71750, 73, 4, nan], [92, 'a0093', 'a0093', -1, 30.72, 1, 61440, 61440, 73, 3, nan], [93, 'a0094', 'a0094', -1, 35.666, 1, 71332, 71332, 82, 4, nan], [94, 'a0095', 'a0095', 1, 35.5965, 1, 71193, 71193, 42, 4, nan], [95, 'a0096', 'a0096', 1, 35.666, 1, 71332, 71332, 53, 4, nan], [96, 'a0097', 'a0097', 1, 35.666, 1, 71332, 71332, 71, 4, nan], [97, 'a0098', 'a0098', 1, 28.5425, 1, 57085, 57085, 70, 3, nan], [98, 'a0099', 'a0099', 1, 35.666, 1, 71332, 71332, 65, 4, nan], [99, 'a0100', 'a0100', 1, 20.6195, 1, 41239, 41239, 52, 2, nan], [100, 'a0101', 'a0101', 1, 35.8055, 1, 71611, 71611, 84, 4, nan], [101, 'a0102', 'a0102', -1, 35.5965, 1, 71193, 71193, 103, 4, nan], [102, 'a0103', 'a0103', 1, 20.898, 1, 41796, 41796, 31, 2, nan], [103, 'a0104', 'a0104', 1, 20.6195, 1, 41239, 41239, 47, 2, nan], [104, 'a0105', 'a0105', -1, 35.2425, 1, 70485, 70485, 105, 4, nan], [105, 'a0106', 'a0106', -1, 35.666, 1, 71332, 71332, 83, 4, nan], [106, 'a0107', 'a0107', 1, 36.293, 1, 72586, 72586, 94, 4, nan], [107, 'a0108', 'a0108', -1, 32.4845, 1, 64969, 64969, 74, 4, nan], [108, 'a0109', 'a0109', -1, 30.6505, 1, 61301, 61301, 65, 3, nan], [109, 'a0110', 'a0110', 1, 35.5965, 1, 71193, 71193, 98, 4, nan], [110, 'a0111', 'a0111', 1, 35.666, 1, 71332, 71332, 91, 4, nan], [111, 'a0112', 'a0112', 1, 36.1535, 1, 72307, 72307, 87, 4, nan], [112, 'a0113', 'a0113', 1, 36.1535, 1, 72307, 72307, 80, 4, nan], [113, 'a0114', 'a0114', 1, 35.736, 1, 71472, 71472, 92, 4, nan], [114, 'a0115', 'a0115', 1, 36.0145, 1, 72029, 72029, 63, 4, nan], [115, 'a0116', 'a0116', 1, 20.689, 1, 41378, 41378, 46, 2, nan], [116, 'a0117', 'a0117', 1, 35.109, 1, 70218, 70218, 60, 4, nan], [117, 'a0118', 'a0118', -1, 30.8595, 1, 61719, 61719, 0, 3, nan], [118, 'a0119', 'a0119', 1, 35.736, 1, 71472, 71472, 80, 4, nan], [119, 'a0120', 'a0120', 1, 36.084, 1, 72168, 72168, 78, 4, nan], [120, 'a0121', 'a0121', 1, 35.666, 1, 71332, 71332, 87, 4, nan], [121, 'a0122', 'a0122', 1, 35.666, 1, 71332, 71332, 51, 4, nan], [122, 'a0123', 'a0123', 1, 20.6195, 1, 41239, 41239, 62, 2, nan], [123, 'a0124', 'a0124', 1, 35.875, 1, 71750, 71750, 62, 4, nan], [124, 'a0125', 'a0125', -1, 35.666, 1, 71332, 71332, 86, 4, nan], [125, 'a0126', 'a0126', 1, 35.666, 1, 71332, 71332, 76, 4, nan], [126, 'a0127', 'a0127', -1, 35.5965, 1, 71193, 71193, 81, 4, nan], [127, 'a0128', 'a0128', 1, 35.666, 1, 71332, 71332, 69, 4, nan], [128, 'a0129', 'a0129', -1, 36.293, 1, 72586, 72586, 105, 4, nan], [129, 'a0130', 'a0130', 1, 35.5965, 1, 71193, 71193, 72, 4, nan], [130, 'a0131', 'a0131', 1, 19.4555, 1, 38911, 38911, 47, 2, nan], [131, 'a0132', 'a0132', 1, 30.6215, 1, 61243, 61243, 61, 3, nan], [132, 'a0133', 'a0133', 1, 36.1535, 1, 72307, 72307, 60, 4, nan], [133, 'a0134', 'a0134', 1, 35.9445, 1, 71889, 71889, 95, 4, nan], [134, 'a0135', 'a0135', 1, 35.5965, 1, 71193, 71193, 73, 4, nan], [135, 'a0136', 'a0136', -1, 30.79, 1, 61580, 61580, 37, 3, nan], [136, 'a0137', 'a0137', 1, 35.8055, 1, 71611, 71611, 93, 4, nan], [137, 'a0138', 'a0138', 1, 21.0375, 1, 42075, 42075, 63, 2, nan], [138, 'a0139', 'a0139', -1, 31.138, 1, 62276, 62276, 71, 3, nan], [139, 'a0140', 'a0140', -1, 35.666, 1, 71332, 71332, 83, 4, nan], [140, 'a0141', 'a0141', -1, 30.8595, 1, 61719, 61719, 53, 3, nan], [141, 'a0142', 'a0142', 1, 35.666, 1, 71332, 71332, 71, 4, nan], [142, 'a0143', 'a0143', 1, 35.666, 1, 71332, 71332, 84, 4, nan], [143, 'a0144', 'a0144', 1, 36.293, 1, 72586, 72586, 66, 4, nan], [144, 'a0145', 'a0145', 1, 36.293, 1, 72586, 72586, 77, 4, nan], [145, 'a0146', 'a0146', 1, 30.6505, 1, 61301, 61301, 74, 3, nan], [146, 'a0147', 'a0147', 1, 35.666, 1, 71332, 71332, 104, 4, nan], [147, 'a0148', 'a0148', 1, 36.084, 1, 72168, 72168, 82, 4, nan], [148, 'a0149', 'a0149', 1, 35.8055, 1, 71611, 71611, 50, 4, nan], [149, 'a0150', 'a0150', 1, 36.0145, 1, 72029, 72029, 98, 4, nan], [150, 'a0151', 'a0151', 1, 35.5965, 1, 71193, 71193, 66, 4, nan], [151, 'a0152', 'a0152', 1, 35.5965, 1, 71193, 71193, 79, 4, nan], [152, 'a0153', 'a0153', -1, 30.6505, 1, 61301, 61301, 67, 3, nan], [153, 'a0154', 'a0154', -1, 30.8595, 1, 61719, 61719, 64, 3, nan], [154, 'a0155', 'a0155', -1, 35.736, 1, 71472, 71472, 88, 4, nan], [155, 'a0156', 'a0156', 1, 20.759, 1, 41518, 41518, 50, 2, nan], [156, 'a0157', 'a0157', 1, 35.9445, 1, 71889, 71889, 100, 4, nan], [157, 'a0158', 'a0158', 1, 20.8285, 1, 41657, 41657, 29, 2, nan], [158, 'a0159', 'a0159', 1, 35.736, 1, 71472, 71472, 0, 4, nan], [159, 'a0160', 'a0160', 1, 35.5965, 1, 71193, 71193, 0, 4, nan], [160, 'a0161', 'a0161', -1, 35.875, 1, 71750, 71750, 83, 4, nan], [161, 'a0162', 'a0162', 1, 20.6195, 1, 41239, 41239, 52, 2, nan], [162, 'a0163', 'a0163', 1, 30.6505, 1, 61301, 61301, 0, 3, nan], [163, 'a0164', 'a0164', 1, 36.293, 1, 72586, 72586, 78, 4, nan], [164, 'a0165', 'a0165', -1, 30.8595, 1, 61719, 61719, 39, 3, nan], [165, 'a0166', 'a0166', 1, 35.736, 1, 71472, 71472, 85, 4, nan], [166, 'a0167', 'a0167', 1, 35.5965, 1, 71193, 71193, 85, 4, nan], [167, 'a0168', 'a0168', 1, 35.5965, 1, 71193, 71193, 83, 4, nan], [168, 'a0169', 'a0169', 1, 35.5965, 1, 71193, 71193, 104, 4, nan], [169, 'a0170', 'a0170', 1, 35.5965, 1, 71193, 71193, 93, 4, nan], [170, 'a0171', 'a0171', -1, 35.5965, 1, 71193, 71193, 83, 4, nan], [171, 'a0172', 'a0172', 1, 35.736, 1, 71472, 71472, 97, 4, nan], [172, 'a0173', 'a0173', 1, 20.689, 1, 41378, 41378, 48, 2, nan], [173, 'a0174', 'a0174', 1, 21.177, 1, 42354, 42354, 53, 2, nan], [174, 'a0175', 'a0175', 1, 30.581, 1, 61162, 61162, 63, 3, nan], [175, 'a0176', 'a0176', 1, 35.666, 1, 71332, 71332, 83, 4, nan], [176, 'a0177', 'a0177', 1, 35.736, 1, 71472, 71472, 65, 4, nan], [177, 'a0178', 'a0178', -1, 35.666, 1, 71332, 71332, 100, 4, nan], [178, 'a0179', 'a0179', -1, 30.8595, 1, 61719, 61719, 0, 3, nan], [179, 'a0180', 'a0180', 1, 36.0145, 1, 72029, 72029, 83, 4, nan], [180, 'a0181', 'a0181', -1, 35.8055, 1, 71611, 71611, 77, 4, nan], [181, 'a0182', 'a0182', 1, 35.8055, 1, 71611, 71611, 85, 4, nan], [182, 'a0183', 'a0183', 1, 35.666, 1, 71332, 71332, 50, 4, nan], [183, 'a0184', 'a0184', -1, 35.5965, 1, 71193, 71193, 89, 4, nan], [184, 'a0185', 'a0185', -1, 35.666, 1, 71332, 71332, 0, 4, nan], [185, 'a0186', 'a0186', 1, 35.666, 1, 71332, 71332, 102, 4, nan], [186, 'a0187', 'a0187', 1, 35.736, 1, 71472, 71472, 58, 4, nan], [187, 'a0188', 'a0188', 1, 36.293, 1, 72586, 72586, 98, 4, nan], [188, 'a0189', 'a0189', -1, 36.0145, 1, 72029, 72029, 86, 4, nan], [189, 'a0190', 'a0190', 1, 35.5965, 1, 71193, 71193, 86, 4, nan], [190, 'a0191', 'a0191', 1, 36.2235, 1, 72447, 72447, 94, 4, nan], [191, 'a0192', 'a0192', 1, 35.875, 1, 71750, 71750, 40, 4, nan], [192, 'a0193', 'a0193', -1, 30.8595, 1, 61719, 61719, 67, 3, nan], [193, 'a0194', 'a0194', 1, 20.689, 1, 41378, 41378, 27, 2, nan], [194, 'a0195', 'a0195', -1, 30.8595, 1, 61719, 61719, 64, 3, nan], [195, 'a0196', 'a0196', -1, 30.72, 1, 61440, 61440, 70, 3, nan], [196, 'a0197', 'a0197', 1, 35.666, 1, 71332, 71332, 91, 4, nan], [197, 'a0198', 'a0198', 1, 35.666, 1, 71332, 71332, 86, 4, nan], [198, 'a0199', 'a0199', -1, 35.875, 1, 71750, 71750, 101, 4, nan], [199, 'a0200', 'a0200', 1, 36.0145, 1, 72029, 72029, 74, 4, nan], [200, 'a0201', 'a0201', 1, 35.5965, 1, 71193, 71193, 92, 4, nan], [201, 'a0202', 'a0202', 1, 36.1535, 1, 72307, 72307, 93, 4, nan], [202, 'a0203', 'a0203', 1, 35.875, 1, 71750, 71750, 52, 4, nan], [203, 'a0204', 'a0204', -1, 31.0685, 1, 62137, 62137, 0, 3, nan], [204, 'a0205', 'a0205', 1, 20.6195, 1, 41239, 41239, 47, 2, nan], [205, 'a0206', 'a0206', 1, 35.5965, 1, 71193, 71193, 106, 4, nan], [206, 'a0207', 'a0207', 1, 35.736, 1, 71472, 71472, 91, 4, nan], [207, 'a0208', 'a0208', -1, 33.2305, 1, 66461, 66461, 75, 4, nan], [208, 'a0209', 'a0209', 1, 35.5965, 1, 71193, 71193, 93, 4, nan], [209, 'a0210', 'a0210', -1, 30.79, 1, 61580, 61580, 72, 3, nan], [210, 'a0211', 'a0211', -1, 30.6505, 1, 61301, 61301, 54, 3, nan], [211, 'a0212', 'a0212', -1, 35.666, 1, 71332, 71332, 79, 4, nan], [212, 'a0213', 'a0213', 1, 36.084, 1, 72168, 72168, 66, 4, nan], [213, 'a0214', 'a0214', 1, 35.5965, 1, 71193, 71193, 67, 4, nan], [214, 'a0215', 'a0215', 1, 36.1535, 1, 72307, 72307, 82, 4, nan], [215, 'a0216', 'a0216', 1, 35.5965, 1, 71193, 71193, 77, 4, nan], [216, 'a0217', 'a0217', 1, 35.5965, 1, 71193, 71193, 62, 4, nan], [217, 'a0218', 'a0218', 1, 35.666, 1, 71332, 71332, 69, 4, nan], [218, 'a0219', 'a0219', 1, 35.5965, 1, 71193, 71193, 46, 4, nan], [219, 'a0220', 'a0220', 1, 35.109, 1, 70218, 70218, 76, 4, nan], [220, 'a0221', 'a0221', 1, 35.5965, 1, 71193, 71193, 69, 4, nan], [221, 'a0222', 'a0222', 1, 30.8595, 1, 61719, 61719, 66, 3, nan], [222, 'a0223', 'a0223', 1, 20.689, 1, 41378, 41378, 52, 2, nan], [223, 'a0224', 'a0224', 1, 36.2235, 1, 72447, 72447, 66, 4, nan], [224, 'a0225', 'a0225', 1, 35.5965, 1, 71193, 71193, 78, 4, nan], [225, 'a0226', 'a0226', 1, 31.044, 1, 62088, 62088, 87, 3, nan], [226, 'a0227', 'a0227', -1, 30.6505, 1, 61301, 61301, 101, 3, nan], [227, 'a0228', 'a0228', 1, 27.1675, 1, 54335, 54335, 61, 3, nan], [228, 'a0229', 'a0229', -1, 30.79, 1, 61580, 61580, 75, 3, nan], [229, 'a0230', 'a0230', 1, 36.2235, 1, 72447, 72447, 87, 4, nan], [230, 'a0231', 'a0231', -1, 30.8595, 1, 61719, 61719, 72, 3, nan], [231, 'a0232', 'a0232', 1, 36.2235, 1, 72447, 72447, 87, 4, nan], [232, 'a0233', 'a0233', 1, 35.666, 1, 71332, 71332, 82, 4, nan], [233, 'a0234', 'a0234', 1, 35.666, 1, 71332, 71332, 98, 4, nan], [234, 'a0235', 'a0235', -1, 30.581, 1, 61162, 61162, 81, 3, nan], [235, 'a0236', 'a0236', 1, 36.0145, 1, 72029, 72029, 88, 4, nan], [236, 'a0237', 'a0237', 1, 35.5965, 1, 71193, 71193, 70, 4, nan], [237, 'a0238', 'a0238', -1, 9.265, 1, 18530, 18530, 27, 1, nan], [238, 'a0239', 'a0239', 1, 20.898, 1, 41796, 41796, 58, 2, nan], [239, 'a0240', 'a0240', 1, 35.666, 1, 71332, 71332, 84, 4, nan], [240, 'a0241', 'a0241', -1, 35.5965, 1, 71193, 71193, 57, 4, nan], [241, 'a0242', 'a0242', 1, 35.5965, 1, 71193, 71193, 81, 4, nan], [242, 'a0243', 'a0243', -1, 36.2235, 1, 72447, 72447, 86, 4, nan], [243, 'a0244', 'a0244', 1, 35.5965, 1, 71193, 71193, 55, 4, nan], [244, 'a0245', 'a0245', 1, 35.736, 1, 71472, 71472, 107, 4, nan], [245, 'a0246', 'a0246', 1, 35.666, 1, 71332, 71332, 94, 4, nan], [246, 'a0247', 'a0247', 1, 35.666, 1, 71332, 71332, 94, 4, nan], [247, 'a0248', 'a0248', 1, 30.5315, 1, 61063, 61063, 57, 3, nan], [248, 'a0249', 'a0249', 1, 35.666, 1, 71332, 71332, 74, 4, nan], [249, 'a0250', 'a0250', -1, 30.999, 1, 61998, 61998, 0, 3, nan], [250, 'a0251', 'a0251', 1, 20.6195, 1, 41239, 41239, 65, 2, nan], [251, 'a0252', 'a0252', 1, 21.0375, 1, 42075, 42075, 43, 2, nan], [252, 'a0253', 'a0253', -1, 35.8055, 1, 71611, 71611, 101, 4, nan], [253, 'a0254', 'a0254', 1, 31.3255, 1, 62651, 62651, 63, 3, nan], [254, 'a0255', 'a0255', 1, 35.8055, 1, 71611, 71611, 68, 4, nan], [255, 'a0256', 'a0256', 1, 20.8285, 1, 41657, 41657, 49, 2, nan], [256, 'a0257', 'a0257', 1, 35.8055, 1, 71611, 71611, 53, 4, nan], [257, 'a0258', 'a0258', 1, 35.736, 1, 71472, 71472, 51, 4, nan], [258, 'a0259', 'a0259', 1, 35.9445, 1, 71889, 71889, 50, 4, nan], [259, 'a0260', 'a0260', 1, 35.736, 1, 71472, 71472, 92, 4, nan], [260, 'a0261', 'a0261', 1, 35.5965, 1, 71193, 71193, 0, 4, nan], [261, 'a0262', 'a0262', 1, 35.666, 1, 71332, 71332, 81, 4, nan], [262, 'a0263', 'a0263', 1, 30.79, 1, 61580, 61580, 58, 3, nan], [263, 'a0264', 'a0264', -1, 30.79, 1, 61580, 61580, 73, 3, nan], [264, 'a0265', 'a0265', 1, 20.968, 1, 41936, 41936, 62, 2, nan], [265, 'a0266', 'a0266', -1, 35.5965, 1, 71193, 71193, 88, 4, nan], [266, 'a0267', 'a0267', 1, 20.689, 1, 41378, 41378, 33, 2, nan], [267, 'a0268', 'a0268', 1, 30.8595, 1, 61719, 61719, 60, 3, nan], [268, 'a0269', 'a0269', 1, 35.5965, 1, 71193, 71193, 75, 4, nan], [269, 'a0270', 'a0270', -1, 30.79, 1, 61580, 61580, 54, 3, nan], [270, 'a0271', 'a0271', -1, 30.8595, 1, 61719, 61719, 68, 3, nan], [271, 'a0272', 'a0272', 1, 35.875, 1, 71750, 71750, 54, 4, nan], [272, 'a0273', 'a0273', 1, 35.8055, 1, 71611, 71611, 82, 4, nan], [273, 'a0274', 'a0274', -1, 36.2235, 1, 72447, 72447, 0, 4, nan], [274, 'a0275', 'a0275', 1, 30.8595, 1, 61719, 61719, 60, 3, nan], [275, 'a0276', 'a0276', 1, 35.8055, 1, 71611, 71611, 89, 4, nan], [276, 'a0277', 'a0277', 1, 31.138, 1, 62276, 62276, 36, 3, nan], [277, 'a0278', 'a0278', 1, 35.5965, 1, 71193, 71193, 65, 4, nan], [278, 'a0279', 'a0279', 1, 35.5965, 1, 71193, 71193, 0, 4, nan], [279, 'a0280', 'a0280', 1, 35.736, 1, 71472, 71472, 58, 4, nan], [280, 'a0281', 'a0281', 1, 28.574, 1, 57148, 57148, 64, 3, nan], [281, 'a0282', 'a0282', 1, 35.736, 1, 71472, 71472, 102, 4, nan], [282, 'a0283', 'a0283', -1, 30.79, 1, 61580, 61580, 38, 3, nan], [283, 'a0284', 'a0284', 1, 35.666, 1, 71332, 71332, 48, 4, nan], [284, 'a0285', 'a0285', -1, 35.666, 1, 71332, 71332, 97, 4, nan], [285, 'a0286', 'a0286', 1, 35.666, 1, 71332, 71332, 42, 4, nan], [286, 'a0287', 'a0287', -1, 30.8595, 1, 61719, 61719, 60, 3, nan], [287, 'a0288', 'a0288', 1, 35.5965, 1, 71193, 71193, 54, 4, nan], [288, 'a0289', 'a0289', -1, 30.8595, 1, 61719, 61719, 31, 3, nan], [289, 'a0290', 'a0290', -1, 31.138, 1, 62276, 62276, 76, 3, nan], [290, 'a0291', 'a0291', 1, 35.666, 1, 71332, 71332, 79, 4, nan], [291, 'a0292', 'a0292', 1, 36.2235, 1, 72447, 72447, 65, 4, nan], [292, 'a0293', 'a0293', -1, 30.72, 1, 61440, 61440, 55, 3, nan], [293, 'a0294', 'a0294', -1, 35.875, 1, 71750, 71750, 79, 4, nan], [294, 'a0295', 'a0295', 1, 35.8055, 1, 71611, 71611, 70, 4, nan], [295, 'a0296', 'a0296', 1, 12.9775, 1, 25955, 25955, 35, 1, nan], [296, 'a0297', 'a0297', 1, 35.666, 1, 71332, 71332, 76, 4, nan], [297, 'a0298', 'a0298', -1, 30.999, 1, 61998, 61998, 66, 3, nan], [298, 'a0299', 'a0299', -1, 30.8595, 1, 61719, 61719, 47, 3, nan], [299, 'a0300', 'a0300', 1, 30.72, 1, 61440, 61440, 78, 3, nan], [300, 'a0301', 'a0301', -1, 30.79, 1, 61580, 61580, 66, 3, nan], [301, 'a0302', 'a0302', -1, 36.0145, 1, 72029, 72029, 81, 4, nan], [302, 'a0303', 'a0303', 1, 35.8055, 1, 71611, 71611, 0, 4, nan], [303, 'a0304', 'a0304', -1, 35.666, 1, 71332, 71332, 37, 4, nan], [304, 'a0305', 'a0305', 1, 35.736, 1, 71472, 71472, 35, 4, nan], [305, 'a0306', 'a0306', 1, 30.6505, 1, 61301, 61301, 74, 3, nan], [306, 'a0307', 'a0307', 1, 34.165, 1, 68330, 68330, 86, 4, nan], [307, 'a0308', 'a0308', 1, 32.942, 1, 65884, 65884, 83, 4, nan], [308, 'a0309', 'a0309', -1, 30.8595, 1, 61719, 61719, 66, 3, nan], [309, 'a0310', 'a0310', -1, 30.8595, 1, 61719, 61719, 51, 3, nan], [310, 'a0311', 'a0311', -1, 30.8595, 1, 61719, 61719, 0, 3, nan], [311, 'a0312', 'a0312', 1, 35.666, 1, 71332, 71332, 80, 4, nan], [312, 'a0313', 'a0313', 1, 35.5965, 1, 71193, 71193, 74, 4, nan], [313, 'a0314', 'a0314', 1, 20.6195, 1, 41239, 41239, 0, 2, nan], [314, 'a0315', 'a0315', 1, 20.6195, 1, 41239, 41239, 0, 2, nan], [315, 'a0316', 'a0316', 1, 20.6195, 1, 41239, 41239, 45, 2, nan], [316, 'a0317', 'a0317', 1, 35.736, 1, 71472, 71472, 93, 4, nan], [317, 'a0318', 'a0318', 1, 21.804, 1, 43608, 43608, 62, 2, nan], [318, 'a0319', 'a0319', 1, 36.0145, 1, 72029, 72029, 101, 4, nan], [319, 'a0320', 'a0320', 1, 35.8055, 1, 71611, 71611, 0, 4, nan], [320, 'a0321', 'a0321', 1, 30.6505, 1, 61301, 61301, 71, 3, nan], [321, 'a0322', 'a0322', 1, 30.8595, 1, 61719, 61719, 54, 3, nan], [322, 'a0323', 'a0323', -1, 20.6195, 1, 41239, 41239, 48, 2, nan], [323, 'a0324', 'a0324', 1, 36.502, 1, 73004, 73004, 96, 4, nan], [324, 'a0325', 'a0325', -1, 36.1535, 1, 72307, 72307, 72, 4, nan], [325, 'a0326', 'a0326', 1, 35.736, 1, 71472, 71472, 49, 4, nan], [326, 'a0327', 'a0327', 1, 35.666, 1, 71332, 71332, 84, 4, nan], [327, 'a0328', 'a0328', -1, 30.72, 1, 61440, 61440, 67, 3, nan], [328, 'a0329', 'a0329', -1, 36.1535, 1, 72307, 72307, 102, 4, nan], [329, 'a0330', 'a0330', -1, 35.666, 1, 71332, 71332, 99, 4, nan], [330, 'a0331', 'a0331', 1, 28.561, 1, 57122, 57122, 40, 3, nan], [331, 'a0332', 'a0332', -1, 36.084, 1, 72168, 72168, 102, 4, nan], [332, 'a0333', 'a0333', 1, 35.736, 1, 71472, 71472, 56, 4, nan], [333, 'a0334', 'a0334', -1, 35.666, 1, 71332, 71332, 85, 4, nan], [334, 'a0335', 'a0335', 1, 36.293, 1, 72586, 72586, 74, 4, nan], [335, 'a0336', 'a0336', 1, 12.7945, 1, 25589, 25589, 32, 1, nan], [336, 'a0337', 'a0337', -1, 30.8595, 1, 61719, 61719, 0, 3, nan], [337, 'a0338', 'a0338', 1, 35.875, 1, 71750, 71750, 67, 4, nan], [338, 'a0339', 'a0339', 1, 35.666, 1, 71332, 71332, 36, 4, nan], [339, 'a0340', 'a0340', -1, 35.5965, 1, 71193, 71193, 83, 4, nan], [340, 'a0341', 'a0341', 1, 33.3585, 1, 66717, 66717, 65, 4, nan], [341, 'a0342', 'a0342', -1, 31.138, 1, 62276, 62276, 70, 3, nan], [342, 'a0343', 'a0343', 1, 36.293, 1, 72586, 72586, 64, 4, nan], [343, 'a0344', 'a0344', 1, 35.5965, 1, 71193, 71193, 54, 4, nan], [344, 'a0345', 'a0345', 1, 35.5965, 1, 71193, 71193, 61, 4, nan], [345, 'a0346', 'a0346', 1, 35.5965, 1, 71193, 71193, 49, 4, nan], [346, 'a0347', 'a0347', 1, 20.689, 1, 41378, 41378, 0, 2, nan], [347, 'a0348', 'a0348', 1, 36.1535, 1, 72307, 72307, 90, 4, nan], [348, 'a0349', 'a0349', 1, 35.5965, 1, 71193, 71193, 90, 4, nan], [349, 'a0350', 'a0350', 1, 32.0785, 1, 64157, 64157, 85, 4, nan], [350, 'a0351', 'a0351', -1, 35.666, 1, 71332, 71332, 111, 4, nan], [351, 'a0352', 'a0352', -1, 36.293, 1, 72586, 72586, 86, 4, nan], [352, 'a0353', 'a0353', -1, 30.6505, 1, 61301, 61301, 64, 3, nan], [353, 'a0354', 'a0354', 1, 35.666, 1, 71332, 71332, 74, 4, nan], [354, 'a0355', 'a0355', -1, 36.2235, 1, 72447, 72447, 80, 4, nan], [355, 'a0356', 'a0356', 1, 35.666, 1, 71332, 71332, 53, 4, nan], [356, 'a0357', 'a0357', 1, 30.8595, 1, 61719, 61719, 79, 3, nan], [357, 'a0358', 'a0358', 1, 20.6195, 1, 41239, 41239, 31, 2, nan], [358, 'a0359', 'a0359', -1, 30.6505, 1, 61301, 61301, 63, 3, nan], [359, 'a0360', 'a0360', 1, 20.6195, 1, 41239, 41239, 35, 2, nan], [360, 'a0361', 'a0361', -1, 30.999, 1, 61998, 61998, 0, 3, nan], [361, 'a0362', 'a0362', 1, 35.875, 1, 71750, 71750, 57, 4, nan], [362, 'a0363', 'a0363', 1, 35.5965, 1, 71193, 71193, 56, 4, nan], [363, 'a0364', 'a0364', 1, 35.9445, 1, 71889, 71889, 95, 4, nan], [364, 'a0365', 'a0365', 1, 30.6505, 1, 61301, 61301, 50, 3, nan], [365, 'a0366', 'a0366', 1, 35.666, 1, 71332, 71332, 72, 4, nan], [366, 'a0367', 'a0367', 1, 35.5965, 1, 71193, 71193, 73, 4, nan], [367, 'a0368', 'a0368', 1, 30.72, 1, 61440, 61440, 64, 3, nan], [368, 'a0369', 'a0369', 1, 20.8285, 1, 41657, 41657, 56, 2, nan], [369, 'a0370', 'a0370', 1, 35.666, 1, 71332, 71332, 101, 4, nan], [370, 'a0371', 'a0371', 1, 20.968, 1, 41936, 41936, 50, 2, nan], [371, 'a0372', 'a0372', 1, 35.666, 1, 71332, 71332, 86, 4, nan], [372, 'a0373', 'a0373', 1, 30.6505, 1, 61301, 61301, 70, 3, nan], [373, 'a0374', 'a0374', 1, 35.8055, 1, 71611, 71611, 100, 4, nan], [374, 'a0375', 'a0375', 1, 30.8595, 1, 61719, 61719, 48, 3, nan], [375, 'a0376', 'a0376', 1, 35.8055, 1, 71611, 71611, 95, 4, nan], [376, 'a0377', 'a0377', 1, 36.293, 1, 72586, 72586, 87, 4, nan], [377, 'a0378', 'a0378', 1, 35.5965, 1, 71193, 71193, 81, 4, nan], [378, 'a0379', 'a0379', 1, 35.5965, 1, 71193, 71193, 66, 4, nan], [379, 'a0380', 'a0380', 1, 35.666, 1, 71332, 71332, 40, 4, nan], [380, 'a0381', 'a0381', 1, 35.736, 1, 71472, 71472, 75, 4, nan], [381, 'a0382', 'a0382', 1, 20.8285, 1, 41657, 41657, 49, 2, nan], [382, 'a0383', 'a0383', 1, 20.8285, 1, 41657, 41657, 42, 2, nan], [383, 'a0384', 'a0384', 1, 30.72, 1, 61440, 61440, 34, 3, nan], [384, 'a0385', 'a0385', -1, 20.968, 1, 41936, 41936, 33, 2, nan], [385, 'a0386', 'a0386', -1, 36.0145, 1, 72029, 72029, 103, 4, nan], [386, 'a0387', 'a0387', 1, 35.666, 1, 71332, 71332, 61, 4, nan], [387, 'a0388', 'a0388', 1, 35.5965, 1, 71193, 71193, 105, 4, nan], [388, 'a0389', 'a0389', 1, 36.2235, 1, 72447, 72447, 69, 4, nan], [389, 'a0390', 'a0390', 1, 35.736, 1, 71472, 71472, 93, 4, nan], [390, 'a0391', 'a0391', 1, 35.736, 1, 71472, 71472, 64, 4, nan], [391, 'a0392', 'a0392', 1, 35.666, 1, 71332, 71332, 96, 4, nan], [392, 'a0393', 'a0393', -1, 35.5965, 1, 71193, 71193, 87, 4, nan], [393, 'a0394', 'a0394', 1, 24.6915, 1, 49383, 49383, 44, 3, nan], [394, 'a0395', 'a0395', 1, 14.7855, 1, 29571, 29571, 0, 1, nan], [395, 'a0396', 'a0396', 1, 35.8055, 1, 71611, 71611, 71, 4, nan], [396, 'a0397', 'a0397', 1, 30.6505, 1, 61301, 61301, 69, 3, nan], [397, 'a0398', 'a0398', 1, 35.9445, 1, 71889, 71889, 101, 4, nan], [398, 'a0399', 'a0399', 1, 36.0145, 1, 72029, 72029, 53, 4, nan], [399, 'a0400', 'a0400', 1, 16.325, 1, 32650, 32650, 0, 2, nan], [400, 'a0401', 'a0401', -1, 36.2235, 1, 72447, 72447, 74, 4, nan], [401, 'a0402', 'a0402', 1, 36.293, 1, 72586, 72586, 54, 4, nan], [402, 'a0403', 'a0403', 1, 36.293, 1, 72586, 72586, 102, 4, nan], [403, 'a0404', 'a0404', 1, 30.79, 1, 61580, 61580, 37, 3, nan], [404, 'a0405', 'a0405', -1, 12.5305, 1, 25061, 25061, 19, 1, nan], [405, 'a0406', 'a0406', -1, 35.5965, 1, 71193, 71193, 71, 4, nan], [406, 'a0407', 'a0407', -1, 35.666, 1, 71332, 71332, 97, 4, nan], [407, 'a0408', 'a0408', -1, 30.581, 1, 61162, 61162, 58, 3, nan], [408, 'a0409', 'a0409', -1, 30.72, 1, 61440, 61440, 29, 3, nan]]
-[28412] *** Processing Signal 0 (1 / 409) [0] ***
-[12224] *** Processing Signal 14 (15 / 409) [14] ***
-[4844] *** Processing Signal 21 (22 / 409) [21] ***
-[26636] *** Processing Signal 7 (8 / 409) [7] ***
-[4844] * Processing Segment 0 (1 / 4) *
-[28412] * Processing Segment 0 (1 / 4) *
-[12224] * Processing Segment 0 (1 / 4) *
-[26636] * Processing Segment 0 (1 / 4) *
-[28412] * Processing Segment 1 (2 / 4) *
-[12224] * Processing Segment 1 (2 / 4) *
-[26636] * Processing Segment 1 (2 / 4) *
-[4844] * Processing Segment 1 (2 / 4) *
-[4844] * Processing Segment 2 (3 / 4) *
-[12224] * Processing Segment 2 (3 / 4) *
-[28412] * Processing Segment 2 (3 / 4) *
-[26636] * Processing Segment 2 (3 / 4) *
-[10248] *** Processing Signal 28 (29 / 409) [28] ***
-[10248] * Processing Segment 0 (1 / 3) *
-[23720] *** Processing Signal 35 (36 / 409) [35] ***
-[23496] *** Processing Signal 42 (43 / 409) [42] ***
-[23720] * Processing Segment 0 (1 / 4) *
-[20348] *** Processing Signal 49 (50 / 409) [49] ***
-[24800] *** Processing Signal 56 (57 / 409) [56] ***
-[23496] * Processing Segment 0 (1 / 4) *
-[22204] *** Processing Signal 63 (64 / 409) [63] ***
-[24800] * Processing Segment 0 (1 / 4) *
-[20348] * Processing Segment 0 (1 / 3) *
-[2060] *** Processing Signal 70 (71 / 409) [70] ***
-[2060] * Processing Segment 0 (1 / 3) *
-[22204] * Processing Segment 0 (1 / 4) *
-[19956] *** Processing Signal 77 (78 / 409) [77] ***
-[17372] *** Processing Signal 84 (85 / 409) [84] ***
-[26144] *** Processing Signal 91 (92 / 409) [91] ***
-[17372] * Processing Segment 0 (1 / 3) *
-[19956] * Processing Segment 0 (1 / 4) *
-[26144] * Processing Segment 0 (1 / 4) *
-[27908] *** Processing Signal 98 (99 / 409) [98] ***
-[27908] * Processing Segment 0 (1 / 4) *
-[12224] * Processing Segment 3 (4 / 4) *
-[28412] * Processing Segment 3 (4 / 4) *
-[26636] * Processing Segment 3 (4 / 4) *
-[4844] * Processing Segment 3 (4 / 4) *
-[10248] * Processing Segment 1 (2 / 3) *
-[26144] * Processing Segment 1 (2 / 4) *
-[24800] * Processing Segment 1 (2 / 4) *
-[17372] * Processing Segment 1 (2 / 3) *
-[23720] * Processing Segment 1 (2 / 4) *
-[20348] * Processing Segment 1 (2 / 3) *
-[23496] * Processing Segment 1 (2 / 4) *
-[19956] * Processing Segment 1 (2 / 4) *
-[22204] * Processing Segment 1 (2 / 4) *
-[2060] * Processing Segment 1 (2 / 3) *
-[28412] * Processing Segment 0 (1 / 4) *
-[27908] * Processing Segment 1 (2 / 4) *
-[4844] * Processing Segment 0 (1 / 4) *
-[12224] * Processing Segment 0 (1 / 4) *
-[26636] * Processing Segment 0 (1 / 4) *
-[10248] * Processing Segment 2 (3 / 3) *
-[26144] * Processing Segment 2 (3 / 4) *
-[24800] * Processing Segment 2 (3 / 4) *
-[23720] * Processing Segment 2 (3 / 4) *
-[23496] * Processing Segment 2 (3 / 4) *
-[17372] * Processing Segment 2 (3 / 3) *
-[20348] * Processing Segment 2 (3 / 3) *
-[19956] * Processing Segment 2 (3 / 4) *
-[2060] * Processing Segment 2 (3 / 3) *
-[22204] * Processing Segment 2 (3 / 4) *
-[27908] * Processing Segment 2 (3 / 4) *
-[26636] * Processing Segment 1 (2 / 4) *
-[4844] * Processing Segment 1 (2 / 4) *
-[12224] * Processing Segment 1 (2 / 4) *
-[28412] * Processing Segment 1 (2 / 4) *
-[10248] * Processing Segment 0 (1 / 3) *
-[24800] * Processing Segment 3 (4 / 4) *
-[26144] * Processing Segment 3 (4 / 4) *
-[23720] * Processing Segment 3 (4 / 4) *
-[17372] * Processing Segment 0 (1 / 3) *
-[23496] * Processing Segment 3 (4 / 4) *
-[20348] * Processing Segment 0 (1 / 3) *
-[2060] * Processing Segment 0 (1 / 3) *
-[19956] * Processing Segment 3 (4 / 4) *
-[22204] * Processing Segment 3 (4 / 4) *
-[27908] * Processing Segment 3 (4 / 4) *
-[23720] * Processing Segment 0 (1 / 4) *
-[12224] * Processing Segment 2 (3 / 4) *
-[26144] * Processing Segment 0 (1 / 4) *
-[26636] * Processing Segment 2 (3 / 4) *
-[4844] * Processing Segment 2 (3 / 4) *
-[24800] * Processing Segment 0 (1 / 4) *
-[10248] * Processing Segment 1 (2 / 3) *
-[28412] * Processing Segment 2 (3 / 4) *
-[17372] * Processing Segment 1 (2 / 3) *
-[23496] * Processing Segment 0 (1 / 4) *
-[20348] * Processing Segment 1 (2 / 3) *
-[2060] * Processing Segment 1 (2 / 3) *
-[22204] * Processing Segment 0 (1 / 4) *
-[27908] * Processing Segment 0 (1 / 4) *
-[19956] * Processing Segment 0 (1 / 4) *
+[12436] * Cleaning Physionet Data - Creating ECG segments, Spectrograms/Wavelets and Videos [2/4] *
+[12436] [['a0001', 'a0001', 1, 35.666, 1, 71332, 71332, 73, 4, nan], ['a0002', 'a0002', 1, 20.8285, 1, 41657, 41657, 54, 2, nan], ['a0003', 'a0003', 1, 30.72, 1, 61440, 61440, 51, 3, nan], ['a0004', 'a0004', 1, 35.5965, 1, 71193, 71193, 67, 4, nan], ['a0005', 'a0005', 1, 35.666, 1, 71332, 71332, 104, 4, nan], ['a0006', 'a0006', 1, 20.759, 1, 41518, 41518, 61, 2, nan], ['a0007', 'a0007', -1, 35.666, 1, 71332, 71332, 83, 4, nan], ['a0008', 'a0008', 1, 35.8055, 1, 71611, 71611, 89, 4, nan], ['a0009', 'a0009', -1, 35.8055, 1, 71611, 71611, 90, 4, nan], ['a0010', 'a0010', 1, 35.736, 1, 71472, 71472, 89, 4, nan], ['a0011', 'a0011', -1, 35.5965, 1, 71193, 71193, 71, 4, nan], ['a0012', 'a0012', -1, 30.8595, 1, 61719, 61719, 57, 3, nan], ['a0013', 'a0013', 1, 35.666, 1, 71332, 71332, 78, 4, nan], ['a0014', 'a0014', 1, 35.736, 1, 71472, 71472, 0, 4, nan], ['a0015', 'a0015', 1, 35.736, 1, 71472, 71472, 101, 4, nan], ['a0016', 'a0016', -1, 30.79, 1, 61580, 61580, 64, 3, nan], ['a0017', 'a0017', 1, 35.666, 1, 71332, 71332, 56, 4, nan], ['a0018', 'a0018', 1, 20.898, 1, 41796, 41796, 0, 2, nan], ['a0019', 'a0019', -1, 30.8595, 1, 61719, 61719, 48, 3, nan], ['a0020', 'a0020', 1, 35.666, 1, 71332, 71332, 110, 4, nan], ['a0021', 'a0021', 1, 35.5965, 1, 71193, 71193, 61, 4, nan], ['a0022', 'a0022', 1, 36.1535, 1, 72307, 72307, 35, 4, nan], ['a0023', 'a0023', 1, 30.581, 1, 61162, 61162, 67, 3, nan], ['a0024', 'a0024', 1, 20.689, 1, 41378, 41378, 34, 2, nan], ['a0025', 'a0025', -1, 31.138, 1, 62276, 62276, 65, 3, nan], ['a0026', 'a0026', 1, 35.5965, 1, 71193, 71193, 80, 4, nan], ['a0027', 'a0027', -1, 31.138, 1, 62276, 62276, 0, 3, nan], ['a0028', 'a0028', -1, 30.8595, 1, 61719, 61719, 0, 3, nan], ['a0029', 'a0029', -1, 30.72, 1, 61440, 61440, 78, 3, nan], ['a0030', 'a0030', 1, 36.2235, 1, 72447, 72447, 81, 4, nan], ['a0031', 'a0031', 1, 35.5965, 1, 71193, 71193, 79, 4, nan], ['a0032', 'a0032', -1, 35.666, 1, 71332, 71332, 64, 4, nan], ['a0033', 'a0033', 1, 35.666, 1, 71332, 71332, 44, 4, nan], ['a0034', 'a0034', 1, 30.581, 1, 61162, 61162, 66, 3, nan], ['a0035', 'a0035', -1, 28.9825, 1, 57965, 57965, 56, 3, nan], ['a0036', 'a0036', 1, 35.9445, 1, 71889, 71889, 76, 4, nan], ['a0037', 'a0037', 1, 35.736, 1, 71472, 71472, 50, 4, nan], ['a0038', 'a0038', -1, 34.63, 1, 69260, 69260, 94, 4, nan], ['a0039', 'a0039', 1, 30.72, 1, 61440, 61440, 69, 3, nan], ['a0040', 'a0040', 1, 35.666, 1, 71332, 71332, 99, 4, nan], ['a0041', 'a0041', 1, 35.109, 1, 70218, 70218, 78, 4, nan], ['a0042', 'a0042', 1, 36.1535, 1, 72307, 72307, 82, 4, nan], ['a0043', 'a0043', 1, 35.5965, 1, 71193, 71193, 84, 4, nan], ['a0044', 'a0044', 1, 30.6505, 1, 61301, 61301, 71, 3, nan], ['a0045', 'a0045', 1, 35.875, 1, 71750, 71750, 0, 4, nan], ['a0046', 'a0046', 1, 35.736, 1, 71472, 71472, 84, 4, nan], ['a0047', 'a0047', 1, 35.5965, 1, 71193, 71193, 100, 4, nan], ['a0048', 'a0048', 1, 36.2235, 1, 72447, 72447, 51, 4, nan], ['a0049', 'a0049', -1, 30.8595, 1, 61719, 61719, 68, 3, nan], ['a0050', 'a0050', -1, 30.6505, 1, 61301, 61301, 73, 3, nan], ['a0051', 'a0051', 1, 35.5965, 1, 71193, 71193, 101, 4, nan], ['a0052', 'a0052', 1, 35.736, 1, 71472, 71472, 70, 4, nan], ['a0053', 'a0053', -1, 35.875, 1, 71750, 71750, 83, 4, nan], ['a0054', 'a0054', 1, 35.666, 1, 71332, 71332, 53, 4, nan], ['a0055', 'a0055', -1, 35.666, 1, 71332, 71332, 0, 4, nan], ['a0056', 'a0056', 1, 30.79, 1, 61580, 61580, 66, 3, nan], ['a0057', 'a0057', 1, 35.9445, 1, 71889, 71889, 0, 4, nan], ['a0058', 'a0058', 1, 20.6195, 1, 41239, 41239, 46, 2, nan], ['a0059', 'a0059', 1, 35.666, 1, 71332, 71332, 56, 4, nan], ['a0060', 'a0060', 1, 35.666, 1, 71332, 71332, 71, 4, nan], ['a0061', 'a0061', 1, 30.79, 1, 61580, 61580, 77, 3, nan], ['a0062', 'a0062', 1, 36.084, 1, 72168, 72168, 76, 4, nan], ['a0063', 'a0063', 1, 35.666, 1, 71332, 71332, 82, 4, nan], ['a0064', 'a0064', 1, 35.5965, 1, 71193, 71193, 74, 4, nan], ['a0065', 'a0065', 1, 35.736, 1, 71472, 71472, 79, 4, nan], ['a0066', 'a0066', 1, 35.5965, 1, 71193, 71193, 89, 4, nan], ['a0067', 'a0067', 1, 20.8285, 1, 41657, 41657, 49, 2, nan], ['a0068', 'a0068', -1, 35.736, 1, 71472, 71472, 0, 4, nan], ['a0069', 'a0069', -1, 30.999, 1, 61998, 61998, 68, 3, nan], ['a0070', 'a0070', -1, 30.79, 1, 61580, 61580, 0, 3, nan], ['a0071', 'a0071', -1, 29.6295, 1, 59259, 59259, 43, 3, nan], ['a0072', 'a0072', 1, 36.293, 1, 72586, 72586, 78, 4, nan], ['a0073', 'a0073', 1, 35.666, 1, 71332, 71332, 86, 4, nan], ['a0074', 'a0074', 1, 35.5965, 1, 71193, 71193, 104, 4, nan], ['a0075', 'a0075', 1, 35.736, 1, 71472, 71472, 0, 4, nan], ['a0076', 'a0076', 1, 35.666, 1, 71332, 71332, 57, 4, nan], ['a0077', 'a0077', 1, 35.736, 1, 71472, 71472, 86, 4, nan], ['a0078', 'a0078', 1, 35.736, 1, 71472, 71472, 78, 4, nan], ['a0079', 'a0079', 1, 30.6505, 1, 61301, 61301, 76, 3, nan], ['a0080', 'a0080', -1, 30.999, 1, 61998, 61998, 84, 3, nan], ['a0081', 'a0081', -1, 35.666, 1, 71332, 71332, 97, 4, nan], ['a0082', 'a0082', 1, 30.6505, 1, 61301, 61301, 65, 3, nan], ['a0083', 'a0083', 1, 35.666, 1, 71332, 71332, 74, 4, nan], ['a0084', 'a0084', 1, 30.79, 1, 61580, 61580, 59, 3, nan], ['a0085', 'a0085', -1, 30.8595, 1, 61719, 61719, 78, 3, nan], ['a0086', 'a0086', -1, 36.2235, 1, 72447, 72447, 84, 4, nan], ['a0087', 'a0087', 1, 20.6195, 1, 41239, 41239, 48, 2, nan], ['a0088', 'a0088', -1, 36.0145, 1, 72029, 72029, 90, 4, nan], ['a0089', 'a0089', 1, 20.968, 1, 41936, 41936, 58, 2, nan], ['a0090', 'a0090', 1, 20.4105, 1, 40821, 40821, 45, 2, nan], ['a0091', 'a0091', -1, 30.6505, 1, 61301, 61301, 55, 3, nan], ['a0092', 'a0092', 1, 35.875, 1, 71750, 71750, 73, 4, nan], ['a0093', 'a0093', -1, 30.72, 1, 61440, 61440, 73, 3, nan], ['a0094', 'a0094', -1, 35.666, 1, 71332, 71332, 82, 4, nan], ['a0095', 'a0095', 1, 35.5965, 1, 71193, 71193, 42, 4, nan], ['a0096', 'a0096', 1, 35.666, 1, 71332, 71332, 53, 4, nan], ['a0097', 'a0097', 1, 35.666, 1, 71332, 71332, 71, 4, nan], ['a0098', 'a0098', 1, 28.5425, 1, 57085, 57085, 70, 3, nan], ['a0099', 'a0099', 1, 35.666, 1, 71332, 71332, 65, 4, nan], ['a0100', 'a0100', 1, 20.6195, 1, 41239, 41239, 52, 2, nan], ['a0101', 'a0101', 1, 35.8055, 1, 71611, 71611, 84, 4, nan], ['a0102', 'a0102', -1, 35.5965, 1, 71193, 71193, 103, 4, nan], ['a0103', 'a0103', 1, 20.898, 1, 41796, 41796, 31, 2, nan], ['a0104', 'a0104', 1, 20.6195, 1, 41239, 41239, 47, 2, nan], ['a0105', 'a0105', -1, 35.2425, 1, 70485, 70485, 105, 4, nan], ['a0106', 'a0106', -1, 35.666, 1, 71332, 71332, 83, 4, nan], ['a0107', 'a0107', 1, 36.293, 1, 72586, 72586, 94, 4, nan], ['a0108', 'a0108', -1, 32.4845, 1, 64969, 64969, 74, 4, nan], ['a0109', 'a0109', -1, 30.6505, 1, 61301, 61301, 65, 3, nan], ['a0110', 'a0110', 1, 35.5965, 1, 71193, 71193, 98, 4, nan], ['a0111', 'a0111', 1, 35.666, 1, 71332, 71332, 91, 4, nan], ['a0112', 'a0112', 1, 36.1535, 1, 72307, 72307, 87, 4, nan], ['a0113', 'a0113', 1, 36.1535, 1, 72307, 72307, 80, 4, nan], ['a0114', 'a0114', 1, 35.736, 1, 71472, 71472, 92, 4, nan], ['a0115', 'a0115', 1, 36.0145, 1, 72029, 72029, 63, 4, nan], ['a0116', 'a0116', 1, 20.689, 1, 41378, 41378, 46, 2, nan], ['a0117', 'a0117', 1, 35.109, 1, 70218, 70218, 60, 4, nan], ['a0118', 'a0118', -1, 30.8595, 1, 61719, 61719, 0, 3, nan], ['a0119', 'a0119', 1, 35.736, 1, 71472, 71472, 80, 4, nan], ['a0120', 'a0120', 1, 36.084, 1, 72168, 72168, 78, 4, nan], ['a0121', 'a0121', 1, 35.666, 1, 71332, 71332, 87, 4, nan], ['a0122', 'a0122', 1, 35.666, 1, 71332, 71332, 51, 4, nan], ['a0123', 'a0123', 1, 20.6195, 1, 41239, 41239, 62, 2, nan], ['a0124', 'a0124', 1, 35.875, 1, 71750, 71750, 62, 4, nan], ['a0125', 'a0125', -1, 35.666, 1, 71332, 71332, 86, 4, nan], ['a0126', 'a0126', 1, 35.666, 1, 71332, 71332, 76, 4, nan], ['a0127', 'a0127', -1, 35.5965, 1, 71193, 71193, 81, 4, nan], ['a0128', 'a0128', 1, 35.666, 1, 71332, 71332, 69, 4, nan], ['a0129', 'a0129', -1, 36.293, 1, 72586, 72586, 105, 4, nan], ['a0130', 'a0130', 1, 35.5965, 1, 71193, 71193, 72, 4, nan], ['a0131', 'a0131', 1, 19.4555, 1, 38911, 38911, 47, 2, nan], ['a0132', 'a0132', 1, 30.6215, 1, 61243, 61243, 61, 3, nan], ['a0133', 'a0133', 1, 36.1535, 1, 72307, 72307, 60, 4, nan], ['a0134', 'a0134', 1, 35.9445, 1, 71889, 71889, 95, 4, nan], ['a0135', 'a0135', 1, 35.5965, 1, 71193, 71193, 73, 4, nan], ['a0136', 'a0136', -1, 30.79, 1, 61580, 61580, 37, 3, nan], ['a0137', 'a0137', 1, 35.8055, 1, 71611, 71611, 93, 4, nan], ['a0138', 'a0138', 1, 21.0375, 1, 42075, 42075, 63, 2, nan], ['a0139', 'a0139', -1, 31.138, 1, 62276, 62276, 71, 3, nan], ['a0140', 'a0140', -1, 35.666, 1, 71332, 71332, 83, 4, nan], ['a0141', 'a0141', -1, 30.8595, 1, 61719, 61719, 53, 3, nan], ['a0142', 'a0142', 1, 35.666, 1, 71332, 71332, 71, 4, nan], ['a0143', 'a0143', 1, 35.666, 1, 71332, 71332, 84, 4, nan], ['a0144', 'a0144', 1, 36.293, 1, 72586, 72586, 66, 4, nan], ['a0145', 'a0145', 1, 36.293, 1, 72586, 72586, 77, 4, nan], ['a0146', 'a0146', 1, 30.6505, 1, 61301, 61301, 74, 3, nan], ['a0147', 'a0147', 1, 35.666, 1, 71332, 71332, 104, 4, nan], ['a0148', 'a0148', 1, 36.084, 1, 72168, 72168, 82, 4, nan], ['a0149', 'a0149', 1, 35.8055, 1, 71611, 71611, 50, 4, nan], ['a0150', 'a0150', 1, 36.0145, 1, 72029, 72029, 98, 4, nan], ['a0151', 'a0151', 1, 35.5965, 1, 71193, 71193, 66, 4, nan], ['a0152', 'a0152', 1, 35.5965, 1, 71193, 71193, 79, 4, nan], ['a0153', 'a0153', -1, 30.6505, 1, 61301, 61301, 67, 3, nan], ['a0154', 'a0154', -1, 30.8595, 1, 61719, 61719, 64, 3, nan], ['a0155', 'a0155', -1, 35.736, 1, 71472, 71472, 88, 4, nan], ['a0156', 'a0156', 1, 20.759, 1, 41518, 41518, 50, 2, nan], ['a0157', 'a0157', 1, 35.9445, 1, 71889, 71889, 100, 4, nan], ['a0158', 'a0158', 1, 20.8285, 1, 41657, 41657, 29, 2, nan], ['a0159', 'a0159', 1, 35.736, 1, 71472, 71472, 0, 4, nan], ['a0160', 'a0160', 1, 35.5965, 1, 71193, 71193, 0, 4, nan], ['a0161', 'a0161', -1, 35.875, 1, 71750, 71750, 83, 4, nan], ['a0162', 'a0162', 1, 20.6195, 1, 41239, 41239, 52, 2, nan], ['a0163', 'a0163', 1, 30.6505, 1, 61301, 61301, 0, 3, nan], ['a0164', 'a0164', 1, 36.293, 1, 72586, 72586, 78, 4, nan], ['a0165', 'a0165', -1, 30.8595, 1, 61719, 61719, 39, 3, nan], ['a0166', 'a0166', 1, 35.736, 1, 71472, 71472, 85, 4, nan], ['a0167', 'a0167', 1, 35.5965, 1, 71193, 71193, 85, 4, nan], ['a0168', 'a0168', 1, 35.5965, 1, 71193, 71193, 83, 4, nan], ['a0169', 'a0169', 1, 35.5965, 1, 71193, 71193, 104, 4, nan], ['a0170', 'a0170', 1, 35.5965, 1, 71193, 71193, 93, 4, nan], ['a0171', 'a0171', -1, 35.5965, 1, 71193, 71193, 83, 4, nan], ['a0172', 'a0172', 1, 35.736, 1, 71472, 71472, 97, 4, nan], ['a0173', 'a0173', 1, 20.689, 1, 41378, 41378, 48, 2, nan], ['a0174', 'a0174', 1, 21.177, 1, 42354, 42354, 53, 2, nan], ['a0175', 'a0175', 1, 30.581, 1, 61162, 61162, 63, 3, nan], ['a0176', 'a0176', 1, 35.666, 1, 71332, 71332, 83, 4, nan], ['a0177', 'a0177', 1, 35.736, 1, 71472, 71472, 65, 4, nan], ['a0178', 'a0178', -1, 35.666, 1, 71332, 71332, 100, 4, nan], ['a0179', 'a0179', -1, 30.8595, 1, 61719, 61719, 0, 3, nan], ['a0180', 'a0180', 1, 36.0145, 1, 72029, 72029, 83, 4, nan], ['a0181', 'a0181', -1, 35.8055, 1, 71611, 71611, 77, 4, nan], ['a0182', 'a0182', 1, 35.8055, 1, 71611, 71611, 85, 4, nan], ['a0183', 'a0183', 1, 35.666, 1, 71332, 71332, 50, 4, nan], ['a0184', 'a0184', -1, 35.5965, 1, 71193, 71193, 89, 4, nan], ['a0185', 'a0185', -1, 35.666, 1, 71332, 71332, 0, 4, nan], ['a0186', 'a0186', 1, 35.666, 1, 71332, 71332, 102, 4, nan], ['a0187', 'a0187', 1, 35.736, 1, 71472, 71472, 58, 4, nan], ['a0188', 'a0188', 1, 36.293, 1, 72586, 72586, 98, 4, nan], ['a0189', 'a0189', -1, 36.0145, 1, 72029, 72029, 86, 4, nan], ['a0190', 'a0190', 1, 35.5965, 1, 71193, 71193, 86, 4, nan], ['a0191', 'a0191', 1, 36.2235, 1, 72447, 72447, 94, 4, nan], ['a0192', 'a0192', 1, 35.875, 1, 71750, 71750, 40, 4, nan], ['a0193', 'a0193', -1, 30.8595, 1, 61719, 61719, 67, 3, nan], ['a0194', 'a0194', 1, 20.689, 1, 41378, 41378, 27, 2, nan], ['a0195', 'a0195', -1, 30.8595, 1, 61719, 61719, 64, 3, nan], ['a0196', 'a0196', -1, 30.72, 1, 61440, 61440, 70, 3, nan], ['a0197', 'a0197', 1, 35.666, 1, 71332, 71332, 91, 4, nan], ['a0198', 'a0198', 1, 35.666, 1, 71332, 71332, 86, 4, nan], ['a0199', 'a0199', -1, 35.875, 1, 71750, 71750, 101, 4, nan], ['a0200', 'a0200', 1, 36.0145, 1, 72029, 72029, 74, 4, nan], ['a0201', 'a0201', 1, 35.5965, 1, 71193, 71193, 92, 4, nan], ['a0202', 'a0202', 1, 36.1535, 1, 72307, 72307, 93, 4, nan], ['a0203', 'a0203', 1, 35.875, 1, 71750, 71750, 52, 4, nan], ['a0204', 'a0204', -1, 31.0685, 1, 62137, 62137, 0, 3, nan], ['a0205', 'a0205', 1, 20.6195, 1, 41239, 41239, 47, 2, nan], ['a0206', 'a0206', 1, 35.5965, 1, 71193, 71193, 106, 4, nan], ['a0207', 'a0207', 1, 35.736, 1, 71472, 71472, 91, 4, nan], ['a0208', 'a0208', -1, 33.2305, 1, 66461, 66461, 75, 4, nan], ['a0209', 'a0209', 1, 35.5965, 1, 71193, 71193, 93, 4, nan], ['a0210', 'a0210', -1, 30.79, 1, 61580, 61580, 72, 3, nan], ['a0211', 'a0211', -1, 30.6505, 1, 61301, 61301, 54, 3, nan], ['a0212', 'a0212', -1, 35.666, 1, 71332, 71332, 79, 4, nan], ['a0213', 'a0213', 1, 36.084, 1, 72168, 72168, 66, 4, nan], ['a0214', 'a0214', 1, 35.5965, 1, 71193, 71193, 67, 4, nan], ['a0215', 'a0215', 1, 36.1535, 1, 72307, 72307, 82, 4, nan], ['a0216', 'a0216', 1, 35.5965, 1, 71193, 71193, 77, 4, nan], ['a0217', 'a0217', 1, 35.5965, 1, 71193, 71193, 62, 4, nan], ['a0218', 'a0218', 1, 35.666, 1, 71332, 71332, 69, 4, nan], ['a0219', 'a0219', 1, 35.5965, 1, 71193, 71193, 46, 4, nan], ['a0220', 'a0220', 1, 35.109, 1, 70218, 70218, 76, 4, nan], ['a0221', 'a0221', 1, 35.5965, 1, 71193, 71193, 69, 4, nan], ['a0222', 'a0222', 1, 30.8595, 1, 61719, 61719, 66, 3, nan], ['a0223', 'a0223', 1, 20.689, 1, 41378, 41378, 52, 2, nan], ['a0224', 'a0224', 1, 36.2235, 1, 72447, 72447, 66, 4, nan], ['a0225', 'a0225', 1, 35.5965, 1, 71193, 71193, 78, 4, nan], ['a0226', 'a0226', 1, 31.044, 1, 62088, 62088, 87, 3, nan], ['a0227', 'a0227', -1, 30.6505, 1, 61301, 61301, 101, 3, nan], ['a0228', 'a0228', 1, 27.1675, 1, 54335, 54335, 61, 3, nan], ['a0229', 'a0229', -1, 30.79, 1, 61580, 61580, 75, 3, nan], ['a0230', 'a0230', 1, 36.2235, 1, 72447, 72447, 87, 4, nan], ['a0231', 'a0231', -1, 30.8595, 1, 61719, 61719, 72, 3, nan], ['a0232', 'a0232', 1, 36.2235, 1, 72447, 72447, 87, 4, nan], ['a0233', 'a0233', 1, 35.666, 1, 71332, 71332, 82, 4, nan], ['a0234', 'a0234', 1, 35.666, 1, 71332, 71332, 98, 4, nan], ['a0235', 'a0235', -1, 30.581, 1, 61162, 61162, 81, 3, nan], ['a0236', 'a0236', 1, 36.0145, 1, 72029, 72029, 88, 4, nan], ['a0237', 'a0237', 1, 35.5965, 1, 71193, 71193, 70, 4, nan], ['a0238', 'a0238', -1, 9.265, 1, 18530, 18530, 27, 1, nan], ['a0239', 'a0239', 1, 20.898, 1, 41796, 41796, 58, 2, nan], ['a0240', 'a0240', 1, 35.666, 1, 71332, 71332, 84, 4, nan], ['a0241', 'a0241', -1, 35.5965, 1, 71193, 71193, 57, 4, nan], ['a0242', 'a0242', 1, 35.5965, 1, 71193, 71193, 81, 4, nan], ['a0243', 'a0243', -1, 36.2235, 1, 72447, 72447, 86, 4, nan], ['a0244', 'a0244', 1, 35.5965, 1, 71193, 71193, 55, 4, nan], ['a0245', 'a0245', 1, 35.736, 1, 71472, 71472, 107, 4, nan], ['a0246', 'a0246', 1, 35.666, 1, 71332, 71332, 94, 4, nan], ['a0247', 'a0247', 1, 35.666, 1, 71332, 71332, 94, 4, nan], ['a0248', 'a0248', 1, 30.5315, 1, 61063, 61063, 57, 3, nan], ['a0249', 'a0249', 1, 35.666, 1, 71332, 71332, 74, 4, nan], ['a0250', 'a0250', -1, 30.999, 1, 61998, 61998, 0, 3, nan], ['a0251', 'a0251', 1, 20.6195, 1, 41239, 41239, 65, 2, nan], ['a0252', 'a0252', 1, 21.0375, 1, 42075, 42075, 43, 2, nan], ['a0253', 'a0253', -1, 35.8055, 1, 71611, 71611, 101, 4, nan], ['a0254', 'a0254', 1, 31.3255, 1, 62651, 62651, 63, 3, nan], ['a0255', 'a0255', 1, 35.8055, 1, 71611, 71611, 68, 4, nan], ['a0256', 'a0256', 1, 20.8285, 1, 41657, 41657, 49, 2, nan], ['a0257', 'a0257', 1, 35.8055, 1, 71611, 71611, 53, 4, nan], ['a0258', 'a0258', 1, 35.736, 1, 71472, 71472, 51, 4, nan], ['a0259', 'a0259', 1, 35.9445, 1, 71889, 71889, 50, 4, nan], ['a0260', 'a0260', 1, 35.736, 1, 71472, 71472, 92, 4, nan], ['a0261', 'a0261', 1, 35.5965, 1, 71193, 71193, 0, 4, nan], ['a0262', 'a0262', 1, 35.666, 1, 71332, 71332, 81, 4, nan], ['a0263', 'a0263', 1, 30.79, 1, 61580, 61580, 58, 3, nan], ['a0264', 'a0264', -1, 30.79, 1, 61580, 61580, 73, 3, nan], ['a0265', 'a0265', 1, 20.968, 1, 41936, 41936, 62, 2, nan], ['a0266', 'a0266', -1, 35.5965, 1, 71193, 71193, 88, 4, nan], ['a0267', 'a0267', 1, 20.689, 1, 41378, 41378, 33, 2, nan], ['a0268', 'a0268', 1, 30.8595, 1, 61719, 61719, 60, 3, nan], ['a0269', 'a0269', 1, 35.5965, 1, 71193, 71193, 75, 4, nan], ['a0270', 'a0270', -1, 30.79, 1, 61580, 61580, 54, 3, nan], ['a0271', 'a0271', -1, 30.8595, 1, 61719, 61719, 68, 3, nan], ['a0272', 'a0272', 1, 35.875, 1, 71750, 71750, 54, 4, nan], ['a0273', 'a0273', 1, 35.8055, 1, 71611, 71611, 82, 4, nan], ['a0274', 'a0274', -1, 36.2235, 1, 72447, 72447, 0, 4, nan], ['a0275', 'a0275', 1, 30.8595, 1, 61719, 61719, 60, 3, nan], ['a0276', 'a0276', 1, 35.8055, 1, 71611, 71611, 89, 4, nan], ['a0277', 'a0277', 1, 31.138, 1, 62276, 62276, 36, 3, nan], ['a0278', 'a0278', 1, 35.5965, 1, 71193, 71193, 65, 4, nan], ['a0279', 'a0279', 1, 35.5965, 1, 71193, 71193, 0, 4, nan], ['a0280', 'a0280', 1, 35.736, 1, 71472, 71472, 58, 4, nan], ['a0281', 'a0281', 1, 28.574, 1, 57148, 57148, 64, 3, nan], ['a0282', 'a0282', 1, 35.736, 1, 71472, 71472, 102, 4, nan], ['a0283', 'a0283', -1, 30.79, 1, 61580, 61580, 38, 3, nan], ['a0284', 'a0284', 1, 35.666, 1, 71332, 71332, 48, 4, nan], ['a0285', 'a0285', -1, 35.666, 1, 71332, 71332, 97, 4, nan], ['a0286', 'a0286', 1, 35.666, 1, 71332, 71332, 42, 4, nan], ['a0287', 'a0287', -1, 30.8595, 1, 61719, 61719, 60, 3, nan], ['a0288', 'a0288', 1, 35.5965, 1, 71193, 71193, 54, 4, nan], ['a0289', 'a0289', -1, 30.8595, 1, 61719, 61719, 31, 3, nan], ['a0290', 'a0290', -1, 31.138, 1, 62276, 62276, 76, 3, nan], ['a0291', 'a0291', 1, 35.666, 1, 71332, 71332, 79, 4, nan], ['a0292', 'a0292', 1, 36.2235, 1, 72447, 72447, 65, 4, nan], ['a0293', 'a0293', -1, 30.72, 1, 61440, 61440, 55, 3, nan], ['a0294', 'a0294', -1, 35.875, 1, 71750, 71750, 79, 4, nan], ['a0295', 'a0295', 1, 35.8055, 1, 71611, 71611, 70, 4, nan], ['a0296', 'a0296', 1, 12.9775, 1, 25955, 25955, 35, 1, nan], ['a0297', 'a0297', 1, 35.666, 1, 71332, 71332, 76, 4, nan], ['a0298', 'a0298', -1, 30.999, 1, 61998, 61998, 66, 3, nan], ['a0299', 'a0299', -1, 30.8595, 1, 61719, 61719, 47, 3, nan], ['a0300', 'a0300', 1, 30.72, 1, 61440, 61440, 78, 3, nan], ['a0301', 'a0301', -1, 30.79, 1, 61580, 61580, 66, 3, nan], ['a0302', 'a0302', -1, 36.0145, 1, 72029, 72029, 81, 4, nan], ['a0303', 'a0303', 1, 35.8055, 1, 71611, 71611, 0, 4, nan], ['a0304', 'a0304', -1, 35.666, 1, 71332, 71332, 37, 4, nan], ['a0305', 'a0305', 1, 35.736, 1, 71472, 71472, 35, 4, nan], ['a0306', 'a0306', 1, 30.6505, 1, 61301, 61301, 74, 3, nan], ['a0307', 'a0307', 1, 34.165, 1, 68330, 68330, 86, 4, nan], ['a0308', 'a0308', 1, 32.942, 1, 65884, 65884, 83, 4, nan], ['a0309', 'a0309', -1, 30.8595, 1, 61719, 61719, 66, 3, nan], ['a0310', 'a0310', -1, 30.8595, 1, 61719, 61719, 51, 3, nan], ['a0311', 'a0311', -1, 30.8595, 1, 61719, 61719, 0, 3, nan], ['a0312', 'a0312', 1, 35.666, 1, 71332, 71332, 80, 4, nan], ['a0313', 'a0313', 1, 35.5965, 1, 71193, 71193, 74, 4, nan], ['a0314', 'a0314', 1, 20.6195, 1, 41239, 41239, 0, 2, nan], ['a0315', 'a0315', 1, 20.6195, 1, 41239, 41239, 0, 2, nan], ['a0316', 'a0316', 1, 20.6195, 1, 41239, 41239, 45, 2, nan], ['a0317', 'a0317', 1, 35.736, 1, 71472, 71472, 93, 4, nan], ['a0318', 'a0318', 1, 21.804, 1, 43608, 43608, 62, 2, nan], ['a0319', 'a0319', 1, 36.0145, 1, 72029, 72029, 101, 4, nan], ['a0320', 'a0320', 1, 35.8055, 1, 71611, 71611, 0, 4, nan], ['a0321', 'a0321', 1, 30.6505, 1, 61301, 61301, 71, 3, nan], ['a0322', 'a0322', 1, 30.8595, 1, 61719, 61719, 54, 3, nan], ['a0323', 'a0323', -1, 20.6195, 1, 41239, 41239, 48, 2, nan], ['a0324', 'a0324', 1, 36.502, 1, 73004, 73004, 96, 4, nan], ['a0325', 'a0325', -1, 36.1535, 1, 72307, 72307, 72, 4, nan], ['a0326', 'a0326', 1, 35.736, 1, 71472, 71472, 49, 4, nan], ['a0327', 'a0327', 1, 35.666, 1, 71332, 71332, 84, 4, nan], ['a0328', 'a0328', -1, 30.72, 1, 61440, 61440, 67, 3, nan], ['a0329', 'a0329', -1, 36.1535, 1, 72307, 72307, 102, 4, nan], ['a0330', 'a0330', -1, 35.666, 1, 71332, 71332, 99, 4, nan], ['a0331', 'a0331', 1, 28.561, 1, 57122, 57122, 40, 3, nan], ['a0332', 'a0332', -1, 36.084, 1, 72168, 72168, 102, 4, nan], ['a0333', 'a0333', 1, 35.736, 1, 71472, 71472, 56, 4, nan], ['a0334', 'a0334', -1, 35.666, 1, 71332, 71332, 85, 4, nan], ['a0335', 'a0335', 1, 36.293, 1, 72586, 72586, 74, 4, nan], ['a0336', 'a0336', 1, 12.7945, 1, 25589, 25589, 32, 1, nan], ['a0337', 'a0337', -1, 30.8595, 1, 61719, 61719, 0, 3, nan], ['a0338', 'a0338', 1, 35.875, 1, 71750, 71750, 67, 4, nan], ['a0339', 'a0339', 1, 35.666, 1, 71332, 71332, 36, 4, nan], ['a0340', 'a0340', -1, 35.5965, 1, 71193, 71193, 83, 4, nan], ['a0341', 'a0341', 1, 33.3585, 1, 66717, 66717, 65, 4, nan], ['a0342', 'a0342', -1, 31.138, 1, 62276, 62276, 70, 3, nan], ['a0343', 'a0343', 1, 36.293, 1, 72586, 72586, 64, 4, nan], ['a0344', 'a0344', 1, 35.5965, 1, 71193, 71193, 54, 4, nan], ['a0345', 'a0345', 1, 35.5965, 1, 71193, 71193, 61, 4, nan], ['a0346', 'a0346', 1, 35.5965, 1, 71193, 71193, 49, 4, nan], ['a0347', 'a0347', 1, 20.689, 1, 41378, 41378, 0, 2, nan], ['a0348', 'a0348', 1, 36.1535, 1, 72307, 72307, 90, 4, nan], ['a0349', 'a0349', 1, 35.5965, 1, 71193, 71193, 90, 4, nan], ['a0350', 'a0350', 1, 32.0785, 1, 64157, 64157, 85, 4, nan], ['a0351', 'a0351', -1, 35.666, 1, 71332, 71332, 111, 4, nan], ['a0352', 'a0352', -1, 36.293, 1, 72586, 72586, 86, 4, nan], ['a0353', 'a0353', -1, 30.6505, 1, 61301, 61301, 64, 3, nan], ['a0354', 'a0354', 1, 35.666, 1, 71332, 71332, 74, 4, nan], ['a0355', 'a0355', -1, 36.2235, 1, 72447, 72447, 80, 4, nan], ['a0356', 'a0356', 1, 35.666, 1, 71332, 71332, 53, 4, nan], ['a0357', 'a0357', 1, 30.8595, 1, 61719, 61719, 79, 3, nan], ['a0358', 'a0358', 1, 20.6195, 1, 41239, 41239, 31, 2, nan], ['a0359', 'a0359', -1, 30.6505, 1, 61301, 61301, 63, 3, nan], ['a0360', 'a0360', 1, 20.6195, 1, 41239, 41239, 35, 2, nan], ['a0361', 'a0361', -1, 30.999, 1, 61998, 61998, 0, 3, nan], ['a0362', 'a0362', 1, 35.875, 1, 71750, 71750, 57, 4, nan], ['a0363', 'a0363', 1, 35.5965, 1, 71193, 71193, 56, 4, nan], ['a0364', 'a0364', 1, 35.9445, 1, 71889, 71889, 95, 4, nan], ['a0365', 'a0365', 1, 30.6505, 1, 61301, 61301, 50, 3, nan], ['a0366', 'a0366', 1, 35.666, 1, 71332, 71332, 72, 4, nan], ['a0367', 'a0367', 1, 35.5965, 1, 71193, 71193, 73, 4, nan], ['a0368', 'a0368', 1, 30.72, 1, 61440, 61440, 64, 3, nan], ['a0369', 'a0369', 1, 20.8285, 1, 41657, 41657, 56, 2, nan], ['a0370', 'a0370', 1, 35.666, 1, 71332, 71332, 101, 4, nan], ['a0371', 'a0371', 1, 20.968, 1, 41936, 41936, 50, 2, nan], ['a0372', 'a0372', 1, 35.666, 1, 71332, 71332, 86, 4, nan], ['a0373', 'a0373', 1, 30.6505, 1, 61301, 61301, 70, 3, nan], ['a0374', 'a0374', 1, 35.8055, 1, 71611, 71611, 100, 4, nan], ['a0375', 'a0375', 1, 30.8595, 1, 61719, 61719, 48, 3, nan], ['a0376', 'a0376', 1, 35.8055, 1, 71611, 71611, 95, 4, nan], ['a0377', 'a0377', 1, 36.293, 1, 72586, 72586, 87, 4, nan], ['a0378', 'a0378', 1, 35.5965, 1, 71193, 71193, 81, 4, nan], ['a0379', 'a0379', 1, 35.5965, 1, 71193, 71193, 66, 4, nan], ['a0380', 'a0380', 1, 35.666, 1, 71332, 71332, 40, 4, nan], ['a0381', 'a0381', 1, 35.736, 1, 71472, 71472, 75, 4, nan], ['a0382', 'a0382', 1, 20.8285, 1, 41657, 41657, 49, 2, nan], ['a0383', 'a0383', 1, 20.8285, 1, 41657, 41657, 42, 2, nan], ['a0384', 'a0384', 1, 30.72, 1, 61440, 61440, 34, 3, nan], ['a0385', 'a0385', -1, 20.968, 1, 41936, 41936, 33, 2, nan], ['a0386', 'a0386', -1, 36.0145, 1, 72029, 72029, 103, 4, nan], ['a0387', 'a0387', 1, 35.666, 1, 71332, 71332, 61, 4, nan], ['a0388', 'a0388', 1, 35.5965, 1, 71193, 71193, 105, 4, nan], ['a0389', 'a0389', 1, 36.2235, 1, 72447, 72447, 69, 4, nan], ['a0390', 'a0390', 1, 35.736, 1, 71472, 71472, 93, 4, nan], ['a0391', 'a0391', 1, 35.736, 1, 71472, 71472, 64, 4, nan], ['a0392', 'a0392', 1, 35.666, 1, 71332, 71332, 96, 4, nan], ['a0393', 'a0393', -1, 35.5965, 1, 71193, 71193, 87, 4, nan], ['a0394', 'a0394', 1, 24.6915, 1, 49383, 49383, 44, 3, nan], ['a0395', 'a0395', 1, 14.7855, 1, 29571, 29571, 0, 1, nan], ['a0396', 'a0396', 1, 35.8055, 1, 71611, 71611, 71, 4, nan], ['a0397', 'a0397', 1, 30.6505, 1, 61301, 61301, 69, 3, nan], ['a0398', 'a0398', 1, 35.9445, 1, 71889, 71889, 101, 4, nan], ['a0399', 'a0399', 1, 36.0145, 1, 72029, 72029, 53, 4, nan], ['a0400', 'a0400', 1, 16.325, 1, 32650, 32650, 0, 2, nan], ['a0401', 'a0401', -1, 36.2235, 1, 72447, 72447, 74, 4, nan], ['a0402', 'a0402', 1, 36.293, 1, 72586, 72586, 54, 4, nan], ['a0403', 'a0403', 1, 36.293, 1, 72586, 72586, 102, 4, nan], ['a0404', 'a0404', 1, 30.79, 1, 61580, 61580, 37, 3, nan], ['a0405', 'a0405', -1, 12.5305, 1, 25061, 25061, 19, 1, nan], ['a0406', 'a0406', -1, 35.5965, 1, 71193, 71193, 71, 4, nan], ['a0407', 'a0407', -1, 35.666, 1, 71332, 71332, 97, 4, nan], ['a0408', 'a0408', -1, 30.581, 1, 61162, 61162, 58, 3, nan], ['a0409', 'a0409', -1, 30.72, 1, 61440, 61440, 29, 3, nan]]
+[13908] *** Processing Signal 35 (36 / 409) [a0036] ***
+[1620] *** Processing Signal 14 (15 / 409) [a0015] ***
+[3452] *** Processing Signal 7 (8 / 409) [a0008] ***
+[2588] *** Processing Signal 0 (1 / 409) [a0001] ***
+[3900] *** Processing Signal 28 (29 / 409) [a0029] ***
+[12160] *** Processing Signal 21 (22 / 409) [a0022] ***
+[12160] * Processing Segment 0 (1 / 4) *
+[13908] * Processing Segment 0 (1 / 4) *
+[2588] * Processing Segment 0 (1 / 4) *
+[1620] * Processing Segment 0 (1 / 4) *
+[3452] * Processing Segment 0 (1 / 4) *
+[3900] * Processing Segment 0 (1 / 3) *
+[2588] * Processing Segment 1 (2 / 4) *
+[3452] * Processing Segment 1 (2 / 4) *
+[12160] * Processing Segment 1 (2 / 4) *
+[1620] * Processing Segment 1 (2 / 4) *
+[13908] * Processing Segment 1 (2 / 4) *
+[3900] * Processing Segment 1 (2 / 3) *
+[15112] *** Processing Signal 42 (43 / 409) [a0043] ***
+[11372] *** Processing Signal 49 (50 / 409) [a0050] ***
+[16284] *** Processing Signal 56 (57 / 409) [a0057] ***
+[7224] *** Processing Signal 63 (64 / 409) [a0064] ***
+[11276] *** Processing Signal 77 (78 / 409) [a0078] ***
+[10160] *** Processing Signal 70 (71 / 409) [a0071] ***
+[9144] *** Processing Signal 91 (92 / 409) [a0092] ***
+[17888] *** Processing Signal 84 (85 / 409) [a0085] ***
+[2788] *** Processing Signal 98 (99 / 409) [a0099] ***
+[1620] * Processing Segment 2 (3 / 4) *
+[2588] * Processing Segment 2 (3 / 4) *
+[12160] * Processing Segment 2 (3 / 4) *
+[3900] * Processing Segment 2 (3 / 3) *
+[13908] * Processing Segment 2 (3 / 4) *
+[3452] * Processing Segment 2 (3 / 4) *
+[2588] * Processing Segment 3 (4 / 4) *
+[17888] * Processing Segment 0 (1 / 3) *
+[11372] * Processing Segment 0 (1 / 3) *
+[10160] * Processing Segment 0 (1 / 3) *
+[15112] * Processing Segment 0 (1 / 4) *
+[16284] * Processing Segment 0 (1 / 4) *
+[9144] * Processing Segment 0 (1 / 4) *
+[7224] * Processing Segment 0 (1 / 4) *
+[11276] * Processing Segment 0 (1 / 4) *
+[2788] * Processing Segment 0 (1 / 4) *
+[1620] * Processing Segment 3 (4 / 4) *
+[3900] * Processing Segment 0 (1 / 3) *
+[12160] * Processing Segment 3 (4 / 4) *
+[3452] * Processing Segment 3 (4 / 4) *
+[13908] * Processing Segment 3 (4 / 4) *
+[2588] * Processing Segment 0 (1 / 4) *
+[17888] * Processing Segment 1 (2 / 3) *
+[11372] * Processing Segment 1 (2 / 3) *
+[10160] * Processing Segment 1 (2 / 3) *
+[15112] * Processing Segment 1 (2 / 4) *
+[2788] * Processing Segment 1 (2 / 4) *
+[9144] * Processing Segment 1 (2 / 4) *
+[16284] * Processing Segment 1 (2 / 4) *
+[7224] * Processing Segment 1 (2 / 4) *
+[11276] * Processing Segment 1 (2 / 4) *
+[1620] * Processing Segment 0 (1 / 4) *
+[3900] * Processing Segment 1 (2 / 3) *
+[12160] * Processing Segment 0 (1 / 4) *
+[2588] * Processing Segment 1 (2 / 4) *
+[13908] * Processing Segment 0 (1 / 4) *
+[3452] * Processing Segment 0 (1 / 4) *
+[17888] * Processing Segment 2 (3 / 3) *
+[11372] * Processing Segment 2 (3 / 3) *
+[10160] * Processing Segment 2 (3 / 3) *
+[2788] * Processing Segment 2 (3 / 4) *
+[16284] * Processing Segment 2 (3 / 4) *
+[11276] * Processing Segment 2 (3 / 4) *
+[9144] * Processing Segment 2 (3 / 4) *
+[15112] * Processing Segment 2 (3 / 4) *
