@@ -198,9 +198,10 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
   pcg_segments = []
   frames = []
   write_to_logger_from_worker(f"*** Processing Signal {index} ({index+1} / {reflen}) [{data_list[0]}] ***", q=q)
-  filename = data_list[1]
-  og_filename = [2]
-  label = data_list[3]
+  filename = data_list[0]
+  og_filename = [1]
+  label = data_list[2]
+  print(data_list)
   create_new_folder(outputpath_+f'data_ecg_{config.global_opts.ecg_type}/{filename}')
   create_new_folder(outputpath_+f'data_pcg_{config.global_opts.pcg_type}/{filename}')
   frames = []
@@ -671,23 +672,23 @@ if __name__ == "__main__":
   
   #   - 'create_objects=False' for better performance; uses 'np.load(filepath_to_saved_spectogram_or_cwt)' to get processed ECG/PCG data
   # Normal Workflow (as in paper): 
-  #data_p, ratio_data_p = get_dataset(dataset="physionet", 
-  #                                  inputpath_data=config.input_physionet_data_folderpath_, 
-  #                                  inputpath_target=config.input_physionet_target_folderpath_, 
-  #                                  outputpath_folder=config.outputpath,
-  #                                  pool=pool, q=manager_q,
-  #                                  
-  #                                  create_objects=False,
-  #                                  get_balance_diff=True,
-  #                                  skipDataCSVAndFiles=False,
-  #                                 skipECGSpectrogram=False,
-  #                                 skipPCGSpectrogram=False,
-  #                                 saveSpecData=True, 
-  #                                  saveSpecImage=False,
-  #                                 saveParent=False,
-  #                                  save_qrs_hrs_plot=False,
-  #                                  skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
-  #)
+  data_p, ratio_data_p = get_dataset(dataset="physionet", 
+                                    inputpath_data=config.input_physionet_data_folderpath_, 
+                                    inputpath_target=config.input_physionet_target_folderpath_, 
+                                    outputpath_folder=config.outputpath,
+                                    pool=pool, q=manager_q,
+                                    
+                                    create_objects=False,
+                                    get_balance_diff=True,
+                                    skipDataCSVAndFiles=True,
+                                  skipECGSpectrogram=False,
+                                   skipPCGSpectrogram=False,
+                                   saveSpecData=True, 
+                                    saveSpecImage=False,
+                                   saveParent=False,
+                                    save_qrs_hrs_plot=False,
+                                    skipExisting=True, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+  )
   data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
                                     inputpath_data=config.input_ephnogram_data_folderpath_, 
                                     inputpath_target=config.input_ephnogram_target_folderpath_, 
@@ -696,14 +697,14 @@ if __name__ == "__main__":
                                     
                                     create_objects=False,
                                      get_balance_diff=True,
-                                     skipDataCSVAndFiles=False,
+                                     skipDataCSVAndFiles=True,
                                      skipECGSpectrogram=False,
                                      skipPCGSpectrogram=False,
                                     saveSpecData=True, 
                                     saveSpecImage=False,
                                     saveParent=False,
                                     save_qrs_hrs_plot=False,
-                                     skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+                                     skipExisting=True, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
  )
   write_to_logger("*** Cleaning and Postprocessing Data [3/3] ***", pool, manager_q)
   num_data_p, num_data_e = get_total_num_segments(config.outputpath)

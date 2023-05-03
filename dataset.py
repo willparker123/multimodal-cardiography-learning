@@ -25,8 +25,8 @@ class ECGPCGDataset(Dataset):
                  file_type_ecg="npz",
                  file_type_pcg="npz",  
                  clip_length=global_opts.segment_length, 
-                 data_type_ecg="spec",
-                 data_type_pcg="spec",
+                 data_type_ecg="signal",
+                 data_type_pcg="signal",
                  ecg_sample_rate=global_opts.sample_rate_ecg, 
                  pcg_sample_rate=global_opts.sample_rate_pcg,
                  
@@ -41,7 +41,8 @@ class ECGPCGDataset(Dataset):
                  freqs_pcg=[],
                  times_ecg=[],
                  times_pcg=[],
-                 verifyComplete=True
+                 verifyComplete=True,
+                 data_and_label_only=True
                  ):
         if data_type_ecg not in config.data_types_ecg:
             raise ValueError(f"Error: 'data_type_ecg' must be one of {config.data_types_ecg}") 
@@ -81,11 +82,11 @@ class ECGPCGDataset(Dataset):
         self.times_ecg = times_ecg
         self.freqs_pcg = freqs_pcg
         self.times_pcg = times_pcg
+        self.data_and_label_only = data_and_label_only
         print(f"** ECGPCG DATASET HEAD: {self.df_data.head()} **")
         
         # Validate that all directories and files exist
         print(f"* Validating directories and files for: \n{paths_ecgs}\n{paths_pcgs}\n{paths_csv}\n\n")
-        print(self.dfs[0])
         incomplete_x = []
         for i in range(self.dataset_count):
             ecg_paths_samples = []
@@ -144,27 +145,27 @@ class ECGPCGDataset(Dataset):
                         if data_type_ecg is not "video" and not no_pcg_paths:
                             if not os.path.exists(f"{paths_pcgs[i]}{dir}/{dir_inner}/"):
                                 if not verifyComplete:
-                                    if f"{paths_pcgs[i]}{dir}" not in incomplete_x:
-                                        incomplete_x.append(f"{paths_pcgs[i]}{dir}")
+                                    if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
+                                        incomplete_x.append(f"{paths_ecgs[i]}{dir}")
                                     continue
                             files_pcg = next(os.walk(paths_pcgs[i]+f'{dir}/{dir_inner}/'))[2]
                             if len(files_pcg) == 0:
                                 if verifyComplete:
                                     raise ValueError(f"Error: no files found in directory '{paths_pcgs[i]}{dir}/{dir_inner}/'.")
                                 else:
-                                    if f"{paths_pcgs[i]}{dir}" not in incomplete_x:
-                                        incomplete_x.append(f"{paths_pcgs[i]}{dir}")
+                                    if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
+                                        incomplete_x.append(f"{paths_ecgs[i]}{dir}")
                             valid_files_pcg = [f for f in files_pcg if f.endswith(f".{self.file_type_pcg}") and ('spec' in f if data_type_ecg=='spec' else True)]
 
                             if len(valid_files_pcg) == 0:
                                 if verifyComplete:
                                     raise ValueError(f"Error: no valid files found with extension '.{self.file_type_pcg}'")
                                 else:
-                                    if f"{paths_pcgs[i]}{dir}" not in incomplete_x:
-                                        incomplete_x.append(f"{paths_pcgs[i]}{dir}")
+                                    if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
+                                        incomplete_x.append(f"{paths_ecgs[i]}{dir}")
                             else:
                                 filepath_pcg = f'{paths_pcgs[i]}{dir}/{dir_inner}/{valid_files_pcg[0]}'
-                                if f"{paths_pcgs[i]}{dir}" not in incomplete_x:
+                                if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
                                     pcg_paths_sample_segments.append(filepath_pcg) #self.pcg_paths[sample_index][segment_index]
                         
                         # filepath_ecg is array if self.file_type_ecg == 'wfdb' otherwise single value
@@ -292,15 +293,16 @@ class ECGPCGDataset(Dataset):
         print(f"ECGPCG DATASET LABELS HEAD: {self.labels.head()}")
         print(f"ECGPCG DATASET LENGTH (EXISTING): {self.data_len}, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): {self.data_len_target}")
         #'ECGPCG DATASET LENGTH (EXISTING): 1820, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): 2803
+    
     def get_child_and_parent_index(self, index):
         c = 0
         for i in range(len(self.df_data.index)):
-            c += self.df_data.iloc[[i]]['seg_num']
+            c += int(self.df_data.iloc[[i]]['seg_num'])
             if c >= index:
                 if c == index: 
                     return 0, i
                 else:
-                    d = c - self.df_data.iloc[[i]]['seg_num']
+                    d = c - int(self.df_data.iloc[[i]]['seg_num'])
                     return index - d - 1, i
                 
     def __getitem__(self, index, print_df=True, print_short=False, parent_index=None, child_index=None):
@@ -313,6 +315,7 @@ class ECGPCGDataset(Dataset):
             index_of_parent = parent_index
         else:
             filepath_ecg = list(np.concatenate(self.ecg_paths).flat)[index]
+            print(f"index: {index} list(np.concatenate(self.pcg_paths).flat): {len(list(np.concatenate(self.pcg_paths).flat))} {len(list(np.concatenate(self.ecg_paths).flat))}")
             filepath_pcg = list(np.concatenate(self.pcg_paths).flat)[index]
             index_of_segment, index_of_parent = self.get_child_and_parent_index(index)
         if self.no_pcg_paths:
@@ -339,8 +342,8 @@ class ECGPCGDataset(Dataset):
                 pcg_data = pcg['spec']
                 freqs_ecg = ecg['freqs']
                 times_ecg = ecg['times']
-                freqs_ecg = pcg['freqs']
-                times_ecg = pcg['times']
+                freqs_pcg = pcg['freqs']
+                times_pcg = pcg['times']
             else:
                 if len(self.qrs) == 0:
                     qrs = None
@@ -376,26 +379,30 @@ class ECGPCGDataset(Dataset):
             ecg_data = ecg
             pcg_data = pcg
             
-        dict_ = self.df_all.iloc[index_of_parent].to_dict()
-        out_dict = dict_.copy()
-        data_dict = {
-            'ecg_path': filepath_ecg,
-            'pcg_path': filepath_pcg,
-            'ecg': ecg_data,
-            'pcg': pcg_data,
-            'qrs': qrs,
-            'hrs': hrs,
-            'freqs_ecg': freqs_ecg,
-            'times_ecg': times_ecg,
-            'freqs_pcg': freqs_pcg,
-            'times_pcg': times_pcg,
-            'index': index,
-            'parent_index': index_of_parent,
-            'seg_index': index_of_segment
-        }
+        dict_ = self.df_data.iloc[index_of_parent].to_dict()
+        
+        if self.data_and_label_only:
+            out_dict = np.squeeze(ecg), int(self.labels.iloc[[index]]['label'])
+        else:
+            out_dict = dict_.copy()
+            data_dict = {
+                'ecg_path': filepath_ecg,
+                'pcg_path': filepath_pcg,
+                'ecg': ecg_data,
+                'pcg': pcg_data,
+                'qrs': qrs,
+                'hrs': hrs,
+                'freqs_ecg': freqs_ecg,
+                'times_ecg': times_ecg,
+                'freqs_pcg': freqs_pcg,
+                'times_pcg': times_pcg,
+                'index': index,
+                'parent_index': index_of_parent,
+                'seg_index': index_of_segment
+            }
         out_dict.update(data_dict)
         if print_df:
-            if print_short:
+            if print_short and not self.data_and_label_only:
                 print(data_dict)
             else:
                 print(out_dict)
@@ -409,7 +416,7 @@ class ECGPCGDataset(Dataset):
             raise ValueError(f"Error: sample with filename '{filename}' not in Dataset")
         return self.df_data.loc[self.df_data['filename']==filename]['seg_num'].values[0]
     
-    def __len__(self):
+    def __len__(self) -> int:
         return self.data_len
     
     def save_item(self, ind, outpath=outputpath+'physionet/', type_="ecg_log"):

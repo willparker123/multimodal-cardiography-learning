@@ -118,7 +118,7 @@ def load_checkpoint(chkpt, model):
     print(f"Checkpoint {chkpt} loaded!")
     return c
     
-def get_summary_writer_log_dir() -> str:
+def get_summary_writer_log_dir(modelname="transformer") -> str:
     """Get a unique directory that hasn't been logged to before for use with a TB
     SummaryWriter.
 
@@ -128,19 +128,20 @@ def get_summary_writer_log_dir() -> str:
         untangle in TB).
     """
     log_dir_prefix = (
-      f"modelrun_"+
-      f"bs={opts.batch_size}_"+
-      f"lr={opts.learning_rate}_"+
-      f"momentum={opts.sgd_momentum}_" +
-      (f"saturation={opts.data_aug_saturation}_" if opts.data_aug_saturation != 0 else "")
+      f"modelrun_{modelname}"+
+      f"bs={config.global_opts.batch_size}_"+
+      f"lr={config.global_opts.learning_rate}_"+
+      f"momentum={config.global_opts.sgd_momentum}"
       #("hflip_" if opts.data_aug_hflip else "") +
     )
-    i = 0
-    while i < 1000:
-        tb_log_dir = opts.log_dir / (log_dir_prefix + str(i))
-        if not tb_log_dir.exists():
-            return str(tb_log_dir)
-        i += 1
+    tb_log_dir = config.global_opts.log_path +"/"+ (log_dir_prefix)
+    create_new_folder(tb_log_dir)
+    #i = 0
+    #while i < 1000:
+    #    tb_log_dir = config.global_opts.log_path / (log_dir_prefix + str(i))
+    #    if not tb_log_dir.exists():
+    #        return str(tb_log_dir)
+    #    i += 1
     return str(tb_log_dir)
 
 # Borrowed from avobjects util.load_model_params

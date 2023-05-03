@@ -13,13 +13,10 @@ from torch.utils.data import DataLoader
 from torch.optim.optimizer import Optimizer
 from torch.utils.data import DataLoader
 from torch.utils.tensorboard import SummaryWriter
-from config import load_config
+import config
 from typing import Any, Union, NamedTuple
 import time
 
-
-
-opts = load_config()
 
 class ECGPCGVisTrainer():
     def __init__(self, 
