@@ -65,6 +65,7 @@ class PCG():
             pass
         if signal.ndim != 1:
             signal = np.squeeze(signal)
+        print(f"SIGSIG: {signal}")
         self.signal_preproc = signal
         if apply_filter:
             #[Deep Learning Based Classification of Unsegmented Phonocardiogram Spectrograms Leveraging Transfer Learning]

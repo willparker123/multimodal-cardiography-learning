@@ -62,7 +62,6 @@ def data_sample(outputfolderpath="samples-TEST", dataset="physionet", filename="
                                   signal=pcg.signal, window=window_pcg, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
                                   outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=0, wavelet_function=wavelet_pcg, colormap=colormap)
     for index_e, seg in enumerate(ecg_segments):
-        print(f"INDEX {index_e}: seg.signal: {seg.signal}")
         seg_spectrogram = Spectrogram(filename, savename='ecg_'+seg.savename+f'_spec_{wavelet_ecg}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
                                             signal=seg.signal, window=window_ecg, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                             outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=seg.start_time, wavelet_function=wavelet_ecg, colormap=colormap)
