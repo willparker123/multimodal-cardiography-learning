@@ -173,7 +173,7 @@ class ECGPCGDataset(Dataset):
                                         incomplete_x.append(f"{paths_pcgs[i]}{dir}")
                             else:
                                 filepath_pcg = f'{paths_pcgs[i]}{dir}/{dir_inner}/{valid_files_pcg[0]}'
-                                if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
+                                if f"{paths_pcgs[i]}{dir}" not in incomplete_x:
                                     pcg_paths_sample_segments.append(filepath_pcg) #self.pcg_paths[sample_index][segment_index]
                         
                         # filepath_ecg is array if self.file_type_ecg == 'wfdb' otherwise single value
@@ -193,7 +193,7 @@ class ECGPCGDataset(Dataset):
                         # Append np array to list of ECGs
                         if filepath_ecg is not None and f"{paths_ecgs[i]}{dir}" not in incomplete_x:
                             ecg_paths_sample_segments.append(filepath_ecg) #self.ecg_paths[sample_index][segment_index]
-                        
+                        print(f"filepath_ecg: {filepath_ecg} filepath_pcg: {filepath_pcg} not in incomplete_x: {paths_ecgs[i]+dir not in incomplete_x} not in incomplete_x: {paths_pcgs[i]+dir not in incomplete_x}")
                         #self.ecgs.append(read_file(filepath, self.file_type_ecg))
                         #self.pcgs.append(read_file(filepath, self.file_type_pcg))
                     ecg_paths_samples.append(ecg_paths_sample_segments)
@@ -207,7 +207,6 @@ class ECGPCGDataset(Dataset):
                     ecg_paths_sample_segments = []
                     pcg_paths_sample_segments = []
                     seg_num = int(len(self.dfs[i].iloc[[ind]]['seg_num']))
-                    print(f"int(len(self.dfs[i].iloc[[ind]]['seg_num'])): {int(len(self.dfs[i].iloc[[ind]]['seg_num']))}")
                     valid_files_ecg = [f for f in all_files_ecg if self.dfs[i].iloc[[ind]]['filename'] in f and (f.endswith(f".{self.file_type_ecg}") if self.file_type_ecg is not 'wfdb' else (f.endswith(f".hea") or f.endswith(f".dat"))) \
                             and ('spec' in f if data_type_ecg=='spec' else True)]
                     fileswithfilenameandseg_ecg = [y for y in valid_files_ecg if '_seg_' in y]
@@ -277,26 +276,32 @@ class ECGPCGDataset(Dataset):
                     
                     #self.ecgs.append(read_file(filepath, self.file_type_ecg))
                     #self.pcgs.append(read_file(filepath, self.file_type_pcg))
-                    if f"{ind}" not in incomplete_x:
-                        ecg_paths_samples.append(ecg_paths_sample_segments)
-                        if data_type_ecg is not "video" and not no_pcg_paths:
-                            pcg_paths_samples.append(pcg_paths_sample_segments)
-            self.ecg_paths = ecg_paths_samples
+                    ecg_paths_samples.append(ecg_paths_sample_segments)
+                    if data_type_ecg is not "video" and not no_pcg_paths:
+                        pcg_paths_samples.append(pcg_paths_sample_segments)
+            self.ecg_paths.extend(ecg_paths_samples)
             if data_type_ecg is not "video" and not no_pcg_paths:
-                self.pcg_paths = pcg_paths_samples
+                self.pcg_paths.extend(pcg_paths_samples)
             self.incomplete_x = incomplete_x
         print(f"* Successfully validated all ECG and PCG directories and files.")
         if not verifyComplete:
             print(f"Incomplete samples (missing ECG/PCG/both, missing files, missing segments): {self.incomplete_x}")
         
         self.labels = self.df_data[['filename', 'label']].copy()
-        self.data_len = len(self.ecg_paths)
+        self.data_len = len(sum(self.ecg_paths, []))
         self.data_len_target = get_total_filecount(self.df_data, False)
+        print(f"0: {self.ecg_paths[0]}")
+        print(f"1: {self.ecg_paths[1]}")
+        print(f"2: {self.ecg_paths[2]}")
+        print(f"5: {self.ecg_paths[5]}")
+        print(f"11: {self.ecg_paths[11]}")
+        print(f"12: {self.ecg_paths[12]}")
+        print(f"self.ecg_paths: {self.data_len} len(sum(self.ecg_paths, [])): {self.data_len_target}")
         self.ecg_sample_rate = ecg_sample_rate
         self.pcg_sample_rate = pcg_sample_rate
         print(f"ECGPCG DATASET LABELS HEAD: {self.labels.head()}")
         print(f"ECGPCG DATASET LENGTH (EXISTING): {self.data_len}, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): {self.data_len_target}")
-        
+        #'ECGPCG DATASET LENGTH (EXISTING): 1820, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): 2803
     def get_child_and_parent_index(self, index):
         c = 0
         for i in range(len(self.df_data.index)):

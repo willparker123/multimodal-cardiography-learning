@@ -54,8 +54,6 @@ def data_sample(outputfolderpath="samples-TEST", dataset="physionet", filename="
     pcg_segments = pcg.get_segments(config.global_opts.segment_length, normalise=pcg.normalise)
     create_new_folder(outputfolderpath)
     outputpath_ = f"{outputfolderpath}/"
-    print(f"BB: {config.global_opts.ecg_filter_upper_bound} {config.global_opts.ecg_filter_lower_bound}")
-    print(f"AA: {config.global_opts.pcg_filter_upper_bound} {config.global_opts.pcg_filter_lower_bound}")
     spectrogram = Spectrogram(ecg.filename, savename='ecg_'+ecg.filename+f'_spec_{wavelet_ecg}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
                                                     signal=ecg.signal, window=window_ecg, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                                     outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', 
@@ -72,6 +70,7 @@ def data_sample(outputfolderpath="samples-TEST", dataset="physionet", filename="
         pcg_seg_spectrogram = Spectrogram(filename, savename='pcg_'+pcg_seg.savename+f'_spec_{wavelet_ecg}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, transform_type=transform_type_pcg,
                                 signal=pcg_seg.signal, window=window_pcg, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
                                 outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=pcg_seg.start_time, wavelet_function=wavelet_pcg, colormap=colormap)
+    return data
 
 def main():
     np.random.seed(1)
@@ -164,6 +163,8 @@ def main():
 if __name__ == '__main__':
     print(f'**** main started - creating sample data, visualisations and launching model ****\n')
     
+    data_sample(filename="a0314")
+    data_sample(filename="a0315")
     torch.backends.cudnn.benchmark = config.global_opts.enable_gpu
     # Load options
     global_opts = config.global_opts
@@ -172,7 +173,7 @@ if __name__ == '__main__':
     main()
   
     #create_new_folder("samples-TEST")
-    data_sample()
+    sys.exit(0)
     data_sample(wavelet_ecg="ricker", wavelet_pcg="morlet", colormap="magma")
     data_sample(wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma")
     data_sample(outputfolderpath="samples-TEST/stft", transform_type_ecg="stft_log", transform_type_pcg="stft_log", colormap="magma")

@@ -39,7 +39,7 @@ class PCG():
         if torch.is_tensor(signal):
             signal = signal.numpy()
         if not signal.ndim == 1:
-            np.squeeze(signal, axis=0)
+            signal = np.squeeze(signal, axis=0)
         if not self.audio_sample_rate == sample_rate and resample:
             print(f"Warning: audio_sample_rate frequency ({self.audio_sample_rate}) does not match sample_rate ({sample_rate}) - resampling to sample_rate")
             if not torch.is_tensor(signal):

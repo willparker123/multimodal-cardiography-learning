@@ -682,13 +682,13 @@ if __name__ == "__main__":
                                     
                                     create_objects=False,
                                     get_balance_diff=True,
-                                    skipDataCSVAndFiles=True,
+                                    skipDataCSVAndFiles=False,
                                    skipECGSpectrogram=False,
                                    skipPCGSpectrogram=False,
                                    saveSpecData=True, 
                                     saveSpecImage=False,
                                    saveParent=False,
-                                    skipExisting=True, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+                                    skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
   )
   data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
                                     inputpath_data=config.input_ephnogram_data_folderpath_, 
@@ -698,13 +698,13 @@ if __name__ == "__main__":
                                     
                                     create_objects=False,
                                      get_balance_diff=True,
-                                     skipDataCSVAndFiles=True,
+                                     skipDataCSVAndFiles=False,
                                      skipECGSpectrogram=False,
                                      skipPCGSpectrogram=False,
                                     saveSpecData=True, 
                                     saveSpecImage=False,
                                     saveParent=False,
-                                     skipExisting=True, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+                                     skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
  )
   write_to_logger("*** Cleaning and Postprocessing Data [3/3] ***", pool, manager_q)
   num_data_p, num_data_e = get_total_num_segments(config.outputpath)
