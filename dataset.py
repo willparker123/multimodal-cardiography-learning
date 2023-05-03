@@ -85,7 +85,7 @@ class ECGPCGDataset(Dataset):
         
         # Validate that all directories and files exist
         print(f"* Validating directories and files for: \n{paths_ecgs}\n{paths_pcgs}\n{paths_csv}\n\n")
-        
+        print(self.dfs[0])
         incomplete_x = []
         for i in range(self.dataset_count):
             ecg_paths_samples = []
