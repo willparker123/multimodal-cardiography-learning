@@ -95,6 +95,11 @@ class ECGPCGVisNet(nn.Module):
         if hasattr(layer, "weight"):
             nn.init.kaiming_normal_(layer.weight)
 
+
+class ResNet2D(nn.Module):
+    def __init__(self, height: int, width: int, channels: int, class_count: int):
+        super().__init__()
+    
 class CNN(nn.Module):
     def __init__(self, height: int, width: int, channels: int, class_count: int):
         super().__init__()

@@ -82,10 +82,8 @@ class ECG():
             else:
                 record = wfdb.rdrecord(filepath+filename, channels=[chan], sampfrom=sampfrom, sampto=sampto)
                 self.start_time = sampfrom/sample_rate
-        print(f"filename: {filename} {savename} record: {record}")
         signal = record.p_signal[:,0]
         signal = (np.floor(signal)).astype(int)
-        print(f"filename: {filename} {savename} record: {signal}")
         self.normalise_factor = normalise_factor
         
         if not signal.ndim == 1:
