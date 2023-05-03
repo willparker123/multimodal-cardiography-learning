@@ -8,6 +8,7 @@ data-after/physionet/results/
 data-after/
 data-after-TEST/
 samples-TEST/
+samples/
 envs/
 Scripts/
 .vscode/

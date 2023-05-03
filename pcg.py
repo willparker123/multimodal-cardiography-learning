@@ -4,7 +4,7 @@ import torchaudio.transforms as transforms
 import pandas as pd
 import config
 from config import input_physionet_data_folderpath_, input_physionet_target_folderpath_, outputpath
-from helpers import get_filtered_df, butterworth_bandpass_filter, check_filter_bounds
+from helpers import get_filtered_df, butterworth_bandpass_filter, check_filter_bounds, create_new_folder
 import os
 import matplotlib.pyplot as plt
 import numpy as np
@@ -65,7 +65,6 @@ class PCG():
             pass
         if signal.ndim != 1:
             signal = np.squeeze(signal)
-        print(f"SIGSIG: {signal}")
         self.signal_preproc = signal
         if apply_filter:
             #[Deep Learning Based Classification of Unsegmented Phonocardiogram Spectrograms Leveraging Transfer Learning]
@@ -102,7 +101,7 @@ class PCG():
             label = 1
         self.label = label
         if plot_audio:
-            self.plot_resampled_audio()
+            self.plot_resampled_audio(outpath_png=f"{config.outputpath}results/pcg_audio")
         
     def save_signal(self, outpath=outputpath+'physionet/', type_=config.global_opts.pcg_type, preproc=False):
         if self.savename is not None:
@@ -129,6 +128,7 @@ class PCG():
         return segments
         
     def plot_resampled_audio(self, save=True, outpath_png=outputpath+'physionet/spectrograms_pcg_audio', show=False):
+        create_new_folder(outpath_png)
         plt.plot(self.signal)
         if save:
             if self.savename is not None:
@@ -137,8 +137,7 @@ class PCG():
                 plt.savefig(outpath_png+'/'+self.filename+'_pcg_audio.png', format="png")
         if show:
             plt.show()
-        plt.figure().clear()
-        plt.close('all')
+        plt.close()
 
 def save_pcg(filename, signal, signal_preproc, outpath=outputpath+'physionet/', savename=None, type_="stft_logmel"):
     f = filename

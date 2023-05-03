@@ -41,6 +41,7 @@ import numpy as np
 import seaborn as sns
 import tqdm
 from glob import glob
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 from helpers import get_segment_num, get_filtered_df, create_new_folder, ricker, dataframe_cols, read_signal
 import config
@@ -105,7 +106,7 @@ def get_cleaned_ephnogram_csv(ref_csv, pool=None, q=None):
       ref_csv_temp = ref_csv_temp.append({'Record Name':name, 'Record Duration (min)':duration, 'Num Channels':chan_num}, ignore_index=True)
   return ref_csv_temp
   
-def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate, pcg_sample_rate, dataset="physionet", sample_clip_len=config.global_opts.segment_length, create_objects=True, outputpath_save=None, skipExisting=True, q=None):
+def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate, pcg_sample_rate, dataset="physionet", sample_clip_len=config.global_opts.segment_length, create_objects=True, outputpath_save=None, skipExisting=True, q=None, save_qrs_hrs_plot=False):
   if not create_objects and outputpath_save is None:
     raise ValueError("Error: Parameter 'outputpath_save' must be supplied if 'create_objects' is False")
   write_to_logger_from_worker(f"Processing Data Item: {data_list}", q=q)
@@ -142,8 +143,8 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
   if dataset=="ephnogram":
     filename = ref[0][0] #data_list[0][0]
     duration = ref[0][1]
-    sn = 'b0000'[:-len(str(index))]+str(index)
-    ecg = ECG(filename=filename, savename=sn, filepath=inputpath_data, label=label, chan=0, csv_path=inputpath_target, sample_rate=ecg_sample_rate, normalise=True, apply_filter=True)
+    sn = 'b0000'[:-len(str(index+1))]+str(index+1)
+    ecg = ECG(filename=filename, savename=sn, filepath=inputpath_data, label=label, chan=0, csv_path=inputpath_target, sample_rate=ecg_sample_rate, normalise=True, apply_filter=True, save_qrs_hrs_plot=save_qrs_hrs_plot)
     pcg_record = wfdb.rdrecord(inputpath_data+filename, channels=[1])
     audio_sig = np.array(pcg_record.p_signal[:, 0])
     audio = Audio(filename=filename, filepath=inputpath_data, audio=audio_sig, sample_rate=config.base_wfdb_pcg_sample_rate)
@@ -152,14 +153,14 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
   #ECG is WFDB channel 0, PCG is .wav
   elif dataset=="physionet":
     filename = ref[0][0]
-    ecg = ECG(filename=filename, filepath=inputpath_data, label=label, csv_path=inputpath_target, sample_rate=ecg_sample_rate, normalise=True, apply_filter=True)
+    ecg = ECG(filename=filename, filepath=inputpath_data, label=label, csv_path=inputpath_target, sample_rate=ecg_sample_rate, normalise=True, apply_filter=True, save_qrs_hrs_plot=save_qrs_hrs_plot)
     duration = len(ecg.signal)/ecg.sample_rate
     audio = Audio(filename=filename, filepath=inputpath_data)
     pcg = PCG(filename=filename, audio=audio, sample_rate=pcg_sample_rate, label=label, normalise=True, apply_filter=True)
   #ECG is WFDB channel 0, PCG is .wav
   else:
     filename = ref[0][0]
-    ecg = ECG(filename=filename, filepath=inputpath_data, label=label, csv_path=inputpath_target, sample_rate=ecg_sample_rate, normalise=True, apply_filter=True)
+    ecg = ECG(filename=filename, filepath=inputpath_data, label=label, csv_path=inputpath_target, sample_rate=ecg_sample_rate, normalise=True, apply_filter=True, save_qrs_hrs_plot=save_qrs_hrs_plot)
     duration = len(ecg.signal)/ecg.sample_rate
     audio = Audio(filename=filename, filepath=inputpath_data)
     pcg = PCG(filename=filename, audio=audio, sample_rate=pcg_sample_rate, label=label, normalise=True, apply_filter=True)
@@ -369,7 +370,7 @@ def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_
 
 """# Cleaning Data"""
 def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=config.global_opts.segment_length, ecg_sample_rate=config.global_opts.sample_rate_ecg, pcg_sample_rate=config.global_opts.sample_rate_pcg,
-                         skipDataCSVAndFiles = False, skipECGSpectrogram = False, skipPCGSpectrogram = False, skipSegments = False, create_objects=True, dataset="physionet", skipExisting=True, pool=None, q=None, saveSpecData=True, saveSpecImage=True, saveParent=True):
+                         skipDataCSVAndFiles = False, skipECGSpectrogram = False, skipPCGSpectrogram = False, skipSegments = False, create_objects=True, dataset="physionet", save_qrs_hrs_plot=False, skipExisting=True, pool=None, q=None, saveSpecData=True, saveSpecImage=True, saveParent=True):
   steps_taken = 1
   total_steps = 4 if dataset == "physionet" else 5
   dataset = format_dataset_name(dataset)
@@ -422,7 +423,7 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
                                pcg_sample_rate=pcg_sample_rate, 
                                create_objects=create_objects, 
                                outputpath_save=outputpath_save, 
-                               skipExisting=skipExisting, q=q), data_list)
+                               skipExisting=skipExisting, q=q, save_qrs_hrs_plot=save_qrs_hrs_plot), data_list)
     if create_objects:
       data = pd.DataFrame.from_records(list(map(lambda x: x[0], results)))
       for result in results:
@@ -470,14 +471,14 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
     return data
 
 
-def get_dataset(dataset="physionet", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_, outputpath_folder=config.outputpath, create_objects=False, get_balance_diff=True, skipDataCSVAndFiles=False, skipExisting=True, skipECGSpectrogram=False, skipPCGSpectrogram=False, pool=None, q=None, saveSpecData=True, saveSpecImage=True, saveParent=True):
+def get_dataset(dataset="physionet", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_, outputpath_folder=config.outputpath, save_qrs_hrs_plot=False, create_objects=False, get_balance_diff=True, skipDataCSVAndFiles=False, skipExisting=True, skipECGSpectrogram=False, skipPCGSpectrogram=False, pool=None, q=None, saveSpecData=True, saveSpecImage=True, saveParent=True):
   dataset = format_dataset_name(dataset)
   write_to_logger(f'*** Cleaning Data [{1 if dataset == "physionet" else 2}/3] ***', pool, q=q)
   write_to_logger(f'** Cleaning {dataset.capitalize()} Data **', pool, q=q)
   if not create_objects:
-    data = clean_data(inputpath_data, inputpath_target, outputpath_folder, skipSegments=False, create_objects=create_objects, dataset=dataset, skipDataCSVAndFiles=skipDataCSVAndFiles, skipExisting=skipExisting, skipECGSpectrogram=skipECGSpectrogram, skipPCGSpectrogram=skipPCGSpectrogram, pool=pool, q=q, saveSpecData=saveSpecData, saveSpecImage=saveSpecImage, saveParent=saveParent)
+    data = clean_data(inputpath_data, inputpath_target, outputpath_folder, skipSegments=False, create_objects=create_objects, dataset=dataset, save_qrs_hrs_plot=save_qrs_hrs_plot, skipDataCSVAndFiles=skipDataCSVAndFiles, skipExisting=skipExisting, skipECGSpectrogram=skipECGSpectrogram, skipPCGSpectrogram=skipPCGSpectrogram, pool=pool, q=q, saveSpecData=saveSpecData, saveSpecImage=saveSpecImage, saveParent=saveParent)
   else:
-    data, ecgs, pcgs, ecg_segments, pcg_segments, spectrograms_ecg, spectrograms_pcg, spectrograms_ecg_segs, spectrograms_pcg_segs = clean_data(inputpath_data, inputpath_target, outputpath_folder, skipSegments=False, create_objects=create_objects, dataset=dataset, skipDataCSVAndFiles=skipDataCSVAndFiles, skipExisting=skipExisting, skipECGSpectrogram=skipECGSpectrogram, skipPCGSpectrogram=skipPCGSpectrogram, pool=pool, q=q, saveSpecData=saveSpecData, saveSpecImage=saveSpecImage, saveParent=saveParent)
+    data, ecgs, pcgs, ecg_segments, pcg_segments, spectrograms_ecg, spectrograms_pcg, spectrograms_ecg_segs, spectrograms_pcg_segs = clean_data(inputpath_data, inputpath_target, outputpath_folder, skipSegments=False, create_objects=create_objects, dataset=dataset, save_qrs_hrs_plot=save_qrs_hrs_plot, skipDataCSVAndFiles=skipDataCSVAndFiles, skipExisting=skipExisting, skipECGSpectrogram=skipECGSpectrogram, skipPCGSpectrogram=skipPCGSpectrogram, pool=pool, q=q, saveSpecData=saveSpecData, saveSpecImage=saveSpecImage, saveParent=saveParent)
   write_to_logger(f'{dataset.upper()}: Head', pool, q=q)
   write_to_logger(data.head(), pool, q=q)
   write_to_logger(f'{dataset.upper()}: Samples (PCG)', pool, q=q)
@@ -585,6 +586,7 @@ def get_data_from_files(fn, data, index, path, logger=None):
 
 
 if __name__ == "__main__":
+  mpl.rcParams['agg.path.chunksize'] = 10000
   print(f'**** clean_data started: logging to "{config.log_path+"/"+config.log_filename}.log" ****\n')
   #UNUSED logger, ostdout = start_logger(config.log_path+"/"+config.log_filename)
   
@@ -674,22 +676,23 @@ if __name__ == "__main__":
   
   #   - 'create_objects=False' for better performance; uses 'np.load(filepath_to_saved_spectogram_or_cwt)' to get processed ECG/PCG data
   # Normal Workflow (as in paper): 
-  data_p, ratio_data_p = get_dataset(dataset="physionet", 
-                                    inputpath_data=config.input_physionet_data_folderpath_, 
-                                    inputpath_target=config.input_physionet_target_folderpath_, 
-                                    outputpath_folder=config.outputpath,
-                                    pool=pool, q=manager_q,
-                                    
-                                    create_objects=False,
-                                    get_balance_diff=True,
-                                    skipDataCSVAndFiles=False,
-                                   skipECGSpectrogram=False,
-                                   skipPCGSpectrogram=False,
-                                   saveSpecData=True, 
-                                    saveSpecImage=False,
-                                   saveParent=False,
-                                    skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
-  )
+  #data_p, ratio_data_p = get_dataset(dataset="physionet", 
+  #                                  inputpath_data=config.input_physionet_data_folderpath_, 
+  #                                  inputpath_target=config.input_physionet_target_folderpath_, 
+  #                                  outputpath_folder=config.outputpath,
+  #                                  pool=pool, q=manager_q,
+  #                                  
+  #                                  create_objects=False,
+  #                                  get_balance_diff=True,
+  #                                  skipDataCSVAndFiles=False,
+  #                                 skipECGSpectrogram=False,
+  #                                 skipPCGSpectrogram=False,
+  #                                 saveSpecData=True, 
+  #                                  saveSpecImage=False,
+  #                                 saveParent=False,
+  #                                  save_qrs_hrs_plot=False,
+  #                                  skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+  #)
   data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
                                     inputpath_data=config.input_ephnogram_data_folderpath_, 
                                     inputpath_target=config.input_ephnogram_target_folderpath_, 
@@ -704,6 +707,7 @@ if __name__ == "__main__":
                                     saveSpecData=True, 
                                     saveSpecImage=False,
                                     saveParent=False,
+                                    save_qrs_hrs_plot=False,
                                      skipExisting=False, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
  )
   write_to_logger("*** Cleaning and Postprocessing Data [3/3] ***", pool, manager_q)

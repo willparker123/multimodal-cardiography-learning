@@ -58,7 +58,7 @@ Class for ECG preprocessing, loading from .dat/.hea (WFDB) /.npy files
 class ECG():
     def __init__(self, filename, savename=None, label=None, filepath=config.input_physionet_data_folderpath_, csv_path=config.input_physionet_target_folderpath_, 
                  sample_rate=2000, sampfrom=None, sampto=None, resample=True, normalise=True, apply_filter=True, normalise_factor=None, chan=0, get_qrs_and_hrs_png=True,
-                 filter_lower=config.global_opts.ecg_filter_lower_bound, filter_upper=config.global_opts.ecg_filter_upper_bound):
+                 filter_lower=config.global_opts.ecg_filter_lower_bound, filter_upper=config.global_opts.ecg_filter_upper_bound, save_qrs_hrs_plot=False):
         #super().__init__()
         self.filepath = filepath
         self.filename = filename
@@ -83,7 +83,10 @@ class ECG():
                 record = wfdb.rdrecord(filepath+filename, channels=[chan], sampfrom=sampfrom, sampto=sampto)
                 self.start_time = sampfrom/sample_rate
         signal = record.p_signal[:,0]
-        signal = (np.floor(signal)).astype(int)
+        try:
+            signal = (np.floor(signal)).astype(int)
+        except:
+            pass
         self.normalise_factor = normalise_factor
         
         if not signal.ndim == 1:
@@ -94,10 +97,11 @@ class ECG():
             print(f"Warning: record sampling frequency ({record.fs}) does not match ecg_sample_rate ({sample_rate}) - resampling to sample_rate")
             signal, self.locations = processing.resample_sig(signal, record.fs, sample_rate)
         self.signal_preproc = signal
+        print(f"SIGGYSIG: {savename if savename is not None else filename} {signal}")
         self.qrs_inds = processing.qrs.xqrs_detect(sig=signal, fs=sample_rate)
         if get_qrs_and_hrs_png:    
             self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=sample_rate,
-                title="Corrected GQRS peak detection", saveto=f"{config.outputpath}results/gqrs_peaks/{self.savename if self.savename is not None else self.filename}.png")
+                title="Corrected GQRS peak detection", savefolder=f"{config.outputpath}results/gqrs_peaks", saveto=f"{config.outputpath}results/gqrs_peaks/{self.savename if self.savename is not None else self.filename}.png", save_plot=save_qrs_hrs_plot)
             self.hr_avg = np.nanmean(self.hrs)
             
         if apply_filter:
@@ -199,7 +203,11 @@ def save_ecg_signal(filename, signal, outpath=config.outputpath+'physionet/', sa
 def save_qrs_inds(filename, qrs_inds, outpath=config.outputpath+'physionet/'):
         np.save(outpath+filename+'_qrs_inds.npy', qrs_inds)
         
-def get_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), saveto=None, show=False, save_hrs=False):
+def get_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), savefolder=None, saveto=None, show=False, save_hrs=False, save_plot=False):
+    if savefolder in saveto:
+        create_new_folder(savefolder)
+    else:
+        raise ValueError(f"Error: savefolder ({savefolder}) must be part of the filepath 'saveto' ({saveto}).")
     print("Plot a signal with its peaks and heart rate")
     # Calculate heart rate
     hrs = processing.hr.compute_hr(sig_len=sig.shape[0], qrs_inds=peak_inds, fs=fs)
@@ -207,27 +215,28 @@ def get_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), saveto=Non
     fig, ax_left = plt.subplots(figsize=figsize)
     ax_right = ax_left.twinx()
     # Display results
-    
-    ax_left.plot(sig, color='#3979f0', label='Signal')
-    ax_left.plot(peak_inds, sig[peak_inds.astype(int)], 'rx', marker='x', 
-                 color='#8b0000', label='Peak', markersize=12)
-    ax_left.set_title(title)
-    ax_left.set_xlabel('Time (ms)')
-    ax_left.set_ylabel('ECG (mV)', color='#3979f0')
-    
-    ax_right.plot(np.arange(N), hrs, label='Heart rate', color='m', linewidth=2)
-    ax_right.set_ylabel('Heart rate (bpm)', color='m')
-    plt.axhline(np.average(hrs), color='m', linewidth=4, ls='--') 
-    ax_right.tick_params('y', colors='m')
-    # Make the y-axis label, ticks and tick labels match the line color.
-    ax_left.tick_params('y', colors='#3979f0')
-    if saveto is not None:
-        plt.savefig(saveto, dpi=600)
-    if show:
-        plt.show()
+    if save_plot:
+        ax_left.plot(sig, color='#3979f0', label='Signal')
+        ax_left.plot(peak_inds, sig[peak_inds.astype(int)], 'rx', marker='x', 
+                    color='#8b0000', label='Peak', markersize=12)
+        ax_left.set_title(title)
+        ax_left.set_xlabel('Time (ms)')
+        ax_left.set_ylabel('ECG (mV)', color='#3979f0')
+        
+        ax_right.plot(np.arange(N), hrs, label='Heart rate', color='m', linewidth=2)
+        ax_right.set_ylabel('Heart rate (bpm)', color='m')
+        plt.axhline(np.average(hrs), color='m', linewidth=4, ls='--') 
+        ax_right.tick_params('y', colors='m')
+        # Make the y-axis label, ticks and tick labels match the line color.
+        ax_left.tick_params('y', colors='#3979f0')
+        if saveto is not None:
+            plt.savefig(saveto, dpi=600)
+        if show:
+            plt.show()
     if save_hrs:
         np.save(saveto)
-    plt.close()
+    if save_plot:
+        plt.close()
     return hrs
     
 def get_ecg_segments_from_array(data, sample_rate, segment_length, factor=1, normalise=True):
