@@ -128,7 +128,7 @@ def get_summary_writer_log_dir(modelname="transformer") -> str:
         untangle in TB).
     """
     log_dir_prefix = (
-      f"modelrun_{modelname}"+
+      f"modelrun_{modelname}_"+
       f"bs={config.global_opts.batch_size}_"+
       f"lr={config.global_opts.learning_rate}_"+
       f"momentum={config.global_opts.sgd_momentum}"

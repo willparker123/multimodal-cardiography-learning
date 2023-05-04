@@ -246,13 +246,13 @@ def load_config():
     parser.add_argument("--sgd-momentum", default=0.9, type=float, help="SGD Momentum parameter Beta")
     parser.add_argument(
         "--batch-size",
-        default=64,
+        default=8,
         type=int,
         help="Number of images within each mini-batch",
     )
     parser.add_argument(
         "--epochs",
-        default=20,
+        default=100,
         type=int,
         help="Number of epochs (passes through the entire dataset) to train for",
     )
@@ -266,7 +266,7 @@ def load_config():
     parser.add_argument("--adam-amsgrad", action="store_true", help="Enables AMSGrad version of the Adam optimiser", default=False)
     parser.add_argument(
         "--dropout",
-        default=0,
+        default=0.1,
         type=float,
         help="Dropout probability",
     )

@@ -29,15 +29,16 @@ from torch_ecg.components.trainer import BaseTrainer
 from torch_ecg.utils.utils_nn import default_collate_fn as collate_fn
 from torch.utils.data.dataset import Dataset
 import math
+from config import outputpath
 from dataset import ECGPCGDataset
 
 TrainCfg = CFG()
 TrainCfg.classes = ["N", "A"]
 # configs of training epochs, batch, etc.
-TrainCfg.n_epochs = 50
+TrainCfg.n_epochs = config.global_opts.epochs
 # TODO: automatic adjust batch size according to GPU capacity
 # https://stackoverflow.com/questions/45132809/how-to-select-batch-size-automatically-to-fit-gpu
-TrainCfg.batch_size = 64
+TrainCfg.batch_size = config.global_opts.batch_size
 # TrainCfg.max_batches = 500500
 
 # configs of optimizers and lr_schedulers
@@ -136,6 +137,7 @@ class TransformerTrainer(BaseTrainer):
         lazy: bool, default True,
             whether to initialize the data loader lazily
         """
+        train_config.physionetOnly = kwargs.get('physionetOnly',True)
         super().__init__(
             model=model,
             dataset_cls=ECGPCGDataset,
@@ -166,6 +168,14 @@ class TransformerTrainer(BaseTrainer):
                                 ecg_sample_rate=config.global_opts.sample_rate_ecg,
                                 pcg_sample_rate=config.global_opts.sample_rate_pcg,
                                 verifyComplete=False
+            ) if self.train_config.physionetOnly is not None and self.train_config.physionetOnly else self.dataset_cls(
+                clip_length=config.global_opts.segment_length, 
+                                ecg_sample_rate=config.global_opts.sample_rate_ecg,
+                                pcg_sample_rate=config.global_opts.sample_rate_pcg,
+                                verifyComplete=False,
+                            paths_ecgs=[outputpath+f'physionet/data_ecg_{config.global_opts.ecg_type}/'], 
+                            paths_pcgs=[outputpath+f'physionet/data_pcg_{config.global_opts.pcg_type}/'], 
+                            paths_csv=[outputpath+f'physionet/data_physionet_raw']
             )
         train_len = math.floor(len(dataset)*config.global_opts.train_split)
         data_train, data_test = torch.utils.data.random_split(dataset, [train_len, len(dataset)-train_len], generator=torch.Generator().manual_seed(42)) 

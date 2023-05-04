@@ -7,6 +7,7 @@ from torch.optim.optimizer import Optimizer
 from torch.nn.parallel import DataParallel as DP
 from torch.nn.parallel import DistributedDataParallel as DDP  # noqa: F401
 from dataset import ECGPCGDataset
+from config import outputpath
 import numpy as np
 import math
 import pandas as pd
@@ -86,6 +87,13 @@ def main():
                             ecg_sample_rate=config.global_opts.sample_rate_ecg,
                             pcg_sample_rate=config.global_opts.sample_rate_pcg,
                             verifyComplete=False)
+    dataset_physionet = ECGPCGDataset(clip_length=config.global_opts.segment_length, 
+                            ecg_sample_rate=config.global_opts.sample_rate_ecg,
+                            pcg_sample_rate=config.global_opts.sample_rate_pcg,
+                            verifyComplete=False,
+                            paths_ecgs=[outputpath+f'physionet/data_ecg_{config.global_opts.ecg_type}/'], 
+                            paths_pcgs=[outputpath+f'physionet/data_pcg_{config.global_opts.pcg_type}/'], 
+                            paths_csv=[outputpath+f'physionet/data_physionet_raw'])
     
     train_len = math.floor(len(dataset)*config.global_opts.train_split)
     data_train, data_test = torch.utils.data.random_split(dataset, [train_len, len(dataset)-train_len], generator=torch.Generator().manual_seed(42)) 
@@ -137,10 +145,10 @@ def main():
     config_crnn_transformer.cnn.hidden_size="transformer"
     config_crnn_transformer.cnn.num_heads=6
     config_crnn_transformer.cnn.num_layers=1
-    config_crnn_transformer.cnn.dropout=0.1
+    config_crnn_transformer.cnn.dropout=config.global_opts.dropout
     config_crnn_transformer.cnn.fs=config.global_opts.sample_rate_ecg
     config_crnn_transformer.cnn.activation="relu"
-    batch_size = 8
+    batch_size = config.global_opts.batch_size
     #ClassificationOutput
     #input_size=attn_input_size,
     #hidden_size=self.config.attn.transformer.hidden_size,
@@ -184,10 +192,20 @@ def main():
         device=device,
         lazy=False,
     )
+    trainer_physionet = TransformerTrainer(
+        model=model,
+        model_config=config_crnn_transformer,
+        train_config=config_crnn_transformer_train,
+        device=device,
+        lazy=False,
+        physionetOnly=True
+    )
 
     try:
         best_model_state_dict = trainer.train()
         print(f"** TRAINING COMPLETE FOR ECG-Transformer: best_model_state_dict {best_model_state_dict}")
+        best_model_state_dict_physionet = trainer_physionet.train()
+        print(f"** TRAINING COMPLETE FOR ECG-Transformer(Physionet only): best_model_state_dict_physionet {best_model_state_dict_physionet}")
     except KeyboardInterrupt:
         try:
             sys.exit(0)
@@ -229,8 +247,8 @@ if __name__ == '__main__':
     create_new_folder("samples")
     
     # Samples in the paper
-    data_sample(filename="a0314", outputfolderpath="samples/a0314", label=1)
-    data_sample(filename="a0315", outputfolderpath="samples/a0315", label=1)
+    #data_sample(filename="a0314", outputfolderpath="samples/a0314", label=1)
+    #data_sample(filename="a0315", outputfolderpath="samples/a0315", label=1)
     #data_sample(filename="a0007", outputfolderpath="samples/a0007", label=1)
     #data_sample(filename="ECGPCG0003", index_ephnogram=1, outputfolderpath="samples/b0001", dataset="ephnogram", inputpath_data=config.input_ephnogram_data_folderpath_, inputpath_target=config.input_ephnogram_target_folderpath_, label=0)
     

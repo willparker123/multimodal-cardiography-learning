@@ -400,7 +400,7 @@ class ECGPCGDataset(Dataset):
                 'parent_index': index_of_parent,
                 'seg_index': index_of_segment
             }
-        out_dict.update(data_dict)
+            out_dict.update(data_dict)
         if print_df:
             if print_short and not self.data_and_label_only:
                 print(data_dict)
