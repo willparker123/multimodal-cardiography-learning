@@ -88,6 +88,7 @@ class ECGPCGDataset(Dataset):
         # Validate that all directories and files exist
         print(f"* Validating directories and files for: \n{paths_ecgs}\n{paths_pcgs}\n{paths_csv}\n\n")
         incomplete_x = []
+        incomplete_x_inds = []
         for i in range(self.dataset_count):
             ecg_paths_samples = []
             pcg_paths_samples = []
@@ -119,12 +120,14 @@ class ECGPCGDataset(Dataset):
                         else:
                             if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
                                 incomplete_x.append(f"{paths_ecgs[i]}{dir}")
+                                incomplete_x_inds.append(f"{dir}")
                     for k, dir_inner in enumerate(dirs_inner):
                         # Files in paths_ecgs[i]/sample_filename/segment_index/
                         if not os.path.exists(f"{paths_ecgs[i]}{dir}/{dir_inner}/"):
                             if not verifyComplete:
                                 if f"{paths_pcgs[i]}{dir}" not in incomplete_x:
                                     incomplete_x.append(f"{paths_pcgs[i]}{dir}")
+                                    incomplete_x_inds.append(f"{dir}")
                                 continue
                         files_ecg = next(os.walk(paths_ecgs[i]+f'{dir}/{dir_inner}/'))[2]
                         if len(files_ecg) == 0:
@@ -133,7 +136,8 @@ class ECGPCGDataset(Dataset):
                             else:
                                 if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
                                     incomplete_x.append(f"{paths_ecgs[i]}{dir}")
-                        valid_files_ecg = [f for f in files_ecg if (f.endswith(f".{self.file_type_ecg}") if self.file_type_ecg is not 'wfdb' else (f.endswith(f".hea") or f.endswith(f".dat"))) \
+                                    incomplete_x_inds.append(f"{dir}")
+                        valid_files_ecg = [f for f in files_ecg if "seg" in f and(f.endswith(f"{global_opts.ecg_type}.{self.file_type_ecg}") if self.file_type_ecg is not 'wfdb' else (f.endswith(f".hea") or f.endswith(f".dat"))) \
                             and ('spec' in f if data_type_ecg=='spec' else True)]
                         if len(valid_files_ecg) == 0:
                             if verifyComplete:
@@ -141,12 +145,14 @@ class ECGPCGDataset(Dataset):
                             else:
                                 if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
                                     incomplete_x.append(f"{paths_ecgs[i]}{dir}")
+                                    incomplete_x_inds.append(f"{dir}")
                         
                         if data_type_ecg is not "video" and not no_pcg_paths:
                             if not os.path.exists(f"{paths_pcgs[i]}{dir}/{dir_inner}/"):
                                 if not verifyComplete:
                                     if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
                                         incomplete_x.append(f"{paths_ecgs[i]}{dir}")
+                                        incomplete_x_inds.append(f"{dir}")
                                     continue
                             files_pcg = next(os.walk(paths_pcgs[i]+f'{dir}/{dir_inner}/'))[2]
                             if len(files_pcg) == 0:
@@ -155,7 +161,8 @@ class ECGPCGDataset(Dataset):
                                 else:
                                     if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
                                         incomplete_x.append(f"{paths_ecgs[i]}{dir}")
-                            valid_files_pcg = [f for f in files_pcg if f.endswith(f".{self.file_type_pcg}") and ('spec' in f if data_type_ecg=='spec' else True)]
+                                        incomplete_x_inds.append(f"{dir}")
+                            valid_files_pcg = [f for f in files_pcg if "seg" in f and f.endswith(f"{global_opts.pcg_type}.{self.file_type_pcg}" if not data_type_ecg=='spec' else f'spec.{self.file_type_pcg}')]
 
                             if len(valid_files_pcg) == 0:
                                 if verifyComplete:
@@ -163,6 +170,7 @@ class ECGPCGDataset(Dataset):
                                 else:
                                     if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
                                         incomplete_x.append(f"{paths_ecgs[i]}{dir}")
+                                        incomplete_x_inds.append(f"{dir}")
                             else:
                                 filepath_pcg = f'{paths_pcgs[i]}{dir}/{dir_inner}/{valid_files_pcg[0]}'
                                 if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
@@ -171,20 +179,22 @@ class ECGPCGDataset(Dataset):
                         # filepath_ecg is array if self.file_type_ecg == 'wfdb' otherwise single value
                         if self.file_type_ecg is not 'wfdb' and not len(valid_files_ecg) == 0:
                             filepath_ecg = f'{paths_ecgs[i]}{dir}/{dir_inner}/{valid_files_ecg[0]}'
+                            if filepath_ecg is not None and f"{paths_ecgs[i]}{dir}" not in incomplete_x:
+                                ecg_paths_sample_segments.append(filepath_ecg) #self.ecg_paths[sample_index][segment_index]
                         else:
                             if len([x for x in valid_files_ecg if x.endswith(".hea")]) > 0 and len([x for x in valid_files_ecg if x.endswith(".dat")]) > 0:
                                 valid_file_hea = [x for x in valid_files_ecg if x.endswith(".hea")][0]
                                 valid_file_dat = [x for x in valid_files_ecg if x.endswith(".dat")][0]
                                 filepath_ecg = [f'{paths_ecgs[i]}{dir}/{dir_inner}/{valid_file_hea}', f'{paths_ecgs[i]}{dir}/{dir_inner}/{valid_file_dat}']
+                                if filepath_ecg is not None and f"{paths_ecgs[i]}{dir}" not in incomplete_x:
+                                    ecg_paths_sample_segments.append(filepath_ecg) #self.ecg_paths[sample_index][segment_index]
                             else:
                                 if verifyComplete:
                                     raise ValueError(f"Error: .dat and .hea file must be present in directory '{paths_ecgs[i]}{dir}/{dir_inner}/'")
                                 else:
                                     if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
                                         incomplete_x.append(f"{paths_ecgs[i]}{dir}")
-                        # Append np array to list of ECGs
-                        if filepath_ecg is not None and f"{paths_ecgs[i]}{dir}" not in incomplete_x:
-                            ecg_paths_sample_segments.append(filepath_ecg) #self.ecg_paths[sample_index][segment_index]
+                                        incomplete_x_inds.append(f"{dir}")
                         #self.ecgs.append(read_file(filepath, self.file_type_ecg))
                         #self.pcgs.append(read_file(filepath, self.file_type_pcg))
                     ecg_paths_samples.append(ecg_paths_sample_segments)
@@ -198,7 +208,7 @@ class ECGPCGDataset(Dataset):
                     ecg_paths_sample_segments = []
                     pcg_paths_sample_segments = []
                     seg_num = int(len(self.dfs[i].iloc[[ind]]['seg_num']))
-                    valid_files_ecg = [f for f in all_files_ecg if self.dfs[i].iloc[[ind]]['filename'] in f and (f.endswith(f".{self.file_type_ecg}") if self.file_type_ecg is not 'wfdb' else (f.endswith(f".hea") or f.endswith(f".dat"))) \
+                    valid_files_ecg = [f for f in all_files_ecg if "seg" in f and self.dfs[i].iloc[[ind]]['filename'] in f and (f.endswith(f"{self.data_type_ecg}.{self.file_type_ecg}" if not data_type_ecg=='spec' else f'spec.{self.file_type_ecg}') if self.file_type_ecg is not 'wfdb' else (f.endswith(f".hea") or f.endswith(f".dat"))) \
                             and ('spec' in f if data_type_ecg=='spec' else True)]
                     fileswithfilenameandseg_ecg = [y for y in valid_files_ecg if '_seg_' in y]
                     if len(valid_files_ecg) == 0:
@@ -219,7 +229,7 @@ class ECGPCGDataset(Dataset):
                             else:
                                 if f"{ind}" not in incomplete_x:
                                     incomplete_x.append(f"{ind}")
-                        valid_files_pcg = [f for f in files_pcg if self.dfs[i].iloc[[ind]]['filename'] in f and f.endswith(f".{self.file_type_pcg}") and ('spec' in f if data_type_ecg=='spec' else True)]
+                        valid_files_pcg = [f for f in files_pcg if "seg" in f and self.dfs[i].iloc[[ind]]['filename'] in f and f.endswith(f"{global_opts.pcg_type}.{self.file_type_pcg}" if not data_type_ecg=='spec' else f'spec.{self.file_type_pcg}')]
                         fileswithfilenameandseg_pcg = [y for y in valid_files_pcg if '_seg_' in y]
                         if len(valid_files_pcg) == 0:
                             if verifyComplete:
@@ -274,10 +284,15 @@ class ECGPCGDataset(Dataset):
             if data_type_ecg is not "video" and not no_pcg_paths:
                 self.pcg_paths.extend(pcg_paths_samples)
             self.incomplete_x = incomplete_x
+            self.incomplete_x_inds = incomplete_x_inds
         print(f"* Successfully validated all ECG and PCG directories and files.")
         if not verifyComplete:
             print(f"Incomplete samples (missing ECG/PCG/both, missing files, missing segments): {self.incomplete_x}")
-        
+        for row in range(len(self.df_data)):
+            print(f"str(self.df_data.iloc[[row]]['filename']): {str(self.df_data.iloc[[row]]['filename'])}")
+            if str(self.df_data.iloc[[row]]['filename']) in self.incomplete_x_inds:
+                fn = self.df_data.iloc[[row]]['filename']
+                self.df_data.drop(self.df_data[self.df_data['filename'] == fn].index, inplace = True)
         self.labels = self.df_data[['filename', 'label']].copy()
         self.data_len = len(sum(self.ecg_paths, []))
         self.data_len_target = get_total_filecount(self.df_data, False)
@@ -314,9 +329,10 @@ class ECGPCGDataset(Dataset):
             index_of_segment = child_index
             index_of_parent = parent_index
         else:
-            filepath_ecg = list(np.concatenate(self.ecg_paths).flat)[index]
-            print(f"index: {index} list(np.concatenate(self.pcg_paths).flat): {len(list(np.concatenate(self.pcg_paths).flat))} {len(list(np.concatenate(self.ecg_paths).flat))}")
-            filepath_pcg = list(np.concatenate(self.pcg_paths).flat)[index]
+            print(f"self.ecg_pathsself.ecg_paths: {len(self.ecg_paths)} {index}")
+            filepath_ecg = list(sum(self.ecg_paths, []))[index]
+            print(f"index: {index} list(np.concatenate(self.pcg_paths).flat): {len(list(sum(self.pcg_paths, [])))} {len(list(sum(self.ecg_paths, [])))}")
+            filepath_pcg = list(sum(self.pcg_paths, []))[index]
             index_of_segment, index_of_parent = self.get_child_and_parent_index(index)
         if self.no_pcg_paths:
             ecg, pcg = read_file(filepath_ecg, self.data_type_ecg, self.file_type_ecg, self.no_pcg_paths)

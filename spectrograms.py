@@ -70,7 +70,7 @@ class Spectrogram():
             if ((self.transform_type=="stft" or self.transform_type=="stft_log") and self.matplotlib_stft):
                 plt.imshow(self.image)
             else:
-                plt.imshow(self.spec, extent=[self.times[0], self.times[len(self.times)-1], self.freqs[0], self.freqs[len(self.freqs)-1]], cmap=colormap, aspect='auto', vmax=abs(self.spec).max(), vmin=-abs(self.spec).max(), interpolation="none")
+                plt.imshow(self.spec, extent=[self.times[0], self.times[len(self.times)-1], self.freqs[0], self.freqs[len(self.freqs)-1]], cmap=colormap, aspect='auto', vmax=1, vmin=0, interpolation="none")
             
             if show:
                 plt.show()
@@ -97,7 +97,7 @@ class Spectrogram():
             plt.ylim(0, self.freqs[len(self.freqs)-1])
             #if self.transform_type == "ecg_cwtlog":
             #    plt.yscale("log")
-            plt.imshow(self.spec, extent=[self.times[0], self.times[len(self.times)-1],self.freqs[0], self.freqs[len(self.freqs)-1]], cmap=colormap, aspect='auto', vmax=abs(self.spec).max(), vmin=-abs(self.spec).max(), interpolation="none")
+            plt.imshow(self.spec, extent=[self.times[0], self.times[len(self.times)-1],self.freqs[0], self.freqs[len(self.freqs)-1]], cmap=colormap, aspect='auto', vmax=1, vmin=0, interpolation="none")
             
             if show:
                 plt.show()
@@ -124,7 +124,7 @@ class Spectrogram():
             #if self.transform_type == "ecg_log":
             #    plt.yscale("log")
             #plt.pcolormesh(self.times, self.freqs, self.spec, shading='gouraud')
-            plt.imshow(self.spec, extent=[self.times[0], self.times[len(self.times)-1], self.freqs[0], self.freqs[len(self.freqs)-1]], cmap=colormap, aspect='auto', vmax=abs(self.spec).max(), vmin=-abs(self.spec).max(), interpolation="none")
+            plt.imshow(self.spec, extent=[self.times[0], self.times[len(self.times)-1], self.freqs[0], self.freqs[len(self.freqs)-1]], cmap=colormap, aspect='auto', vmax=1, vmin=0, interpolation="none")
             
             if show:
                 plt.show()

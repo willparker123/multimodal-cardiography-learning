@@ -264,8 +264,7 @@ if __name__ == '__main__':
     # Samples in the paper
     data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="stft", transform_type_pcg="stft_mel", colormap="magma")
     #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma")
-    data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="morlet", wavelet_pcg="morlet", colormap="magma")
-    sys.exit(0)
+    #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="morlet", wavelet_pcg="morlet", colormap="magma")
     #data_sample(filename="a0315", outputfolderpath="samples/a0315", label=1)
     #data_sample(filename="a0007", outputfolderpath="samples/a0007", label=1)
     #data_sample(filename="ECGPCG0003", index_ephnogram=1, outputfolderpath="samples/b0001", dataset="ephnogram", inputpath_data=config.input_ephnogram_data_folderpath_, inputpath_target=config.input_ephnogram_target_folderpath_, label=0)

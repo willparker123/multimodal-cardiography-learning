@@ -1,4 +1,4 @@
-log file path: D:\Uni\Thesis\NEWREPO\multimodal-cardiography-learning\logs\TorchECG_05-04_01-31_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
+log file path: D:\Uni\Thesis\NEWREPO\multimodal-cardiography-learning\logs\TorchECG_05-04_07-46_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
 TorchECG - INFO - training configurations are as follows:
 {
     "debug": True,
@@ -22,10 +22,10 @@ TorchECG - INFO - training configurations are as follows:
     "eps": 1e-07,
     "SEED": 42,
     "RNG": Generator(PCG64),
-    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x00000276D79F9D68>, replace=False, shuffle=False),
-    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x00000276D79F9D68>, endpoint=True),
-    "set_seed": <function set_seed at 0x00000276D7A37288>,
-    "change_dtype": <function change_dtype at 0x00000276D7A3C558>,
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x000001C7F8995E58>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x000001C7F8995E58>, endpoint=True),
+    "set_seed": <function set_seed at 0x000001C7F89CF558>,
+    "change_dtype": <function change_dtype at 0x000001C7F89DB828>,
     "classes": [
         "N",
         "A"
@@ -65,12 +65,14 @@ TorchECG - INFO - training configurations are as follows:
     "siglen": 16000,
     "physionetOnly": True
 }
-** ECGPCG DATASET HEAD:   filename og_filename  label  record_duration  num_channels  samples_ecg  samples_pcg  qrs_count  seg_num     avg_hr
-0    a0001       a0001      1          35.6660             1        71332        71332         73        4  142.20499
-1    a0002       a0002      1          20.8285             1        41657        41657         54        2  168.61365
-2    a0003       a0003      1          30.7200             1        61440        61440         51        3  170.23572
-3    a0004       a0004      1          35.5965             1        71193        71193         67        4  141.67530
-4    a0005       a0005      1          35.6660             1        71332        71332        104        4  208.28456 **
+** ECGPCG DATASET HEAD:   filename og_filename  label  ...  qrs_count  seg_num     avg_hr
+0    a0001       a0001      1  ...         73        4  142.20499
+1    a0002       a0002      1  ...         54        2  168.61365
+2    a0003       a0003      1  ...         51        3  170.23572
+3    a0004       a0004      1  ...         67        4  141.67530
+4    a0005       a0005      1  ...        104        4  208.28456
+
+[5 rows x 10 columns] **
 * Validating directories and files for: 
 ['data-after-TEST/physionet/data_ecg_cwt/', 'data-after-TEST/ephnogram/data_ecg_cwt/']
 ['data-after-TEST/physionet/data_pcg_cwt/', 'data-after-TEST/ephnogram/data_pcg_cwt/']
@@ -78,27 +80,869 @@ TorchECG - INFO - training configurations are as follows:
 
 
 * Successfully validated all ECG and PCG directories and files.
-Incomplete samples (missing ECG/PCG/both, missing files, missing segments): ['data-after-TEST/physionet/data_ecg_cwt/a0315']
+Incomplete samples (missing ECG/PCG/both, missing files, missing segments): []
+str(self.df_data.iloc[[row]]['filename']): 0    a0001
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 1    a0002
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 2    a0003
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 3    a0004
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 4    a0005
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 5    a0006
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 6    a0007
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 7    a0008
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 8    a0009
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 9    a0010
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 10    a0011
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 11    a0012
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 12    a0013
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 13    a0014
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 14    a0015
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 15    a0016
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 16    a0017
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 17    a0018
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 18    a0019
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 19    a0020
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 20    a0021
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 21    a0022
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 22    a0023
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 23    a0024
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 24    a0025
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 25    a0026
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 26    a0027
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 27    a0028
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 28    a0029
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 29    a0030
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 30    a0031
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 31    a0032
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 32    a0033
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 33    a0034
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 34    a0035
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 35    a0036
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 36    a0037
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 37    a0038
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 38    a0039
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 39    a0040
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 40    a0041
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 41    a0042
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 42    a0043
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 43    a0044
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 44    a0045
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 45    a0046
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 46    a0047
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 47    a0048
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 48    a0049
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 49    a0050
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 50    a0051
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 51    a0052
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 52    a0053
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 53    a0054
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 54    a0055
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 55    a0056
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 56    a0057
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 57    a0058
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 58    a0059
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 59    a0060
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 60    a0061
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 61    a0062
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 62    a0063
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 63    a0064
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 64    a0065
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 65    a0066
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 66    a0067
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 67    a0068
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 68    a0069
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 69    a0070
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 70    a0071
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 71    a0072
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 72    a0073
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 73    a0074
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 74    a0075
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 75    a0076
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 76    a0077
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 77    a0078
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 78    a0079
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 79    a0080
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 80    a0081
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 81    a0082
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 82    a0083
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 83    a0084
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 84    a0085
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 85    a0086
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 86    a0087
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 87    a0088
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 88    a0089
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 89    a0090
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 90    a0091
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 91    a0092
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 92    a0093
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 93    a0094
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 94    a0095
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 95    a0096
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 96    a0097
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 97    a0098
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 98    a0099
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 99    a0100
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 100    a0101
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 101    a0102
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 102    a0103
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 103    a0104
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 104    a0105
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 105    a0106
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 106    a0107
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 107    a0108
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 108    a0109
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 109    a0110
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 110    a0111
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 111    a0112
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 112    a0113
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 113    a0114
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 114    a0115
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 115    a0116
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 116    a0117
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 117    a0118
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 118    a0119
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 119    a0120
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 120    a0121
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 121    a0122
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 122    a0123
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 123    a0124
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 124    a0125
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 125    a0126
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 126    a0127
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 127    a0128
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 128    a0129
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 129    a0130
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 130    a0131
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 131    a0132
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 132    a0133
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 133    a0134
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 134    a0135
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 135    a0136
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 136    a0137
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 137    a0138
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 138    a0139
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 139    a0140
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 140    a0141
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 141    a0142
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 142    a0143
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 143    a0144
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 144    a0145
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 145    a0146
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 146    a0147
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 147    a0148
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 148    a0149
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 149    a0150
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 150    a0151
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 151    a0152
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 152    a0153
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 153    a0154
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 154    a0155
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 155    a0156
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 156    a0157
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 157    a0158
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 158    a0159
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 159    a0160
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 160    a0161
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 161    a0162
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 162    a0163
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 163    a0164
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 164    a0165
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 165    a0166
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 166    a0167
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 167    a0168
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 168    a0169
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 169    a0170
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 170    a0171
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 171    a0172
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 172    a0173
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 173    a0174
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 174    a0175
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 175    a0176
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 176    a0177
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 177    a0178
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 178    a0179
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 179    a0180
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 180    a0181
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 181    a0182
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 182    a0183
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 183    a0184
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 184    a0185
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 185    a0186
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 186    a0187
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 187    a0188
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 188    a0189
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 189    a0190
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 190    a0191
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 191    a0192
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 192    a0193
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 193    a0194
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 194    a0195
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 195    a0196
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 196    a0197
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 197    a0198
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 198    a0199
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 199    a0200
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 200    a0201
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 201    a0202
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 202    a0203
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 203    a0204
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 204    a0205
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 205    a0206
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 206    a0207
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 207    a0208
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 208    a0209
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 209    a0210
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 210    a0211
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 211    a0212
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 212    a0213
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 213    a0214
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 214    a0215
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 215    a0216
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 216    a0217
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 217    a0218
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 218    a0219
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 219    a0220
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 220    a0221
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 221    a0222
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 222    a0223
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 223    a0224
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 224    a0225
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 225    a0226
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 226    a0227
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 227    a0228
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 228    a0229
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 229    a0230
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 230    a0231
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 231    a0232
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 232    a0233
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 233    a0234
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 234    a0235
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 235    a0236
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 236    a0237
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 237    a0238
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 238    a0239
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 239    a0240
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 240    a0241
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 241    a0242
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 242    a0243
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 243    a0244
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 244    a0245
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 245    a0246
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 246    a0247
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 247    a0248
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 248    a0249
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 249    a0250
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 250    a0251
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 251    a0252
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 252    a0253
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 253    a0254
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 254    a0255
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 255    a0256
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 256    a0257
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 257    a0258
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 258    a0259
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 259    a0260
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 260    a0261
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 261    a0262
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 262    a0263
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 263    a0264
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 264    a0265
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 265    a0266
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 266    a0267
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 267    a0268
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 268    a0269
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 269    a0270
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 270    a0271
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 271    a0272
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 272    a0273
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 273    a0274
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 274    a0275
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 275    a0276
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 276    a0277
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 277    a0278
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 278    a0279
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 279    a0280
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 280    a0281
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 281    a0282
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 282    a0283
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 283    a0284
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 284    a0285
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 285    a0286
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 286    a0287
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 287    a0288
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 288    a0289
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 289    a0290
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 290    a0291
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 291    a0292
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 292    a0293
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 293    a0294
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 294    a0295
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 295    a0296
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 296    a0297
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 297    a0298
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 298    a0299
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 299    a0300
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 300    a0301
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 301    a0302
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 302    a0303
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 303    a0304
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 304    a0305
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 305    a0306
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 306    a0307
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 307    a0308
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 308    a0309
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 309    a0310
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 310    a0311
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 311    a0312
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 312    a0313
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 313    a0314
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 314    a0315
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 315    a0316
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 316    a0317
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 317    a0318
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 318    a0319
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 319    a0320
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 320    a0321
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 321    a0322
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 322    a0323
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 323    a0324
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 324    a0325
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 325    a0326
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 326    a0327
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 327    a0328
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 328    a0329
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 329    a0330
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 330    a0331
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 331    a0332
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 332    a0333
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 333    a0334
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 334    a0335
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 335    a0336
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 336    a0337
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 337    a0338
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 338    a0339
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 339    a0340
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 340    a0341
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 341    a0342
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 342    a0343
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 343    a0344
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 344    a0345
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 345    a0346
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 346    a0347
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 347    a0348
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 348    a0349
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 349    a0350
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 350    a0351
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 351    a0352
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 352    a0353
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 353    a0354
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 354    a0355
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 355    a0356
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 356    a0357
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 357    a0358
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 358    a0359
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 359    a0360
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 360    a0361
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 361    a0362
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 362    a0363
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 363    a0364
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 364    a0365
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 365    a0366
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 366    a0367
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 367    a0368
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 368    a0369
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 369    a0370
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 370    a0371
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 371    a0372
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 372    a0373
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 373    a0374
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 374    a0375
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 375    a0376
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 376    a0377
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 377    a0378
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 378    a0379
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 379    a0380
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 380    a0381
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 381    a0382
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 382    a0383
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 383    a0384
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 384    a0385
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 385    a0386
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 386    a0387
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 387    a0388
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 388    a0389
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 389    a0390
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 390    a0391
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 391    a0392
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 392    a0393
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 393    a0394
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 394    a0395
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 395    a0396
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 396    a0397
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 397    a0398
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 398    a0399
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 399    a0400
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 400    a0401
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 401    a0402
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 402    a0403
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 403    a0404
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 404    a0405
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 405    a0406
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 406    a0407
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 407    a0408
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 408    a0409
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 0    b0001
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 1    b0002
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 2    b0003
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 3    b0004
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 4    b0005
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 5    b0006
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 6    b0007
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 7    b0008
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 8    b0009
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 9    b0010
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 10    b0011
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 11    b0012
+Name: filename, dtype: object
 0: ['data-after-TEST/physionet/data_ecg_cwt/a0001/0/a0001_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0001/1/a0001_seg_1_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0001/2/a0001_seg_2_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0001/3/a0001_seg_3_cwt.npz']
 1: ['data-after-TEST/physionet/data_ecg_cwt/a0002/0/a0002_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0002/1/a0002_seg_1_cwt.npz']
 2: ['data-after-TEST/physionet/data_ecg_cwt/a0003/0/a0003_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0003/1/a0003_seg_1_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0003/2/a0003_seg_2_cwt.npz']
 5: ['data-after-TEST/physionet/data_ecg_cwt/a0006/0/a0006_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0006/1/a0006_seg_1_cwt.npz']
 11: ['data-after-TEST/physionet/data_ecg_cwt/a0012/0/a0012_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0012/1/a0012_seg_1_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0012/2/a0012_seg_2_cwt.npz']
 12: ['data-after-TEST/physionet/data_ecg_cwt/a0013/0/a0013_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0013/1/a0013_seg_1_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0013/2/a0013_seg_2_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0013/3/a0013_seg_3_cwt.npz']
-self.ecg_paths: 2801 len(sum(self.ecg_paths, [])): 2803
+self.ecg_paths: 2803 len(sum(self.ecg_paths, [])): 2803
 ECGPCG DATASET LABELS HEAD:   filename  label
 0    a0001      1
 1    a0002      1
 2    a0003      1
 3    a0004      1
 4    a0005      1
-ECGPCG DATASET LENGTH (EXISTING): 2801, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): 2803
-len data_train, data_test: 1960 841
-len val_dataset, val_train_dataset: 841 1960
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x00000276D4552408>
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x00000276D4552408>
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x00000276D7886808>
-log file path: D:\Uni\Thesis\NEWREPO\multimodal-cardiography-learning\logs\TorchECG_05-04_01-31_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
+ECGPCG DATASET LENGTH (EXISTING): 2803, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): 2803
+len data_train, data_test: 1962 841
+len val_dataset, val_train_dataset: 841 1962
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000001C78552D648>
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000001C78552D648>
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000001C78552DE08>
+log file path: D:\Uni\Thesis\NEWREPO\multimodal-cardiography-learning\logs\TorchECG_05-04_07-46_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
 TorchECG - INFO - training configurations are as follows:
 {
     "debug": True,
@@ -122,10 +966,10 @@ TorchECG - INFO - training configurations are as follows:
     "eps": 1e-07,
     "SEED": 42,
     "RNG": Generator(PCG64),
-    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x00000276D79F9D68>, replace=False, shuffle=False),
-    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x00000276D79F9D68>, endpoint=True),
-    "set_seed": <function set_seed at 0x00000276D7A37288>,
-    "change_dtype": <function change_dtype at 0x00000276D7A3C558>,
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x000001C7F8995E58>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x000001C7F8995E58>, endpoint=True),
+    "set_seed": <function set_seed at 0x000001C7F89CF558>,
+    "change_dtype": <function change_dtype at 0x000001C7F89DB828>,
     "classes": [
         "N",
         "A"
@@ -165,12 +1009,14 @@ TorchECG - INFO - training configurations are as follows:
     "siglen": 16000,
     "physionetOnly": True
 }
-** ECGPCG DATASET HEAD:   filename og_filename  label  record_duration  num_channels  samples_ecg  samples_pcg  qrs_count  seg_num     avg_hr
-0    a0001       a0001      1          35.6660             1        71332        71332         73        4  142.20499
-1    a0002       a0002      1          20.8285             1        41657        41657         54        2  168.61365
-2    a0003       a0003      1          30.7200             1        61440        61440         51        3  170.23572
-3    a0004       a0004      1          35.5965             1        71193        71193         67        4  141.67530
-4    a0005       a0005      1          35.6660             1        71332        71332        104        4  208.28456 **
+** ECGPCG DATASET HEAD:   filename og_filename  label  ...  qrs_count  seg_num     avg_hr
+0    a0001       a0001      1  ...         73        4  142.20499
+1    a0002       a0002      1  ...         54        2  168.61365
+2    a0003       a0003      1  ...         51        3  170.23572
+3    a0004       a0004      1  ...         67        4  141.67530
+4    a0005       a0005      1  ...        104        4  208.28456
+
+[5 rows x 10 columns] **
 * Validating directories and files for: 
 ['data-after-TEST/physionet/data_ecg_cwt/', 'data-after-TEST/ephnogram/data_ecg_cwt/']
 ['data-after-TEST/physionet/data_pcg_cwt/', 'data-after-TEST/ephnogram/data_pcg_cwt/']
@@ -178,33 +1024,875 @@ TorchECG - INFO - training configurations are as follows:
 
 
 * Successfully validated all ECG and PCG directories and files.
-Incomplete samples (missing ECG/PCG/both, missing files, missing segments): ['data-after-TEST/physionet/data_ecg_cwt/a0315']
+Incomplete samples (missing ECG/PCG/both, missing files, missing segments): []
+str(self.df_data.iloc[[row]]['filename']): 0    a0001
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 1    a0002
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 2    a0003
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 3    a0004
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 4    a0005
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 5    a0006
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 6    a0007
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 7    a0008
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 8    a0009
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 9    a0010
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 10    a0011
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 11    a0012
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 12    a0013
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 13    a0014
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 14    a0015
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 15    a0016
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 16    a0017
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 17    a0018
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 18    a0019
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 19    a0020
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 20    a0021
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 21    a0022
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 22    a0023
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 23    a0024
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 24    a0025
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 25    a0026
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 26    a0027
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 27    a0028
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 28    a0029
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 29    a0030
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 30    a0031
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 31    a0032
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 32    a0033
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 33    a0034
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 34    a0035
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 35    a0036
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 36    a0037
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 37    a0038
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 38    a0039
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 39    a0040
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 40    a0041
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 41    a0042
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 42    a0043
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 43    a0044
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 44    a0045
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 45    a0046
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 46    a0047
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 47    a0048
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 48    a0049
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 49    a0050
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 50    a0051
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 51    a0052
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 52    a0053
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 53    a0054
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 54    a0055
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 55    a0056
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 56    a0057
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 57    a0058
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 58    a0059
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 59    a0060
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 60    a0061
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 61    a0062
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 62    a0063
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 63    a0064
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 64    a0065
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 65    a0066
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 66    a0067
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 67    a0068
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 68    a0069
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 69    a0070
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 70    a0071
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 71    a0072
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 72    a0073
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 73    a0074
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 74    a0075
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 75    a0076
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 76    a0077
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 77    a0078
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 78    a0079
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 79    a0080
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 80    a0081
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 81    a0082
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 82    a0083
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 83    a0084
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 84    a0085
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 85    a0086
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 86    a0087
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 87    a0088
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 88    a0089
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 89    a0090
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 90    a0091
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 91    a0092
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 92    a0093
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 93    a0094
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 94    a0095
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 95    a0096
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 96    a0097
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 97    a0098
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 98    a0099
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 99    a0100
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 100    a0101
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 101    a0102
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 102    a0103
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 103    a0104
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 104    a0105
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 105    a0106
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 106    a0107
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 107    a0108
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 108    a0109
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 109    a0110
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 110    a0111
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 111    a0112
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 112    a0113
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 113    a0114
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 114    a0115
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 115    a0116
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 116    a0117
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 117    a0118
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 118    a0119
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 119    a0120
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 120    a0121
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 121    a0122
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 122    a0123
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 123    a0124
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 124    a0125
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 125    a0126
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 126    a0127
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 127    a0128
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 128    a0129
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 129    a0130
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 130    a0131
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 131    a0132
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 132    a0133
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 133    a0134
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 134    a0135
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 135    a0136
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 136    a0137
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 137    a0138
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 138    a0139
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 139    a0140
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 140    a0141
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 141    a0142
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 142    a0143
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 143    a0144
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 144    a0145
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 145    a0146
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 146    a0147
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 147    a0148
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 148    a0149
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 149    a0150
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 150    a0151
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 151    a0152
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 152    a0153
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 153    a0154
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 154    a0155
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 155    a0156
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 156    a0157
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 157    a0158
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 158    a0159
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 159    a0160
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 160    a0161
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 161    a0162
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 162    a0163
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 163    a0164
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 164    a0165
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 165    a0166
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 166    a0167
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 167    a0168
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 168    a0169
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 169    a0170
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 170    a0171
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 171    a0172
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 172    a0173
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 173    a0174
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 174    a0175
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 175    a0176
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 176    a0177
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 177    a0178
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 178    a0179
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 179    a0180
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 180    a0181
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 181    a0182
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 182    a0183
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 183    a0184
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 184    a0185
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 185    a0186
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 186    a0187
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 187    a0188
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 188    a0189
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 189    a0190
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 190    a0191
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 191    a0192
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 192    a0193
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 193    a0194
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 194    a0195
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 195    a0196
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 196    a0197
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 197    a0198
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 198    a0199
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 199    a0200
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 200    a0201
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 201    a0202
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 202    a0203
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 203    a0204
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 204    a0205
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 205    a0206
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 206    a0207
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 207    a0208
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 208    a0209
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 209    a0210
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 210    a0211
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 211    a0212
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 212    a0213
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 213    a0214
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 214    a0215
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 215    a0216
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 216    a0217
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 217    a0218
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 218    a0219
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 219    a0220
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 220    a0221
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 221    a0222
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 222    a0223
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 223    a0224
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 224    a0225
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 225    a0226
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 226    a0227
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 227    a0228
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 228    a0229
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 229    a0230
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 230    a0231
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 231    a0232
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 232    a0233
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 233    a0234
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 234    a0235
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 235    a0236
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 236    a0237
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 237    a0238
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 238    a0239
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 239    a0240
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 240    a0241
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 241    a0242
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 242    a0243
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 243    a0244
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 244    a0245
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 245    a0246
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 246    a0247
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 247    a0248
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 248    a0249
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 249    a0250
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 250    a0251
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 251    a0252
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 252    a0253
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 253    a0254
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 254    a0255
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 255    a0256
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 256    a0257
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 257    a0258
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 258    a0259
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 259    a0260
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 260    a0261
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 261    a0262
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 262    a0263
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 263    a0264
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 264    a0265
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 265    a0266
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 266    a0267
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 267    a0268
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 268    a0269
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 269    a0270
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 270    a0271
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 271    a0272
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 272    a0273
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 273    a0274
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 274    a0275
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 275    a0276
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 276    a0277
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 277    a0278
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 278    a0279
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 279    a0280
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 280    a0281
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 281    a0282
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 282    a0283
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 283    a0284
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 284    a0285
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 285    a0286
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 286    a0287
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 287    a0288
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 288    a0289
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 289    a0290
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 290    a0291
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 291    a0292
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 292    a0293
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 293    a0294
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 294    a0295
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 295    a0296
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 296    a0297
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 297    a0298
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 298    a0299
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 299    a0300
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 300    a0301
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 301    a0302
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 302    a0303
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 303    a0304
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 304    a0305
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 305    a0306
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 306    a0307
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 307    a0308
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 308    a0309
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 309    a0310
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 310    a0311
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 311    a0312
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 312    a0313
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 313    a0314
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 314    a0315
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 315    a0316
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 316    a0317
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 317    a0318
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 318    a0319
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 319    a0320
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 320    a0321
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 321    a0322
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 322    a0323
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 323    a0324
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 324    a0325
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 325    a0326
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 326    a0327
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 327    a0328
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 328    a0329
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 329    a0330
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 330    a0331
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 331    a0332
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 332    a0333
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 333    a0334
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 334    a0335
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 335    a0336
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 336    a0337
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 337    a0338
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 338    a0339
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 339    a0340
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 340    a0341
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 341    a0342
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 342    a0343
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 343    a0344
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 344    a0345
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 345    a0346
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 346    a0347
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 347    a0348
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 348    a0349
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 349    a0350
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 350    a0351
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 351    a0352
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 352    a0353
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 353    a0354
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 354    a0355
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 355    a0356
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 356    a0357
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 357    a0358
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 358    a0359
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 359    a0360
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 360    a0361
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 361    a0362
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 362    a0363
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 363    a0364
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 364    a0365
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 365    a0366
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 366    a0367
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 367    a0368
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 368    a0369
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 369    a0370
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 370    a0371
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 371    a0372
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 372    a0373
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 373    a0374
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 374    a0375
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 375    a0376
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 376    a0377
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 377    a0378
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 378    a0379
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 379    a0380
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 380    a0381
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 381    a0382
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 382    a0383
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 383    a0384
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 384    a0385
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 385    a0386
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 386    a0387
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 387    a0388
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 388    a0389
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 389    a0390
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 390    a0391
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 391    a0392
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 392    a0393
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 393    a0394
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 394    a0395
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 395    a0396
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 396    a0397
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 397    a0398
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 398    a0399
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 399    a0400
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 400    a0401
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 401    a0402
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 402    a0403
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 403    a0404
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 404    a0405
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 405    a0406
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 406    a0407
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 407    a0408
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 408    a0409
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 0    b0001
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 1    b0002
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 2    b0003
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 3    b0004
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 4    b0005
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 5    b0006
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 6    b0007
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 7    b0008
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 8    b0009
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 9    b0010
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 10    b0011
+Name: filename, dtype: object
+str(self.df_data.iloc[[row]]['filename']): 11    b0012
+Name: filename, dtype: object
 0: ['data-after-TEST/physionet/data_ecg_cwt/a0001/0/a0001_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0001/1/a0001_seg_1_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0001/2/a0001_seg_2_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0001/3/a0001_seg_3_cwt.npz']
 1: ['data-after-TEST/physionet/data_ecg_cwt/a0002/0/a0002_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0002/1/a0002_seg_1_cwt.npz']
 2: ['data-after-TEST/physionet/data_ecg_cwt/a0003/0/a0003_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0003/1/a0003_seg_1_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0003/2/a0003_seg_2_cwt.npz']
 5: ['data-after-TEST/physionet/data_ecg_cwt/a0006/0/a0006_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0006/1/a0006_seg_1_cwt.npz']
 11: ['data-after-TEST/physionet/data_ecg_cwt/a0012/0/a0012_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0012/1/a0012_seg_1_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0012/2/a0012_seg_2_cwt.npz']
 12: ['data-after-TEST/physionet/data_ecg_cwt/a0013/0/a0013_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0013/1/a0013_seg_1_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0013/2/a0013_seg_2_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0013/3/a0013_seg_3_cwt.npz']
-self.ecg_paths: 2801 len(sum(self.ecg_paths, [])): 2803
+self.ecg_paths: 2803 len(sum(self.ecg_paths, [])): 2803
 ECGPCG DATASET LABELS HEAD:   filename  label
 0    a0001      1
 1    a0002      1
 2    a0003      1
 3    a0004      1
 4    a0005      1
-ECGPCG DATASET LENGTH (EXISTING): 2801, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): 2803
-len data_train, data_test: 1960 841
-len val_dataset, val_train_dataset: 841 1960
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x00000276E01CB908>
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x00000276E01CB908>
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x00000276E023CF48>
+ECGPCG DATASET LENGTH (EXISTING): 2803, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): 2803
+len data_train, data_test: 1962 841
+len val_dataset, val_train_dataset: 841 1962
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000001C79844BF88>
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000001C79844BF88>
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000001C796EFFC08>
 TorchECG - INFO - 
 Starting training:
 ------------------
 Epochs:          100
 Batch size:      8
 Learning rate:   0.0001
-Training size:   1960
+Training size:   1962
 Validation size: 841
 Device:          cuda
 Optimizer:       adamw_amsgrad
