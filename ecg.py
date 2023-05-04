@@ -70,6 +70,7 @@ class ECG():
         self.normalise = normalise
         self.apply_filter = apply_filter
         self.start_time = 0
+        self.save_qrs_hrs_plot = save_qrs_hrs_plot
         if sampfrom is None:
             if sampto is None:
                 record = wfdb.rdrecord(filepath+filename, channels=[chan])
@@ -99,9 +100,10 @@ class ECG():
         self.signal_preproc = signal
         print(f"SIGGYSIG: {savename if savename is not None else filename} {signal}")
         self.qrs_inds = processing.qrs.xqrs_detect(sig=signal, fs=sample_rate)
-        if get_qrs_and_hrs_png:    
+        if get_qrs_and_hrs_png:   
+            print(f"get_qrs_peaks_and_hr: {savename}") 
             self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=sample_rate,
-                title="Corrected GQRS peak detection", savefolder=f"{config.outputpath}results/gqrs_peaks", saveto=f"{config.outputpath}results/gqrs_peaks/{self.savename if self.savename is not None else self.filename}.png", save_plot=save_qrs_hrs_plot)
+                title="Corrected GQRS peak detection", savefolder=f"{config.outputpath}results/gqrs_peaks", saveto=f"{config.outputpath}results/gqrs_peaks/{savename if savename is not None else self.filename}.png", save_plot=save_qrs_hrs_plot)
             self.hr_avg = np.nanmean(self.hrs)
             
         if apply_filter:
@@ -182,9 +184,9 @@ class ECG():
         for i in range(no_segs):
             segment = None
             if self.savename is not None:
-                segment = ECG(self.filename, filepath=self.filepath, label=self.label, savename=f'{self.savename}_seg_{i}', csv_path=self.csv_path, sample_rate=self.sample_rate, sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter)
+                segment = ECG(self.filename, filepath=self.filepath, label=self.label, savename=f'{self.savename}_seg_{i}', csv_path=self.csv_path, sample_rate=self.sample_rate, sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter, save_qrs_hrs_plot=self.save_qrs_hrs_plot)
             else:
-                segment = ECG(self.filename, filepath=self.filepath, label=self.label, savename=f'{self.filename}_seg_{i}', csv_path=self.csv_path, sample_rate=self.sample_rate, sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter)
+                segment = ECG(self.filename, filepath=self.filepath, label=self.label, savename=f'{self.filename}_seg_{i}', csv_path=self.csv_path, sample_rate=self.sample_rate, sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter, save_qrs_hrs_plot=self.save_qrs_hrs_plot)
             segments.append(segment)
         return segments
     
@@ -208,7 +210,7 @@ def get_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), savefolder
         create_new_folder(savefolder)
     else:
         raise ValueError(f"Error: savefolder ({savefolder}) must be part of the filepath 'saveto' ({saveto}).")
-    print("Plot a signal with its peaks and heart rate")
+    print(f"Plot a signal with its peaks and heart rate - {saveto}")
     # Calculate heart rate
     hrs = processing.hr.compute_hr(sig_len=sig.shape[0], qrs_inds=peak_inds, fs=fs)
     N = sig.shape[0]
@@ -223,10 +225,10 @@ def get_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), savefolder
         ax_left.set_xlabel('Time (ms)')
         ax_left.set_ylabel('ECG (mV)', color='#3979f0')
         
-        ax_right.plot(np.arange(N), hrs, label='Heart rate', color='m', linewidth=2)
-        ax_right.set_ylabel('Heart rate (bpm)', color='m')
-        plt.axhline(np.average(hrs), color='m', linewidth=4, ls='--') 
-        ax_right.tick_params('y', colors='m')
+       # ax_right.plot(np.arange(N), hrs, label='Heart rate', color='m', linewidth=2)
+        #ax_right.set_ylabel('Heart rate (bpm)', color='m')
+        #plt.axhline(np.average(hrs), color='m', linewidth=4, ls='--') 
+        #ax_right.tick_params('y', colors='m')
         # Make the y-axis label, ticks and tick labels match the line color.
         ax_left.tick_params('y', colors='#3979f0')
         if saveto is not None:

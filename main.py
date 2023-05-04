@@ -39,14 +39,14 @@ def data_sample(outputfolderpath="samples-TEST", dataset="physionet", filename="
         colormap = plt.cm.jet
     if dataset=="ephnogram":
         sn = 'b0000'[:-len(str(index_ephnogram-1))]+str(index_ephnogram-1)
-        ecg = ECG(filename=filename, savename=sn, filepath=inputpath_data, label=label, chan=0, csv_path=inputpath_target, sample_rate=config.global_opts.sample_rate_ecg, normalise=True, apply_filter=True, get_qrs_and_hrs_png=True)
+        ecg = ECG(filename=filename, savename=sn, filepath=inputpath_data, label=label, chan=0, csv_path=inputpath_target, sample_rate=config.global_opts.sample_rate_ecg, normalise=True, apply_filter=True, get_qrs_and_hrs_png=True, save_qrs_hrs_plot=True)
         duration = len(ecg.signal)/ecg.sample_rate
         pcg_record = wfdb.rdrecord(inputpath_data+filename, channels=[1])
         audio_sig = np.array(pcg_record.p_signal[:, 0])
         audio = Audio(filename=filename, filepath=inputpath_data, audio=audio_sig, sample_rate=config.base_wfdb_pcg_sample_rate)
         pcg = PCG(filename=filename, savename=sn, audio=audio, sample_rate=config.global_opts.sample_rate_pcg, label=label, normalise=True, apply_filter=True, plot_audio=True)
     else: #dataset=="physionet"
-        ecg = ECG(filename=filename, filepath=inputpath_data, label=label, csv_path=inputpath_target, sample_rate=config.global_opts.sample_rate_ecg, normalise=True, apply_filter=True, get_qrs_and_hrs_png=True)
+        ecg = ECG(filename=filename, filepath=inputpath_data, label=label, csv_path=inputpath_target, sample_rate=config.global_opts.sample_rate_ecg, normalise=True, apply_filter=True, get_qrs_and_hrs_png=True, save_qrs_hrs_plot=True)
         duration = len(ecg.signal)/ecg.sample_rate
         audio = Audio(filename=filename, filepath=inputpath_data)
         pcg = PCG(filename=filename, audio=audio, sample_rate=config.global_opts.sample_rate_pcg, label=label, normalise=True, apply_filter=True, plot_audio=True)
@@ -246,8 +246,26 @@ if __name__ == '__main__':
     create_new_folder(config.outputpath+"results")
     create_new_folder("samples")
     
+    # Delete all files in directory with pattern file.endswith("_spec_cwt_spec.npz")
+    #dirs_ecg = next(os.walk(outputpath+f'ephnogram/data_ecg_{config.global_opts.ecg_type}/'))[1]
+    #for dir in dirs_ecg:
+    #    dirs_inner = next(os.walk(outputpath+f'ephnogram/data_ecg_{config.global_opts.ecg_type}/'+f'{dir}/'))[1]
+    #    for j, d in enumerate(dirs_inner):
+    #        files_ecg = next(os.walk(outputpath+f'ephnogram/data_ecg_{config.global_opts.ecg_type}/'+f'{dir}/{d}/'))[2]
+    #        files_pcg = next(os.walk(outputpath+f'ephnogram/data_pcg_{config.global_opts.pcg_type}/'+f'{dir}/{d}/'))[2]
+    #        valid_files_ecg = [f for f in files_ecg if f.endswith("_spec_cwt_spec.npz")]
+    #        valid_files_pcg = [f for f in files_pcg if f.endswith("_spec_cwt_spec.npz")]
+    #        for v in valid_files_ecg:
+    #            os.remove(outputpath+f'ephnogram/data_ecg_{config.global_opts.ecg_type}/'+f'{dir}/{d}/'+v)
+    #        for v in valid_files_pcg:
+    #            os.remove(outputpath+f'ephnogram/data_pcg_{config.global_opts.pcg_type}/'+f'{dir}/{d}/'+v)
+    #        print(f"AAA: {valid_files_ecg}")
+    
     # Samples in the paper
-    #data_sample(filename="a0314", outputfolderpath="samples/a0314", label=1)
+    data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="stft", transform_type_pcg="stft_mel", colormap="magma")
+    #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma")
+    data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="morlet", wavelet_pcg="morlet", colormap="magma")
+    sys.exit(0)
     #data_sample(filename="a0315", outputfolderpath="samples/a0315", label=1)
     #data_sample(filename="a0007", outputfolderpath="samples/a0007", label=1)
     #data_sample(filename="ECGPCG0003", index_ephnogram=1, outputfolderpath="samples/b0001", dataset="ephnogram", inputpath_data=config.input_ephnogram_data_folderpath_, inputpath_target=config.input_ephnogram_target_folderpath_, label=0)

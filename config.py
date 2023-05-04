@@ -75,8 +75,8 @@ ecg_filter_lim = [0.5, 100]
 pcg_filter_lim = [20, 400]
 #[64ms in paper] 40ms window length. converting from ms to samples
 window_length_ms = 64 #64, 40
-window_length = 512 #window_length_ms * sample_rate_ecg
-nmels = 64 #60; must be < nfft//2-1
+window_length = 256 #window_length_ms * sample_rate_ecg
+nmels = 128 #60; must be < nfft//2-1
 segment_length = 8
 seg_factor_fps = 24 #video fps
 frame_length = 2 #length of spectrogram in one frame

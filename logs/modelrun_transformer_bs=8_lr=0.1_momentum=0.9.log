@@ -1,4 +1,4 @@
-log file path: D:\Uni\Thesis\NEWREPO\multimodal-cardiography-learning\logs\TorchECG_05-04_01-12_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
+log file path: D:\Uni\Thesis\NEWREPO\multimodal-cardiography-learning\logs\TorchECG_05-04_01-31_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
 TorchECG - INFO - training configurations are as follows:
 {
     "debug": True,
@@ -22,10 +22,10 @@ TorchECG - INFO - training configurations are as follows:
     "eps": 1e-07,
     "SEED": 42,
     "RNG": Generator(PCG64),
-    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x00000228DABC9D68>, replace=False, shuffle=False),
-    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x00000228DABC9D68>, endpoint=True),
-    "set_seed": <function set_seed at 0x00000228DAC08288>,
-    "change_dtype": <function change_dtype at 0x00000228DAC0D558>,
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x00000276D79F9D68>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x00000276D79F9D68>, endpoint=True),
+    "set_seed": <function set_seed at 0x00000276D7A37288>,
+    "change_dtype": <function change_dtype at 0x00000276D7A3C558>,
     "classes": [
         "N",
         "A"
@@ -95,10 +95,10 @@ ECGPCG DATASET LABELS HEAD:   filename  label
 ECGPCG DATASET LENGTH (EXISTING): 2801, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): 2803
 len data_train, data_test: 1960 841
 len val_dataset, val_train_dataset: 841 1960
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000002288A3FBF08>
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000002288A3FBF08>
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x00000228E39926C8>
-log file path: D:\Uni\Thesis\NEWREPO\multimodal-cardiography-learning\logs\TorchECG_05-04_01-12_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x00000276D4552408>
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x00000276D4552408>
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x00000276D7886808>
+log file path: D:\Uni\Thesis\NEWREPO\multimodal-cardiography-learning\logs\TorchECG_05-04_01-31_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
 TorchECG - INFO - training configurations are as follows:
 {
     "debug": True,
@@ -122,10 +122,10 @@ TorchECG - INFO - training configurations are as follows:
     "eps": 1e-07,
     "SEED": 42,
     "RNG": Generator(PCG64),
-    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x00000228DABC9D68>, replace=False, shuffle=False),
-    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x00000228DABC9D68>, endpoint=True),
-    "set_seed": <function set_seed at 0x00000228DAC08288>,
-    "change_dtype": <function change_dtype at 0x00000228DAC0D558>,
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x00000276D79F9D68>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x00000276D79F9D68>, endpoint=True),
+    "set_seed": <function set_seed at 0x00000276D7A37288>,
+    "change_dtype": <function change_dtype at 0x00000276D7A3C558>,
     "classes": [
         "N",
         "A"
@@ -177,3 +177,39 @@ TorchECG - INFO - training configurations are as follows:
 ['data-after-TEST/physionet/data_physionet_raw', 'data-after-TEST/ephnogram/data_ephnogram_raw']
 
 
+* Successfully validated all ECG and PCG directories and files.
+Incomplete samples (missing ECG/PCG/both, missing files, missing segments): ['data-after-TEST/physionet/data_ecg_cwt/a0315']
+0: ['data-after-TEST/physionet/data_ecg_cwt/a0001/0/a0001_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0001/1/a0001_seg_1_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0001/2/a0001_seg_2_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0001/3/a0001_seg_3_cwt.npz']
+1: ['data-after-TEST/physionet/data_ecg_cwt/a0002/0/a0002_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0002/1/a0002_seg_1_cwt.npz']
+2: ['data-after-TEST/physionet/data_ecg_cwt/a0003/0/a0003_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0003/1/a0003_seg_1_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0003/2/a0003_seg_2_cwt.npz']
+5: ['data-after-TEST/physionet/data_ecg_cwt/a0006/0/a0006_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0006/1/a0006_seg_1_cwt.npz']
+11: ['data-after-TEST/physionet/data_ecg_cwt/a0012/0/a0012_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0012/1/a0012_seg_1_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0012/2/a0012_seg_2_cwt.npz']
+12: ['data-after-TEST/physionet/data_ecg_cwt/a0013/0/a0013_seg_0_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0013/1/a0013_seg_1_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0013/2/a0013_seg_2_cwt.npz', 'data-after-TEST/physionet/data_ecg_cwt/a0013/3/a0013_seg_3_cwt.npz']
+self.ecg_paths: 2801 len(sum(self.ecg_paths, [])): 2803
+ECGPCG DATASET LABELS HEAD:   filename  label
+0    a0001      1
+1    a0002      1
+2    a0003      1
+3    a0004      1
+4    a0005      1
+ECGPCG DATASET LENGTH (EXISTING): 2801, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): 2803
+len data_train, data_test: 1960 841
+len val_dataset, val_train_dataset: 841 1960
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x00000276E01CB908>
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x00000276E01CB908>
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x00000276E023CF48>
+TorchECG - INFO - 
+Starting training:
+------------------
+Epochs:          100
+Batch size:      8
+Learning rate:   0.0001
+Training size:   1960
+Validation size: 841
+Device:          cuda
+Optimizer:       adamw_amsgrad
+Dataset classes: ['N', 'A']
+-----------------------------------------
+
+TorchECG - INFO - Train epoch_0:
+--------------------------------------------------------------------------------------------------------------

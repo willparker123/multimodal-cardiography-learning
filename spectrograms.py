@@ -144,7 +144,7 @@ class Spectrogram():
         else:
             raise ValueError(f"Error: Invalid type for 'transform_type': must be one of {config.transform_types}")
 
-def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=None, signal=None, save_np=True, save_img=True, normalise=True, transform_type="stft", window=None, window_size=128, NMels=128, NFFT=128, 
+def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=None, signal=None, save_np=True, save_img=True, normalise=True, transform_type="stft", window=None, window_size=128, NMels=128, NFFT=128, 
                        hop_length=128//2, outpath_np=outputpath+'physionet/data', outpath_png=outputpath+'physionet/spectrograms', start_time=0, wavelet_function="ricker",
                        power_coeff=2, colormap=plt.cm.jet, just_image=True):
     if signal.ndim != 1:
@@ -177,6 +177,12 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
             spec = spec.log2().detach().numpy()
         else:
             spec = spec.detach().numpy()
+            
+        if normalise: #normalise to [0, 1]
+            if normalise_factor is not None:
+                spec = spec / normalise_factor
+            else:
+                spec = (spec-np.min(spec))/(np.max(spec)-np.min(spec)) #(spec - spec.min())/np.ptp(spec)
         f = np.linspace(0, sr//2, num=np.shape(spec)[0])
         t = np.linspace(0, len(signal)//sr, num=np.shape(spec)[1])
         f[0] = 0
@@ -211,6 +217,11 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
             spec = np.log2(spec)
         if transform_type.endswith("sq"):
             spec = np.square(spec)
+        if normalise: #normalise to [0, 1]
+            if normalise_factor is not None:
+                spec = spec / normalise_factor
+            else:
+                spec = (spec-np.min(spec))/(np.max(spec)-np.min(spec)) #(spec - spec.min())/np.ptp(spec)
         f = np.linspace(0, sr//2, num=np.shape(spec)[0])
         t = np.linspace(0, len(signal)//sr, num=np.shape(spec)[1])
         t[0] = 0
@@ -240,8 +251,14 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
         signal = signal.float()
         spec = spec_transform(signal)
         if transform_type.endswith("log"):
-            spec = spec.log2()
-        spec = spec.detach().numpy()
+            spec = spec.log2().detach().numpy()
+        else:
+            spec = spec.detach().numpy()
+        if normalise: #normalise to [0, 1]
+            if normalise_factor is not None:
+                spec = spec / normalise_factor
+            else:
+                spec = (spec-np.min(spec))/(np.max(spec)-np.min(spec)) #(spec - spec.min())/np.ptp(spec)
         f = librosa.mel_frequencies(fmin=0, fmax=sr//2, n_mels=NMels)
         t = np.linspace(0, len(signal)//sr, num=np.shape(spec)[1])
         f[0] = 0
@@ -250,12 +267,6 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=False, savename=
         image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=abs(spec).max(), vmin=-abs(spec).max(), interpolation="none")
     else:
         raise ValueError(f"Error: Invalid transform_type for 'transform_type': must be one of {config.transform_types}")
-    
-    if normalise: #normalise to [0, 1]
-        if normalise_factor is not None:
-            spec = spec / normalise_factor
-        else:
-            spec = (spec-np.min(spec))/(np.max(spec)-np.min(spec)) #(spec - spec.min())/np.ptp(spec)
     if save_np:
         if savename is not None:
             np.savez(outpath_np+savename+f'_{transform_type}_spec', spec=spec, freqs=f, times=t)
