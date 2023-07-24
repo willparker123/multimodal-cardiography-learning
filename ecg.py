@@ -98,7 +98,6 @@ class ECG():
             print(f"Warning: record sampling frequency ({record.fs}) does not match ecg_sample_rate ({sample_rate}) - resampling to sample_rate")
             signal, self.locations = processing.resample_sig(signal, record.fs, sample_rate)
         self.signal_preproc = signal
-        print(f"SIGGYSIG: {savename if savename is not None else filename} {signal}")
         self.qrs_inds = processing.qrs.xqrs_detect(sig=signal, fs=sample_rate)
         if get_qrs_and_hrs_png:   
             print(f"get_qrs_peaks_and_hr: {savename}") 
