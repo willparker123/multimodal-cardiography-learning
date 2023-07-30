@@ -1,4 +1,4 @@
-log file path: D:\Uni\Thesis\NEWREPO\multimodal-cardiography-learning\logs\TorchECG_05-04_07-46_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
+log file path: D:\Uni\Thesis\NEWREPO\multimodal-cardiography-learning\logs\TorchECG_07-14_22-22_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
 TorchECG - INFO - training configurations are as follows:
 {
     "debug": True,
@@ -22,10 +22,10 @@ TorchECG - INFO - training configurations are as follows:
     "eps": 1e-07,
     "SEED": 42,
     "RNG": Generator(PCG64),
-    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x000001C7F8995E58>, replace=False, shuffle=False),
-    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x000001C7F8995E58>, endpoint=True),
-    "set_seed": <function set_seed at 0x000001C7F89CF558>,
-    "change_dtype": <function change_dtype at 0x000001C7F89DB828>,
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x0000029F4D235E58>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x0000029F4D235E58>, endpoint=True),
+    "set_seed": <function set_seed at 0x0000029F4D26F558>,
+    "change_dtype": <function change_dtype at 0x0000029F4D27B828>,
     "classes": [
         "N",
         "A"
@@ -65,14 +65,12 @@ TorchECG - INFO - training configurations are as follows:
     "siglen": 16000,
     "physionetOnly": True
 }
-** ECGPCG DATASET HEAD:   filename og_filename  label  ...  qrs_count  seg_num     avg_hr
-0    a0001       a0001      1  ...         73        4  142.20499
-1    a0002       a0002      1  ...         54        2  168.61365
-2    a0003       a0003      1  ...         51        3  170.23572
-3    a0004       a0004      1  ...         67        4  141.67530
-4    a0005       a0005      1  ...        104        4  208.28456
-
-[5 rows x 10 columns] **
+** ECGPCG DATASET HEAD:   filename og_filename  label  record_duration  num_channels  samples_ecg  samples_pcg  qrs_count  seg_num     avg_hr
+0    a0001       a0001      1          35.6660             1        71332        71332         73        4  142.20499
+1    a0002       a0002      1          20.8285             1        41657        41657         54        2  168.61365
+2    a0003       a0003      1          30.7200             1        61440        61440         51        3  170.23572
+3    a0004       a0004      1          35.5965             1        71193        71193         67        4  141.67530
+4    a0005       a0005      1          35.6660             1        71332        71332        104        4  208.28456 **
 * Validating directories and files for: 
 ['data-after-TEST/physionet/data_ecg_cwt/', 'data-after-TEST/ephnogram/data_ecg_cwt/']
 ['data-after-TEST/physionet/data_pcg_cwt/', 'data-after-TEST/ephnogram/data_pcg_cwt/']
@@ -939,10 +937,10 @@ ECGPCG DATASET LABELS HEAD:   filename  label
 ECGPCG DATASET LENGTH (EXISTING): 2803, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): 2803
 len data_train, data_test: 1962 841
 len val_dataset, val_train_dataset: 841 1962
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000001C78552D648>
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000001C78552D648>
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000001C78552DE08>
-log file path: D:\Uni\Thesis\NEWREPO\multimodal-cardiography-learning\logs\TorchECG_05-04_07-46_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x0000029F59462CC8>
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x0000029F59462CC8>
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x0000029F59462308>
+log file path: D:\Uni\Thesis\NEWREPO\multimodal-cardiography-learning\logs\TorchECG_07-14_22-22_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
 TorchECG - INFO - training configurations are as follows:
 {
     "debug": True,
@@ -966,10 +964,10 @@ TorchECG - INFO - training configurations are as follows:
     "eps": 1e-07,
     "SEED": 42,
     "RNG": Generator(PCG64),
-    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x000001C7F8995E58>, replace=False, shuffle=False),
-    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x000001C7F8995E58>, endpoint=True),
-    "set_seed": <function set_seed at 0x000001C7F89CF558>,
-    "change_dtype": <function change_dtype at 0x000001C7F89DB828>,
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x0000029F4D235E58>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x0000029F4D235E58>, endpoint=True),
+    "set_seed": <function set_seed at 0x0000029F4D26F558>,
+    "change_dtype": <function change_dtype at 0x0000029F4D27B828>,
     "classes": [
         "N",
         "A"
@@ -1009,14 +1007,12 @@ TorchECG - INFO - training configurations are as follows:
     "siglen": 16000,
     "physionetOnly": True
 }
-** ECGPCG DATASET HEAD:   filename og_filename  label  ...  qrs_count  seg_num     avg_hr
-0    a0001       a0001      1  ...         73        4  142.20499
-1    a0002       a0002      1  ...         54        2  168.61365
-2    a0003       a0003      1  ...         51        3  170.23572
-3    a0004       a0004      1  ...         67        4  141.67530
-4    a0005       a0005      1  ...        104        4  208.28456
-
-[5 rows x 10 columns] **
+** ECGPCG DATASET HEAD:   filename og_filename  label  record_duration  num_channels  samples_ecg  samples_pcg  qrs_count  seg_num     avg_hr
+0    a0001       a0001      1          35.6660             1        71332        71332         73        4  142.20499
+1    a0002       a0002      1          20.8285             1        41657        41657         54        2  168.61365
+2    a0003       a0003      1          30.7200             1        61440        61440         51        3  170.23572
+3    a0004       a0004      1          35.5965             1        71193        71193         67        4  141.67530
+4    a0005       a0005      1          35.6660             1        71332        71332        104        4  208.28456 **
 * Validating directories and files for: 
 ['data-after-TEST/physionet/data_ecg_cwt/', 'data-after-TEST/ephnogram/data_ecg_cwt/']
 ['data-after-TEST/physionet/data_pcg_cwt/', 'data-after-TEST/ephnogram/data_pcg_cwt/']
@@ -1883,9 +1879,9 @@ ECGPCG DATASET LABELS HEAD:   filename  label
 ECGPCG DATASET LENGTH (EXISTING): 2803, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): 2803
 len data_train, data_test: 1962 841
 len val_dataset, val_train_dataset: 841 1962
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000001C79844BF88>
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000001C79844BF88>
-len(self.data_source): <torch.utils.data.dataset.Subset object at 0x000001C796EFFC08>
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x0000029F599E6F48>
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x0000029F599E6F48>
+len(self.data_source): <torch.utils.data.dataset.Subset object at 0x0000029F5958BAC8>
 TorchECG - INFO - 
 Starting training:
 ------------------

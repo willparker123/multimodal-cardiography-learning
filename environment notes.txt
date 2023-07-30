@@ -103,11 +103,11 @@ conda install -c conda-forge wfdb scikit-build opencv tqdm librosa configargpars
 
 ECGPCG
 # WINDOWS
-{installation_directory_path}\python.exe -V
-ADD TO PATH ^
+ADD TO PATH: {installation_directory_path}\python.exe -V
+
 python -m virtualenv --python="{installation_directory_path}\python.exe" "{path_to_environment}/{environment_name}"
-e.g. python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38-32/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
-D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/activate.bat
+	(e.g. python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38-32/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new")
+D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/activate.bat  [.ps1]
 deactivate 
 
 TO FIX activate.bat NOT RUNNING: Set-ExecutionPolicy Unrestricted --Force AS ADMINISTRATOR 
