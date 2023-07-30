@@ -5,6 +5,10 @@ The paper references two datasets - [Ephnogram](https://physionet.org/content/ep
 
 The combined MM-ECGPCG dataset in the paper combines these two base datasets, taking **normal** samples from participants who were "at rest" from Ephnogram, and all of the samples from the 'training-a' folder inside the Physionet 2016 challenge data. This combined dataset is formed using **clean_data.py**, and the Pytorch dataset is in **dataset.py**. The model code is in **model.py**, and the training and analysis is in **main.py**.
 
+## Environment
+
+The paper's code (this repo) runs on Python 3.8.1 due to a dependency
+
 ## Data Cleaning
 
 The data cleaning process begins by reading all source files from the two existing datasets (Ephnogram / Physionet), sample-by-sample. The files are transformed, split into segments and saved into directories inside a common root folder named after the transformation process for each sample ('data_{transformation_type}'). For exmaple, the ECG from the first segment of the first sample would be saved into 'data_ecg_cwt/a0001/0' and the PCG 'data_pcg_cwt/a0001/0' where 'data_ecg_cwt'  The data cleaning process is detailed in the paper.

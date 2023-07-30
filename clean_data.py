@@ -58,7 +58,8 @@ from pcg import PCG, get_pcg_segments_from_array, save_pcg
 import sys
 import importlib
 
-balance_diff_precalc = 812
+# How many more Normal data points (segments) there are than Abnormal in the full Ephnogram-Physionet database
+NORMAL_SEG_SAMPLE_EXCESS = 812
 
 def format_dataset_name(dataset):
   dataset = dataset.lower()
@@ -184,7 +185,7 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
   else:
     return data
   
-def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_, sample_clip_len=config.global_opts.segment_length, ecg_sample_rate=config.global_opts.sample_rate_ecg, pcg_sample_rate=config.global_opts.sample_rate_pcg, skipECGSpectrogram = False, skipPCGSpectrogram = False, skipSegments = False, balance_diff=balance_diff_precalc, create_objects=False, split_into_video=False, q=None, window_ecg=None, window_pcg=None, saveImage=True, saveData=True, saveParent=True, skipExisting=True):
+def get_spectrogram_data(full_list, dataset, reflen, inputpath_data, outputpath_, sample_clip_len=config.global_opts.segment_length, ecg_sample_rate=config.global_opts.sample_rate_ecg, pcg_sample_rate=config.global_opts.sample_rate_pcg, skipECGSpectrogram = False, skipPCGSpectrogram = False, skipSegments = False, balance_diff=NORMAL_SEG_SAMPLE_EXCESS, create_objects=False, split_into_video=False, q=None, window_ecg=None, window_pcg=None, saveImage=True, saveData=True, saveParent=True, skipExisting=True):
   dataset = format_dataset_name(dataset)
   # data_list.values.tolist() SHOULD RETURN (index,filename,og_filename,label,record_duration,num_channels,qrs_inds,signal,samples,qrs_count,seg_num)
   data_list = full_list[0]
@@ -448,7 +449,7 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
   results_ = pool.map(partial(get_spectrogram_data, dataset=dataset, reflen=reflen, inputpath_data=inputpath_data, outputpath_=outputpath_+dataset+'/', 
                               sample_clip_len=config.global_opts.segment_length, ecg_sample_rate=config.global_opts.sample_rate_ecg, pcg_sample_rate=config.global_opts.sample_rate_pcg,
                               skipECGSpectrogram = skipECGSpectrogram, skipPCGSpectrogram = skipPCGSpectrogram, 
-                              skipSegments = skipSegments, balance_diff=balance_diff_precalc, create_objects=create_objects, q=q, 
+                              skipSegments = skipSegments, balance_diff=NORMAL_SEG_SAMPLE_EXCESS, create_objects=create_objects, q=q, 
                               saveData=saveSpecData, saveImage=saveSpecImage, saveParent=saveParent, skipExisting=skipExisting), full_list)
   if not skipSegments and create_objects:
     for r in results_:

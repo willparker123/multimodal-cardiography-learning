@@ -141,6 +141,7 @@ def ricker(points, width):
 bior_family = pywt.wavelist(family='bior', kind='continuous')
 wavelet = pywt.Wavelet(name="bior2.6")
 phi_d, psi_d, phi_r, psi_r, x = wavelet.wavefun(level=6)
+
 # [Constrained transformer network for ECG signal processing and arrhythmia classification]
 #
 # This paper uses the Biorthogonal 2.6 (bior2.6) Wavelet Function
