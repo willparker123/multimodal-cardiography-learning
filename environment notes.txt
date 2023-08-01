@@ -106,28 +106,17 @@ ECGPCG
 ADD TO PATH: {installation_directory_path}\python.exe -V
 
 python -m virtualenv --python="{installation_directory_path}\python.exe" "{path_to_environment}/{environment_name}"
-	(e.g. python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38-32/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new")
+	(e.g. python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new")
 D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/activate.bat  [.ps1]
 deactivate 
 
 TO FIX activate.bat NOT RUNNING: Set-ExecutionPolicy Unrestricted --Force AS ADMINISTRATOR 
 
-#LINUX TODO
-sudo apt-get install python3.7.9
-	or
-wget https://www.python.org/ftp/python/3.7.9/Python-3.7.9.tgz
-tar -xf Python-3.7.9.tgz
-cd Python-3.7.9
-./configure --enable-optimizations
-make -j {processor_count}
-sudo make altinstall
-python3.7 --version
-python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38-32/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
-python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python37/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
-python -m virtualenv D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/activate.bat
-python -m virtualenv D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/Activate.ps1
-deactivate 
+GET CUDA VERSION: nvcc --version
+INSTALL PYTHON 3.8.1 (64 bit): https://www.python.org/downloads/release/python-381/
+INSTALL PYTORCH 1.12.0 WITH CUDA, TORCHAUDIO AND TORCHVISION: https://pytorch.org/get-started/previous-versions/#v1120
 
+pip install torch==1.12.0+cu116 torchvision==0.13.0+cu116 torchaudio==0.12.0 --extra-index-url https://download.pytorch.org/whl/cu116
 pip install torch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0
 pip install matplotlib
 pip install pywavelets
@@ -157,7 +146,26 @@ pip install scikit-build
 pip install scipy
 
 pip install cudatoolkit
+
+
+
 conda env create -n ecgpcg-new2 python=3.8.1
+
+#LINUX TODO
+sudo apt-get install python3.7.9
+	or
+wget https://www.python.org/ftp/python/3.7.9/Python-3.7.9.tgz
+tar -xf Python-3.7.9.tgz
+cd Python-3.7.9
+./configure --enable-optimizations
+make -j {processor_count}
+sudo make altinstall
+python3.7 --version
+python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38-32/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
+python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python37/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new"
+python -m virtualenv D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/activate.bat
+python -m virtualenv D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/Activate.ps1
+deactivate 
 
 ECGPCG
 conda create -n ecgpcg --file=environment.yml python=3.8.1
