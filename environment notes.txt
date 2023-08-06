@@ -106,50 +106,11 @@ ECGPCG
 ADD TO PATH: {installation_directory_path}\python.exe -V
 
 python -m virtualenv --python="{installation_directory_path}\python.exe" "{path_to_environment}/{environment_name}"
-	(e.g. python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new")
+	(e.g. python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Python38-32/python.exe" "D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new")
 D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/activate.bat  [.ps1]
 deactivate 
 
 TO FIX activate.bat NOT RUNNING: Set-ExecutionPolicy Unrestricted --Force AS ADMINISTRATOR 
-
-GET CUDA VERSION: nvcc --version
-INSTALL PYTHON 3.8.1 (64 bit): https://www.python.org/downloads/release/python-381/
-INSTALL PYTORCH 1.12.0 WITH CUDA, TORCHAUDIO AND TORCHVISION: https://pytorch.org/get-started/previous-versions/#v1120
-
-pip install torch==1.12.0+cu116 torchvision==0.13.0+cu116 torchaudio==0.12.0 --extra-index-url https://download.pytorch.org/whl/cu116
-pip install torch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0
-pip install matplotlib
-pip install pywavelets
-pip install wfdb
-pip install opencv-python
-pip install pandas
-pip install seaborn
-pip install tqdm
-pip install pillow==6.2
-pip install librosa==0.8
-pip install numba==0.53
-pip install configargparse
-pip install regex
-
-#LINUX
-	pip install resource
-
-#WINDOWS
-    pip install pywin32
-	pip install psutil
-		import winerror
-        import win32api
-        import win32job
-
-
-pip install scikit-build
-pip install scipy
-
-pip install cudatoolkit
-
-
-
-conda env create -n ecgpcg-new2 python=3.8.1
 
 #LINUX TODO
 sudo apt-get install python3.7.9
@@ -166,6 +127,61 @@ python -m virtualenv --python="C:/Users/willi/AppData/Local/Programs/Python/Pyth
 python -m virtualenv D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/activate.bat
 python -m virtualenv D:/Uni/Thesis/NEWREPO/multimodal-cardiography-learning/envs/ecgpcg-new/Scripts/Activate.ps1
 deactivate 
+
+
+
+
+
+
+
+
+https://pytorch.org/get-started/previous-versions/
+
+pip install torch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 [+ cuda]
+pip install matplotlib
+pip install pywavelets
+pip install wfdb
+pip install opencv-python
+pip install pandas
+pip install seaborn
+pip install tqdm
+pip install librosa
+pip install configargparse
+pip install regex
+pip install tensorboard
+pip install moviepy
+pip install scikit-image
+pip install torch_ecg
+
+# pip install pillow==6.2
+pip install librosa==0.8
+# pip install numba==0.53
+
+#LINUX
+	pip install resource
+
+#WINDOWS
+    pip install pywin32
+	pip install psutil
+	 	import winerror
+		import win32api
+		import win32job
+
+pip install scikit-build
+pip install scipy
+
+
+python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.device_count()); print(torch.cuda.get_device_name(0))"
+
+
+
+
+
+
+
+
+pip install cudatoolkit
+conda env create -n ecgpcg-new2 python=3.8.1
 
 ECGPCG
 conda create -n ecgpcg --file=environment.yml python=3.8.1

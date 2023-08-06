@@ -351,7 +351,7 @@ def get_spectrogram_data(full_list,
           if create_objects:
             ecg_frames = seg.get_segments(config.global_opts.frame_length, factor=config.global_opts.fps*config.global_opts.frame_length, normalise=False) #24fps, 42ms between frames, 8ms window, 128/8=16
           else:
-            ecg_frames, start_times_frames, zip_sampfrom_sampto_ecg_f = get_ecg_segments_from_array(seg, config.global_opts.frame_length, factor=config.global_opts.fps*config.global_opts.frame_length, normalise=False) #24fps, 42ms between frames, 8ms window, 128/8=16
+            ecg_frames, start_times_frames, zip_sampfrom_sampto_ecg_f = get_ecg_segments_from_array(seg, config.global_opts.ecg_sample_rate, config.global_opts.frame_length, factor=config.global_opts.fps*config.global_opts.frame_length, normalise=False) #24fps, 42ms between frames, 8ms window, 128/8=16
             
             for i in tqdm.trange(len(ecg_frames)):
               ecg_frame = ecg_frames[i]

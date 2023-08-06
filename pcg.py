@@ -19,9 +19,6 @@ class PCG():
         self.filepath = filepath
         self.filename = filename
         self.csv_path = csv_path
-        self.label = label
-        if filepath is None and label is None:
-            raise ValueError
         self.sample_rate = sample_rate
         if audio is None:
             audio = Audio(filename, filepath)
@@ -59,13 +56,14 @@ class PCG():
             else:
                 signal = np.array(signal)[sampfrom:sampto]
                 self.start_time = sampfrom/self.sample_rate
-        try:
-            signal = signal.numpy()
-        except:
-            pass
+        #try:
+        #    signal = signal.numpy()
+        #except:
+        #    pass
         if signal.ndim != 1:
             signal = np.squeeze(signal)
         self.signal_preproc = signal
+        
         if apply_filter:
             #[Deep Learning Based Classification of Unsegmented Phonocardiogram Spectrograms Leveraging Transfer Learning]
             #
@@ -87,8 +85,6 @@ class PCG():
             else:
                 signal = (signal-np.min(signal))/(np.max(signal)-np.min(signal))
         self.signal = signal
-        if self.signal.ndim != 1:
-            self.signal = np.squeeze(self.signal)
         self.samples = int(len(signal))
         if label is None:
             if not os.path.isfile(csv_path):
@@ -118,7 +114,7 @@ class PCG():
         
         inds = range(self.samples//samples_goal)
         inds = map(lambda x: x*samples_goal, inds)
-        inds = np.fromiter(inds, dtype=np.int)
+        inds = np.fromiter(inds, dtype=int)
         for i in range(no_segs):
             if self.savename is not None:
                 segment = PCG(self.filename, filepath=self.filepath, savename=f'{self.savename}_seg_{i}', label=self.label, csv_path=self.csv_path, audio=self.audio, sample_rate=self.sample_rate, sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter)
@@ -163,7 +159,7 @@ def get_pcg_segments_from_array(data, sample_rate, segment_length, factor=1, nor
     
     inds = range(samples//samples_goal)
     inds = map(lambda x: x*samples_goal, inds)
-    inds = np.fromiter(inds, dtype=np.int)
+    inds = np.fromiter(inds, dtype=int)
     for i in range(no_segs):
         sampfrom = inds[i]
         sampto=inds[i]+samples_goal

@@ -7,12 +7,12 @@ data-after/ephnogram/results/
 data-after/physionet/results/
 data-after/
 data-after-TEST/
+results/
 samples-TEST/
 samples/
 envs/
 Scripts/
 .vscode/
-results/
 Lib/
 venv/
 __pycache__/

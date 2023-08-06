@@ -78,15 +78,15 @@ class Spectrogram():
                 if self.savename is not None:#, bbox_inches='tight', pad_inches=0
                     if just_image:
                         plt.axis('off')
-                        plt.savefig(self.outpath_png+self.savename+f'_{self.transform_type}.png', interpolation="none", format="png", bbox_inches='tight', pad_inches=0)
+                        plt.savefig(self.outpath_png+self.savename+f'_{self.transform_type}.png', format="png", bbox_inches='tight', pad_inches=0)
                     else:
-                        plt.savefig(self.outpath_png+self.savename+f'_{self.transform_type}.png', interpolation="none", format="png")
+                        plt.savefig(self.outpath_png+self.savename+f'_{self.transform_type}.png', format="png")
                 else:
                     if just_image:
                         plt.axis('off')
-                        plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', interpolation="none", format="png", bbox_inches='tight', pad_inches=0)
+                        plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', format="png", bbox_inches='tight', pad_inches=0)
                     else:
-                        plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', interpolation="none", format="png")
+                        plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', format="png")
         elif self.transform_type == "cwt" or self.transform_type == "cwt_log" or self.transform_type == "cwt_sq":
             #plt.xlim([0,len(np.squeeze(self.signal))/self.sample_rate])
             plt.xlim(0,len(self.signal)//self.sample_rate)
@@ -105,15 +105,15 @@ class Spectrogram():
                 if self.savename is not None:
                     if just_image:
                         plt.axis('off')
-                        plt.savefig(self.outpath_png+self.savename+f'_{self.transform_type}.png', format="png", interpolation="none", bbox_inches='tight', pad_inches=0)
+                        plt.savefig(self.outpath_png+self.savename+f'_{self.transform_type}.png', format="png", bbox_inches='tight', pad_inches=0)
                     else:
-                        plt.savefig(self.outpath_png+self.savename+f'_{self.transform_type}.png', format="png", interpolation="none")
+                        plt.savefig(self.outpath_png+self.savename+f'_{self.transform_type}.png', format="png")
                 else:
                     if just_image:
                         plt.axis('off')
-                        plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', format="png", interpolation="none", bbox_inches='tight', pad_inches=0)
+                        plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', format="png", bbox_inches='tight', pad_inches=0)
                     else:
-                        plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', format="png", interpolation="none")
+                        plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', format="png")
         elif self.transform_type == "stft_logmel" or self.transform_type == "stft_mel":
             plt.xlim(0,len(self.signal)//self.sample_rate)
             plt.ylim(0, self.freqs[len(self.freqs)-1])
@@ -132,15 +132,15 @@ class Spectrogram():
                 if self.savename is not None:#, bbox_inches='tight', pad_inches=0
                     if just_image:
                         plt.axis('off')
-                        plt.savefig(self.outpath_png+self.savename+f'_{self.transform_type}.png', format="png", interpolation="none", bbox_inches='tight', pad_inches=0)
+                        plt.savefig(self.outpath_png+self.savename+f'_{self.transform_type}.png', format="png", bbox_inches='tight', pad_inches=0)
                     else:
-                        plt.savefig(self.outpath_png+self.savename+f'_{self.transform_type}.png', format="png", interpolation="none")
+                        plt.savefig(self.outpath_png+self.savename+f'_{self.transform_type}.png', format="png")
                 else:
                     if just_image:
                         plt.axis('off')
-                        plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', format="png", interpolation="none", bbox_inches='tight', pad_inches=0)
+                        plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', format="png", bbox_inches='tight', pad_inches=0)
                     else:
-                        plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', format="png", interpolation="none")
+                        plt.savefig(self.outpath_png+self.filename+f'_{self.transform_type}.png', format="png")
         else:
             raise ValueError(f"Error: Invalid type for 'transform_type': must be one of {config.transform_types}")
 
@@ -276,15 +276,15 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
         if savename is not None:
             if just_image:
                 plt.axis('off')
-                plt.savefig(outpath_png+savename+f'_{transform_type}.png', interpolation="none", format="png", bbox_inches='tight', pad_inches=0)
+                plt.savefig(outpath_png+savename+f'_{transform_type}.png', format="png", bbox_inches='tight', pad_inches=0)
             else:
-                plt.savefig(outpath_png+savename+f'_{transform_type}.png', interpolation="none", format="png")
+                plt.savefig(outpath_png+savename+f'_{transform_type}.png', format="png")
         else:
             if just_image:
                 plt.axis('off') 
-                plt.savefig(outpath_png+filename+f'_{transform_type}.png', interpolation="none", format="png", bbox_inches='tight', pad_inches=0)
+                plt.savefig(outpath_png+filename+f'_{transform_type}.png', format="png", bbox_inches='tight', pad_inches=0)
             else:
-                plt.savefig(outpath_png+filename+f'_{transform_type}.png', interpolation="none", format="png")
+                plt.savefig(outpath_png+filename+f'_{transform_type}.png', format="png")
     #print(f"spec: {spec}")
     #print(f"specshape: {np.shape(spec)}")
     #print(f"fshape: {np.shape(f)}")

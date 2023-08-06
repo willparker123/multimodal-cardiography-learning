@@ -6,6 +6,7 @@ import numpy as np
 import wfdb
 from wfdb import processing
 import math
+import torch
 import config
 from helpers import butterworth_bandpass_filter, get_filtered_df, create_new_folder, check_filter_bounds
 import matplotlib.pyplot as plt
@@ -58,12 +59,13 @@ Class for ECG preprocessing, loading from .dat/.hea (WFDB) /.npy files
 class ECG():
     def __init__(self, filename, savename=None, label=None, filepath=config.input_physionet_data_folderpath_, csv_path=config.input_physionet_target_folderpath_, 
                  sample_rate=2000, sampfrom=None, sampto=None, resample=True, normalise=True, apply_filter=True, normalise_factor=None, chan=0, get_qrs_and_hrs_png=True,
-                 filter_lower=config.global_opts.ecg_filter_lower_bound, filter_upper=config.global_opts.ecg_filter_upper_bound, save_qrs_hrs_plot=False):
+                 filter_lower=config.global_opts.ecg_filter_lower_bound, filter_upper=config.global_opts.ecg_filter_upper_bound, save_qrs_hrs_plot=False, split_before_resample=False):
         #super().__init__()
         self.filepath = filepath
         self.filename = filename
         self.csv_path = csv_path
         self.savename = savename
+        self.sample_rate = sample_rate
         self.sampfrom = sampfrom
         self.sampto = sampto
         self.resample = resample
@@ -71,34 +73,51 @@ class ECG():
         self.apply_filter = apply_filter
         self.start_time = 0
         self.save_qrs_hrs_plot = save_qrs_hrs_plot
-        if sampfrom is None:
-            if sampto is None:
-                record = wfdb.rdrecord(filepath+filename, channels=[chan])
-            else:
-                record = wfdb.rdrecord(filepath+filename, channels=[chan], sampto=sampto)
-        else:
-            if sampto is None:
-                record = wfdb.rdrecord(filepath+filename, channels=[chan], sampfrom=sampfrom)
-                self.start_time = sampfrom/sample_rate
-            else:
-                record = wfdb.rdrecord(filepath+filename, channels=[chan], sampfrom=sampfrom, sampto=sampto)
-                self.start_time = sampfrom/sample_rate
-        signal = record.p_signal[:,0]
-        try:
-            signal = (np.floor(signal)).astype(int)
-        except:
-            pass
         self.normalise_factor = normalise_factor
-        
+        if split_before_resample:
+            if sampfrom is None:
+                if sampto is None:
+                    record = wfdb.rdrecord(filepath+filename, channels=[chan])
+                else:
+                    record = wfdb.rdrecord(filepath+filename, channels=[chan], sampto=sampto)
+            else:
+                if sampto is None:
+                    record = wfdb.rdrecord(filepath+filename, channels=[chan], sampfrom=sampfrom)
+                    self.start_time = sampfrom/sample_rate
+                else:
+                    record = wfdb.rdrecord(filepath+filename, channels=[chan], sampfrom=sampfrom, sampto=sampto)
+                    self.start_time = sampfrom/sample_rate
+        else:
+            record = wfdb.rdrecord(filepath+filename, channels=[chan])
+        signal = record.p_signal[:,0]
+        if sampfrom is not None:
+            self.start_time = sampfrom/sample_rate
+        if torch.is_tensor(signal):
+            signal = signal.numpy()
         if not signal.ndim == 1:
             signal = np.squeeze(signal, axis=0)
-        #if filename == "a0001":
-            #self.qrs_inds = processing.qrs.gqrs_detect(sig=signal, fs=record.fs)
         if not record.fs == sample_rate and resample:
             print(f"Warning: record sampling frequency ({record.fs}) does not match ecg_sample_rate ({sample_rate}) - resampling to sample_rate")
             signal, self.locations = processing.resample_sig(signal, record.fs, sample_rate)
+        if not split_before_resample:
+            if sampfrom is None:
+                if sampto is None:
+                    signal = signal
+                else:
+                    signal = np.array(signal)[0:sampto]
+            else:
+                if sampto is None:
+                    signal = np.array(signal)[sampfrom:len(signal)]
+                    self.start_time = sampfrom/self.sample_rate
+                else:
+                    signal = np.array(signal)[sampfrom:sampto]
+                    self.start_time = sampfrom/self.sample_rate
+        if signal.ndim != 1:
+            signal = np.squeeze(signal)
         self.signal_preproc = signal
-        self.qrs_inds = processing.qrs.xqrs_detect(sig=signal, fs=sample_rate)
+        
+        # Get heart rates, avg heart rate and QRS complex indicies
+        self.qrs_inds = processing.qrs.gqrs_detect(sig=signal, fs=sample_rate)
         if get_qrs_and_hrs_png:   
             print(f"get_qrs_peaks_and_hr: {savename}") 
             self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=sample_rate,
@@ -136,11 +155,9 @@ class ECG():
                 signal = signal / normalise_factor
             else:
                 signal = (signal-np.min(signal))/(np.max(signal)-np.min(signal))
-        self.sample_rate = sample_rate
         self.record = record
         self.signal = signal
         self.samples = int(len(self.signal))
-        
         if label is None:
             if not os.path.isfile(csv_path):
                 raise ValueError(f"Error: file '{csv_path}' does not exist - aborting")
@@ -179,7 +196,7 @@ class ECG():
         
         inds = range(self.samples//samples_goal)
         inds = map(lambda x: x*samples_goal, inds)
-        inds = np.fromiter(inds, dtype=np.int)
+        inds = np.fromiter(inds, dtype=int)
         for i in range(no_segs):
             segment = None
             if self.savename is not None:
@@ -252,7 +269,7 @@ def get_ecg_segments_from_array(data, sample_rate, segment_length, factor=1, nor
     
     inds = range(samples//samples_goal)
     inds = map(lambda x: x*samples_goal, inds)
-    inds = np.fromiter(inds, dtype=np.int)
+    inds = np.fromiter(inds, dtype=int)
     for i in range(no_segs):
         sampfrom = inds[i]
         sampto=inds[i]+samples_goal #-1
