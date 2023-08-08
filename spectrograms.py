@@ -261,8 +261,6 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
                 spec = spec / normalise_factor
             else:
                 spec = (spec-np.min(spec))/(np.max(spec)-np.min(spec)) #(spec - spec.min())/np.ptp(spec)
-        print(f"AAAAA: vmin: {np.min(spec)} {np.max(spec)}")
-        print(f"BBBBB: vmin: {spec.min()} {spec.max()}")
         f = librosa.mel_frequencies(fmin=0, fmax=sr//2, n_mels=NMels)
         t = np.linspace(0, len(signal)//sr, num=np.shape(spec)[1])
         f[0] = 0
