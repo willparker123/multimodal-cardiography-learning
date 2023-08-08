@@ -135,6 +135,13 @@ deactivate
 
 
 
+
+
+module load languages/anaconda3/2022.12-3.9.13-torch-cuda-11.7
+
+
+
+
 https://pytorch.org/get-started/previous-versions/
 
 pip install torch==1.12.0 torchvision==0.13.0 torchaudio==0.12.0 [+ cuda]

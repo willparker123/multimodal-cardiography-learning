@@ -62,19 +62,19 @@ def data_sample(outputfolderpath="samples-TEST", dataset="physionet", filename="
     ecg_segments = ecg.get_segments(config.global_opts.segment_length, normalise=ecg.normalise)
     pcg_segments = pcg.get_segments(config.global_opts.segment_length, normalise=pcg.normalise)
     create_new_folder(outputfolderpath)
-    spectrogram = Spectrogram(ecg.filename, savename='ecg_'+ecg.filename+f'_spec_{wavelet_ecg}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
+    spectrogram = Spectrogram(ecg.filename, savename='ecg_'+ecg.filename+f'_spec_{wavelet_ecg+"_" if transform_type_ecg.startswith("cwt") else ""}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
                                                     signal=ecg.signal, window=window_ecg, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                                     outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', 
                                                     normalise=True, start_time=0, wavelet_function=wavelet_ecg, colormap=colormap)
-    spectrogram_pcg = Spectrogram(filename, savename='pcg_'+filename+f'_spec_{wavelet_pcg}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, transform_type=transform_type_pcg,
+    spectrogram_pcg = Spectrogram(filename, savename='pcg_'+filename+f'_spec_{wavelet_pcg+"_" if transform_type_pcg.startswith("cwt") else ""}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, transform_type=transform_type_pcg,
                                   signal=pcg.signal, window=window_pcg, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
                                   outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=0, wavelet_function=wavelet_pcg, colormap=colormap)
     for index_e, seg in enumerate(ecg_segments):
-        seg_spectrogram = Spectrogram(filename, savename='ecg_'+seg.savename+f'_spec_{wavelet_ecg}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
+        seg_spectrogram = Spectrogram(filename, savename='ecg_'+seg.savename+f'_spec_{wavelet_ecg+"_" if transform_type_ecg.startswith("cwt") else ""}{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
                                             signal=seg.signal, window=window_ecg, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                             outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=seg.start_time, wavelet_function=wavelet_ecg, colormap=colormap)
     for index_p, pcg_seg in enumerate(pcg_segments):
-        pcg_seg_spectrogram = Spectrogram(filename, savename='pcg_'+pcg_seg.savename+f'_spec_{wavelet_ecg}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, transform_type=transform_type_pcg,
+        pcg_seg_spectrogram = Spectrogram(filename, savename='pcg_'+pcg_seg.savename+f'_spec_{wavelet_ecg+"_" if transform_type_ecg.startswith("cwt") else ""}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, transform_type=transform_type_pcg,
                                 signal=pcg_seg.signal, window=window_pcg, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
                                 outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=pcg_seg.start_time, wavelet_function=wavelet_pcg, colormap=colormap)
     return data
@@ -263,8 +263,8 @@ if __name__ == '__main__':
     
     # Samples in the paper
     data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="stft", transform_type_pcg="stft_mel", colormap="magma")
-    #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma")
-    #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="morlet", wavelet_pcg="morlet", colormap="magma")
+    data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma")
+    data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="morlet", wavelet_pcg="morlet", colormap="magma")
     #data_sample(filename="a0315", outputfolderpath="samples/a0315", label=1)
     #data_sample(filename="a0007", outputfolderpath="samples/a0007", label=1)
     #data_sample(filename="ECGPCG0003", index_ephnogram=1, outputfolderpath="samples/b0001", dataset="ephnogram", inputpath_data=config.input_ephnogram_data_folderpath_, inputpath_target=config.input_ephnogram_target_folderpath_, label=0)

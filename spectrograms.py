@@ -8,6 +8,7 @@ import librosa
 import os
 import torch
 import pywt
+import sklearn
 import config
 import skimage.io
 
@@ -146,7 +147,8 @@ class Spectrogram():
 
 def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=None, signal=None, save_np=True, save_img=True, normalise=True, transform_type="stft", window=None, window_size=128, NMels=128, NFFT=128, 
                        hop_length=128//2, outpath_np=outputpath+'physionet/data', outpath_png=outputpath+'physionet/spectrograms', start_time=0, wavelet_function="ricker",
-                       power_coeff=2, colormap=plt.cm.jet, just_image=True):
+                       power_coeff=1, colormap=plt.cm.jet, just_image=True, upper_f_bound=None):
+    upper_f_bound = upper_f_bound if upper_f_bound is not None else sr//2
     if signal.ndim != 1:
         signal = np.squeeze(signal)
     if signal is None:
@@ -174,22 +176,22 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
         transformed_sig = spec_transform(signal)
         spec = transformed_sig
         if transform_type.endswith("log"):
-            spec = spec.log2().detach().numpy()
+            spec = spec.detach().numpy().log2()
         else:
             spec = spec.detach().numpy()
-            
-        if normalise: #normalise to [0, 1]
-            if normalise_factor is not None:
-                spec = spec / normalise_factor
-            else:
-                spec = (spec-np.min(spec))/(np.max(spec)-np.min(spec)) #(spec - spec.min())/np.ptp(spec)
+        #if normalise: #normalise to [0, 1]
+        #    if normalise_factor is not None:
+        #        spec = spec / normalise_factor
+        #    else:
+        #        spec = (spec-np.min(spec))/(np.max(spec)-np.min(spec)) #(spec - spec.min())/np.ptp(spec)
+        spec = sklearn.preprocessing.normalize(spec, axis=0, norm='l1')
         f = np.linspace(0, sr//2, num=np.shape(spec)[0])
         t = np.linspace(0, len(signal)//sr, num=np.shape(spec)[1])
         f[0] = 0
         f[len(f)-1] = sr//2
         t[0] = 0
         spec = np.flipud(spec)
-        image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=abs(spec).max(), vmin=-abs(spec).max(), interpolation="none")
+        image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], upper_f_bound], cmap=colormap, aspect='auto', vmax=spec.max(), vmin=spec.min(), interpolation="none")
     elif transform_type=="cwt" or transform_type=="cwt_log" or transform_type=="cwt_sq":
         #widths = np.linspace(1, 6, num=6, dtype=int)
         #freq = np.linspace(1, sr/2, 100)
@@ -231,7 +233,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
         f = f.astype(int)
         t = t.astype(float)
         spec = np.flipud(spec)
-        image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=abs(spec).max(), vmin=-abs(spec).max(), interpolation="none")
+        image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], upper_f_bound], cmap=colormap, aspect='auto', vmax=spec.max(), vmin=spec.min(), interpolation="none")
     elif transform_type=="stft_mel" or transform_type=="stft_logmel":
         if window == None:
                 window = torch.hamming_window
@@ -259,12 +261,14 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
                 spec = spec / normalise_factor
             else:
                 spec = (spec-np.min(spec))/(np.max(spec)-np.min(spec)) #(spec - spec.min())/np.ptp(spec)
+        print(f"AAAAA: vmin: {np.min(spec)} {np.max(spec)}")
+        print(f"BBBBB: vmin: {spec.min()} {spec.max()}")
         f = librosa.mel_frequencies(fmin=0, fmax=sr//2, n_mels=NMels)
         t = np.linspace(0, len(signal)//sr, num=np.shape(spec)[1])
         f[0] = 0
         t[0] = 0
         spec = np.flipud(spec)
-        image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=abs(spec).max(), vmin=-abs(spec).max(), interpolation="none")
+        image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=spec.max(), vmin=spec.min(), interpolation="none")
     else:
         raise ValueError(f"Error: Invalid transform_type for 'transform_type': must be one of {config.transform_types}")
     if save_np:

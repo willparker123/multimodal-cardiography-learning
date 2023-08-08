@@ -7,6 +7,7 @@ import wfdb
 from wfdb import processing
 import math
 import torch
+import sklearn
 import config
 from helpers import butterworth_bandpass_filter, get_filtered_df, create_new_folder, check_filter_bounds
 import matplotlib.pyplot as plt
@@ -119,10 +120,11 @@ class ECG():
         # Get heart rates, avg heart rate and QRS complex indicies
         self.qrs_inds = processing.qrs.gqrs_detect(sig=signal, fs=sample_rate)
         if get_qrs_and_hrs_png:   
-            print(f"get_qrs_peaks_and_hr: {savename}") 
+            print(f"get_qrs_peaks_and_hr: {savename if savename is not None else filename}") 
             self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=sample_rate,
                 title="Corrected GQRS peak detection", savefolder=f"{config.outputpath}results/gqrs_peaks", saveto=f"{config.outputpath}results/gqrs_peaks/{savename if savename is not None else self.filename}.png", save_plot=save_qrs_hrs_plot)
             self.hr_avg = np.nanmean(self.hrs)
+        signal = sklearn.preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
             
         if apply_filter:
             #### UNUSED
@@ -150,11 +152,6 @@ class ECG():
             # 15 Hz to 150 [3 in MODEL]
             check_filter_bounds(filter_lower, filter_upper)
             signal = butterworth_bandpass_filter(signal, filter_lower, filter_upper, sample_rate, order=4)
-        if normalise: #normalise to [0, 1]
-            if normalise_factor is not None:
-                signal = signal / normalise_factor
-            else:
-                signal = (signal-np.min(signal))/(np.max(signal)-np.min(signal))
         self.record = record
         self.signal = signal
         self.samples = int(len(self.signal))
