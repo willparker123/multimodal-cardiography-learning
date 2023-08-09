@@ -74,8 +74,12 @@ window_pcg = torch.hamming_window # default supplied to create_spectrogram is No
 ecg_filter_lim = [0.5, 100]
 pcg_filter_lim = [20, 400]
 #[64ms in paper] 40ms window length. converting from ms to samples
-window_length_ms = 64 #64, 40
-window_length = 256 #window_length_ms * sample_rate_ecg
+nfft_ecg = 256 #0 < win_length_ecg (window_length_ms_ecg * 2) <= nfft_ecg
+nfft_pcg = 256 #0 < win_length_pcg (window_length_ms_pcg * 2) <= nfft_pcg
+window_length_ms_ecg = 40 #32, 20 [OLD FROM PAPERS: 64, 40]
+window_length_ms_pcg = 40 #32, 20 [OLD FROM PAPERS: 64, 40]
+window_length_ecg = int((window_length_ms_ecg / 1000) * sample_rate_ecg) #window_length_ms * sample_rate_ecg
+window_length_pcg = int((window_length_ms_pcg / 1000) * sample_rate_pcg) #window_length_ms * sample_rate_ecg
 nmels = 128 #60; must be < nfft//2-1
 segment_length = 8
 seg_factor_fps = 24 #video fps
@@ -159,14 +163,22 @@ def load_config():
                         default=segment_length,
                         type=int,
                         help='Length in seconds of each segment split from each full data sample')
-    parser.add_argument('--window-length',
-                        default=window_length,
+    parser.add_argument('--window-length-ecg',
+                        default=window_length_ecg,
                         type=int,
-                        help='Length of the Hamming window used in spectrogram transform (overrides window-length-ms)')
-    parser.add_argument('--window-length-ms',
-                        default=window_length_ms,
+                        help='Length of the Hamming window used in spectrogram transform (overrides window-length-ms) [ECG]')
+    parser.add_argument('--window-length-pcg',
+                        default=window_length_pcg,
                         type=int,
-                        help='Length in milliseconds of the Hamming window used in spectrogram transform')
+                        help='Length of the Hamming window used in spectrogram transform (overrides window-length-ms) [PCG]')
+    parser.add_argument('--window-length-ms-ecg',
+                        default=window_length_ms_ecg,
+                        type=int,
+                        help='Length in milliseconds of the Hamming window used in spectrogram transform [ECG]')
+    parser.add_argument('--window-length-ms-pcg',
+                    default=window_length_ms_pcg,
+                    type=int,
+                    help='Length in milliseconds of the Hamming window used in spectrogram transform [PCG]')
     
     # --- ecg
     parser.add_argument('--ecg-type',
@@ -186,11 +198,11 @@ def load_config():
                         type=float,
                         help='Upper bound for the Butterworth bandpass filter applied to the ECG')
     parser.add_argument('--nfft-ecg',
-                        default=window_length,
+                        default=nfft_ecg,
                         type=int,
                         help='Size of FFT applied to ECG: n_fft // 2 + 1 bins')
     parser.add_argument('--hop-length-ecg',
-                        default=window_length//2,
+                        default=nfft_ecg//2,
                         type=int,
                         help='Length of hop between STFT windows')
     parser.add_argument('--cwt-function-ecg',
@@ -220,11 +232,11 @@ def load_config():
                         type=float,
                         help='Upper bound for the Butterworth bandpass filter applied to the PCG')
     parser.add_argument('--nfft-pcg',
-                        default=window_length,
+                        default=nfft_pcg,
                         type=int,
                         help='Size of FFT applied to PCG: n_fft // 2 + 1 bins')
     parser.add_argument('--hop-length-pcg',
-                        default=window_length//2,
+                        default=nfft_pcg//2,
                         type=int,
                         help='Length of hop between STFT windows')
     parser.add_argument('--cwt-function-pcg',
@@ -323,5 +335,5 @@ input_physionet_target_folderpath_ = drivepath+global_opts.inputpath_physionet_l
 input_ephnogram_data_folderpath_ = drivepath+global_opts.inputpath_ephnogram_data+"/" if useDrive else global_opts.inputpath_ephnogram_data+"/"
 input_ephnogram_target_folderpath_ = drivepath+global_opts.inputpath_ephnogram_labels+"/" if useDrive else global_opts.inputpath_ephnogram_labels
 outputpath = drivepath+global_opts.outputpath+"/" if useDrive else global_opts.outputpath+"/"
-spec_win_size_ecg = global_opts.window_length#int(round(global_opts.window_length_ms * global_opts.sample_rate_ecg / 1e3)) #[64ms in paper] 40ms window length. converting from ms to samples
-spec_win_size_pcg = global_opts.window_length#int(round(global_opts.window_length_ms * global_opts.sample_rate_pcg / 1e3)) #[64ms in paper] 40ms window length. converting from ms to samples
+spec_win_size_ecg = global_opts.window_length_ecg#int(round(global_opts.window_length_ms * global_opts.sample_rate_ecg / 1e3)) #[64ms in paper] 40ms window length. converting from ms to samples
+spec_win_size_pcg = global_opts.window_length_pcg#int(round(global_opts.window_length_ms * global_opts.sample_rate_pcg / 1e3)) #[64ms in paper] 40ms window length. converting from ms to samples

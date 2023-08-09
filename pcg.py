@@ -6,6 +6,7 @@ import config
 from config import input_physionet_data_folderpath_, input_physionet_target_folderpath_, outputpath
 from helpers import get_filtered_df, butterworth_bandpass_filter, check_filter_bounds, create_new_folder
 import os
+import sklearn
 import matplotlib.pyplot as plt
 import numpy as np
 
@@ -64,6 +65,7 @@ class PCG():
             signal = np.squeeze(signal)
         self.signal_preproc = signal
         
+        signal = sklearn.preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
         if apply_filter:
             #[Deep Learning Based Classification of Unsegmented Phonocardiogram Spectrograms Leveraging Transfer Learning]
             #
@@ -79,11 +81,6 @@ class PCG():
             # 100 Hz to 600 [2 in MODEL]
             check_filter_bounds(filter_lower, filter_upper)
             signal = butterworth_bandpass_filter(signal, filter_lower, filter_upper, sample_rate, order=4)
-        if normalise: #normalise to [0, 1]
-            if normalise_factor is not None:
-                signal = signal / normalise_factor
-            else:
-                signal = (signal-np.min(signal))/(np.max(signal)-np.min(signal))
         self.signal = signal
         self.samples = int(len(signal))
         if label is None:
