@@ -191,7 +191,9 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
         f[len(f)-1] = sr//2
         t[0] = 0
         spec = np.flipud(spec)
-        image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], upper_f_bound], cmap=colormap, aspect='auto', vmax=spec.max(), vmin=spec.min(), interpolation="none")
+        print(f"SHAPEEE: {np.shape(spec)}")
+        #plt.ylim(0, upper_f_bound)
+        image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=spec.max(), vmin=spec.min(), interpolation="none")
     elif transform_type=="cwt" or transform_type=="cwt_log" or transform_type=="cwt_sq":
         #widths = np.linspace(1, 6, num=6, dtype=int)
         #freq = np.linspace(1, sr/2, 100)
@@ -233,7 +235,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
         f = f.astype(int)
         t = t.astype(float)
         spec = np.flipud(spec)
-        image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], upper_f_bound], cmap=colormap, aspect='auto', vmax=spec.max(), vmin=spec.min(), interpolation="none")
+        image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=spec.max(), vmin=spec.min(), interpolation="none")
     elif transform_type=="stft_mel" or transform_type=="stft_logmel":
         if window == None:
                 window = torch.hamming_window
@@ -265,6 +267,8 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
         t = np.linspace(0, len(signal)//sr, num=np.shape(spec)[1])
         f[0] = 0
         t[0] = 0
+        print(f"SHAPEEE MEL: {np.shape(spec)}")
+        plt.ylim(0, upper_f_bound)
         spec = np.flipud(spec)
         image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=spec.max(), vmin=spec.min(), interpolation="none")
     else:
