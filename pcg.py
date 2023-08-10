@@ -127,11 +127,11 @@ class PCG():
             if self.savename is not None:
                 segment = PCG(self.filename, filepath=self.filepath, savename=f'{self.savename}_seg_{i}', label=self.label, csv_path=self.csv_path, audio=self.audio, sample_rate=self.sample_rate, sampfrom=inds[i], 
                               sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter, outputpath_png=self.outputpath_png, filter_lower=self.filter_lower, filter_upper=self.filter_upper,
-                              plot_audio=self.plot_audio, outputpath_png=self.outputpath_png)
+                              plot_audio=self.plot_audio)
             else:
                 segment = PCG(self.filename, filepath=self.filepath, savename=f'{self.filename}_seg_{i}', label=self.label, csv_path=self.csv_path, audio=self.audio, sample_rate=self.sample_rate, sampfrom=inds[i], 
                               sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter, outputpath_png=self.outputpath_png, filter_lower=self.filter_lower, filter_upper=self.filter_upper,
-                              plot_audio=self.plot_audio, outputpath_png=self.outputpath_png)
+                              plot_audio=self.plot_audio)
             segments.append(segment)
         return segments
         
