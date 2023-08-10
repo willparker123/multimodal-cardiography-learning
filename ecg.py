@@ -212,12 +212,12 @@ class ECG():
                 segment = ECG(self.filename, filepath=self.filepath, label=self.label, savename=f'{self.savename}_seg_{i}', csv_path=self.csv_path, sample_rate=self.sample_rate, 
                               sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter, save_qrs_hrs_plot=self.save_qrs_hrs_plot, 
                               outputpath_png=self.outputpath_png, normalise_factor=self.normalise_factor, chan=self.chan, get_qrs_and_hrs_png=self.get_qrs_and_hrs_png,
-                              filter_lower=self.filter_lower, filter_upper=self.filter_upper, save_qrs_hrs_plot=self.save_qrs_hrs_plot, split_before_resample=self.split_before_resample)
+                              filter_lower=self.filter_lower, filter_upper=self.filter_upper, split_before_resample=self.split_before_resample)
             else:
                 segment = ECG(self.filename, filepath=self.filepath, label=self.label, savename=f'{self.filename}_seg_{i}', csv_path=self.csv_path, sample_rate=self.sample_rate, 
                               sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter, save_qrs_hrs_plot=self.save_qrs_hrs_plot, 
                               outputpath_png=self.outputpath_png, normalise_factor=self.normalise_factor, chan=self.chan, get_qrs_and_hrs_png=self.get_qrs_and_hrs_png,
-                              filter_lower=self.filter_lower, filter_upper=self.filter_upper, save_qrs_hrs_plot=self.save_qrs_hrs_plot, split_before_resample=self.split_before_resample)
+                              filter_lower=self.filter_lower, filter_upper=self.filter_upper, split_before_resample=self.split_before_resample)
             segments.append(segment)
         return segments
     
