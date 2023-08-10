@@ -72,6 +72,9 @@ class PCG():
             signal = np.squeeze(signal)
         self.signal_preproc = signal
         
+        if not np.all(np.isfinite(signal)) or np.any(np.isnan(signal)):
+            signal = np.nan_to_num(signal, nan=0, posinf=1, neginf=0)
+            
         if normalise:
             if normalise_factor is None:
                 signal = preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
