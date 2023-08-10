@@ -26,6 +26,7 @@ python -c "import torch; print(torch.cuda.is_available()); print(torch.cuda.devi
 
 [NEW CONDA PYTHON3.11.4]
 module load languages/anaconda3/2022.12-3.9.13-torch-cuda-11.7
+module load apps/ffmpeg/4.3
 conda create --name ecgpcg
 conda activate ecgpcg
 
@@ -37,6 +38,7 @@ conda env create --name ecgpcg --file=environment_3.11.4_linux.yml
 
 [NEW CONDA PYTHON3.8.1]
 module load languages/anaconda3/2022.11-3.11.4
+module load apps/ffmpeg/4.3
 conda create --name ecgpcg-381 python=3.8.1
 conda activate ecgpcg-381
 

@@ -5,6 +5,7 @@ from config import load_config
 import numpy as np
 import wfdb
 from wfdb import processing
+from sklearn import preprocessing
 import math
 import torch
 import sklearn
@@ -124,7 +125,7 @@ class ECG():
             self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=sample_rate,
                 title="Corrected GQRS peak detection", savefolder=f"{config.outputpath}results/gqrs_peaks", saveto=f"{config.outputpath}results/gqrs_peaks/{savename if savename is not None else self.filename}.png", save_plot=save_qrs_hrs_plot)
             self.hr_avg = np.nanmean(self.hrs)
-        signal = sklearn.preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
+        signal = preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
             
         if apply_filter:
             #### UNUSED

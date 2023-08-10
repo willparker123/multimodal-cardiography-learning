@@ -9,6 +9,7 @@ import os
 import torch
 import pywt
 import sklearn
+from sklearn import preprocessing
 import config
 import skimage.io
 
@@ -184,7 +185,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
         #        spec = spec / normalise_factor
         #    else:
         #        spec = (spec-np.min(spec))/(np.max(spec)-np.min(spec)) #(spec - spec.min())/np.ptp(spec)
-        spec = sklearn.preprocessing.normalize(spec, axis=0, norm='l1')
+        spec = preprocessing.normalize(spec, axis=0, norm='l1')
         f = np.linspace(0, sr//2, num=np.shape(spec)[0])
         t = np.linspace(0, len(signal)//sr, num=np.shape(spec)[1])
         f[0] = 0

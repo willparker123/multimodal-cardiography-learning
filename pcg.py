@@ -2,6 +2,7 @@ from audio import Audio
 import torch
 import torchaudio.transforms as transforms
 import pandas as pd
+from sklearn import preprocessing
 import config
 from config import input_physionet_data_folderpath_, input_physionet_target_folderpath_, outputpath
 from helpers import get_filtered_df, butterworth_bandpass_filter, check_filter_bounds, create_new_folder
@@ -65,7 +66,7 @@ class PCG():
             signal = np.squeeze(signal)
         self.signal_preproc = signal
         
-        signal = sklearn.preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
+        signal = preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
         if apply_filter:
             #[Deep Learning Based Classification of Unsegmented Phonocardiogram Spectrograms Leveraging Transfer Learning]
             #
