@@ -133,6 +133,9 @@ class ECG():
             self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=sample_rate,
                 title="Corrected GQRS peak detection", savefolder=outputpath_png, savename=f"{outputpath_png}{savename if savename is not None else self.filename}.png", save_plot=save_qrs_hrs_plot)
             self.hr_avg = np.nanmean(self.hrs)
+        
+        if not np.all(np.isfinite(signal)) or np.any(np.isnan(signal)):
+            signal = np.nan_to_num(signal, nan=0, posinf=1, neginf=0)
             
         if normalise:
             if normalise_factor is None:
