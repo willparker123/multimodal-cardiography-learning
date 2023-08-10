@@ -44,12 +44,12 @@ def data_sample(outputfolderpath="samples-TEST", dataset="physionet", filename="
         pcg_record = wfdb.rdrecord(inputpath_data+filename, channels=[1])
         audio_sig = np.array(pcg_record.p_signal[:, 0])
         audio = Audio(filename=filename, filepath=inputpath_data, audio=audio_sig, sample_rate=config.base_wfdb_pcg_sample_rate)
-        pcg = PCG(filename=filename, savename=sn, audio=audio, sample_rate=config.global_opts.sample_rate_pcg, label=label, normalise=True, apply_filter=True, plot_audio=True)
+        pcg = PCG(filename=filename, savename=sn, audio=audio, sample_rate=config.global_opts.sample_rate_pcg, label=label, normalise=True, apply_filter=True, plot_audio=True, outputpath_png=f"{outputfolderpath}/audio/")
     else: #dataset=="physionet"
         ecg = ECG(filename=filename, filepath=inputpath_data, label=label, csv_path=inputpath_target, sample_rate=config.global_opts.sample_rate_ecg, normalise=True, apply_filter=True, get_qrs_and_hrs_png=True, save_qrs_hrs_plot=True, outputpath_png=f"{outputfolderpath}/gqrs_peaks/")
         duration = len(ecg.signal)/ecg.sample_rate
         audio = Audio(filename=filename, filepath=inputpath_data)
-        pcg = PCG(filename=filename, audio=audio, sample_rate=config.global_opts.sample_rate_pcg, label=label, normalise=True, apply_filter=True, plot_audio=True)
+        pcg = PCG(filename=filename, audio=audio, sample_rate=config.global_opts.sample_rate_pcg, label=label, normalise=True, apply_filter=True, plot_audio=True, outputpath_png=f"{outputfolderpath}/audio/")
     seg_num = get_segment_num(ecg.sample_rate, int(len(ecg.signal)), config.global_opts.segment_length, factor=1)      
     ecg_save_name = ecg.filename if ecg.savename == None else ecg.savename
     pcg_save_name = pcg.filename if pcg.savename == None else pcg.savename
