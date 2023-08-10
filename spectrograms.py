@@ -20,7 +20,8 @@ class Spectrogram():
     def __init__(self, filename, savename=None, filepath=outputpath+'physionet/', signal=None, outpath_np=outputpath+'physionet/', 
                  outpath_png=outputpath+'physionet/spectrograms', sample_rate=2000, 
                  window=None, hop_length=128//2 #50% overlapping windows,
-                 , NMels=128, window_size=128, NFFT=128, transform_type="stft", normalise=True, normalise_factor=None, save_np=True, save_img=True,
+                 , NMels=128, window_size=128, NFFT=128, transform_type="stft", normalise=True, normalise_factor=None, 
+                 save_np=True, save_img=False,
                  spec=None, freqs=None, times=None, image=None, start_time=0, wavelet_function="ricker", colormap='magma'):
         #super().__init__()
         self.filepath = filepath
@@ -274,6 +275,8 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
         image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=spec.max(), vmin=spec.min(), interpolation="none")
     else:
         raise ValueError(f"Error: Invalid transform_type for 'transform_type': must be one of {config.transform_types}")
+    print(f"Saving image: {savename if savename is not None else filename} - {save_np} {save_img}")
+    
     if save_np:
         if savename is not None:
             np.savez(outpath_np+savename+f'_{transform_type}_spec', spec=spec, freqs=f, times=t)
