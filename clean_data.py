@@ -211,7 +211,7 @@ def get_spectrogram_data(full_list,
                          create_objects=False, split_into_video=False, 
                          q=None, window_ecg=None, window_pcg=None, 
                          skipImage=False, 
-                         skipData=False, 
+                         skipSpecData=False, 
                          skipParent=False, 
                          skipExisting=True):
   dataset = format_dataset_name(dataset)
@@ -320,7 +320,7 @@ def get_spectrogram_data(full_list,
                                 normalise=True, 
                                 start_time=0,
                                 wavelet_function=config.global_opts.cwt_function_ecg, 
-                                save_np=(not skipData), 
+                                save_np=(not skipSpecData), 
                                 save_img=(not skipImage))
     if not skipSegments:
       for index_e, seg in enumerate(ecg_segments):
@@ -343,7 +343,7 @@ def get_spectrogram_data(full_list,
                                       normalise=True, 
                                       start_time=seg.start_time if create_objects else start_times_ecg[index_e], 
                                       wavelet_function=config.global_opts.cwt_function_ecg, 
-                                      save_np=(not skipData), 
+                                      save_np=(not skipSpecData), 
                                       save_img=(not skipImage))
         if split_into_video:
           write_to_logger_from_worker(f"*** Processing Frames for Segment {index_e} ***", q=q)
@@ -371,7 +371,7 @@ def get_spectrogram_data(full_list,
                                               normalise_factor=np.linalg.norm(seg_spectrogram.spec), 
                                               start_time=ecg_frame.start_time if create_objects else start_times_frames[i], 
                                               wavelet_function=config.global_opts.cwt_function_ecg, 
-                                              save_np=(not skipData), 
+                                              save_np=(not skipSpecData), 
                                               save_img=(not skipImage))
               if create_objects:  
                 frames.append(frame_spectrogram)
@@ -402,7 +402,7 @@ def get_spectrogram_data(full_list,
                                     normalise=True, 
                                     start_time=0, 
                                     wavelet_function=config.global_opts.cwt_function_pcg, 
-                                    save_np=(not skipData), 
+                                    save_np=(not skipSpecData), 
                                     save_img=(not skipImage))
     if not skipSegments:
       for index_p, pcg_seg in enumerate(pcg_segments):
@@ -426,7 +426,7 @@ def get_spectrogram_data(full_list,
                                           normalise=True, 
                                           start_time=pcg_seg.start_time, 
                                           wavelet_function=config.global_opts.cwt_function_pcg, 
-                                          save_np=(not skipData), 
+                                          save_np=(not skipSpecData), 
                                           save_img=(not skipImage))
         if create_objects:
           specs_pcg.append(pcg_seg_spectrogram)
@@ -522,7 +522,7 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
                               sample_clip_len=config.global_opts.segment_length, ecg_sample_rate=config.global_opts.sample_rate_ecg, pcg_sample_rate=config.global_opts.sample_rate_pcg,
                               skipECGSpectrogram = skipECGSpectrogram, skipPCGSpectrogram = skipPCGSpectrogram, 
                               skipSegments= skipSegments, balance_diff=NORMAL_SEG_SAMPLE_EXCESS, create_objects=create_objects, q=q, 
-                              saveData=skipSpecData, saveImage=skipSpecImage, skipParent=skipParent, skipExisting=skipExisting), full_list)
+                              skipSpecData=skipSpecData, saveImage=skipSpecImage, skipParent=skipParent, skipExisting=skipExisting), full_list)
   if not skipSegments and create_objects:
     for r in results_:
       ecg_segments_all.append(r[0])
