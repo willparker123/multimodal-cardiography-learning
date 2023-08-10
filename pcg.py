@@ -34,6 +34,9 @@ class PCG():
         self.sampfrom = sampfrom
         self.sampto = sampto
         self.resample = resample
+        self.filter_lower = filter_lower
+        self.plot_audio = plot_audio
+        self.filter_upper = filter_upper
         self.normalise = normalise
         self.apply_filter = apply_filter
         self.start_time = 0
@@ -69,7 +72,11 @@ class PCG():
             signal = np.squeeze(signal)
         self.signal_preproc = signal
         
-        signal = preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
+        if normalise:
+            if normalise_factor is None:
+                signal = preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
+            else:
+                signal = signal / normalise_factor
         if apply_filter:
             #[Deep Learning Based Classification of Unsegmented Phonocardiogram Spectrograms Leveraging Transfer Learning]
             #
@@ -118,9 +125,13 @@ class PCG():
         inds = np.fromiter(inds, dtype=int)
         for i in range(no_segs):
             if self.savename is not None:
-                segment = PCG(self.filename, filepath=self.filepath, savename=f'{self.savename}_seg_{i}', label=self.label, csv_path=self.csv_path, audio=self.audio, sample_rate=self.sample_rate, sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter)
+                segment = PCG(self.filename, filepath=self.filepath, savename=f'{self.savename}_seg_{i}', label=self.label, csv_path=self.csv_path, audio=self.audio, sample_rate=self.sample_rate, sampfrom=inds[i], 
+                              sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter, outputpath_png=self.outputpath_png, filter_lower=self.filter_lower, filter_upper=self.filter_upper,
+                              plot_audio=self.plot_audio, outputpath_png=self.outputpath_png)
             else:
-                segment = PCG(self.filename, filepath=self.filepath, savename=f'{self.filename}_seg_{i}', label=self.label, csv_path=self.csv_path, audio=self.audio, sample_rate=self.sample_rate, sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter)
+                segment = PCG(self.filename, filepath=self.filepath, savename=f'{self.filename}_seg_{i}', label=self.label, csv_path=self.csv_path, audio=self.audio, sample_rate=self.sample_rate, sampfrom=inds[i], 
+                              sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter, outputpath_png=self.outputpath_png, filter_lower=self.filter_lower, filter_upper=self.filter_upper,
+                              plot_audio=self.plot_audio, outputpath_png=self.outputpath_png)
             segments.append(segment)
         return segments
         
