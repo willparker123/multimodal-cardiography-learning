@@ -61,10 +61,12 @@ Class for ECG preprocessing, loading from .dat/.hea (WFDB) /.npy files
 class ECG():
     def __init__(self, filename, savename=None, label=None, filepath=config.input_physionet_data_folderpath_, csv_path=config.input_physionet_target_folderpath_, 
                  sample_rate=2000, sampfrom=None, sampto=None, resample=True, normalise=True, apply_filter=True, normalise_factor=None, chan=0, get_qrs_and_hrs_png=True,
-                 filter_lower=config.global_opts.ecg_filter_lower_bound, filter_upper=config.global_opts.ecg_filter_upper_bound, save_qrs_hrs_plot=False, split_before_resample=False):
+                 filter_lower=config.global_opts.ecg_filter_lower_bound, filter_upper=config.global_opts.ecg_filter_upper_bound, save_qrs_hrs_plot=False, split_before_resample=False,
+                 outputpath_png=f"{config.outputpath}results/gqrs_peaks/"):
         #super().__init__()
         self.filepath = filepath
         self.filename = filename
+        self.outputpath_png = outputpath_png
         self.csv_path = csv_path
         self.savename = savename
         self.sample_rate = sample_rate
@@ -123,7 +125,7 @@ class ECG():
         if get_qrs_and_hrs_png:   
             print(f"get_qrs_peaks_and_hr: {savename if savename is not None else filename}") 
             self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=sample_rate,
-                title="Corrected GQRS peak detection", savefolder=f"{config.outputpath}results/gqrs_peaks", saveto=f"{config.outputpath}results/gqrs_peaks/{savename if savename is not None else self.filename}.png", save_plot=save_qrs_hrs_plot)
+                title="Corrected GQRS peak detection", savefolder=outputpath_png, saveto=f"{outputpath_png}{savename if savename is not None else self.filename}.png", save_plot=save_qrs_hrs_plot)
             self.hr_avg = np.nanmean(self.hrs)
         signal = preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
             

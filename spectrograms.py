@@ -275,7 +275,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
         image = plt.imshow(spec, extent=[t[0], t[len(t)-1], f[0], f[len(f)-1]], cmap=colormap, aspect='auto', vmax=spec.max(), vmin=spec.min(), interpolation="none")
     else:
         raise ValueError(f"Error: Invalid transform_type for 'transform_type': must be one of {config.transform_types}")
-    print(f"Saving image: {savename if savename is not None else filename} - {save_np} {save_img}")
+    print(f"Saving image: {savename if savename is not None else filename}")
     
     if save_np:
         if savename is not None:

@@ -39,14 +39,14 @@ def data_sample(outputfolderpath="samples-TEST", dataset="physionet", filename="
         colormap = plt.cm.jet
     if dataset=="ephnogram":
         sn = 'b0000'[:-len(str(index_ephnogram-1))]+str(index_ephnogram-1)
-        ecg = ECG(filename=filename, savename=sn, filepath=inputpath_data, label=label, chan=0, csv_path=inputpath_target, sample_rate=config.global_opts.sample_rate_ecg, normalise=True, apply_filter=True, get_qrs_and_hrs_png=True, save_qrs_hrs_plot=True)
+        ecg = ECG(filename=filename, savename=sn, filepath=inputpath_data, label=label, chan=0, csv_path=inputpath_target, sample_rate=config.global_opts.sample_rate_ecg, normalise=True, apply_filter=True, get_qrs_and_hrs_png=True, save_qrs_hrs_plot=True, outputpath_png=f"{outputfolderpath}/gqrs_peaks/")
         duration = len(ecg.signal)/ecg.sample_rate
         pcg_record = wfdb.rdrecord(inputpath_data+filename, channels=[1])
         audio_sig = np.array(pcg_record.p_signal[:, 0])
         audio = Audio(filename=filename, filepath=inputpath_data, audio=audio_sig, sample_rate=config.base_wfdb_pcg_sample_rate)
         pcg = PCG(filename=filename, savename=sn, audio=audio, sample_rate=config.global_opts.sample_rate_pcg, label=label, normalise=True, apply_filter=True, plot_audio=True)
     else: #dataset=="physionet"
-        ecg = ECG(filename=filename, filepath=inputpath_data, label=label, csv_path=inputpath_target, sample_rate=config.global_opts.sample_rate_ecg, normalise=True, apply_filter=True, get_qrs_and_hrs_png=True, save_qrs_hrs_plot=True)
+        ecg = ECG(filename=filename, filepath=inputpath_data, label=label, csv_path=inputpath_target, sample_rate=config.global_opts.sample_rate_ecg, normalise=True, apply_filter=True, get_qrs_and_hrs_png=True, save_qrs_hrs_plot=True, outputpath_png=f"{outputfolderpath}/gqrs_peaks/")
         duration = len(ecg.signal)/ecg.sample_rate
         audio = Audio(filename=filename, filepath=inputpath_data)
         pcg = PCG(filename=filename, audio=audio, sample_rate=config.global_opts.sample_rate_pcg, label=label, normalise=True, apply_filter=True, plot_audio=True)
