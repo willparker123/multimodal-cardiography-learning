@@ -181,8 +181,8 @@ def main():
     model(torch.rand(batch_size, n_leads, x_length)) 
     
     if torch.cuda.device_count() > 1:
+        print(f"Using Data Parallelism with {torch.cuda.device_count()} GPUs")
         model = DP(model)
-        # model = DDP(model)
     model.to(device=device)
     
     trainer = TransformerTrainer(
@@ -214,30 +214,34 @@ def main():
             
     summary_writer.close()
     stop_logger(logger, ostdout)
-    #abstractmethods (_setup_dataloaders, run_one_step, evaluate, batch_dim, etc.)
     
-    #def __getitem__(self, index:int) -> Tuple[np.ndarray, ...]:
-    #   return self._all_data[index], self._all_labels[index], self._all_masks[index]
-    #evaluate(self, data_loader:DataLoader) -> Dict[str, float]
     
-    #model = ECGPCGVisNet()
-    #loss_f = nn.CrossEntropyLoss()
-    #criterion = loss_f  #lambda logits, labels: torch.tensor(0)
-    #optimizer = optim.SGD(model.parameters(), lr=config.global_opts.learning_rate, momentum=config.global_opts.sgd_momentum)
-    #if config.global_opts.opt_adam:
-    #    optimizer = optim.Adam(model.parameters(), lr=config.global_opts.learning_rate, betas=(config.global_opts.sgd_momentum, 0.999), eps=1e-08, weight_decay=config.global_opts.adam_weight_decay, amsgrad=config.global_opts.adam_amsgrad)
-    #trainer = ECGPCGVisTrainer(
-    #    model, train_loader, test_loader, criterion, optimizer, summary_writer, device
-    #)
-    #trainer.train(
-    #    config.global_opts.epochs,
-    #    config.global_opts.val_frequency,
-    #    print_frequency=config.global_opts.print_frequency,
-    #    log_frequency=config.global_opts.log_frequency,
-    #)
-    #model.eval()
-    #with torch.no_grad():  
-    #    trainer.eval(train_loader, test_loader)
+    # *** UNUSED MMECGPCGNET CODE ***
+    #
+    #   abstractmethods (_setup_dataloaders, run_one_step, evaluate, batch_dim, etc.)
+        
+    #   def __getitem__(self, index:int) -> Tuple[np.ndarray, ...]:
+    #      return self._all_data[index], self._all_labels[index], self._all_masks[index]
+    #   evaluate(self, data_loader:DataLoader) -> Dict[str, float]
+        
+    #   model = ECGPCGVisNet()
+    #   loss_f = nn.CrossEntropyLoss()
+    #   criterion = loss_f  #lambda logits, labels: torch.tensor(0)
+    #   optimizer = optim.SGD(model.parameters(), lr=config.global_opts.learning_rate, momentum=config.global_opts.sgd_momentum)
+    #   if config.global_opts.opt_adam:
+    #       optimizer = optim.Adam(model.parameters(), lr=config.global_opts.learning_rate, betas=(config.global_opts.sgd_momentum, 0.999), eps=1e-08, weight_decay=config.global_opts.adam_weight_decay, amsgrad=config.global_opts.adam_amsgrad)
+    #   trainer = ECGPCGVisTrainer(
+    #        model, train_loader, test_loader, criterion, optimizer, summary_writer, device
+    #   )
+    #   trainer.train(
+    #       config.global_opts.epochs,
+    #       config.global_opts.val_frequency,
+    #       print_frequency=config.global_opts.print_frequency,
+    #       log_frequency=config.global_opts.log_frequency,
+    #   )
+    #   model.eval()
+    #   with torch.no_grad():  
+    #   trainer.eval(train_loader, test_loader)
 
 if __name__ == '__main__':
     mpl.rcParams['agg.path.chunksize'] = 10000
