@@ -78,6 +78,7 @@ class ECG():
         self.normalise = normalise
         self.apply_filter = apply_filter
         self.start_time = 0
+        self.chan = chan
         self.save_qrs_hrs_plot = save_qrs_hrs_plot
         self.normalise_factor = normalise_factor
         self.get_qrs_and_hrs_png = get_qrs_and_hrs_png
