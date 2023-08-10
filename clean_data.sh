@@ -13,5 +13,4 @@ module purge
 module load languages/anaconda3/2022.11-3.9.13
 module load apps/ffmpeg/4.3
 source activate /mnt/storage/scratch/gg18045/.conda/envs/ecgpcg-381
-conda activate ecgpcg-381
 python ./clean_data.py
