@@ -125,7 +125,7 @@ class ECG():
         if get_qrs_and_hrs_png:   
             print(f"get_qrs_peaks_and_hr: {savename if savename is not None else filename}") 
             self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=sample_rate,
-                title="Corrected GQRS peak detection", savefolder=outputpath_png, saveto=f"{outputpath_png}{savename if savename is not None else self.filename}.png", save_plot=save_qrs_hrs_plot)
+                title="Corrected GQRS peak detection", savefolder=outputpath_png, savename=f"{outputpath_png}{savename if savename is not None else self.filename}.png", save_plot=save_qrs_hrs_plot)
             self.hr_avg = np.nanmean(self.hrs)
         signal = preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
             
@@ -221,12 +221,12 @@ def save_ecg_signal(filename, signal, outpath=config.outputpath+'physionet/', sa
 def save_qrs_inds(filename, qrs_inds, outpath=config.outputpath+'physionet/'):
         np.save(outpath+filename+'_qrs_inds.npy', qrs_inds)
         
-def get_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), savefolder=None, saveto=None, show=False, save_hrs=False, save_plot=False):
-    if savefolder in saveto:
+def get_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), savefolder=None, savename=None, show=False, save_hrs=False, save_plot=False):
+    if savefolder in savename:
         create_new_folder(savefolder)
     else:
         raise ValueError(f"Error: savefolder ({savefolder}) must be part of the filepath 'saveto' ({saveto}).")
-    print(f"Plot a signal with its peaks and heart rate - {saveto}")
+    print(f"Plot a signal with its peaks and heart rate - {savename}")
     # Calculate heart rate
     hrs = processing.hr.compute_hr(sig_len=sig.shape[0], qrs_inds=peak_inds, fs=fs)
     N = sig.shape[0]
@@ -247,12 +247,12 @@ def get_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), savefolder
         #ax_right.tick_params('y', colors='m')
         # Make the y-axis label, ticks and tick labels match the line color.
         ax_left.tick_params('y', colors='#3979f0')
-        if saveto is not None:
-            plt.savefig(saveto, dpi=600)
+        if savename is not None:
+            plt.savefig(savename, dpi=600)
         if show:
             plt.show()
     if save_hrs:
-        np.save(saveto)
+        np.save(savename)
     if save_plot:
         plt.close()
     return hrs
