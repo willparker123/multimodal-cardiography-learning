@@ -27,6 +27,7 @@ class PCG():
         self.audio = audio
         self.audio_sample_rate = audio.sample_rate
         signal = audio.audio
+        self.audio_raw = self.audio.audio
         self.savename = savename
         self.sampfrom = sampfrom
         self.sampto = sampto
@@ -123,12 +124,24 @@ class PCG():
         
     def plot_resampled_audio(self, save=True, outpath_png=outputpath+'physionet/spectrograms_pcg_audio', show=False):
         create_new_folder(outpath_png)
-        plt.plot(self.signal)
+        plt.plot(self.signal_preproc)
         if save:
             if self.savename is not None:
-                plt.savefig(outpath_png+'/'+self.savename+'_pcg_audio.png', format="png")
+                plt.savefig(outpath_png+'/'+self.savename+'_pcg_audio_resampled.png', format="png")
             else:
-                plt.savefig(outpath_png+'/'+self.filename+'_pcg_audio.png', format="png")
+                plt.savefig(outpath_png+'/'+self.filename+'_pcg_audio_resampled.png', format="png")
+        if show:
+            plt.show()
+        plt.close()
+        
+    def plot_raw_audio(self, save=True, outpath_png=outputpath+'physionet/spectrograms_pcg_audio', show=False):
+        create_new_folder(outpath_png)
+        plt.plot(self.audio_raw)
+        if save:
+            if self.savename is not None:
+                plt.savefig(outpath_png+'/'+self.savename+'_pcg_audio_raw.png', format="png")
+            else:
+                plt.savefig(outpath_png+'/'+self.filename+'_pcg_audio_raw.png', format="png")
         if show:
             plt.show()
         plt.close()
