@@ -72,12 +72,17 @@ class ECG():
         self.sample_rate = sample_rate
         self.sampfrom = sampfrom
         self.sampto = sampto
+        self.filter_lower = filter_lower
+        self.filter_upper = filter_upper
         self.resample = resample
         self.normalise = normalise
         self.apply_filter = apply_filter
         self.start_time = 0
         self.save_qrs_hrs_plot = save_qrs_hrs_plot
         self.normalise_factor = normalise_factor
+        self.get_qrs_and_hrs_png = get_qrs_and_hrs_png
+        self.split_before_resample = split_before_resample
+        self.outputpath_png = outputpath_png
         if split_before_resample:
             if sampfrom is None:
                 if sampto is None:
@@ -127,8 +132,12 @@ class ECG():
             self.hrs = get_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=sample_rate,
                 title="Corrected GQRS peak detection", savefolder=outputpath_png, savename=f"{outputpath_png}{savename if savename is not None else self.filename}.png", save_plot=save_qrs_hrs_plot)
             self.hr_avg = np.nanmean(self.hrs)
-        signal = preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
             
+        if normalise:
+            if normalise_factor is None:
+                signal = preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
+            else:
+                signal = signal / normalise_factor
         if apply_filter:
             #### UNUSED
             #
@@ -200,9 +209,15 @@ class ECG():
         for i in range(no_segs):
             segment = None
             if self.savename is not None:
-                segment = ECG(self.filename, filepath=self.filepath, label=self.label, savename=f'{self.savename}_seg_{i}', csv_path=self.csv_path, sample_rate=self.sample_rate, sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter, save_qrs_hrs_plot=self.save_qrs_hrs_plot)
+                segment = ECG(self.filename, filepath=self.filepath, label=self.label, savename=f'{self.savename}_seg_{i}', csv_path=self.csv_path, sample_rate=self.sample_rate, 
+                              sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter, save_qrs_hrs_plot=self.save_qrs_hrs_plot, 
+                              outputpath_png=self.outputpath_png, normalise_factor=self.normalise_factor, chan=self.chan, get_qrs_and_hrs_png=self.get_qrs_and_hrs_png,
+                              filter_lower=self.filter_lower, filter_upper=self.filter_upper, save_qrs_hrs_plot=self.save_qrs_hrs_plot, split_before_resample=self.split_before_resample)
             else:
-                segment = ECG(self.filename, filepath=self.filepath, label=self.label, savename=f'{self.filename}_seg_{i}', csv_path=self.csv_path, sample_rate=self.sample_rate, sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter, save_qrs_hrs_plot=self.save_qrs_hrs_plot)
+                segment = ECG(self.filename, filepath=self.filepath, label=self.label, savename=f'{self.filename}_seg_{i}', csv_path=self.csv_path, sample_rate=self.sample_rate, 
+                              sampfrom=inds[i], sampto=inds[i]+samples_goal, resample=False, normalise=normalise, apply_filter=self.apply_filter, save_qrs_hrs_plot=self.save_qrs_hrs_plot, 
+                              outputpath_png=self.outputpath_png, normalise_factor=self.normalise_factor, chan=self.chan, get_qrs_and_hrs_png=self.get_qrs_and_hrs_png,
+                              filter_lower=self.filter_lower, filter_upper=self.filter_upper, save_qrs_hrs_plot=self.save_qrs_hrs_plot, split_before_resample=self.split_before_resample)
             segments.append(segment)
         return segments
     
