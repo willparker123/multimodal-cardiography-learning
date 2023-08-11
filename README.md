@@ -55,8 +55,9 @@ The resampled,
 
 ## Avobjects - LWT-Net on ECG Video [INCOMPLETE]
 
-The data processing framework in this repo allows for video creation of pre-processed and transformed ECGs; a STFT / CWT transform is windowed and moved across the time dimension, creating a "scrolling spectrogram / wavelet transform".
-This video can be used in models such as [LWT-Net from this "Self-Supervised Learning of audio-visual objects from video" paper](https://arxiv.org/pdf/2008.04237.pdf) in the [avobjects](https://github.com/afourast/avobjects) repository ([project page](https://www.robots.ox.ac.uk/~vgg/research/avobjects/)). For avobjects, the following command can be used with segment videos; the model may need some tweaking to work after cloning the repo:*
+The data processing framework in this repo allows for video creation of pre-processed and transformed ECGs; a STFT / CWT transform is windowed and moved across the time dimension, creating a "scrolling spectrogram / wavelet transform". Video files are only in .mp4 format, and are created using **ffmpeg**, which may need installing on your system. The pytorch dataset implementation can support .mp4 as an inpuy file to read the ECG and PCG for model training.
+ 
+This video can be used in models such as [LWT-Net from this "Self-Supervised Learning of audio-visual objects from video" paper](https://arxiv.org/pdf/2008.04237.pdf) in the [avobjects](https://github.com/afourast/avobjects) repository ([project page](https://www.robots.ox.ac.uk/~vgg/research/avobjects/)).  The model may need some tweaking to work after cloning the repo - for avobjects, the following command can be used with segment videos:*
 
 ```python main.py  --resume checkpoints/avobjects_loc_sep.pt --input_video a0001_seg_0.mp4 --output_dir a0001_seg_0_output```
 
