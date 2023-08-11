@@ -28,6 +28,8 @@ The project supports Google Drive, although this has not been tested in a while.
 
 The original Ephnogram and Physionet (as the paper / implementation refers to them) repositories can be found [here for Physionet](https://physionet.org/content/challenge-2016/1.0.0/#files) and [here for Ephnogram](https://physionet.org/content/ephnogram/1.0.0/). Alternatively, there is [this zip file hosted on Google Drive](https://drive.google.com/file/d/1tT4nswG1hNpuF5WKEobpO0XJNdbF4ZJI/view?usp=sharing) which contains both datasets which are in a directory heirarchy and with a naming convention matching that of the default values in the configuration (argparse / config.py).
 
+**These datasets will need to be downloaded and configured before running clean_data.py, which is needed for model training and evaluation.**
+
 ```
     --inputpath-physionet-data : string
         Input folder location for the Physionet raw ECG / PCG data (directory holding WFDB/MAT/.wav files)
