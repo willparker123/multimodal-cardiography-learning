@@ -31,14 +31,14 @@ The original Ephnogram and Physionet (as the paper / implementation refers to th
 **These datasets will need to be downloaded and configured before running clean_data.py, which is needed for model training and evaluation.**
 
 ```
-    --inputpath-physionet-data : string
-        Input folder location for the Physionet raw ECG / PCG data (directory holding WFDB/MAT/.wav files)
-    --inputpath-physionet-labels : string
-        Input file path for the Physionet label CSV for the data (.csv file)
-    --inputpath-ephnogram-data : string
-        Input folder location for the Ephnogram raw ECG / PCG data (directory holding WFDB/MAT/.wav files)
-    --inputpath-ephnogram-labels : string
-        Input file path for the Ephnogram label CSV for the data (.csv file)
+--inputpath-physionet-data : string
+    Input folder location for the Physionet raw ECG / PCG data (directory holding WFDB/MAT/.wav files)
+--inputpath-physionet-labels : string
+    Input file path for the Physionet label CSV for the data (.csv file)
+--inputpath-ephnogram-data : string
+    Input folder location for the Ephnogram raw ECG / PCG data (directory holding WFDB/MAT/.wav files)
+--inputpath-ephnogram-labels : string
+    Input file path for the Ephnogram label CSV for the data (.csv file)
 ```
 
 The location of the labels (.csv) and raw pre-processed data can be configured in config.py or using argparse (key arguments is in this README, the rest can be viewed in config.py) and will be needed to create the new .csv files containing metadata information used in the MMECGPCGNet model as well as for future applications, as well as using the naming conventions of this project.
@@ -59,7 +59,9 @@ The data processing framework in this repo allows for video creation of pre-proc
 
 This video can be used in models such as [LWT-Net from this "Self-Supervised Learning of audio-visual objects from video" paper](https://arxiv.org/pdf/2008.04237.pdf) in the [avobjects](https://github.com/afourast/avobjects) repository ([project page](https://www.robots.ox.ac.uk/~vgg/research/avobjects/)).  The model may need some tweaking to work after cloning the repo - for avobjects, the following command can be used with segment videos:*
 
-```python main.py  --resume checkpoints/avobjects_loc_sep.pt --input_video a0001_seg_0.mp4 --output_dir a0001_seg_0_output```
+```
+python main.py  --resume checkpoints/avobjects_loc_sep.pt --input_video a0001_seg_0.mp4 --output_dir a0001_seg_0_output
+```
 
 An example of a windowed ECG with the STFT transform on the first segment of the first sample of the Physionet dataset (8 seconds, 24fps)
 <br/>
