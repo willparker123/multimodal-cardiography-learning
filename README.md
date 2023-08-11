@@ -62,7 +62,7 @@ This video can be used in models such as [LWT-Net from this "Self-Supervised Lea
 ```python main.py  --resume checkpoints/avobjects_loc_sep.pt --input_video a0001_seg_0.mp4 --output_dir a0001_seg_0_output```
 
 An example of a windowed ECG with the STFT transform on the first segment of the first sample of the Physionet dataset (8 seconds, 24fps)
-![](https://github.com/willparker123/multimodal-cardiography-learning/blob/main/readme/a0001_seg_0.gif?raw=true)
+![a0001_seg_0.gif](https://github.com/willparker123/multimodal-cardiography-learning/blob/main/readme/a0001_seg_0.gif?raw=true)
 
 **The LWT-Net model was designed for attention over time in the domain of speakers; videos of human-like speaking behaviour and audio of human-like speech. This is very different from attention over time between ECG and PCG, one key difference which needs accounting for is the constant positive x-axis translation due to the nature of the sliding window in the ECG videos, as well as the obvious morphological differences between the domains.
 
