@@ -9,9 +9,42 @@ The combined MM-ECGPCG dataset in the paper combines these two base datasets, ta
 
 The paper's code (this repo) runs on Python 3.8.1 due to a dependency
 
+
 ## Data Cleaning
 
 The data cleaning process begins by reading all source files from the two existing datasets (Ephnogram / Physionet), sample-by-sample. The files are transformed, split into segments and saved into directories inside a common root folder named after the transformation process for each sample ('data_{transformation_type}'). For exmaple, the ECG from the first segment of the first sample would be saved into 'data_ecg_cwt/a0001/0' and the PCG 'data_pcg_cwt/a0001/0' where 'data_ecg_cwt'  The data cleaning process is detailed in the paper.
+
+The project supports Google Drive, although this has not been tested in a while. It may need some extra work on authentication, but the prefixing of folder paths with the Google Drive folder location is implemented.
+
+```
+    --use-googledrive : bool
+        Use Google Drive to read / write data to (prefix inputpaths and outputpaths with --drive-folderpath)
+    --drive-folderpath : string
+        The folder location from the root in Googe Drive to use
+```
+
+
+### Physionet (CINC 2016) + EPHNOGRAM Datasets (data-before)
+
+The original Ephnogram and Physionet (as the paper / implementation refers to them) repositories can be found [here for Physionet](https://physionet.org/content/challenge-2016/1.0.0/#files) and [here for Ephnogram](https://physionet.org/content/ephnogram/1.0.0/). Alternatively, there is [this zip file hosted on Google Drive](https://drive.google.com/file/d/1tT4nswG1hNpuF5WKEobpO0XJNdbF4ZJI/view?usp=sharing) which contains both datasets which are in a directory heirarchy and with a naming convention matching that of the default values in the configuration (argparse / config.py).
+
+```
+    --inputpath-physionet-data : string
+        Input folder location for the Physionet raw ECG / PCG data (directory holding WFDB/MAT/.wav files)
+    --inputpath-physionet-labels : string
+        Input file path for the Physionet label CSV for the data (.csv file)
+    --inputpath-ephnogram-data : string
+        Input folder location for the Ephnogram raw ECG / PCG data (directory holding WFDB/MAT/.wav files)
+    --inputpath-ephnogram-labels : string
+        Input file path for the Ephnogram label CSV for the data (.csv file)
+```
+
+The location of the labels (.csv) and raw pre-processed data can be configured in config.py or using argparse (key arguments is in this README, the rest can be viewed in config.py) and will be needed to create the new .csv files containing metadata information used in the MMECGPCGNet model as well as for future applications, as well as using the naming conventions of this project.
+
+
+### Data cleaning, naming conventions
+
+The resampled,
 
 ## MM-ECGPCG Dataset
 
