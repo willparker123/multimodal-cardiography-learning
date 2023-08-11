@@ -16,4 +16,4 @@ module load apps/ffmpeg/4.3
 module load module load FFmpeg/3.0.2-foss-2016a
 export IMAGEIO_FFMPEG_EXE="/usr/bin/ffmpeg"
 source activate /mnt/storage/scratch/gg18045/.conda/envs/ecgpcg-381
-python ./clean_data.py --skip-csvs-and-data true
+python ./clean_data.py --ecg-type stft --pcg-type stft_logmel --skip-csvs-and-data true
