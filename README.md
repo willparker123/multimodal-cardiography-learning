@@ -53,5 +53,14 @@ The resampled,
 ## Model + Training
 
 
-python main.py  --resume checkpoints/avobjects_loc_sep.pt --input_video a0001_seg_0.mp4 --output_dir a0001_seg_0_output
+## Avobjects - LWT-Net on ECG Video [INCOMPLETE]
+
+The data processing framework in this repo allows for video creation of pre-processed and transformed ECGs; a STFT / CWT transform is windowed and moved across the time dimension, creating a "scrolling spectrogram / wavelet transform".
+This video can be used in models such as [LWT-Net from this "Self-Supervised Learning of audio-visual objects from video" paper](https://arxiv.org/pdf/2008.04237.pdf) in the [avobjects](https://github.com/afourast/avobjects) repository ([project page](https://www.robots.ox.ac.uk/~vgg/research/avobjects/)). For avobjects, the following command can be used with segment videos; the model may need some tweaking to work after cloning the repo:*
+
+```python main.py  --resume checkpoints/avobjects_loc_sep.pt --input_video a0001_seg_0.mp4 --output_dir a0001_seg_0_output```
+
+**The LWT-Net model was designed for attention over time in the domain of speakers; videos of human-like speaking behaviour and audio of human-like speech. This is very different from attention over time between ECG and PCG, and that there is a constant positive x-axis translation due to the nature of the sliding window in the ECG videos.
+
+This will likely lead to poor results, and this feature was designed for future multimodal ECG/PCG models which use unsupervised attention methods.**
 
