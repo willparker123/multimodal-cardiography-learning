@@ -227,9 +227,9 @@ def get_spectrogram_data(full_list,
   pcg_segments = []
   frames = []
   write_to_logger_from_worker(f"*** Processing Signal {index} ({index+1} / {reflen}) [{data_list[0]}] ***", q=q)
-  filename = data_list[0]
-  og_filename = [1]
-  label = data_list[2]
+  filename = data_list[1]
+  og_filename = [2]
+  label = data_list[3]
   print(data_list)
   create_new_folder(outputpath_+f'data_ecg_{config.global_opts.ecg_type}/{filename}')
   create_new_folder(outputpath_+f'data_pcg_{config.global_opts.pcg_type}/{filename}')
