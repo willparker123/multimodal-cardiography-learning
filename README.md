@@ -60,7 +60,7 @@ This video can be used in models such as [LWT-Net from this "Self-Supervised Lea
 
 ```python main.py  --resume checkpoints/avobjects_loc_sep.pt --input_video a0001_seg_0.mp4 --output_dir a0001_seg_0_output```
 
-**The LWT-Net model was designed for attention over time in the domain of speakers; videos of human-like speaking behaviour and audio of human-like speech. This is very different from attention over time between ECG and PCG, and that there is a constant positive x-axis translation due to the nature of the sliding window in the ECG videos.
+**The LWT-Net model was designed for attention over time in the domain of speakers; videos of human-like speaking behaviour and audio of human-like speech. This is very different from attention over time between ECG and PCG, one key difference which needs accounting for is the constant positive x-axis translation due to the nature of the sliding window in the ECG videos, as well as the obvious morphological differences between the domains.
 
 This will likely lead to poor results, and this feature was designed for future multimodal ECG/PCG models which use unsupervised attention methods.**
 
