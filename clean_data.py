@@ -424,7 +424,7 @@ def get_spectrogram_data(full_list,
                                           outpath_np=outputpath_+f'data_pcg_{config.global_opts.pcg_type}/{filename}/{index_p}/', 
                                           outpath_png=outputpath_+f'spectrograms_pcg_{config.global_opts.pcg_type}/{filename}/{index_p}/', 
                                           normalise=True, 
-                                          start_time=pcg_seg.start_time, 
+                                          start_time=pcg_seg.start_time if create_objects else start_times_pcg[index_p], 
                                           wavelet_function=config.global_opts.cwt_function_pcg, 
                                           save_np=(not skipSpecData), 
                                           save_img=(not skipSpecImage))
