@@ -15,7 +15,7 @@ import os
 import numpy as np
 from audio import Audio
 from pcg import PCG, get_pcg_segments_from_array, save_pcg
-from ecg import ECG, save_qrs_inds, get_ecg_segments_from_array, get_qrs_peaks_and_hr, save_ecg
+from ecg import ECG, save_qrs_inds, get_ecg_segments_from_array, plot_qrs_peaks_and_hr, save_ecg
 from spectrograms import Spectrogram
 from helpers import get_segment_num, get_filtered_df, create_new_folder, ricker, dataframe_cols, read_signal
 import config
@@ -267,8 +267,8 @@ if __name__ == '__main__':
     
     # Samples in the paper
     data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="stft", transform_type_pcg="stft_mel", colormap="magma")
-    data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma")
-    data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="morlet", wavelet_pcg="morlet", colormap="magma")
+    #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma")
+    #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="morlet", wavelet_pcg="morlet", colormap="magma")
     #data_sample(filename="a0315", outputfolderpath="samples/a0315", label=1)
     #data_sample(filename="a0007", outputfolderpath="samples/a0007", label=1)
     #data_sample(filename="ECGPCG0003", index_ephnogram=1, outputfolderpath="samples/b0001", dataset="ephnogram", inputpath_data=config.input_ephnogram_data_folderpath_, inputpath_target=config.input_ephnogram_target_folderpath_, label=0)

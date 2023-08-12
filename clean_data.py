@@ -47,7 +47,7 @@ from helpers import get_segment_num, get_filtered_df, create_new_folder, ricker,
 import config
 from utils import listener, write_to_logger, write_to_logger_from_worker
 from visualisations import histogram
-from ecg import ECG, save_qrs_inds, get_ecg_segments_from_array, get_qrs_peaks_and_hr, save_ecg
+from ecg import ECG, save_qrs_inds, get_ecg_segments_from_array, plot_qrs_peaks_and_hr, save_ecg
 import wfdb
 from wfdb import processing
 from spectrograms import Spectrogram
