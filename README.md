@@ -17,10 +17,10 @@ The data cleaning process begins by reading all source files from the two existi
 The project supports Google Drive, although this has not been tested in a while. It may need some extra work on authentication, but the prefixing of folder paths with the Google Drive folder location is implemented.
 
 ```
-    --use-googledrive : bool
-        Use Google Drive to read / write data to (prefix inputpaths and outputpaths with --drive-folderpath)
-    --drive-folderpath : string
-        The folder location from the root in Googe Drive to use
+--use-googledrive : bool
+    Use Google Drive to read / write data to (prefix inputpaths and outputpaths with --drive-folderpath)
+--drive-folderpath : string
+    The folder location from the root in Googe Drive to use
 ```
 
 
