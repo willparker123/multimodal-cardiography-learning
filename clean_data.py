@@ -745,48 +745,53 @@ if __name__ == "__main__":
   
   #   - 'create_objects=False' for better performance; uses 'np.load(filepath_to_saved_spectogram_or_cwt)' to get processed ECG/PCG data
   # Normal Workflow (as in paper): 
-  data_p, ratio_data_p = get_dataset(dataset="physionet", 
-                                    inputpath_data=config.input_physionet_data_folderpath_, 
-                                    inputpath_target=config.input_physionet_target_folderpath_, 
-                                    outputpath_folder=config.outputpath,
-                                    pool=pool, q=manager_q,
-                                    
-                                    create_objects=False,
-                                    get_balance_diff=True,
-                                    skipDataCSVAndFiles=config.global_opts.skip_csvs_and_data,
-                                    skipECGSpectrogram=config.global_opts.skip_spec_ecg,
-                                    skipPCGSpectrogram=config.global_opts.skip_spec_pcg,
-                                    skipSpecData=config.global_opts.skip_spec_data, 
-                                    skipSpecImage=config.global_opts.skip_spec_img,
-                                    skipParent=config.global_opts.skip_spec_parent,
-                                    skipSegments=config.global_opts.skip_spec_seg,
-                                    save_qrs_hrs_plot=config.global_opts.save_qrs_hrs,
-                                    skipExisting=config.global_opts.skip_existing, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+  if not config.global_opts.skip_physionet:
+    data_p, ratio_data_p = get_dataset(dataset="physionet", 
+                                      inputpath_data=config.input_physionet_data_folderpath_, 
+                                      inputpath_target=config.input_physionet_target_folderpath_, 
+                                      outputpath_folder=config.outputpath,
+                                      pool=pool, q=manager_q,
+                                      
+                                      create_objects=False,
+                                      get_balance_diff=True,
+                                      skipDataCSVAndFiles=config.global_opts.skip_csvs_and_data,
+                                      skipECGSpectrogram=config.global_opts.skip_spec_ecg,
+                                      skipPCGSpectrogram=config.global_opts.skip_spec_pcg,
+                                      skipSpecData=config.global_opts.skip_spec_data, 
+                                      skipSpecImage=config.global_opts.skip_spec_img,
+                                      skipParent=config.global_opts.skip_spec_parent,
+                                      skipSegments=config.global_opts.skip_spec_seg,
+                                      save_qrs_hrs_plot=config.global_opts.save_qrs_hrs,
+                                      skipExisting=config.global_opts.skip_existing, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
   )
-  data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
-                                    inputpath_data=config.input_ephnogram_data_folderpath_, 
-                                    inputpath_target=config.input_ephnogram_target_folderpath_, 
-                                    outputpath_folder=config.outputpath,
-                                    pool=pool, q=manager_q,
-                                    
-                                    create_objects=False,
-                                    get_balance_diff=True,
-                                    skipDataCSVAndFiles=config.global_opts.skip_csvs_and_data,
-                                    skipECGSpectrogram=config.global_opts.skip_spec_ecg,
-                                    skipPCGSpectrogram=config.global_opts.skip_spec_pcg,
-                                    skipSpecData=config.global_opts.skip_spec_data, 
-                                    skipSpecImage=config.global_opts.skip_spec_img,
-                                    skipParent=config.global_opts.skip_spec_parent,
-                                    skipSegments=config.global_opts.skip_spec_seg,
-                                    save_qrs_hrs_plot=config.global_opts.save_qrs_hrs,
-                                    skipExisting=config.global_opts.skip_existing, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
+  if not config.global_opts.skip_ephnogram:
+    data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
+                                      inputpath_data=config.input_ephnogram_data_folderpath_, 
+                                      inputpath_target=config.input_ephnogram_target_folderpath_, 
+                                      outputpath_folder=config.outputpath,
+                                      pool=pool, q=manager_q,
+                                      
+                                      create_objects=False,
+                                      get_balance_diff=True,
+                                      skipDataCSVAndFiles=config.global_opts.skip_csvs_and_data,
+                                      skipECGSpectrogram=config.global_opts.skip_spec_ecg,
+                                      skipPCGSpectrogram=config.global_opts.skip_spec_pcg,
+                                      skipSpecData=config.global_opts.skip_spec_data, 
+                                      skipSpecImage=config.global_opts.skip_spec_img,
+                                      skipParent=config.global_opts.skip_spec_parent,
+                                      skipSegments=config.global_opts.skip_spec_seg,
+                                      save_qrs_hrs_plot=config.global_opts.save_qrs_hrs,
+                                      skipExisting=config.global_opts.skip_existing, #skips data creation process if CSV containing processed ECG/PCG filenames (not yet split into segments)
  )
   write_to_logger("*** Cleaning and Postprocessing Data [3/3] ***", pool, manager_q)
-  num_data_p, num_data_e = get_total_num_segments(config.outputpath)
-  hists, signal_stats = create_histograms_data_values_distribution(config.outputpath, manager_q)
+  if config.global_opts.skip_physionet or config.global_opts.skip_ephnogram:
+    num_data_p, num_data_e = get_total_num_segments(config.outputpath)
+    hists, signal_stats = create_histograms_data_values_distribution(config.outputpath, manager_q)
   write_to_logger(f"Range of values in each dataset (Created from Histogram and Quartiles): {signal_stats}", pool, manager_q)
-  write_to_logger(f"Number of Physionet segments ({config.global_opts.segment_length}s): {num_data_p}", pool, manager_q)
-  write_to_logger(f"Number of Ephnogram segments ({config.global_opts.segment_length}s): {num_data_e}", pool, manager_q)
+  if not config.global_opts.skip_physionet:
+    write_to_logger(f"Number of Physionet segments ({config.global_opts.segment_length}s): {num_data_p}", pool, manager_q)
+  if not config.global_opts.skip_ephnogram:
+    write_to_logger(f"Number of Ephnogram segments ({config.global_opts.segment_length}s): {num_data_e}", pool, manager_q)
   write_to_logger("*** Done - all Data cleaned ***", pool, manager_q)
   
   manager_q.put('#DONE#')  # all workers are done, we close the output file
