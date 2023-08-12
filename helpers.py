@@ -79,9 +79,11 @@ def read_file(filepath, datatype, filetype, both_in_wfdb=False):
     else:
         return return_data, return_data_pcg
 
-
 def read_signal(filepath):
     return np.load(filepath)
+
+def linear_regression_objective(x, a, b):
+    return np.array(x).astype(float) * float(a) + float(b)
 
 def get_filtered_df(df, column, value):
     df = df[df[column] == value]
