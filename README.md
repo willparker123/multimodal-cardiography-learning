@@ -46,9 +46,8 @@ The location of the labels (.csv) and raw pre-processed data can be configured i
 
 ### Data cleaning, naming conventions
 
-The resampled raw data (before any pre-processing; filtering, thresholding and transformation) is saved as .npz files before the rest of the data framework augments the data. This data renamed and saved with a new filename (savename) and in a directory heirarchy which follows the convention:
-<br/>
-<br/>
+The resampled raw data (before any pre-processing; filtering, thresholding and transformation) is saved as .npz files before the rest of the data framework augments the data. This data renamed and saved with a new filename (savename) and in a directory heirarchy which follows the convention:  
+
 ```
 "{outputpath}/{dataset}/data_{ecg/pcg}_{ecg_transform_type/pcg_transform_type}/{sample_savename}/{sample_savename}_{ecg_transform_type/pcg_transform_type}.npz" (for samples)
     (e.g. "data-after/physionet/data_ecg_cwt/a0001/a0001_cwt.npz")
@@ -56,9 +55,9 @@ The resampled raw data (before any pre-processing; filtering, thresholding and t
 "{outputpath}/{dataset}/data_{ecg/pcg}_{ecg_transform_type/pcg_transform_type}/{sample_savename}/{segment_number}/{sample_savename}_seg_{segment_number}_{ecg_transform_type/pcg_transform_type}.npz" (for sample segments)
     (e.g. "data-after/physionet/data_ecg_cwt/a0001/0/a0001_seg_0_cwt.npz")
 ```
-<br/>
+  
 **Spectrogram data (after all pre-processing including transforms) follows the same convention, with '_spec' as a suffix to the filename (e.g. "data-after/physionet/data_ecg_cwt/a0001/0/a0001_seg_0_cwt_spec.npz")**
-<br/>
+  
 ## MM-ECGPCG Dataset
 
 ## Model + Training
