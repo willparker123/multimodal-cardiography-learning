@@ -93,70 +93,55 @@ def load_config():
     #TODO only in Pytorch currently
     parser.add_argument("--use-tensorflow", default=False, type=bool)
     parser.add_argument("--use-googledrive", default=useDrive, type=bool)
+    parser.add_argument("--drive-folderpath", default=drive_folderpath, type=str)
     # --- paths
     parser.add_argument("--inputpath-physionet-data", default=input_physionet_data_folderpath, type=str)
     parser.add_argument("--inputpath-physionet-labels", default=input_physionet_target_folderpath, type=str)
     parser.add_argument("--inputpath-ephnogram-data", default=input_ephnogram_data_folderpath, type=str)
     parser.add_argument("--inputpath-ephnogram-labels", default=input_ephnogram_target_folderpath, type=str)
     parser.add_argument("--outputpath", default=output_folderpath, type=str)
-    parser.add_argument("--drive-folderpath", default=drive_folderpath, type=str)
     parser.add_argument("--checkpoint-path", default=f'./checkpoints', type=str)
     parser.add_argument("--log-path", default=str("logs"), type=str)
     parser.add_argument("--log-filename", default=str("log"), type=str)
-    parser.add_argument('--output_dir',
-                        type=str,
-                        default="./results/save",
-                        help='Path to save results to')
-    parser.add_argument('--inputpath-videos',
-                        type=str,
-                        default="./input-videos",
-                        help='Input video path')
     
     # --- checkpoints and logging
     parser.add_argument('--resume-checkpoint',
                         type=str,
                         default=None,
                         help='Checkpoint path to load model weights from')
-    parser.add_argument("--checkpoint-frequency", type=int, default=1, help="Save a checkpoint every N epochs")
-    parser.add_argument(
-        "--log-frequency",
-        default=10,
-        type=int,
-        help="How frequently to save logs to tensorboard in number of steps",
-    )
-    parser.add_argument(
-        "--print-frequency",
-        default=10,
-        type=int,
-        help="How frequently to print progress to the command line in number of steps",
-    )
+    parser.add_argument("--checkpoint-frequency", 
+                        type=int, 
+                        default=1, 
+                        help="Save a checkpoint every N epochs")
+    parser.add_argument("--log-frequency",
+                        default=10,
+                        type=int,
+                        help="How frequently to save logs to tensorboard in number of steps")
+    parser.add_argument("--print-frequency",
+                        default=10,
+                        type=int,
+                        help="How frequently to print progress to the command line in number of steps")
     
     # --- util
     parser.add_argument('--gpu_id',
                         type=int,
                         default=0,
                         help='-1: all, 0-7: GPU index')
-    parser.add_argument(
-        "-N",
-        "--number-of-processes",
-        default=number_of_processes,
-        type=int,
-        help=f"Number of worker processes used to load data. Must be less than [{mp.cpu_count()+2}]",
-    )
-    parser.add_argument(
-        "-M",
-        "--mem-limit",
-        default=mem_limit,
-        type=float,
-        help="Percentage of total RAM to use for processing",
-    )
-    parser.add_argument(
-        "-G",
-        "--enable-gpu",
-        default=True,
-        type=bool,
-        help="Enable GPU for pytorch; model training",
-    )
+    parser.add_argument("-N",
+                        "--number-of-processes",
+                        default=number_of_processes,
+                        type=int,
+                        help=f"Number of worker processes used to load data. Must be less than [{mp.cpu_count()+2}]")
+    parser.add_argument("-M",
+                        "--mem-limit",
+                        default=mem_limit,
+                        type=float,
+                        help="Percentage of total RAM to use for processing")
+    parser.add_argument("-G",
+                        "--enable-gpu",
+                        default=True,
+                        type=bool,
+                        help="Enable GPU for pytorch; model training")
 
     # --- input
     parser.add_argument('--segment-length',
@@ -176,9 +161,9 @@ def load_config():
                         type=int,
                         help='Length in milliseconds of the Hamming window used in spectrogram transform [ECG]')
     parser.add_argument('--window-length-ms-pcg',
-                    default=window_length_ms_pcg,
-                    type=int,
-                    help='Length in milliseconds of the Hamming window used in spectrogram transform [PCG]')
+                        default=window_length_ms_pcg,
+                        type=int,
+                        help='Length in milliseconds of the Hamming window used in spectrogram transform [PCG]')
     
     # --- ecg
     parser.add_argument('--ecg-type',
@@ -245,6 +230,8 @@ def load_config():
                         help='Function to use when creating PCG using CWT [ricker, bior2.6, customricker, morlet]')
 
     # -- CLEAN_DATA: Data and Transform (spec/cwt) creation
+    parser.add_argument("--skip-physionet", default=False, type=bool, help="Skip all data cleaning (CSV creation, data creation, spectrogram creation) for the Physionet dataset")
+    parser.add_argument("--skip-ephnogram", default=False, type=bool, help="Skip all data cleaning (CSV creation, data creation, spectrogram creation) for the Ephnogram dataset")
     parser.add_argument("--skip-csvs-and-data", default=False, type=bool, help="Skip CSV creation for labels, segment and sample information as well as [a0001.npz] files")
     parser.add_argument("--skip-spec-ecg", default=False, type=bool, help="Skip Transform (spec / cwt) creation (data and img) for ECG")
     parser.add_argument("--skip-spec-pcg", default=False, type=bool, help="Skip Transform (spec / cwt) creation (data and img) for PCG")
@@ -260,39 +247,46 @@ def load_config():
                         default=None,
                         type=int,
                         help='Scale input video to that resolution')
-    parser.add_argument('--fps', type=int, default=seg_factor_fps, help='Video input fps')
-    parser.add_argument('--frame-length', type=float, default=frame_length, help='Length in seconds in view for each video frame')
+    parser.add_argument('--fps', 
+                        type=int, 
+                        default=seg_factor_fps, 
+                        help='Video input fps')
+    parser.add_argument('--frame-length', 
+                        type=float, 
+                        default=frame_length, 
+                        help='Length in seconds in view for each video frame')
     
     # --- model
-    parser.add_argument("--train-split", default=0.7, type=float, help="Train/Test split on the training dataset for validation in non-full training")
-    parser.add_argument("--learning-rate", default=1e-1, type=float, help="Learning rate")
-    parser.add_argument("--sgd-momentum", default=0.9, type=float, help="SGD Momentum parameter Beta")
-    parser.add_argument(
-        "--batch-size",
-        default=8,
-        type=int,
-        help="Number of images within each mini-batch",
-    )
-    parser.add_argument(
-        "--epochs",
-        default=100,
-        type=int,
-        help="Number of epochs (passes through the entire dataset) to train for",
-    )
-    parser.add_argument(
-        "--val-frequency",
-        default=2,
-        type=int,
-        help="How frequently to test the model on the validation set in number of epochs",
-    )
+    parser.add_argument("--train-split", 
+                        default=0.7, 
+                        type=float, 
+                        help="Train/Test split on the training dataset for validation in non-full training")
+    parser.add_argument("--learning-rate", 
+                        default=1e-1, 
+                        type=float, 
+                        help="Learning rate")
+    parser.add_argument("--sgd-momentum", 
+                        default=0.9, 
+                        type=float, 
+                        help="SGD Momentum parameter Beta")
+    parser.add_argument("--batch-size",
+                        default=8,
+                        type=int,
+                        help="Number of images within each mini-batch")
+    parser.add_argument("--epochs",
+                        default=100,
+                        type=int,
+                        help="Number of epochs (passes through the entire dataset) to train for")
+    parser.add_argument("--val-frequency",
+                        default=2,
+                        type=int,
+                        help="How frequently to test the model on the validation set in number of epochs")
     parser.add_argument("--opt-adam", action="store_true", help="Replaces SGD with Adam", default=True)
     parser.add_argument("--adam-amsgrad", action="store_true", help="Enables AMSGrad version of the Adam optimiser", default=False)
-    parser.add_argument(
-        "--dropout",
-        default=0.1,
-        type=float,
-        help="Dropout probability",
-    )
+    parser.add_argument("--dropout",
+                        default=0.1,
+                        type=float,
+                        help="Dropout probability")
 
     # -- avobjects
     parser.add_argument( '--n_negative_samples',
