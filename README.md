@@ -56,7 +56,7 @@ The resampled raw data (before any pre-processing; filtering, thresholding and t
     (e.g. "data-after/physionet/data_ecg_cwt/a0001/0/a0001_seg_0_cwt.npz")
 ```
   
-**<sup><sub>Spectrogram data (after all pre-processing including transforms) follows the same convention, with '_spec' as a suffix to the filename (e.g. "data-after/physionet/data_ecg_cwt/a0001/0/a0001_seg_0_cwt_spec.npz").</sup></sub>**
+**<sup><sub>Spectrogram data (after all pre-processing including transforms) follows the same convention, with '_spec' as a suffix to the filename (e.g. "data-after/physionet/data_ecg_cwt/a0001/0/a0001_seg_0_cwt_spec.npz").**
   
 ## MM-ECGPCG Dataset
 
@@ -77,7 +77,7 @@ An example of a windowed ECG with the STFT transform on the first segment of the
 
 ![a0001_seg_0.gif](https://github.com/willparker123/multimodal-cardiography-learning/blob/main/readme/a0001_seg_0.gif?raw=true)  
   
-**<sub><sup>The LWT-Net model was designed for attention over time in the domain of speakers; videos of human-like speaking behaviour and audio of human-like speech. This is very different from attention over time between ECG and PCG, one key difference which needs accounting for is the constant positive x-axis translation due to the nature of the sliding window in the ECG videos, as well as the obvious morphological differences between the domains.</sup></sub>**
+**The LWT-Net model was designed for attention over time in the domain of speakers; videos of human-like speaking behaviour and audio of human-like speech. This is very different from attention over time between ECG and PCG, one key difference which needs accounting for is the constant positive x-axis translation due to the nature of the sliding window in the ECG videos, as well as the obvious morphological differences between the domains.**
 
-**<sub><sup>This will likely lead to poor results, and this feature was designed for future multimodal ECG/PCG models which use unsupervised attention methods.</sup></sub>**
+**This will likely lead to poor results, and this feature was designed for future multimodal ECG/PCG models which use unsupervised attention methods.**
 
