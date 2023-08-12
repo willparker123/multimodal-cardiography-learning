@@ -133,7 +133,7 @@ class ECG():
         if get_qrs_and_hrs_png:   
             print(f"plot_qrs_peaks_and_hr: {savename if savename is not None else filename}") 
             self.hrs, self.hr_avg = plot_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=sample_rate,
-                title=f"Plot of raw ECG (voltage x time) and Heart Rate (BPM) using corrected GQRS peak detection [{savename if savename is not None else filename}]", savefolder=outputpath_png, savename=f"{outputpath_png}{savename if savename is not None else self.filename}.png", save_plot=save_qrs_hrs_plot)
+                title=f"Plot of raw ECG (Voltage x Time) and Heart Rate (BPM) using corrected GQRS peak detection [{savename if savename is not None else filename}]", savefolder=outputpath_png, savename=f"{outputpath_png}{savename if savename is not None else self.filename}.png", save_plot=save_qrs_hrs_plot)
         
         if not np.all(np.isfinite(signal)) or np.any(np.isnan(signal)):
             signal = np.nan_to_num(signal, nan=0, posinf=1, neginf=0)
@@ -261,8 +261,12 @@ def plot_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), savefolde
     ax_hr.yaxis.set_ticks_position('right')
     # UNUSED FOR SECOND X AXIS LABELS:
     #   ax_hr.spines['bottom'].set_position(('outward', 35))
-    ax_sig.set_xlim(0,N)
     ax_hr.set_xlim(0,N)
+    ax_sig.set_xlim(0,N)
+    #normalise voltage and time to mv and seconds
+    ax_hr.xaxis.set_major_formatter(lambda x, pos: x/config.global_opts.sample_rate_ecg)
+    ax_sig.xaxis.set_major_formatter(lambda x, pos: x/config.global_opts.sample_rate_ecg)
+    ax_sig.yaxis.set_major_formatter(lambda x, pos: round(x/6500, 3))
     
     # Display results
     if save_plot:
@@ -294,7 +298,7 @@ def plot_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), savefolde
             Y_ = X_Y_Spline(X_)
             #ax_hr.plot(X_, Y_, color='#f03979', linewidth=4, ls='--', label='Heart Rates at QRS peaks (interpolated)')
             
-            ax_hr.scatter(peak_inds, hrs_peak_inds, marker='X', color='#f03979')
+            ax_hr.scatter(peak_inds, hrs_peak_inds, marker='X', color='#f03979', label='Heart Rates at QRS peaks')
             ax_hr.plot(x_line, y_line, color='red', label='Heart Rate (linear regression)', linewidth=3)
             ax_hr.axhline(hr_avg, color="#f039d5", linewidth=4, ls='--', label='Average Heart Rate')
             # UNUSED FOR SECOND X AXIS LABELS:
@@ -303,7 +307,7 @@ def plot_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), savefolde
 
         ax_sig.plot(peak_inds, sig[peak_inds.astype(int)], 'rx', marker='x', color='#8b0000', label='QRS peaks', markersize=12)
         ax_sig.set_title(title)
-        ax_sig.set_xlabel('Time (ms)', color='#163060')
+        ax_sig.set_xlabel('Time (s)', color='#163060')
         ax_sig.set_ylabel('ECG Voltage (mV)', color='#163060')
         
         ax_sig.tick_params('y', colors='#163060')
