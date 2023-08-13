@@ -338,12 +338,10 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
             cbar.ax.tick_params(labelsize=24)
     else:
         raise ValueError(f"Error: Invalid transform_type for 'transform_type': must be one of {config.transform_types}")
-    print(f"Saving image: {savename if savename is not None else filename}")
+    print(f"Saving image: {outpath_np+savename+f'_{transform_type}_spec.npz' if savename is not None else outpath_np+filename+f'_{transform_type}_spec.npz'}")
     
     if save_np:
         if savename is not None:
-            print(outpath_np+savename+f'_{transform_type}_spec.npz')
-            raise ValueError("AAAA")
             np.savez(outpath_np+savename+f'_{transform_type}_spec.npz', spec=spec, freqs=f, times=t)
         else:
             np.savez(outpath_np+filename+f'_{transform_type}_spec.npz', spec=spec, freqs=f, times=t)
