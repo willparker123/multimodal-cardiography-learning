@@ -23,6 +23,7 @@ import time
 from torch_ecg.components.trainer import BaseTrainer
 from torch_ecg.cfg import CFG
 from .scoring_metrics import evaluate_scores
+import torch.nn.functional as nnf
 
 from torch_ecg.cfg import CFG, DEFAULTS
 from torch_ecg.components.trainer import BaseTrainer
@@ -248,6 +249,7 @@ class TransformerTrainer(BaseTrainer):
         labels: Tensor,
             the labels of the given data
         """
+        self.model.train()
         signals, labels = data
         signals = signals.to(self.device)
         labels = labels.to(self.device)
@@ -257,6 +259,7 @@ class TransformerTrainer(BaseTrainer):
     @torch.no_grad()
     def evaluate(self, data_loader: DataLoader) -> Dict[str, float]:
         """ """
+        self.model.eval()
         all_scalar_preds = []
         all_bin_preds = []
         all_labels = []
@@ -268,27 +271,40 @@ class TransformerTrainer(BaseTrainer):
 
             if torch.cuda.is_available():
                 torch.cuda.synchronize()
-            model_output = self._model.inference(signals)
-            all_scalar_preds.append(model_output.prob)
-            all_bin_preds.append(model_output.pred)
+            
+            # Forward pass, get our logits
+            criterion = nn.CrossEntropyLoss()
+            logits = self.model(signals)
+            labels = np.array(list(map(lambda x: 0 if x == -1 else (1 if x == 1 else x), labels)))
+            print(f"logits {np.shape(logits)} {logits}")
+            print(f"labels {np.shape(torch.from_numpy(labels))} {torch.from_numpy(labels.squeeze())}")
+            # Calculate the loss with the logits and the labels
+            loss = criterion(logits, torch.from_numpy(labels.squeeze()))
+            prob = nnf.softmax(logits, dim=1)
+            top_p, top_class = prob.topk(1, dim = 1)
+            pred = top_class
+            all_scalar_preds.append(prob)
+            all_bin_preds.append(pred)
 
         all_scalar_preds = np.concatenate(all_scalar_preds, axis=0)
         all_bin_preds = np.concatenate(all_bin_preds, axis=0)
         all_labels = np.concatenate(all_labels, axis=0)
-        classes = data_loader.dataset.all_classes
+        classes = self.model.classes
 
         if self.val_train_loader is not None:
             msg = f"all_scalar_preds.shape = {all_scalar_preds.shape}, all_labels.shape = {all_labels.shape}"
             self.log_manager.log_message(msg, level=logging.DEBUG)
-            head_num = 5
+            head_num = len(classes)
             head_scalar_preds = all_scalar_preds[:head_num, ...]
             head_bin_preds = all_bin_preds[:head_num, ...]
+            print(f"head_bin_preds {head_bin_preds} {np.shape(head_bin_preds)}")
+            print(f"np.where(row) {[np.array(head_bin_preds)[row] for row in range(len(head_bin_preds))]}")
             head_preds_classes = [
-                np.array(classes)[np.where(row)] for row in head_bin_preds
+                np.array(head_bin_preds)[row] for row in range(len(head_bin_preds))
             ]
             head_labels = all_labels[:head_num, ...]
             head_labels_classes = [
-                np.array(classes)[np.where(row)] for row in head_labels
+                np.array(head_labels)[row] for row in range(len(head_labels))
             ]
             for n in range(head_num):
                 msg = textwrap.dedent(
@@ -330,8 +346,6 @@ class TransformerTrainer(BaseTrainer):
 
         # in case possible memeory leakage?
         del all_scalar_preds, all_bin_preds, all_labels
-
-        self.model.train()
 
         return eval_res
         #self.model.eval()
