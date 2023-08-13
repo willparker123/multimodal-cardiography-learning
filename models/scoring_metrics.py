@@ -4,8 +4,11 @@ metrics from the official scoring repository
 
 from numbers import Real
 from typing import List, Sequence, Tuple, Union
-
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+import matplotlib.pyplot as plt
 import numpy as np
+import config
+from helpers import create_new_folder
 
 try:
     import torch_ecg  # noqa: F401
@@ -60,21 +63,24 @@ def evaluate_scores_detailed(
     weights = [1.0, 1.0]
 
     _truth = np.array(truth)
+    print(f"SCOREMET1: {np.shape(truth)} {truth} ")
     _binary_pred = np.array(binary_pred)
+    print(f"SCOREMET2: {np.shape(binary_pred)} {binary_pred} ")
     _scalar_pred = np.array(scalar_pred)
+    print(f"SCOREMET3: {np.shape(scalar_pred)} {scalar_pred} ")
 
     print("- AUROC and AUPRC...")
-    auroc, auprc, auroc_classes, auprc_classes = compute_auc(_truth, _scalar_pred)
+    auroc, auprc, auroc_classes, auprc_classes = compute_auc(_truth, _scalar_pred, classes=classes)
 
     print("- Accuracy...")
-    accuracy = compute_accuracy(_truth, _binary_pred)
+    accuracy = compute_accuracy(_truth, _binary_pred, classes)
 
     print("- F-measure...")
-    f_measure, f_measure_classes = compute_f_measure(_truth, _binary_pred)
+    f_measure, f_measure_classes = compute_f_measure(_truth, _binary_pred, classes=classes)
 
     print("- F-beta and G-beta measures...")
     # NOTE that F-beta and G-beta are not among metrics of CinC2021, in contrast to CinC2020
-    f_beta_measure, g_beta_measure = compute_beta_measures(_truth, _binary_pred, beta=2)
+    f_beta_measure, g_beta_measure = compute_beta_measures(_truth, _binary_pred, beta=2, classes=classes)
 
     print("- Challenge metric...")
     challenge_metric = compute_challenge_metric(
@@ -137,6 +143,10 @@ def evaluate_scores(
         g_beta_measure,
         challenge_metric,
     ) = evaluate_scores_detailed(classes, truth, binary_pred, scalar_pred)
+    print(f"classes: {classes}")
+    confusion_matrix = compute_confusion_matrices(truth, binary_pred, classes)
+    confusion_matrix_img = plot_confusion_matrix(confusion_matrix=np.squeeze(confusion_matrix), display_labels=classes, savename=f"confusion_matrix_ecg_{config.global_opts.ecg_type}_pcg_{config.global_opts.pcg_type}")
+    
     return (
         auroc,
         auprc,
@@ -147,11 +157,31 @@ def evaluate_scores(
         challenge_metric,
     )
 
+def plot_confusion_matrix(confusion_matrix, display_labels=['N', 'A'], save_folder=config.global_opts.outputpath+'confusion_matricies/', savename=None, show=False):
+    create_new_folder(save_folder)
+    fig, ax = plt.subplots(figsize=(7.5, 7.5))
+    ax.matshow(confusion_matrix, cmap=plt.cm.Blues, alpha=0.3)
+    for i in range(confusion_matrix.shape[0]):
+        for j in range(confusion_matrix.shape[1]):
+            ax.text(x=j, y=i,s=confusion_matrix[i, j], va='center', ha='center', size='xx-large')
+    ax.set_xticklabels(display_labels)
+    ax.set_yticklabels(display_labels)
+    plt.xlabel('Prediction Label', fontsize=18)
+    plt.ylabel('Actual Label', fontsize=18)
+    plt.title('Confusion Matrix', fontsize=18)
+    img = None
+    if savename is not None:
+        img = plt.savefig(save_folder+savename, dpi=600)
+    if show:
+        plt.show()
+    if savename is not None:
+        plt.close()
+    return img
 
 # Compute recording-wise accuracy.
-def compute_accuracy(labels: np.ndarray, outputs: np.ndarray) -> float:
+def compute_accuracy(labels: np.ndarray, outputs: np.ndarray, classes=[0, 1], num_classes=1) -> float:
     """checked,"""
-    num_recordings, num_classes = np.shape(labels)
+    num_recordings = np.shape(labels)[0]
 
     num_correct_recordings = 0
     for i in range(num_recordings):
@@ -163,7 +193,7 @@ def compute_accuracy(labels: np.ndarray, outputs: np.ndarray) -> float:
 
 # Compute confusion matrices.
 def compute_confusion_matrices(
-    labels: np.ndarray, outputs: np.ndarray, normalize: bool = False
+    labels: np.ndarray, outputs: np.ndarray, classes=['N', 'A'], normalize: bool = False, num_classes=1
 ) -> np.ndarray:
     """checked,"""
     # Compute a binary confusion matrix for each class k:
@@ -173,53 +203,54 @@ def compute_confusion_matrices(
     #
     # If the normalize variable is set to true, then normalize the contributions
     # to the confusion matrix by the number of labels per recording.
-    num_recordings, num_classes = np.shape(labels)
-
+    num_recordings = np.shape(labels)[0]
     if not normalize:
         A = np.zeros((num_classes, 2, 2))
         for i in range(num_recordings):
             for j in range(num_classes):
-                if labels[i, j] == 1 and outputs[i, j] == 1:  # TP
+                print(f"labels[i]: {labels[i]} {outputs[i]}")
+                if labels[i] == 1 and outputs[i] == 1:  # TP
                     A[j, 1, 1] += 1
-                elif labels[i, j] == 0 and outputs[i, j] == 1:  # FP
+                elif labels[i] == 0 and outputs[i] == 1:  # FP
                     A[j, 1, 0] += 1
-                elif labels[i, j] == 1 and outputs[i, j] == 0:  # FN
+                elif labels[i] == 1 and outputs[i] == 0:  # FN
                     A[j, 0, 1] += 1
-                elif labels[i, j] == 0 and outputs[i, j] == 0:  # TN
+                elif labels[i] == 0 and outputs[i] == 0:  # TN
                     A[j, 0, 0] += 1
                 else:  # This condition should not happen.
                     raise ValueError("Error in computing the confusion matrix.")
     else:
         A = np.zeros((num_classes, 2, 2))
         for i in range(num_recordings):
-            normalization = float(max(np.sum(labels[i, :]), 1))
             for j in range(num_classes):
-                if labels[i, j] == 1 and outputs[i, j] == 1:  # TP
-                    A[j, 1, 1] += 1.0 / normalization
-                elif labels[i, j] == 0 and outputs[i, j] == 1:  # FP
-                    A[j, 1, 0] += 1.0 / normalization
-                elif labels[i, j] == 1 and outputs[i, j] == 0:  # FN
-                    A[j, 0, 1] += 1.0 / normalization
-                elif labels[i, j] == 0 and outputs[i, j] == 0:  # TN
-                    A[j, 0, 0] += 1.0 / normalization
-                else:  # This condition should not happen.
-                    raise ValueError("Error in computing the confusion matrix.")
+                normalization = float(max(np.sum(labels[i, :]), 1))
+                for j in range(num_classes):
+                    if labels[i] == 1 and outputs[i] == 1:  # TP
+                        A[j, 1, 1] += 1.0 / normalization
+                    elif labels[i] == 0 and outputs[i] == 1:  # FP
+                        A[j, 1, 0] += 1.0 / normalization
+                    elif labels[i] == 1 and outputs[i] == 0:  # FN
+                        A[j, 0, 1] += 1.0 / normalization
+                    elif labels[i] == 0 and outputs[i] == 0:  # TN
+                        A[j, 0, 0] += 1.0 / normalization
+                    else:  # This condition should not happen.
+                        raise ValueError("Error in computing the confusion matrix.")
 
     return A
 
 
 # Compute macro F-measure.
 def compute_f_measure(
-    labels: np.ndarray, outputs: np.ndarray
+    labels: np.ndarray, outputs: np.ndarray, classes=['N', 'A'], num_classes=1
 ) -> Tuple[float, np.ndarray]:
     """checked,"""
-    num_recordings, num_classes = np.shape(labels)
-
-    A = compute_confusion_matrices(labels, outputs)
+    num_recordings = np.shape(labels)[0]
+    
+    confusion_matrix = compute_confusion_matrices(labels, outputs, classes)
 
     f_measure = np.zeros(num_classes)
     for k in range(num_classes):
-        tp, fp, fn, tn = A[k, 1, 1], A[k, 1, 0], A[k, 0, 1], A[k, 0, 0]
+        tp, fp, fn, tn = confusion_matrix[k, 1, 1], confusion_matrix[k, 1, 0], confusion_matrix[k, 0, 1], confusion_matrix[k, 0, 0]
         if 2 * tp + fp + fn:
             f_measure[k] = float(2 * tp) / float(2 * tp + fp + fn)
         else:
@@ -235,17 +266,17 @@ def compute_f_measure(
 
 # Compute F-beta and G-beta measures from the unofficial phase of the Challenge.
 def compute_beta_measures(
-    labels: np.ndarray, outputs: np.ndarray, beta: Real
+    labels: np.ndarray, outputs: np.ndarray, beta: Real, classes=['N', 'A'], num_classes=1
 ) -> Tuple[float, float]:
     """checked,"""
-    num_recordings, num_classes = np.shape(labels)
-
-    A = compute_confusion_matrices(labels, outputs, normalize=True)
+    num_recordings = np.shape(labels)[0]
+    
+    confusion_matrix = compute_confusion_matrices(labels, outputs, classes)
 
     f_beta_measure = np.zeros(num_classes)
     g_beta_measure = np.zeros(num_classes)
     for k in range(num_classes):
-        tp, fp, fn, tn = A[k, 1, 1], A[k, 1, 0], A[k, 0, 1], A[k, 0, 0]
+        tp, fp, fn, tn = confusion_matrix[k, 1, 1], confusion_matrix[k, 1, 0], confusion_matrix[k, 0, 1], confusion_matrix[k, 0, 0]
         if (1 + beta**2) * tp + fp + beta**2 * fn:
             f_beta_measure[k] = float((1 + beta**2) * tp) / float(
                 (1 + beta**2) * tp + fp + beta**2 * fn
@@ -265,10 +296,10 @@ def compute_beta_measures(
 
 # Compute macro AUROC and macro AUPRC.
 def compute_auc(
-    labels: np.ndarray, outputs: np.ndarray
+    labels: np.ndarray, outputs: np.ndarray, classes=['N', 'A'], num_classes=1
 ) -> Tuple[float, float, np.ndarray, np.ndarray]:
     """checked,"""
-    num_recordings, num_classes = np.shape(labels)
+    num_recordings = np.shape(labels)[0]
 
     # Compute and summarize the confusion matrices for each class across at distinct output values.
     auroc = np.zeros(num_classes)
@@ -286,8 +317,8 @@ def compute_auc(
         fp = np.zeros(num_thresholds)
         fn = np.zeros(num_thresholds)
         tn = np.zeros(num_thresholds)
-        fn[0] = np.sum(labels[:, k] == 1)
-        tn[0] = np.sum(labels[:, k] == 0)
+        fn[0] = np.sum(list(filter(lambda x: x == 1, labels)))
+        tn[0] = np.sum(list(filter(lambda x: x == 0, labels)))
 
         # Find the indices that result in sorted output values.
         idx = np.argsort(outputs[:, k])[::-1]
@@ -303,7 +334,7 @@ def compute_auc(
 
             # Update the TPs, FPs, FNs, and TNs at i-th output value.
             while i < num_recordings and outputs[idx[i], k] >= thresholds[j]:
-                if labels[idx[i], k]:
+                if labels[idx[i]]:
                     tp[j] += 1
                     fn[j] -= 1
                 else:
@@ -352,27 +383,28 @@ def compute_auc(
 
 # Compute modified confusion matrix for multi-class, multi-label tasks.
 def compute_modified_confusion_matrix(
-    labels: np.ndarray, outputs: np.ndarray
+    labels: np.ndarray, outputs: np.ndarray, classes=['N', 'A'], num_classes=1
 ) -> np.ndarray:
     """checked,
     Compute a binary multi-class, multi-label confusion matrix,
     where the rows are the labels and the columns are the outputs.
     """
-    num_recordings, num_classes = np.shape(labels)
+    num_recordings = np.shape(labels)[0]
     A = np.zeros((num_classes, num_classes))
 
     # Iterate over all of the recordings.
     for i in range(num_recordings):
+        print(f"outputsoutputs {outputs} {labels}")
         # Calculate the number of positive labels and/or outputs.
         normalization = float(
-            max(np.sum(np.any((labels[i, :], outputs[i, :]), axis=0)), 1)
+            max(np.sum(np.any((labels[i], outputs[i]), axis=0)), 1)
         )
         # Iterate over all of the classes.
         for j in range(num_classes):
             # Assign full and/or partial credit for each positive class.
-            if labels[i, j]:
+            if labels[i]:
                 for k in range(num_classes):
-                    if outputs[i, k]:
+                    if outputs[i]:
                         A[j, k] += 1.0 / normalization
 
     return A
@@ -387,7 +419,8 @@ def compute_challenge_metric(
     sinus_rhythm: str,
 ) -> float:
     """checked,"""
-    num_recordings, num_classes = np.shape(labels)
+    num_recordings = np.shape(labels)[0]
+    num_classes = len(classes)
     if sinus_rhythm in classes:
         sinus_rhythm_index = classes.index(sinus_rhythm)
     else:
@@ -402,17 +435,4 @@ def compute_challenge_metric(
     A = compute_modified_confusion_matrix(labels, correct_outputs)
     correct_score = np.nansum(weights * A)
 
-    # Compute the score for the model that always chooses the sinus rhythm class.
-    inactive_outputs = np.zeros((num_recordings, num_classes), dtype=bool)
-    inactive_outputs[:, sinus_rhythm_index] = 1
-    A = compute_modified_confusion_matrix(labels, inactive_outputs)
-    inactive_score = np.nansum(weights * A)
-
-    if correct_score != inactive_score:
-        normalized_score = float(observed_score - inactive_score) / float(
-            correct_score - inactive_score
-        )
-    else:
-        normalized_score = 0.0
-
-    return normalized_score
+    return float(observed_score)/float(correct_score)

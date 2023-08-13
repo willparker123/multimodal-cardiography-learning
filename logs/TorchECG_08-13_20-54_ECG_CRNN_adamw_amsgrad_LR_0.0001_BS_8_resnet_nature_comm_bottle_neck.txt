@@ -1,0 +1,196 @@
+2023-08-13 20:54:06,267 - TorchECG - INFO - training configurations are as follows:
+{
+    "debug": True,
+    "final_model_name": None,
+    "log_step": 20,
+    "flooding_level": 0.0,
+    "early_stopping": {
+        "min_delta": 0.001,
+        "patience": 10
+    },
+    "log_dir": "logs",
+    "checkpoints": checkpoints,
+    "model_dir": None,
+    "working_dir": "",
+    "prefix": "TorchECG",
+    "DTYPE": DTYPE(STR='float32', NP=dtype('float32'), TORCH=torch.float32, INT=32),
+    "str_dtype": "float32",
+    "np_dtype": float32,
+    "dtype": torch.float32,
+    "device": cpu,
+    "eps": 1e-07,
+    "SEED": 42,
+    "RNG": Generator(PCG64),
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2ab9a248e9e0>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2ab9a248e9e0>, endpoint=True),
+    "set_seed": <function set_seed at 0x2ab9a2493940>,
+    "change_dtype": <function change_dtype at 0x2ab9a24dd0d0>,
+    "classes": [
+        "N",
+        "A"
+    ],
+    "n_epochs": 100,
+    "batch_size": 8,
+    "optimizer": "adamw_amsgrad",
+    "momentum": 0.949,
+    "betas": [
+        0.9, 0.999
+    ],
+    "decay": 0.01,
+    "learning_rate": 0.0001,
+    "lr": 0.0001,
+    "lr_scheduler": "one_cycle",
+    "lr_step_size": 50,
+    "lr_gamma": 0.1,
+    "max_lr": 0.002,
+    "burn_in": 400,
+    "steps": [
+        5000, 10000
+    ],
+    "loss": "AsymmetricLoss",
+    "loss_kw": {
+        "gamma_pos": 0,
+        "gamma_neg": 0.2,
+        "implementation": "deep-psp"
+    },
+    "monitor": "challenge_metric",
+    "eval_every": 20,
+    "cnn_name": "transformer",
+    "rnn_name": "none",
+    "attn_name": "none",
+    "input_len": 16000,
+    "input_len_tol": 3200,
+    "sig_slice_tol": 0.4,
+    "siglen": 16000,
+    "physionetOnly": True
+}
+2023-08-13 20:54:08,680 - TorchECG - INFO - training configurations are as follows:
+{
+    "debug": True,
+    "final_model_name": None,
+    "log_step": 20,
+    "flooding_level": 0.0,
+    "early_stopping": {
+        "min_delta": 0.001,
+        "patience": 10
+    },
+    "log_dir": "logs",
+    "checkpoints": checkpoints,
+    "model_dir": None,
+    "working_dir": "",
+    "prefix": "TorchECG",
+    "DTYPE": DTYPE(STR='float32', NP=dtype('float32'), TORCH=torch.float32, INT=32),
+    "str_dtype": "float32",
+    "np_dtype": float32,
+    "dtype": torch.float32,
+    "device": cpu,
+    "eps": 1e-07,
+    "SEED": 42,
+    "RNG": Generator(PCG64),
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2ab9a248e9e0>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2ab9a248e9e0>, endpoint=True),
+    "set_seed": <function set_seed at 0x2ab9a2493940>,
+    "change_dtype": <function change_dtype at 0x2ab9a24dd0d0>,
+    "classes": [
+        "N",
+        "A"
+    ],
+    "n_epochs": 100,
+    "batch_size": 8,
+    "optimizer": "adamw_amsgrad",
+    "momentum": 0.949,
+    "betas": [
+        0.9, 0.999
+    ],
+    "decay": 0.01,
+    "learning_rate": 0.0001,
+    "lr": 0.0001,
+    "lr_scheduler": "one_cycle",
+    "lr_step_size": 50,
+    "lr_gamma": 0.1,
+    "max_lr": 0.002,
+    "burn_in": 400,
+    "steps": [
+        5000, 10000
+    ],
+    "loss": "AsymmetricLoss",
+    "loss_kw": {
+        "gamma_pos": 0,
+        "gamma_neg": 0.2,
+        "implementation": "deep-psp"
+    },
+    "monitor": "challenge_metric",
+    "eval_every": 20,
+    "cnn_name": "transformer",
+    "rnn_name": "none",
+    "attn_name": "none",
+    "input_len": 16000,
+    "input_len_tol": 3200,
+    "sig_slice_tol": 0.4,
+    "siglen": 16000,
+    "physionetOnly": True
+}
+2023-08-13 20:54:10,377 - TorchECG - INFO - 
+Starting training:
+------------------
+Epochs:          100
+Batch size:      8
+Learning rate:   0.0001
+Training size:   1004
+Validation size: 431
+Device:          cpu
+Optimizer:       adamw_amsgrad
+Dataset classes: ['N', 'A']
+-----------------------------------------
+
+2023-08-13 20:54:10,382 - TorchECG - INFO - Train epoch_0:
+--------------------------------------------------------------------------------------------------------------
+2023-08-13 20:54:44,432 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 20: train/loss : 0.6159
+Epoch 0 / Step 20: train/lr :   0.0001
+--------------------------------------------------
+2023-08-13 20:55:15,954 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 40: train/loss : 1.9230
+Epoch 0 / Step 40: train/lr :   0.0001
+--------------------------------------------------
+2023-08-13 20:55:48,707 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 60: train/loss : 0.4100
+Epoch 0 / Step 60: train/lr :   0.0001
+--------------------------------------------------
+2023-08-13 20:56:17,607 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 80: train/loss : 0.7634
+Epoch 0 / Step 80: train/lr :   0.0001
+--------------------------------------------------
+2023-08-13 20:56:42,084 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 100: train/loss : 0.7417
+Epoch 0 / Step 100: train/lr :   0.0001
+--------------------------------------------------
+2023-08-13 20:57:08,300 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 120: train/loss : 1.3921
+Epoch 0 / Step 120: train/lr :   0.0001
+--------------------------------------------------
+2023-08-13 20:58:05,973 - TorchECG - DEBUG - all_scalar_preds.shape = (1004, 2), all_labels.shape = (1004, 1)
+2023-08-13 20:58:05,974 - TorchECG - INFO - 
+----------------------------------------------
+scalar prediction:    [0.511, 0.489]
+binary prediction:    [0]
+labels:               [1]
+predicted classes:    [0]
+label classes:        [1]
+----------------------------------------------
+
+2023-08-13 20:58:05,975 - TorchECG - INFO - 
+----------------------------------------------
+scalar prediction:    [0.499, 0.501]
+binary prediction:    [1]
+labels:               [1]
+predicted classes:    [1]
+label classes:        [1]
+----------------------------------------------
+

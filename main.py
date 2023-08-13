@@ -8,6 +8,7 @@ from torch.nn.parallel import DataParallel as DP
 from torch.nn.parallel import DistributedDataParallel as DDP  # noqa: F401
 from dataset import ECGPCGDataset
 from config import outputpath
+import json
 import numpy as np
 import math
 import pandas as pd
@@ -265,21 +266,21 @@ if __name__ == '__main__':
     #            os.remove(outputpath+f'ephnogram/data_ecg_{config.global_opts.ecg_type}/'+f'{dir}/{d}/'+v)
     #        for v in valid_files_pcg:
     #            os.remove(outputpath+f'ephnogram/data_pcg_{config.global_opts.pcg_type}/'+f'{dir}/{d}/'+v)
-    #        print(f"AAA: {valid_files_ecg}")
     
     # Samples in the paper
-    #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="stft", transform_type_pcg="stft_mel", colormap="magma")
-    #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma")
-    #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="morlet", wavelet_pcg="morlet", colormap="magma")
-    #data_sample(filename="a0315", outputfolderpath="samples/a0315", label=1)
-    #data_sample(filename="a0007", outputfolderpath="samples/a0007", label=1)
-    #data_sample(filename="ECGPCG0003", index_ephnogram=1, outputfolderpath="samples/b0001", dataset="ephnogram", inputpath_data=config.input_ephnogram_data_folderpath_, inputpath_target=config.input_ephnogram_target_folderpath_, label=0)
+        #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="stft", transform_type_pcg="stft_mel", colormap="magma", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_)
+        #data_sample(filename="a0007", outputfolderpath="samples/a0007", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_)
+        #data_sample(filename="ECGPCG0003", outputfolderpath="samples/b0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="morlet", wavelet_pcg="morlet", colormap="magma", dataset="ephnogram", inputpath_data=config.input_ephnogram_data_folderpath_, inputpath_target=config.input_ephnogram_target_folderpath_)
     
-    #data_sample(wavelet_ecg="ricker", wavelet_pcg="morlet", colormap="magma")
-    #data_sample(wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma")
-    #data_sample(outputfolderpath="samples-TEST/stft", transform_type_ecg="stft_log", transform_type_pcg="stft_log", colormap="magma")
-    #data_sample(outputfolderpath="samples-TEST/stft", transform_type_ecg="stft_log", transform_type_pcg="stft_log", colormap="jet")
-    #data_sample(outputfolderpath="samples-TEST/stft_logmel", transform_type_ecg="stft_log", transform_type_pcg="stft_logmel")
+    # UNUSED sample examples
+        #data_sample(filename="a0315", outputfolderpath="samples/a0315", label=1)
+        #data_sample(filename="a0007", outputfolderpath="samples/a0007", label=1)
+        #data_sample(filename="ECGPCG0003", index_ephnogram=1, outputfolderpath="samples/b0001", dataset="ephnogram", inputpath_data=config.input_ephnogram_data_folderpath_, inputpath_target=config.input_ephnogram_target_folderpath_, label=0)
+        #data_sample(wavelet_ecg="ricker", wavelet_pcg="morlet", colormap="magma")
+        #data_sample(wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma")
+        #data_sample(outputfolderpath="samples-TEST/stft", transform_type_ecg="stft_log", transform_type_pcg="stft_log", colormap="magma")
+        #data_sample(outputfolderpath="samples-TEST/stft", transform_type_ecg="stft_log", transform_type_pcg="stft_log", colormap="jet")
+        #data_sample(outputfolderpath="samples-TEST/stft_logmel", transform_type_ecg="stft_log", transform_type_pcg="stft_logmel")
     
     torch.backends.cudnn.benchmark = config.global_opts.enable_gpu
 

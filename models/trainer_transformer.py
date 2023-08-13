@@ -10,6 +10,7 @@ import numpy as np
 import torch
 import textwrap
 import logging
+import json
 from torch import nn
 from torch import Tensor
 from tqdm import tqdm
@@ -23,6 +24,7 @@ import time
 from torch_ecg.components.trainer import BaseTrainer
 from torch_ecg.cfg import CFG
 from .scoring_metrics import evaluate_scores
+import torch.nn.functional as nnf
 
 from torch_ecg.cfg import CFG, DEFAULTS
 from torch_ecg.components.trainer import BaseTrainer
@@ -136,7 +138,15 @@ class TransformerTrainer(BaseTrainer):
         lazy: bool, default True,
             whether to initialize the data loader lazily
         """
-        train_config.physionetOnly = kwargs.get('physionetOnly',True)
+        train_config.physionetOnly = kwargs.get('physionetOnly',False)
+            
+        self.log_file_path = config.outputpath+"results/model_metrics"
+        self.log_file_name = "log_metrics"
+        if 'log_file_name' in kwargs:
+            self.log_file_name = kwargs.get('log_file_name')
+        if 'log_file_path' in kwargs:
+            self.log_file_path = kwargs.get('log_file_path')
+            
         super().__init__(
             model=model,
             dataset_cls=ECGPCGDataset,
@@ -187,7 +197,10 @@ class TransformerTrainer(BaseTrainer):
             val_dataset = data_test
         print(f"len data_train, data_test: {len(data_train)} {len(data_test)}")
         print(f"len val_train_dataset, val_dataset: {len(val_train_dataset)} {len(val_dataset)}")
-
+        create_new_folder(self.log_file_path)
+        f_log_metrics = open(self.log_file_path+'/'+f"{self.log_file_name}.txt", "w")
+        with open(self.log_file_path+'/'+f"{self.log_file_name}.txt" , "r+") as f_log_metrics:
+            f_log_metrics.write("** Logging model metrics / scores (Accuracy, Precision) **"+"\n")
         # https://discuss.pytorch.org/t/guidelines-for-assigning-num-workers-to-dataloader/813/4
         num_workers = config.global_opts.number_of_processes
 
@@ -248,6 +261,7 @@ class TransformerTrainer(BaseTrainer):
         labels: Tensor,
             the labels of the given data
         """
+        self.model.train()
         signals, labels = data
         signals = signals.to(self.device)
         labels = labels.to(self.device)
@@ -257,6 +271,7 @@ class TransformerTrainer(BaseTrainer):
     @torch.no_grad()
     def evaluate(self, data_loader: DataLoader) -> Dict[str, float]:
         """ """
+        self.model.eval()
         all_scalar_preds = []
         all_bin_preds = []
         all_labels = []
@@ -268,27 +283,38 @@ class TransformerTrainer(BaseTrainer):
 
             if torch.cuda.is_available():
                 torch.cuda.synchronize()
-            model_output = self._model.inference(signals)
-            all_scalar_preds.append(model_output.prob)
-            all_bin_preds.append(model_output.pred)
+            
+            # Forward pass, get our logits
+            criterion = nn.CrossEntropyLoss()
+            logits = self.model(signals)
+            print(f"logits {np.shape(logits)} {logits}")
+            print(f"labels {np.shape(torch.from_numpy(labels))} {torch.from_numpy(labels.squeeze())}")
+            # Calculate the loss with the logits and the labels
+            loss = criterion(logits, torch.from_numpy(labels.squeeze()))
+            prob = nnf.softmax(logits, dim=1)
+            top_p, top_class = prob.topk(1, dim = 1)
+            pred = top_class
+            all_scalar_preds.append(prob)
+            all_bin_preds.append(pred)
 
         all_scalar_preds = np.concatenate(all_scalar_preds, axis=0)
         all_bin_preds = np.concatenate(all_bin_preds, axis=0)
         all_labels = np.concatenate(all_labels, axis=0)
-        classes = data_loader.dataset.all_classes
+        classes = self.model.classes
 
         if self.val_train_loader is not None:
             msg = f"all_scalar_preds.shape = {all_scalar_preds.shape}, all_labels.shape = {all_labels.shape}"
             self.log_manager.log_message(msg, level=logging.DEBUG)
-            head_num = 5
+            head_num = len(classes)
             head_scalar_preds = all_scalar_preds[:head_num, ...]
             head_bin_preds = all_bin_preds[:head_num, ...]
+            print(f"head_bin_preds {head_bin_preds} {np.shape(head_bin_preds)}")
             head_preds_classes = [
-                np.array(classes)[np.where(row)] for row in head_bin_preds
+                np.array(head_bin_preds)[row] for row in range(len(head_bin_preds))
             ]
             head_labels = all_labels[:head_num, ...]
             head_labels_classes = [
-                np.array(classes)[np.where(row)] for row in head_labels
+                np.array(head_labels)[row] for row in range(len(head_labels))
             ]
             for n in range(head_num):
                 msg = textwrap.dedent(
@@ -328,10 +354,11 @@ class TransformerTrainer(BaseTrainer):
             challenge_metric=challenge_metric,
         )
 
+        f_log_metrics.write(f"Logging model metrics / scores (Accuracy, Precision): {self.log_file_path+'/'+f'{self.log_file_name}.txt'}"+"\n")
+        with open(self.log_file_path+'/'+f"{self.log_file_name}.txt" , "r+") as f_log_metrics:
+            f_log_metrics.write(f"[EPOCH {self.current_epoch} / {self.n_epochs}]\n{json.dumps(dict)}\n\n")
         # in case possible memeory leakage?
         del all_scalar_preds, all_bin_preds, all_labels
-
-        self.model.train()
 
         return eval_res
         #self.model.eval()

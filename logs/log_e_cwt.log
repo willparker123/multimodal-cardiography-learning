@@ -1,0 +1,204 @@
+[13564] Output Path: data-after-TEST
+[13564] Input Path (Physionet) Data: data-before/physionet-data/training-a
+[13564] Input Path (Physionet) Labels: data-before/physionet-data/training-a/REFERENCE.csv
+[13564] Input Path (Ephnogram) Data: data-before/ephnogram-data/WFDB
+[13564] Input Path (Ephnogram) Labels: data-before/ephnogram-data/ECGPCGSpreadsheet.csv
+[13564] ****************MMTF-ECGPCGNet*****************
+[13564] ***          ECGPCG Data Cleaning           ***
+[13564] ***********************************************
+[13564] *** OPTIONS:                               ***
+[13564]         RAM usage: 40.0%
+[13564]         Number of Processes: 30   [Available: 30]
+[13564]         GPU Enabled: True  GPU ID: 0
+[13564]         Google Drive Enabled (unprocessed dataset storage): False
+[13564]  UNUSED Tensorflow Enabled: False
+[13564] ***********************************************
+[13564] Attempting to set RAM usage to 40.0%
+[13564] *** Cleaning Data [2/3] ***
+[13564] ** Cleaning Ephnogram Data **
+[13564] * Cleaning Ephnogram Data - Creating References [1/5] *
+[13564] READMEREF:                                                                                                                                                                                                                                                                                                                             Record Name  ...  Database Housekeeping
+ECGPCG0001 S023 30.0 NaN  Male Exercise: pedaling a stationary bicycle 2.0 Good                        Good                             NaN                       NaN                       NaN                       Replaced file ID 01      NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+ECGPCG0002 S024 30.0 NaN  Male Exercise: pedaling a stationary bicycle 2.0 Good; occasional saturation Good                             NaN                       NaN                       NaN                       Replaced file ID 02      NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+ECGPCG0003 S003 0.5  28.0 Male Rest: sitting on armchair               2.0 Good                        Good                             NaN                       NaN                       NaN                       Replaced file ID 03 (PG) NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+ECGPCG0004 S004 0.5  26.0 Male Rest: sitting on armchair               5.0 Good                        Occasional burst powerline noise Quantization noise level  Quantization noise level  Quantization noise level  NaN                      NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+ECGPCG0005 S005 0.5  23.0 Male Rest: sitting on armchair               5.0 Good                        Occasional burst powerline noise Quantization noise level  Quantization noise level  Quantization noise level  NaN                      NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+...                                                                                                                                                                                                                                                                                                                                 ...  ...                    ...
+ECGPCG0066 S020 30.0 26.0 Male Exercise: bicycle stress test           5.0 Good                        Good                             Quantization noise level  Good                      Quantization noise level  NaN                      NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+ECGPCG0067 S015 30.0 29.0 Male Exercise: bicycle stress test           5.0 Good                        Good                             Quantization noise level  Good                      Quantization noise level  NaN                      NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+ECGPCG0068 S016 30.0 23.0 Male Exercise: bicycle stress test           5.0 Good; occasional saturation Good                             Quantization noise level  Good                      Quantization noise level  NaN                      NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+ECGPCG0069 S017 30.0 27.0 Male Exercise: bicycle stress test           5.0 Good; occasional saturation Good                             Quantization noise level  Good                      Quantization noise level  NaN                      NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+NaN        NaN  NaN  NaN  NaN  NaN                                     NaN NaN                         NaN                              NaN                       NaN                       NaN                       NaN                      NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+
+[70 rows x 13 columns]
+[13564] Unprocessed label CSV for EPHNOGRAM:                                                                                                                                                                                                                                                                                                                             Record Name  ...  Database Housekeeping
+ECGPCG0001 S023 30.0 NaN  Male Exercise: pedaling a stationary bicycle 2.0 Good                        Good                             NaN                       NaN                       NaN                       Replaced file ID 01      NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+ECGPCG0002 S024 30.0 NaN  Male Exercise: pedaling a stationary bicycle 2.0 Good; occasional saturation Good                             NaN                       NaN                       NaN                       Replaced file ID 02      NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+ECGPCG0003 S003 0.5  28.0 Male Rest: sitting on armchair               2.0 Good                        Good                             NaN                       NaN                       NaN                       Replaced file ID 03 (PG) NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+ECGPCG0004 S004 0.5  26.0 Male Rest: sitting on armchair               5.0 Good                        Occasional burst powerline noise Quantization noise level  Quantization noise level  Quantization noise level  NaN                      NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+ECGPCG0005 S005 0.5  23.0 Male Rest: sitting on armchair               5.0 Good                        Occasional burst powerline noise Quantization noise level  Quantization noise level  Quantization noise level  NaN                      NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN NaN          NaN  ...                    NaN
+
+[5 rows x 13 columns]
+[13564] * Cleaning Ephnogram Data - Cleaning CSV [2/5] *
+[13564] 30.0
+[13564] 30.0
+[13564] 0.5
+[13564] 0.5
+[13564] 0.5
+[13564] 0.5
+[13564] 0.5
+[13564] 0.5
+[13564] 0.5
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 0.5
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] 30.0
+[13564] * Cleaning Ephnogram Data - Creating CSV "data-after-TEST/ephnogram/data_ephnogram_raw.csv" - QRS, ECGs and PCGs [3/5] *
+[13564] Processing Data Item: (['ECGPCG0007', 0.5, 5], 2)
+[13564] Processing Data Item: (['ECGPCG0008', 0.5, 5], 3)
+[13564] Processing Data Item: (['ECGPCG0010', 30.0, 2], 5)
+[13564] Processing Data Item: (['ECGPCG0006', 0.5, 5], 1)
+[13564] Processing Data Item: (['ECGPCG0009', 0.5, 5], 4)
+[13564] Processing Data Item: (['ECGPCG0015', 30.0, 2], 8)
+[13564] Processing Data Item: (['ECGPCG0003', 0.5, 2], 0)
+[13564] Files found in directories 'data-after-TEST/ephnogram/data_ecg_cwt/b0004/' and 'data-after-TEST/ephnogram/data_pcg_cwt/b0004/' - skipping
+[13564] Files found in directories 'data-after-TEST/ephnogram/data_ecg_cwt/b0003/' and 'data-after-TEST/ephnogram/data_pcg_cwt/b0003/' - skipping
+[13564] Processing Data Item: (['ECGPCG0013', 30.0, 2], 7)
+[13564] Processing Data Item: (['ECGPCG0023', 30.0, 5], 10)
+[13564] Processing Data Item: (['ECGPCG0011', 30.0, 2], 6)
+[13564] Files found in directories 'data-after-TEST/ephnogram/data_ecg_cwt/b0002/' and 'data-after-TEST/ephnogram/data_pcg_cwt/b0002/' - skipping
+[13564] Files found in directories 'data-after-TEST/ephnogram/data_ecg_cwt/b0006/' and 'data-after-TEST/ephnogram/data_pcg_cwt/b0006/' - skipping
+[13564] Processing Data Item: (['ECGPCG0040', 0.5, 2], 11)
+[13564] Processing Data Item: (['ECGPCG0016', 30.0, 2], 9)
+[13564] Files found in directories 'data-after-TEST/ephnogram/data_ecg_cwt/b0001/' and 'data-after-TEST/ephnogram/data_pcg_cwt/b0001/' - skipping
+[13564] Files found in directories 'data-after-TEST/ephnogram/data_ecg_cwt/b0005/' and 'data-after-TEST/ephnogram/data_pcg_cwt/b0005/' - skipping
+[13564] Files found in directories 'data-after-TEST/ephnogram/data_ecg_cwt/b0009/' and 'data-after-TEST/ephnogram/data_pcg_cwt/b0009/' - skipping
+[13564] Files found in directories 'data-after-TEST/ephnogram/data_ecg_cwt/b0012/' and 'data-after-TEST/ephnogram/data_pcg_cwt/b0012/' - skipping
+[13564] Files found in directories 'data-after-TEST/ephnogram/data_ecg_cwt/b0008/' and 'data-after-TEST/ephnogram/data_pcg_cwt/b0008/' - skipping
+[13564] Files found in directories 'data-after-TEST/ephnogram/data_ecg_cwt/b0011/' and 'data-after-TEST/ephnogram/data_pcg_cwt/b0011/' - skipping
+[13564] Files found in directories 'data-after-TEST/ephnogram/data_ecg_cwt/b0007/' and 'data-after-TEST/ephnogram/data_pcg_cwt/b0007/' - skipping
+[13564] Files found in directories 'data-after-TEST/ephnogram/data_ecg_cwt/b0010/' and 'data-after-TEST/ephnogram/data_pcg_cwt/b0010/' - skipping
+[13564] * Cleaning Ephnogram Data - Creating ECG segments, Spectrograms/Wavelets and Videos [3/5] *
+[13564] [[0, 'b0001', 'ECGPCG0003', 0, 30.0, 2, 60000, 60000, 45, 3, 90.27033233642578], [1, 'b0002', 'ECGPCG0006', 0, 30.0, 5, 60000, 60000, 36, 3, 71.21443176269531], [2, 'b0003', 'ECGPCG0007', 0, 30.0, 5, 60000, 60000, 38, 3, 75.03406524658203], [3, 'b0004', 'ECGPCG0008', 0, 30.0, 5, 60000, 60000, 37, 3, 73.53641510009766], [4, 'b0005', 'ECGPCG0009', 0, 30.0, 5, 60000, 60000, 32, 3, 64.72776794433594], [5, 'b0006', 'ECGPCG0010', 0, 1800.0, 2, 3600000, 3600000, 1892, 225, 63.10854721069336], [6, 'b0007', 'ECGPCG0011', 0, 1800.0, 2, 3600000, 3600000, 2124, 225, 71.19633483886719], [7, 'b0008', 'ECGPCG0013', 0, 1800.0, 2, 3600000, 3600000, 1823, 225, 61.32036590576172], [8, 'b0009', 'ECGPCG0015', 0, 1800.0, 2, 3600000, 3600000, 2021, 225, 68.26936340332031], [9, 'b0010', 'ECGPCG0016', 0, 1800.0, 2, 3600000, 3600000, 2352, 225, 78.39679718017578], [10, 'b0011', 'ECGPCG0023', 0, 1800.0, 5, 3600000, 3600000, 2096, 225, 70.00016784667969], [11, 'b0012', 'ECGPCG0040', 0, 30.0, 2, 60000, 60000, 46, 3, 91.58019256591797]]
+[13564] *** Processing Signal 0 (1 / 12) [0] ***
+[13564] *** Processing Signal 3 (4 / 12) [3] ***
+[13564] *** Processing Signal 4 (5 / 12) [4] ***
+[13564] *** Processing Signal 2 (3 / 12) [2] ***
+[13564] *** Processing Signal 1 (2 / 12) [1] ***
+[13564] *** Processing Signal 6 (7 / 12) [6] ***
+[13564] *** Processing Signal 8 (9 / 12) [8] ***
+[13564] *** Processing Signal 5 (6 / 12) [5] ***
+[13564] *** Processing Signal 7 (8 / 12) [7] ***
+[13564] *** Processing Signal 10 (11 / 12) [10] ***
+[13564] *** Processing Signal 9 (10 / 12) [9] ***
+[13564] *** Processing Signal 11 (12 / 12) [11] ***
+[13564] * Processing ECG [b0002] *
+[13564] * Processing ECG [b0005] *
+[13564] * Processing ECG [b0004] *
+[13564] * Processing ECG [b0012] *
+[13564] * Processing ECG [b0003] *
+[13564] * Processing ECG [b0001] *
+[13564] ** Processing ECG Segment 0 (1 / 3) **
+[13564] ** Processing ECG Segment 0 (1 / 3) **
+[13564] ** Processing ECG Segment 0 (1 / 3) **
+[13564] ** Processing ECG Segment 0 (1 / 3) **
+[13564] ** Processing ECG Segment 0 (1 / 3) **
+[13564] ** Processing ECG Segment 0 (1 / 3) **
+[13564] ** Processing ECG Segment 1 (2 / 3) **
+[13564] ** Processing ECG Segment 1 (2 / 3) **
+[13564] ** Processing ECG Segment 1 (2 / 3) **
+[13564] ** Processing ECG Segment 1 (2 / 3) **
+[13564] ** Processing ECG Segment 1 (2 / 3) **
+[13564] ** Processing ECG Segment 1 (2 / 3) **
+[13564] ** Processing ECG Segment 2 (3 / 3) **
+[13564] ** Processing ECG Segment 2 (3 / 3) **
+[13564] ** Processing ECG Segment 2 (3 / 3) **
+[13564] ** Processing ECG Segment 2 (3 / 3) **
+[13564] ** Processing ECG Segment 2 (3 / 3) **
+[13564] ** Processing ECG Segment 2 (3 / 3) **
+[13564] * Processing PCG [b0012] *
+[13564] * Processing PCG [b0004] *
+[13564] * Processing PCG [b0002] *
+[13564] * Processing PCG [b0005] *
+[13564] * Processing PCG [b0001] *
+[13564] * Processing PCG [b0003] *
+[13564] ** Processing ECG Segment 0 (1 / 3) **
+[13564] ** Processing ECG Segment 0 (1 / 3) **
+[13564] ** Processing ECG Segment 0 (1 / 3) **
+[13564] ** Processing ECG Segment 0 (1 / 3) **
+[13564] ** Processing ECG Segment 0 (1 / 3) **
+[13564] ** Processing ECG Segment 0 (1 / 3) **
+[13564] ** Processing ECG Segment 1 (2 / 3) **
+[13564] ** Processing ECG Segment 1 (2 / 3) **
+[13564] ** Processing ECG Segment 1 (2 / 3) **
+[13564] ** Processing ECG Segment 1 (2 / 3) **
+[13564] ** Processing ECG Segment 1 (2 / 3) **
+[13564] ** Processing ECG Segment 1 (2 / 3) **
+[13564] ** Processing ECG Segment 2 (3 / 3) **
+[13564] ** Processing ECG Segment 2 (3 / 3) **
+[13564] ** Processing ECG Segment 2 (3 / 3) **
+[13564] ** Processing ECG Segment 2 (3 / 3) **
+[13564] ** Processing ECG Segment 2 (3 / 3) **
+[13564] ** Processing ECG Segment 2 (3 / 3) **
+[13564] * Processing ECG [b0008] *
+[13564] * Processing ECG [b0006] *
+[13564] * Processing ECG [b0009] *
+[13564] * Processing ECG [b0007] *
+[13564] * Processing ECG [b0011] *
+[13564] * Processing ECG [b0010] *
