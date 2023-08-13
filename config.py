@@ -55,8 +55,8 @@ number_of_processes = mp.cpu_count()+2 #number of processors used for multiproce
 mem_limit = 0.4 #value in range [0, 1] percentage of system memory available for processing
 
 # transform_types
-ecg_type = "cwt"
-pcg_type = "cwt"
+ecg_type = "stft"
+pcg_type = "stft_logmel"
 
 #magma, jet
 
@@ -70,14 +70,16 @@ sample_rate_pcg = 2000
 window_ecg = np.hamming           # default supplied to create_spectrogram is None - uses np/torch Hamming window by default
 window_pcg = torch.hamming_window # default supplied to create_spectrogram is None - uses np/torch Hamming window by default
 
+rr_interval_max_length = 500 #rr_interval_max_length in ms
+pcg_max_db = 60
 # Limits of the Butterworth bandpass filters applied to the ECG/PCG (Hz)
 ecg_filter_lim = [0.5, 100]
 pcg_filter_lim = [20, 400]
 #[64ms in paper] 40ms window length. converting from ms to samples
-nfft_ecg = 256 #0 < win_length_ecg (window_length_ms_ecg * 2) <= nfft_ecg
-nfft_pcg = 256 #0 < win_length_pcg (window_length_ms_pcg * 2) <= nfft_pcg
-window_length_ms_ecg = 40 #32, 20 [OLD FROM PAPERS: 64, 40]
-window_length_ms_pcg = 40 #32, 20 [OLD FROM PAPERS: 64, 40]
+nfft_ecg = 256 #0 < win_length_ecg (window_length_ms_ecg * 2) <= nfft_ecg [256]
+nfft_pcg = 256 #0 < win_length_pcg (window_length_ms_pcg * 2) <= nfft_pcg [256]
+window_length_ms_ecg = 64 #32, 20 [OLD FROM PAPERS: 64, 40]
+window_length_ms_pcg = 64 #32, 20 [OLD FROM PAPERS: 64, 40]
 window_length_ecg = int((window_length_ms_ecg / 1000) * sample_rate_ecg) #window_length_ms * sample_rate_ecg
 window_length_pcg = int((window_length_ms_pcg / 1000) * sample_rate_pcg) #window_length_ms * sample_rate_ecg
 nmels = 128 #60; must be < nfft//2-1
@@ -166,6 +168,10 @@ def load_config():
                         help='Length in milliseconds of the Hamming window used in spectrogram transform [PCG]')
     
     # --- ecg
+    parser.add_argument('--rr-interval-max-length',
+                        default=rr_interval_max_length,
+                        type=float,
+                        help='Maximum length of R-R Intervals in ECGs (in milliseconds: ms)')
     parser.add_argument('--ecg-type',
                         default=ecg_type,
                         type=str,
@@ -196,6 +202,10 @@ def load_config():
                         help='Function to use when creating ECG using CWT [ricker, bior2.6, customricker, morlet]')
     
     # --- pcg
+    parser.add_argument('--pcg-max-db',
+                        default=pcg_max_db,
+                        type=float,
+                        help='Maximum volume in Decibels (DB) of PCG (audio)')
     parser.add_argument('--pcg-type',
                         default=pcg_type,
                         type=str,

@@ -10,7 +10,7 @@ import math
 import torch
 import sklearn
 from scipy.optimize import curve_fit
-from scipy.interpolate import make_interp_spline
+from scipy.interpolate import interp1d
 import config
 from helpers import butterworth_bandpass_filter, get_filtered_df, create_new_folder, check_filter_bounds, linear_regression_objective
 import matplotlib.pyplot as plt
@@ -129,7 +129,12 @@ class ECG():
         self.signal_preproc = signal
         
         # Get heart rates, avg heart rate and QRS complex indicies
-        self.qrs_inds = processing.qrs.gqrs_detect(sig=signal, fs=sample_rate)
+        #   self.qrs_inds = processing.qrs.xqrs_detect(sig=signal, fs=sample_rate)
+        #   self.qrs_inds = processing.qrs.gqrs_detect(sig=signal, fs=sample_rate)
+        rr_interval_max_length = config.global_opts.rr_interval_max_length
+        qrs_radius = (((1/1000)*rr_interval_max_length) / (1/config.global_opts.sample_rate_ecg))
+        self.qrs_inds = processing.find_local_peaks(sig=signal, radius=int(qrs_radius))
+        print(f"self.qrs_inds with qrs_sample_radius={qrs_radius}: {self.qrs_inds}")
         if get_qrs_and_hrs_png:   
             print(f"plot_qrs_peaks_and_hr: {savename if savename is not None else filename}") 
             self.hrs, self.hr_avg = plot_qrs_peaks_and_hr(sig=signal, peak_inds=self.qrs_inds, fs=sample_rate,
@@ -140,7 +145,7 @@ class ECG():
             
         if normalise:
             if normalise_factor is None:
-                signal = preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
+                signal = (signal-np.min(signal))/(np.max(signal)-np.min(signal))
             else:
                 signal = signal / normalise_factor
         if apply_filter:
@@ -266,7 +271,7 @@ def plot_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), savefolde
     #normalise voltage and time to mv and seconds
     ax_hr.xaxis.set_major_formatter(lambda x, pos: x/config.global_opts.sample_rate_ecg)
     ax_sig.xaxis.set_major_formatter(lambda x, pos: x/config.global_opts.sample_rate_ecg)
-    ax_sig.yaxis.set_major_formatter(lambda x, pos: round(x/6500, 3))
+    ax_sig.yaxis.set_major_formatter(lambda y, pos: round(y/6500, 3))
     
     # Display results
     if save_plot:
@@ -291,21 +296,19 @@ def plot_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), savefolde
             y_line = linear_regression_objective(x_line, a, b)
             #print('y = %.5f * x + %.5f' % (a, b))
             
-            X_Y_Spline = make_interp_spline(x_line, y_line)
-            # Returns evenly spaced numbers
-            # over a specified interval.
-            X_ = np.linspace(0, N, 500)
-            Y_ = X_Y_Spline(X_)
-            #ax_hr.plot(X_, Y_, color='#f03979', linewidth=4, ls='--', label='Heart Rates at QRS peaks (interpolated)')
+            x_smooth = np.linspace(min(peak_inds), max(peak_inds), 500)
+            f = interp1d(peak_inds, hrs_peak_inds, kind='quadratic')
+            y_smooth=f(x_smooth)
+            plot_hr_line = ax_hr.plot(x_smooth, y_smooth, color='#f03979', linewidth=2, ls=':', label='Heart Rates at QRS peaks (interpolated)')
             
-            ax_hr.scatter(peak_inds, hrs_peak_inds, marker='X', color='#f03979', label='Heart Rates at QRS peaks')
-            ax_hr.plot(x_line, y_line, color='red', label='Heart Rate (linear regression)', linewidth=3)
-            ax_hr.axhline(hr_avg, color="#f039d5", linewidth=4, ls='--', label='Average Heart Rate')
+            plot_hr_scatter = ax_hr.scatter(peak_inds, hrs_peak_inds, marker='v', color='#f03979', label='Heart Rates at QRS peaks', s=200)
+            plot_hr_reg = ax_hr.plot(x_line, y_line, color='red', label='Heart Rate (linear regression)', linewidth=2)
+            plot_hr_avg = ax_hr.axhline(hr_avg, color="#f039d5", linewidth=4, ls='--', label='Average Heart Rate')
             # UNUSED FOR SECOND X AXIS LABELS:
             #   ax_hr.set_xlabel('Green X-axis', color='#902248')
             ax_hr.set_ylabel('Heart Rate (BPM)', color='#902248')
 
-        ax_sig.plot(peak_inds, sig[peak_inds.astype(int)], 'rx', marker='x', color='#8b0000', label='QRS peaks', markersize=12)
+        plot_qrs = ax_sig.plot(peak_inds, sig[peak_inds.astype(int)], marker='x', color='#8b0000', label='QRS peaks', markersize=12)
         ax_sig.set_title(title)
         ax_sig.set_xlabel('Time (s)', color='#163060')
         ax_sig.set_ylabel('ECG Voltage (mV)', color='#163060')
@@ -313,7 +316,9 @@ def plot_qrs_peaks_and_hr(sig, peak_inds, fs, title, figsize=(20, 10), savefolde
         ax_sig.tick_params('y', colors='#163060')
         
         if legend:
-            plt.legend()
+            lines, labels = ax_sig.get_legend_handles_labels()
+            lines2, labels2 = ax_hr.get_legend_handles_labels()
+            plt.legend(lines + lines2, labels + labels2, fontsize="12", loc='upper center', ncol=3)
         
         if savename is not None:
             plt.savefig(savename, dpi=600)

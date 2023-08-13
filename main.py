@@ -65,18 +65,18 @@ def data_sample(outputfolderpath="samples-TEST", dataset="physionet", filename="
     spectrogram = Spectrogram(ecg.filename, savename='ecg_'+ecg.filename+f'_spec_{wavelet_ecg+"_" if transform_type_ecg.startswith("cwt") else ""}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
                                                     signal=ecg.signal, window=window_ecg, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                                     outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', 
-                                                    normalise=True, start_time=0, wavelet_function=wavelet_ecg, colormap=colormap, save_img=True)
+                                                    normalise=True, start_time=0, wavelet_function=wavelet_ecg, colormap=colormap, save_img=True, show_axis_labels=True, show_legend=True, show_title=True, just_image=False)
     spectrogram_pcg = Spectrogram(filename, savename='pcg_'+filename+f'_spec_{wavelet_pcg+"_" if transform_type_pcg.startswith("cwt") else ""}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, transform_type=transform_type_pcg,
                                   signal=pcg.signal, window=window_pcg, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
-                                  outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=0, wavelet_function=wavelet_pcg, colormap=colormap, save_img=True)
+                                  outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=0, wavelet_function=wavelet_pcg, colormap=colormap, save_img=True, show_axis_labels=True, show_legend=True, show_title=True, just_image=False)
     for index_e, seg in enumerate(ecg_segments):
         seg_spectrogram = Spectrogram(filename, savename='ecg_'+seg.savename+f'_spec_{wavelet_ecg+"_" if transform_type_ecg.startswith("cwt") else ""}{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
                                             signal=seg.signal, window=window_ecg, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
-                                            outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=seg.start_time, wavelet_function=wavelet_ecg, colormap=colormap, save_img=True)
+                                            outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=seg.start_time, wavelet_function=wavelet_ecg, colormap=colormap, save_img=True, show_axis_labels=True, show_legend=True, show_title=True, just_image=False)
     for index_p, pcg_seg in enumerate(pcg_segments):
         pcg_seg_spectrogram = Spectrogram(filename, savename='pcg_'+pcg_seg.savename+f'_spec_{wavelet_ecg+"_" if transform_type_ecg.startswith("cwt") else ""}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, transform_type=transform_type_pcg,
                                 signal=pcg_seg.signal, window=window_pcg, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
-                                outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=pcg_seg.start_time, wavelet_function=wavelet_pcg, colormap=colormap, save_img=True)
+                                outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=pcg_seg.start_time, wavelet_function=wavelet_pcg, colormap=colormap, save_img=True, show_axis_labels=True, show_legend=True, show_title=True, just_image=False)
     return data
 
 def main():
