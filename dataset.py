@@ -433,7 +433,10 @@ class ECGPCGDataset(Dataset):
         return self.df_data.loc[self.df_data['filename']==filename]['seg_num'].values[0]
     
     def __len__(self) -> int:
-        return self.data_len
+        c = 0
+        for p in self.ecg_paths:
+            c += len(p)
+        return c
     
     def save_item(self, ind, outpath=outputpath+'physionet/', type_="ecg_log"):
         p = self.__getitem__(ind).out_dict['video_path']
