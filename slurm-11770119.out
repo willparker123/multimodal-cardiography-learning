@@ -1,0 +1,53 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"module"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "module"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+**** clean_data started: logging to "logs/log_p_cwt.log" ****
+
+/mnt/storage/scratch/gg18045/.conda/envs/ecgpcg-381/lib/python3.8/site-packages/torchaudio/_internal/module_utils.py:99: UserWarning: Failed to import soundfile. 'soundfile' backend is not available.
+  warnings.warn("Failed to import soundfile. 'soundfile' backend is not available.")
+['a0389', 'a0389', 1, 36.2235, 1, 72447, 72447, 51, 4, 84.104065]
+['a0393', 'a0393', -1, 35.5965, 1, 71193, 71193, 41, 4, 72.74957]
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0393/a0393_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0393/0/a0393_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0393/1/a0393_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0393/2/a0393_seg_2_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0393/3/a0393_seg_3_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0393/a0393_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0393/0/a0393_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0393/1/a0393_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0393/2/a0393_seg_2_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0393/3/a0393_seg_3_cwt_spec.npz
+['a0394', 'a0394', 1, 24.6915, 1, 49383, 49383, 22, 3, 52.62301]
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0394/a0394_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0394/0/a0394_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0394/1/a0394_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0394/2/a0394_seg_2_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0394/a0394_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0394/0/a0394_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0394/1/a0394_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0394/2/a0394_seg_2_cwt_spec.npz
+['a0395', 'a0395', 1, 14.7855, 1, 29571, 29571, 15, 1, 62.55454]
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0395/a0395_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0395/0/a0395_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0395/a0395_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0395/0/a0395_seg_0_cwt_spec.npz
+['a0396', 'a0396', 1, 35.8055, 1, 71611, 71611, 48, 4, 81.25943]
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0396/a0396_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0396/0/a0396_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0396/1/a0396_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0396/2/a0396_seg_2_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_ecg_cwt/a0396/3/a0396_seg_3_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0396/a0396_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0396/0/a0396_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0396/1/a0396_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0396/2/a0396_seg_2_cwt_spec.npz
+Saving image: data-after-TEST/physionet/data_pcg_cwt/a0396/3/a0396_seg_3_cwt_spec.npz

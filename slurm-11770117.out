@@ -1,0 +1,36 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"module"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "module"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+**** clean_data started: logging to "logs/log_p_stft.log" ****
+
+/mnt/storage/scratch/gg18045/.conda/envs/ecgpcg-381/lib/python3.8/site-packages/torchaudio/_internal/module_utils.py:99: UserWarning: Failed to import soundfile. 'soundfile' backend is not available.
+  warnings.warn("Failed to import soundfile. 'soundfile' backend is not available.")
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/mnt/storage/scratch/gg18045/.conda/envs/ecgpcg-381/lib/python3.8/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+  File "/mnt/storage/scratch/gg18045/multimodal-cardiography-learning/utils.py", line 202, in worker_write
+    with open(config.log_fullpath, 'rb') as f:
+FileNotFoundError: [Errno 2] No such file or directory: 'logs/log_p_stft.log'
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "./clean_data.py", line 683, in <module>
+    write_to_logger(f"Output Path: {config.global_opts.outputpath}", pool, manager_q)
+  File "/mnt/storage/scratch/gg18045/multimodal-cardiography-learning/utils.py", line 224, in write_to_logger
+    return pool.apply_async(worker_write, (printstring, process_index, q)).get()
+  File "/mnt/storage/scratch/gg18045/.conda/envs/ecgpcg-381/lib/python3.8/multiprocessing/pool.py", line 768, in get
+    raise self._value
+FileNotFoundError: [Errno 2] No such file or directory: 'logs/log_p_stft.log'

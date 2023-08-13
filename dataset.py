@@ -93,7 +93,10 @@ class ECGPCGDataset(Dataset):
             ecg_paths_samples = []
             pcg_paths_samples = []
             if samples_in_directories:
-                dirs_ecg = next(os.walk(paths_ecgs[i]))[1]
+                dirs_ecg = os.walk(paths_ecgs[i])[1]
+                dirs_ecg = sorted(dirs_ecg)
+                print(paths_ecgs[i])
+                print(dirs_ecg)
                 if not len(dirs_ecg) == len(self.dfs[i].index):
                     if verifyComplete:
                         raise ValueError(f"Error: Number of ECG directories does not match records in '{paths_csv[i]}.csv'")
@@ -101,7 +104,8 @@ class ECGPCGDataset(Dataset):
                         if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
                             incomplete_x.append(f"{paths_ecgs[i]}{dir}")
                 if data_type_ecg is not "video" and not no_pcg_paths:
-                    dirs_pcg = next(os.walk(paths_pcgs[i]))[1]
+                    dirs_pcg = os.walk(paths_pcgs[i])[1]
+                    dirs_pcg = sorted(dirs_pcg)
                     if verifyComplete:
                         if not (len(dirs_ecg) == len(dirs_pcg)):
                             raise ValueError(f"Error: Number of ECG and PCG directories do not match")
@@ -111,7 +115,8 @@ class ECGPCGDataset(Dataset):
                     ecg_paths_sample_segments = []
                     pcg_paths_sample_segments = []
                     # Check segment direectories
-                    dirs_inner = next(os.walk(paths_ecgs[i]+f'{dir}/'))[1]
+                    dirs_inner = os.walk(paths_ecgs[i]+f'{dir}/')[1]
+                    dirs_inner = sorted(dirs_inner)
                     record = self.dfs[i].iloc[[j]]
                     seg_num = int(record['seg_num'])
                     if not len(dirs_inner) == seg_num:
@@ -129,7 +134,9 @@ class ECGPCGDataset(Dataset):
                                     incomplete_x.append(f"{paths_pcgs[i]}{dir}")
                                     incomplete_x_inds.append(f"{dir}")
                                 continue
-                        files_ecg = next(os.walk(paths_ecgs[i]+f'{dir}/{dir_inner}/'))[2]
+                        files_ecg = os.listdir(paths_ecgs[i]+f'{dir}/{dir_inner}')
+                        files_ecg = [f for f in files_ecg if os.path.isfile(paths_ecgs[i]+f'{dir}/{dir_inner}/'+f)]
+                        files_ecg = sorted(files_ecg)
                         if len(files_ecg) == 0:
                             if verifyComplete:
                                 raise ValueError(f"Error: no files found in directory '{paths_ecgs[i]}{dir}/{dir_inner}/'.")
@@ -154,7 +161,9 @@ class ECGPCGDataset(Dataset):
                                         incomplete_x.append(f"{paths_ecgs[i]}{dir}")
                                         incomplete_x_inds.append(f"{dir}")
                                     continue
-                            files_pcg = next(os.walk(paths_pcgs[i]+f'{dir}/{dir_inner}/'))[2]
+                            files_pcg = os.listdir(paths_pcgs[i]+f'{dir}/{dir_inner}')
+                            files_pcg = [f for f in files_pcg if os.path.isfile(paths_pcgs[i]+f'{dir}/{dir_inner}/'+f)]
+                            files_pcg = sorted(files_pcg)
                             if len(files_pcg) == 0:
                                 if verifyComplete:
                                     raise ValueError(f"Error: no files found in directory '{paths_pcgs[i]}{dir}/{dir_inner}/'.")
@@ -201,7 +210,11 @@ class ECGPCGDataset(Dataset):
                     if data_type_ecg is not "video" and not no_pcg_paths:
                         pcg_paths_samples.append(pcg_paths_sample_segments)
             else:
-                all_files_ecg = next(os.walk(paths_ecgs[i]))[2]
+                all_root_ecg, all_dirs_ecg, all_files_ecg = os.walk(paths_ecgs[i])
+                all_files_ecg = sorted(all_files_ecg)
+                
+                all_files_ecg = os.listdir(paths_ecgs[i][:-1])
+                all_files_ecg = [f for f in all_files_ecg if os.path.isfile(paths_ecgs[i]+f)]
                 if len(all_files_ecg) == 0:
                     raise ValueError(f"Error: no files found in directory '{paths_ecgs[i]}/'.")
                 for ind in len(self.dfs[i].index):
@@ -222,7 +235,8 @@ class ECGPCGDataset(Dataset):
                             raise ValueError(f"Error: Number of PCG files does not match records in '{paths_csv[i]}.csv'")
                     
                     if data_type_ecg is not "video" and not no_pcg_paths:
-                        all_files_pcg = next(os.walk(paths_pcgs[i]))[2]
+                        all_root_pcg, all_dirs_pcg, all_files_pcg = os.walk(paths_pcgs[i])
+                        all_files_pcg = sorted(all_files_pcg)
                         if len(all_files_pcg) == 0:
                             if verifyComplete:
                                 raise ValueError(f"Error: no files found in directory '{paths_pcgs[i]}/'.")
