@@ -292,7 +292,6 @@ class ECGPCGDataset(Dataset):
         if not verifyComplete:
             print(f"Incomplete samples (missing ECG/PCG/both, missing files, missing segments): {self.incomplete_x}")
         for row in range(len(self.df_data)):
-            print(f"str(self.df_data.iloc[[row]]['filename']): {str(self.df_data.iloc[[row]]['filename'])}")
             if str(self.df_data.iloc[[row]]['filename']) in self.incomplete_x_inds:
                 fn = self.df_data.iloc[[row]]['filename']
                 self.df_data.drop(self.df_data[self.df_data['filename'] == fn].index, inplace = True)
