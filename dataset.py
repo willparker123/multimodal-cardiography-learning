@@ -296,18 +296,11 @@ class ECGPCGDataset(Dataset):
         self.labels = self.df_data[['filename', 'label']].copy()
         self.data_len = len(sum(self.ecg_paths, []))
         self.data_len_target = get_total_filecount(self.df_data, False)
-        print(f"0: {self.ecg_paths[0]}")
-        print(f"1: {self.ecg_paths[1]}")
-        print(f"2: {self.ecg_paths[2]}")
-        print(f"5: {self.ecg_paths[5]}")
-        print(f"11: {self.ecg_paths[11]}")
-        print(f"12: {self.ecg_paths[12]}")
-        print(f"self.ecg_paths: {self.data_len} len(sum(self.ecg_paths, [])): {self.data_len_target}")
+        
         self.ecg_sample_rate = ecg_sample_rate
         self.pcg_sample_rate = pcg_sample_rate
         print(f"ECGPCG DATASET LABELS HEAD: {self.labels.head()}")
         print(f"ECGPCG DATASET LENGTH (EXISTING): {self.data_len}, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): {self.data_len_target}")
-        #'ECGPCG DATASET LENGTH (EXISTING): 1820, TARGET LENGTH (INCLUDING MISSING/INCOMPLETE): 2803
     
     def get_child_and_parent_index(self, index):
         c = 0
