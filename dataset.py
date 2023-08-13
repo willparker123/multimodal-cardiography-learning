@@ -258,7 +258,8 @@ class ECGPCGDataset(Dataset):
                     if self.file_type_ecg is not 'wfdb':
                         filepaths_ecg = [f'{paths_ecgs[i]}/{x}' for x in fileswithfilenameandseg_ecg]
                         if f"{ind}" not in incomplete_x:
-                            ecg_paths_sample_segments = filepaths_ecg
+                            incomplete_x.append(f"{ind}")
+                        ecg_paths_sample_segments = filepaths_ecg
                     else:
                         if len([x for x in fileswithfilenameandseg_ecg if x.endswith(".hea")]) > 0 and len([x for x in fileswithfilenameandseg_ecg if x.endswith(".dat")]) > 0:
                             valid_files_hea = [f'{paths_ecgs[i]}/{x}' for x in fileswithfilenameandseg_ecg if x.endswith(".hea")]
@@ -267,7 +268,8 @@ class ECGPCGDataset(Dataset):
                                 raise ValueError("Error: different number of valid files found for '.dat' and '.hea' - must have one .dat and one .hea file per segment")
                             filepaths_ecg = [[f'{paths_ecgs[i]}/{valid_files_hea[i]}', f'{paths_ecgs[i]}/{valid_files_dat[i]}'] for i in range(len(valid_files_hea))]
                             if f"{ind}" not in incomplete_x:
-                                ecg_paths_sample_segments = filepaths_ecg
+                                incomplete_x.append(f"{ind}")
+                            ecg_paths_sample_segments = filepaths_ecg
                         else:
                             if verifyComplete: 
                                 raise ValueError(f"Error: .dat and .hea file must be present in directory '{paths_ecgs[i]}/'")
@@ -286,6 +288,7 @@ class ECGPCGDataset(Dataset):
             self.incomplete_x = incomplete_x
             self.incomplete_x_inds = incomplete_x_inds
         print(f"* Successfully validated all ECG and PCG directories and files.")
+        print(f"Incomplete X: {self.incomplete_x}\n\nIncomplete indicies: {self.incomplete_x_inds}")
         if not verifyComplete:
             print(f"Incomplete samples (missing ECG/PCG/both, missing files, missing segments): {self.incomplete_x}")
         for row in range(len(self.df_data)):
