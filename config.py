@@ -93,8 +93,8 @@ def load_config():
     parser = argparse.ArgumentParser()
     # --- environment
     #TODO only in Pytorch currently
-    parser.add_argument("--use-tensorflow", default=False, type=bool)
-    parser.add_argument("--use-googledrive", default=useDrive, type=bool)
+    parser.add_argument("--use-tensorflow", default=False, action="store_true")
+    parser.add_argument("--use-googledrive", default=useDrive, action="store_true")
     parser.add_argument("--drive-folderpath", default=drive_folderpath, type=str)
     # --- paths
     parser.add_argument("--inputpath-physionet-data", default=input_physionet_data_folderpath, type=str)
@@ -142,7 +142,7 @@ def load_config():
     parser.add_argument("-G",
                         "--enable-gpu",
                         default=True,
-                        type=bool, action="store_true",
+                        action="store_true",
                         help="Enable GPU for pytorch; model training")
 
     # --- input
@@ -240,17 +240,17 @@ def load_config():
                         help='Function to use when creating PCG using CWT [ricker, bior2.6, customricker, morlet]')
 
     # -- CLEAN_DATA: Data and Transform (spec/cwt) creation
-    parser.add_argument("--skip-physionet", default=False, type=bool, action="store_true", help="Skip all data cleaning (CSV creation, data creation, spectrogram creation) for the Physionet dataset")
-    parser.add_argument("--skip-ephnogram", default=False, type=bool, action="store_true", help="Skip all data cleaning (CSV creation, data creation, spectrogram creation) for the Ephnogram dataset")
-    parser.add_argument("--skip-csvs-and-data", default=False, type=bool, action="store_true", help="Skip CSV creation for labels, segment and sample information as well as [a0001.npz] files")
-    parser.add_argument("--skip-spec-ecg", default=False, type=bool, action="store_true", help="Skip Transform (spec / cwt) creation (data and img) for ECG")
-    parser.add_argument("--skip-spec-pcg", default=False, type=bool, action="store_true", help="Skip Transform (spec / cwt) creation (data and img) for PCG")
-    parser.add_argument("--skip-spec-data", default=False, type=bool, action="store_true", help="Skip Transform (spec / cwt) data [a0001.npz] creation")
-    parser.add_argument("--skip-spec-img", default=True, type=bool, action="store_true", help="Skip Transform (spec / cwt) image [a0001.png] creation")
-    parser.add_argument("--skip-spec-parent", default=False, type=bool, action="store_true", help="Skip Transform (spec / cwt) creation (data and img) for parent (segments are independent)")
-    parser.add_argument("--skip-spec-seg", default=False, type=bool, action="store_true", help="Skip Transform (spec / cwt) creation (data and img) for segments (parent/full sample is independent)")
-    parser.add_argument("--save-qrs-hrs", default=False, type=bool, action="store_true", help="Save QRS complex (with avg HR) plot for full sample")
-    parser.add_argument("--skip-existing", default=True, type=bool, action="store_true", help="Skip existing complete samples (including segments) according to heirarchy [data_folder/a0001/0/]")
+    parser.add_argument("--skip-physionet", default=False, action="store_true", help="Skip all data cleaning (CSV creation, data creation, spectrogram creation) for the Physionet dataset")
+    parser.add_argument("--skip-ephnogram", default=False, action="store_true", help="Skip all data cleaning (CSV creation, data creation, spectrogram creation) for the Ephnogram dataset")
+    parser.add_argument("--skip-csvs-and-data", default=False, action="store_true", help="Skip CSV creation for labels, segment and sample information as well as [a0001.npz] files")
+    parser.add_argument("--skip-spec-ecg", default=False, action="store_true", help="Skip Transform (spec / cwt) creation (data and img) for ECG")
+    parser.add_argument("--skip-spec-pcg", default=False, action="store_true", help="Skip Transform (spec / cwt) creation (data and img) for PCG")
+    parser.add_argument("--skip-spec-data", default=False, action="store_true", help="Skip Transform (spec / cwt) data [a0001.npz] creation")
+    parser.add_argument("--skip-spec-img", default=True, action="store_true", help="Skip Transform (spec / cwt) image [a0001.png] creation")
+    parser.add_argument("--skip-spec-parent", default=False, action="store_true", help="Skip Transform (spec / cwt) creation (data and img) for parent (segments are independent)")
+    parser.add_argument("--skip-spec-seg", default=False, action="store_true", help="Skip Transform (spec / cwt) creation (data and img) for segments (parent/full sample is independent)")
+    parser.add_argument("--save-qrs-hrs", default=False, action="store_true", help="Save QRS complex (with avg HR) plot for full sample")
+    parser.add_argument("--skip-existing", default=True, action="store_true", help="Skip existing complete samples (including segments) according to heirarchy [data_folder/a0001/0/]")
 
     # --- video
     parser.add_argument('--resize',
