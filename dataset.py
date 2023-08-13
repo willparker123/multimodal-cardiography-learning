@@ -294,7 +294,8 @@ class ECGPCGDataset(Dataset):
                 fn = self.df_data.iloc[[row]]['filename']
                 self.df_data.drop(self.df_data[self.df_data['filename'] == fn].index, inplace = True)
         self.labels = self.df_data[['filename', 'label']].copy()
-        self.data_len = len(sum(self.ecg_paths, []))
+        print(f"self.ecg_paths: {self.ecg_paths}")
+        self.data_len = len(np.ndarray.flatten(self.ecg_paths))
         self.data_len_target = get_total_filecount(self.df_data, False)
         
         self.ecg_sample_rate = ecg_sample_rate
