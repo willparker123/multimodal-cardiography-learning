@@ -342,9 +342,11 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
     
     if save_np:
         if savename is not None:
-            np.savez(outpath_np+savename+f'_{transform_type}_spec', spec=spec, freqs=f, times=t)
+            print(outpath_np+savename+f'_{transform_type}_spec.npz')
+            raise ValueError("AAAA")
+            np.savez(outpath_np+savename+f'_{transform_type}_spec.npz', spec=spec, freqs=f, times=t)
         else:
-            np.savez(outpath_np+filename+f'_{transform_type}_spec', spec=spec, freqs=f, times=t)
+            np.savez(outpath_np+filename+f'_{transform_type}_spec.npz', spec=spec, freqs=f, times=t)
     if save_img:
         if savename is not None:
             if just_image:
