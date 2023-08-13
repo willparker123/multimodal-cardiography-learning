@@ -258,8 +258,6 @@ class TransformerTrainer(BaseTrainer):
     @torch.no_grad()
     def evaluate(self, data_loader: DataLoader) -> Dict[str, float]:
         """ """
-        self.model.eval()
-
         all_scalar_preds = []
         all_bin_preds = []
         all_labels = []
@@ -338,6 +336,7 @@ class TransformerTrainer(BaseTrainer):
         self.model.train()
 
         return eval_res
+        #self.model.eval()
 
     @property
     def batch_dim(self) -> int:
