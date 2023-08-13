@@ -94,7 +94,7 @@ def main():
                             paths_ecgs=[outputpath+f'physionet/data_ecg_{config.global_opts.ecg_type}/'], 
                             paths_pcgs=[outputpath+f'physionet/data_pcg_{config.global_opts.pcg_type}/'], 
                             paths_csv=[outputpath+f'physionet/data_physionet_raw'])
-    print(f"Dataset length: {len(dataset)}")
+    print(f"Dataset length: {len(dataset)} {dataset.data_len}")
     train_len = math.floor(len(dataset)*config.global_opts.train_split)
     data_train, data_test = torch.utils.data.random_split(dataset, [train_len, len(dataset)-train_len], generator=torch.Generator().manual_seed(42)) 
     print(f"No. of samples in Training Data: {data_train.__len__()}, Test Data: {data_test.__len__()}")

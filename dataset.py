@@ -296,7 +296,6 @@ class ECGPCGDataset(Dataset):
                 fn = self.df_data.iloc[[row]]['filename']
                 self.df_data.drop(self.df_data[self.df_data['filename'] == fn].index, inplace = True)
         self.labels = self.df_data[['filename', 'label']].copy()
-        print(f"self.ecg_paths: {self.ecg_paths}")
         c = 0
         for p in self.ecg_paths:
             c += len(p)
@@ -436,7 +435,7 @@ class ECGPCGDataset(Dataset):
         c = 0
         for p in self.ecg_paths:
             c += len(p)
-        return c
+        return 1
     
     def save_item(self, ind, outpath=outputpath+'physionet/', type_="ecg_log"):
         p = self.__getitem__(ind).out_dict['video_path']
