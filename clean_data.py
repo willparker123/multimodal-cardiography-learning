@@ -439,7 +439,7 @@ def get_spectrogram_data(full_list,
 
 """# Cleaning Data"""
 def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=config.global_opts.segment_length, ecg_sample_rate=config.global_opts.sample_rate_ecg, pcg_sample_rate=config.global_opts.sample_rate_pcg,
-                         skipDataCSVAndFiles = False, skipECGSpectrogram = False, skipPCGSpectrogram = False, skipSegments = False, create_objects=True, dataset="physionet", save_qrs_hrs_plot=False, skipExisting=True, pool=None, q=None, skipSpecData=True, skipSpecImage=True, skipParent=True):
+                         skipDataCSVAndFiles = False, skipECGSpectrogram = False, skipPCGSpectrogram = False, skipSegments = False, create_objects=True, dataset="physionet", save_qrs_hrs_plot=False, skipExisting=True, pool=None, q=None, skipSpecData=False, skipSpecImage=True, skipParent=False):
   steps_taken = 1
   total_steps = 4 if dataset == "physionet" else 5
   dataset = format_dataset_name(dataset)
@@ -540,7 +540,7 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
     return data
 
 
-def get_dataset(dataset="physionet", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_, outputpath_folder=config.outputpath, save_qrs_hrs_plot=False, create_objects=False, get_balance_diff=True, skipDataCSVAndFiles=False, skipExisting=True, skipECGSpectrogram=False, skipPCGSpectrogram=False, pool=None, q=None, skipSpecData=True, skipSpecImage=True, skipParent=True, skipSegments=False):
+def get_dataset(dataset="physionet", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_, outputpath_folder=config.outputpath, save_qrs_hrs_plot=False, create_objects=False, get_balance_diff=True, skipDataCSVAndFiles=False, skipExisting=True, skipECGSpectrogram=False, skipPCGSpectrogram=False, pool=None, q=None, skipSpecData=False, skipSpecImage=True, skipParent=False, skipSegments=False):
   dataset = format_dataset_name(dataset)
   write_to_logger(f'*** Cleaning Data [{1 if dataset == "physionet" else 2}/3] ***', pool, q=q)
   write_to_logger(f'** Cleaning {dataset.capitalize()} Data **', pool, q=q)
