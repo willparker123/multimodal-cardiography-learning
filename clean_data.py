@@ -607,7 +607,7 @@ def create_histograms_data_values_distribution(outputpath_=config.outputpath, q=
   for i, p in enumerate(paths):
     d = []
     files_ = next(os.walk(p))[1]
-    results = pool.map(partial(get_data_from_files, data=data_p, index=i, path=p, q=q), files_)
+    results = pool.map(partial(get_data_from_files, data=data_p, index=i, path=p), files_)
     for result in results:
       if result is not None:
         d.extend(result)
