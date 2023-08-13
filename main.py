@@ -57,7 +57,7 @@ def data_sample(outputfolderpath="samples-TEST", dataset="physionet", filename="
     create_new_folder(f"{outputpath_}data_ecg_{config.global_opts.ecg_type}/{ecg_save_name}/")
     create_new_folder(f"{outputpath_}data_pcg_{config.global_opts.pcg_type}/{pcg_save_name}/")
     save_ecg(ecg_save_name, ecg.signal, ecg.signal_preproc, ecg.qrs_inds, ecg.hrs, outpath=f'{outputpath_}data_ecg_{config.global_opts.ecg_type}/{ecg_save_name}/', type_=config.global_opts.ecg_type)
-    save_pcg(pcg_save_name, pcg.signal, pcg.signal_preproc, outpath=f'{outputpath_}data_ecg_{config.global_opts.pcg_type}/{pcg_save_name}/', type_=config.global_opts.pcg_type)
+    save_pcg(pcg_save_name, pcg.signal, pcg.signal_preproc, outpath=f'{outputpath_}data_pcg_{config.global_opts.pcg_type}/{pcg_save_name}/', type_=config.global_opts.pcg_type)
     data = {'filename':ecg_save_name, 'og_filename':filename, 'label':ecg.label, 'record_duration':duration, 'samples_ecg':int(len(ecg.signal)), 'samples_pcg':int(len(pcg.signal)), 'qrs_count':int(len(ecg.qrs_inds)), 'seg_num':seg_num, 'avg_hr':ecg.hr_avg}
     ecg_segments = ecg.get_segments(config.global_opts.segment_length, normalise=ecg.normalise)
     pcg_segments = pcg.get_segments(config.global_opts.segment_length, normalise=pcg.normalise)
