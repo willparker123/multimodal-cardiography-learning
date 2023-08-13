@@ -10,6 +10,7 @@ import numpy as np
 import torch
 import textwrap
 import logging
+import json
 from torch import nn
 from torch import Tensor
 from tqdm import tqdm
@@ -137,7 +138,15 @@ class TransformerTrainer(BaseTrainer):
         lazy: bool, default True,
             whether to initialize the data loader lazily
         """
-        train_config.physionetOnly = kwargs.get('physionetOnly',True)
+        train_config.physionetOnly = kwargs.get('physionetOnly',False)
+            
+        self.log_file_path = config.outputpath+"results/model_metrics"
+        self.log_file_name = "log_metrics"
+        if 'log_file_name' in kwargs:
+            self.log_file_name = kwargs.get('log_file_name')
+        if 'log_file_path' in kwargs:
+            self.log_file_path = kwargs.get('log_file_path')
+            
         super().__init__(
             model=model,
             dataset_cls=ECGPCGDataset,
@@ -188,7 +197,10 @@ class TransformerTrainer(BaseTrainer):
             val_dataset = data_test
         print(f"len data_train, data_test: {len(data_train)} {len(data_test)}")
         print(f"len val_train_dataset, val_dataset: {len(val_train_dataset)} {len(val_dataset)}")
-
+        create_new_folder(self.log_file_path)
+        f_log_metrics = open(self.log_file_path+'/'+f"{self.log_file_name}.txt", "w")
+        with open(self.log_file_path+'/'+f"{self.log_file_name}.txt" , "r+") as f_log_metrics:
+            f_log_metrics.write("** Logging model metrics / scores (Accuracy, Precision) **"+"\n")
         # https://discuss.pytorch.org/t/guidelines-for-assigning-num-workers-to-dataloader/813/4
         num_workers = config.global_opts.number_of_processes
 
@@ -275,7 +287,6 @@ class TransformerTrainer(BaseTrainer):
             # Forward pass, get our logits
             criterion = nn.CrossEntropyLoss()
             logits = self.model(signals)
-            labels = np.array(list(map(lambda x: 0 if x == -1 else (1 if x == 1 else x), labels)))
             print(f"logits {np.shape(logits)} {logits}")
             print(f"labels {np.shape(torch.from_numpy(labels))} {torch.from_numpy(labels.squeeze())}")
             # Calculate the loss with the logits and the labels
@@ -298,7 +309,6 @@ class TransformerTrainer(BaseTrainer):
             head_scalar_preds = all_scalar_preds[:head_num, ...]
             head_bin_preds = all_bin_preds[:head_num, ...]
             print(f"head_bin_preds {head_bin_preds} {np.shape(head_bin_preds)}")
-            print(f"np.where(row) {[np.array(head_bin_preds)[row] for row in range(len(head_bin_preds))]}")
             head_preds_classes = [
                 np.array(head_bin_preds)[row] for row in range(len(head_bin_preds))
             ]
@@ -344,6 +354,9 @@ class TransformerTrainer(BaseTrainer):
             challenge_metric=challenge_metric,
         )
 
+        f_log_metrics.write(f"Logging model metrics / scores (Accuracy, Precision): {self.log_file_path+'/'+f'{self.log_file_name}.txt'}"+"\n")
+        with open(self.log_file_path+'/'+f"{self.log_file_name}.txt" , "r+") as f_log_metrics:
+            f_log_metrics.write(f"[EPOCH {self.current_epoch} / {self.n_epochs}]\n{json.dumps(dict)}\n\n")
         # in case possible memeory leakage?
         del all_scalar_preds, all_bin_preds, all_labels
 

@@ -50,10 +50,10 @@ def read_file(filepath, datatype, filetype, both_in_wfdb=False):
             return_data_pcg = audio
     elif filetype == "npz":
         if datatype == "signal":
-            df = np.load(filepath)
+            df = np.load(filepath,allow_pickle=True)
             return_data = df
         elif datatype == "spec":
-            df = np.load(filepath)
+            df = np.load(filepath,allow_pickle=True)
             return_data = df
     elif filetype == "wfdb":
         if both_in_wfdb:

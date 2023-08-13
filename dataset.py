@@ -439,17 +439,23 @@ class ECGPCGDataset(Dataset):
     def __getitem__(self, index, print_df=True, print_short=False, parent_index=None, child_index=None):
         dataitem = self.getitem(index, print_df=print_df, print_short=print_short, parent_index=parent_index, child_index=child_index)
         if self.data_and_label_only:
-            ecg_data = dataitem[0]
+            data = dataitem[0]
+            label = dataitem[1]
+            if label == -1:
+                label = 0
             #remove NaN, inf
-            if not np.all(np.isfinite(ecg_data)) or np.any(np.isnan(ecg_data)):
-                ecg_data = np.nan_to_num(ecg_data, nan=0, posinf=1, neginf=0)
+            if not np.all(np.isfinite(data)) or np.any(np.isnan(data)):
+                data = np.nan_to_num(data, nan=0, posinf=1, neginf=0)
             #add extra dim for channel, convert to Double
-            dataitem = np.expand_dims(ecg_data, axis=0).astype(np.float32), np.expand_dims(dataitem[1], axis=0)
+            dataitem = np.expand_dims(data, axis=0).astype(np.float32), np.expand_dims(label, axis=0)
         else:
-            ecg_data = dataitem['ecg']
-            if not np.all(np.isfinite(ecg_data)) or np.any(np.isnan(ecg_data)):
-                ecg_data = np.nan_to_num(ecg_data, nan=0, posinf=1, neginf=0)
-            dataitem = np.expand_dims(ecg_data, axis=0).astype(np.float32), np.expand_dims(int(dataitem['label'], axis=0))
+            data = dataitem['ecg']
+            label = dataitem['label']
+            if label == -1:
+                label = 0
+            if not np.all(np.isfinite(data)) or np.any(np.isnan(data)):
+                data = np.nan_to_num(data, nan=0, posinf=1, neginf=0)
+            dataitem = np.expand_dims(data, axis=0).astype(np.float32), np.expand_dims(label, axis=0)
         return dataitem
 
     def get_segment_num(self, filename) -> int:
