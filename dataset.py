@@ -435,7 +435,7 @@ class ECGPCGDataset(Dataset):
         c = 0
         for p in self.ecg_paths:
             c += len(p)
-        return 1
+        return c
     
     def save_item(self, ind, outpath=outputpath+'physionet/', type_="ecg_log"):
         p = self.__getitem__(ind).out_dict['video_path']
