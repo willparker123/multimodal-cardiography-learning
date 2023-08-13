@@ -147,7 +147,7 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
         'samples_pcg': int(len(pcg_sig)), 
         'qrs_count': int(len(ecg_qrs)), 
         'seg_num': seg_num, 
-        'avg_hr': np.average(hrs)
+        'avg_hr': np.nanmean(hrs)
       }
       return data
 
