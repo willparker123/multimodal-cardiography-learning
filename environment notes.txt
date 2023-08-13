@@ -99,7 +99,7 @@ pip install configargparse
 pip install regex
 pip install tensorboard
 pip install moviepy
-pip install torch_ecg
+pip install torch-ecg
 pip install scikit-image
 pip install scikit-build
 pip install scipy

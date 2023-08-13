@@ -77,7 +77,7 @@ class PCG():
             
         if normalise:
             if normalise_factor is None:
-                signal = preprocessing.normalize(signal.reshape(-1, 1), axis=0, norm='l1').reshape(-1, 1)
+                signal = (signal-np.min(signal))/(np.max(signal)-np.min(signal))
             else:
                 signal = signal / normalise_factor
         if apply_filter:
@@ -138,29 +138,35 @@ class PCG():
             segments.append(segment)
         return segments
         
-    def plot_resampled_audio(self, save=True, outputpath_png=outputpath+'physionet/spectrograms_pcg_audio/', show=False):
+    def plot_the_audio(self, audio, suffix="_raw", title="Plot of raw PCG audio (Amplitude x Time)", figsize=(20, 10), save=True, outputpath_png=outputpath+'physionet/pcg_audio/', show=False, legend=True):
         create_new_folder(outputpath_png)
-        plt.plot(self.signal_preproc)
-        if save:
-            if self.savename is not None:
-                plt.savefig(outputpath_png+self.savename+'_pcg_audio_resampled.png', format="png")
-            else:
-                plt.savefig(outputpath_png+self.filename+'_pcg_audio_resampled.png', format="png")
-        if show:
-            plt.show()
-        plt.close()
+        print(f"Plot an audio signal - {self.savename if self.savename is not None else self.filename}")
+        fig, ax = plt.subplots(figsize=figsize)
+        ax.xaxis.set_major_formatter(lambda x, pos: x/config.global_opts.sample_rate_pcg)
+        ax.yaxis.set_major_formatter(lambda y, pos: np.round(y, 3))
         
-    def plot_raw_audio(self, save=True, outputpath_png=outputpath+'physionet/spectrograms_pcg_audio', show=False):
-        create_new_folder(outputpath_png)
-        plt.plot(self.audio_raw)
+        ax.tick_params(axis='both', which='major', labelsize=20)
+        ax.tick_params(axis='both', which='minor', labelsize=20)
+        ax.set_title(title, fontsize=24)
+        ax.plot(audio, label='Signal')
+        ax.set_xlabel('Time (s)', color='#163060', fontsize=24)
+        ax.set_ylabel('PCG Amplitude', color='#163060', fontsize=24)
+        if legend:
+            plt.legend(fontsize="12", loc='upper center', ncol=1)
         if save:
             if self.savename is not None:
-                plt.savefig(outputpath_png+self.savename+'_pcg_audio_raw.png', format="png")
+                plt.savefig(outputpath_png+self.savename+f'_pcg_audio{suffix}.png', format="png")
             else:
-                plt.savefig(outputpath_png+self.filename+'_pcg_audio_raw.png', format="png")
+                plt.savefig(outputpath_png+self.filename+f'_pcg_audio{suffix}.png', format="png")
         if show:
             plt.show()
         plt.close()
+
+    def plot_resampled_audio(self, title="Plot of raw PCG audio (Amplitude x Time)", figsize=(20, 10), save=True, outputpath_png=outputpath+'physionet/pcg_audio_resampled/', show=False, legend=False):
+        self.plot_the_audio(self.signal_preproc, suffix="_resampled", title=title, figsize=figsize, outputpath_png=outputpath_png, save=save, show=show, legend=legend)
+        
+    def plot_raw_audio(self, title="Plot of raw PCG audio (Amplitude x Time)", figsize=(20, 10), save=True, outputpath_png=outputpath+'physionet/pcg_audio_raw/', show=False, legend=False):
+        self.plot_the_audio(self.audio_raw, suffix="_raw", title=title, figsize=figsize, outputpath_png=outputpath_png, save=save, show=show, legend=legend)
 
 def save_pcg(filename, signal, signal_preproc, outpath=outputpath+'physionet/', savename=None, type_="stft_logmel"):
     f = filename
