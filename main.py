@@ -172,19 +172,23 @@ def main():
     config_crnn_transformer_train.model_dir = config.global_opts.resume_checkpoint
     config_crnn_transformer_train.working_dir = ""
     
+    print("0")
     if config.global_opts.resume_checkpoint is not None:
         checkpoint = load_checkpoint(config.global_opts.resume_checkpoint, model)
     
     ECG_CRNN.__DEBUG__ = False
 
+    print("00")
     #input is of shape ``(batch_size, seq_len, input_size)``
     model(torch.rand(batch_size, n_leads, x_length)) 
     
     if torch.cuda.device_count() > 1:
         print(f"Using Data Parallelism with {torch.cuda.device_count()} GPUs")
         model = DP(model)
+    print("000")
     model.to(device=device)
     
+    print("Initialising TransformerTrainer: Fused Physionet/Ephnogram dataset")
     trainer = TransformerTrainer(
         model=model,
         model_config=config_crnn_transformer,
@@ -192,6 +196,7 @@ def main():
         device=device,
         lazy=False,
     )
+    print("Initialising TransformerTrainer: Physionet dataset")
     trainer_physionet = TransformerTrainer(
         model=model,
         model_config=config_crnn_transformer,

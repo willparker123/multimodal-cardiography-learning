@@ -1,0 +1,441 @@
+2023-08-13 15:19:12,343 - TorchECG - INFO - training configurations are as follows:
+{
+    "debug": True,
+    "final_model_name": None,
+    "log_step": 20,
+    "flooding_level": 0.0,
+    "early_stopping": {
+        "min_delta": 0.001,
+        "patience": 10
+    },
+    "log_dir": "logs",
+    "checkpoints": checkpoints,
+    "model_dir": None,
+    "working_dir": "",
+    "prefix": "TorchECG",
+    "DTYPE": DTYPE(STR='float32', NP=dtype('float32'), TORCH=torch.float32, INT=32),
+    "str_dtype": "float32",
+    "np_dtype": float32,
+    "dtype": torch.float32,
+    "device": cpu,
+    "eps": 1e-07,
+    "SEED": 42,
+    "RNG": Generator(PCG64),
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b34139a6f20>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b34139a6f20>, endpoint=True),
+    "set_seed": <function set_seed at 0x2b3413d7a160>,
+    "change_dtype": <function change_dtype at 0x2b3413d7a670>,
+    "classes": [
+        "N",
+        "A"
+    ],
+    "n_epochs": 100,
+    "batch_size": 8,
+    "optimizer": "adamw_amsgrad",
+    "momentum": 0.949,
+    "betas": [
+        0.9, 0.999
+    ],
+    "decay": 0.01,
+    "learning_rate": 0.0001,
+    "lr": 0.0001,
+    "lr_scheduler": "one_cycle",
+    "lr_step_size": 50,
+    "lr_gamma": 0.1,
+    "max_lr": 0.002,
+    "burn_in": 400,
+    "steps": [
+        5000, 10000
+    ],
+    "loss": "AsymmetricLoss",
+    "loss_kw": {
+        "gamma_pos": 0,
+        "gamma_neg": 0.2,
+        "implementation": "deep-psp"
+    },
+    "monitor": "challenge_metric",
+    "eval_every": 20,
+    "cnn_name": "transformer",
+    "rnn_name": "none",
+    "attn_name": "none",
+    "input_len": 16000,
+    "input_len_tol": 3200,
+    "sig_slice_tol": 0.4,
+    "siglen": 16000,
+    "physionetOnly": True
+}
+2023-08-13 15:19:13,949 - TorchECG - INFO - training configurations are as follows:
+{
+    "debug": True,
+    "final_model_name": None,
+    "log_step": 20,
+    "flooding_level": 0.0,
+    "early_stopping": {
+        "min_delta": 0.001,
+        "patience": 10
+    },
+    "log_dir": "logs",
+    "checkpoints": checkpoints,
+    "model_dir": None,
+    "working_dir": "",
+    "prefix": "TorchECG",
+    "DTYPE": DTYPE(STR='float32', NP=dtype('float32'), TORCH=torch.float32, INT=32),
+    "str_dtype": "float32",
+    "np_dtype": float32,
+    "dtype": torch.float32,
+    "device": cpu,
+    "eps": 1e-07,
+    "SEED": 42,
+    "RNG": Generator(PCG64),
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b34139a6f20>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b34139a6f20>, endpoint=True),
+    "set_seed": <function set_seed at 0x2b3413d7a160>,
+    "change_dtype": <function change_dtype at 0x2b3413d7a670>,
+    "classes": [
+        "N",
+        "A"
+    ],
+    "n_epochs": 100,
+    "batch_size": 8,
+    "optimizer": "adamw_amsgrad",
+    "momentum": 0.949,
+    "betas": [
+        0.9, 0.999
+    ],
+    "decay": 0.01,
+    "learning_rate": 0.0001,
+    "lr": 0.0001,
+    "lr_scheduler": "one_cycle",
+    "lr_step_size": 50,
+    "lr_gamma": 0.1,
+    "max_lr": 0.002,
+    "burn_in": 400,
+    "steps": [
+        5000, 10000
+    ],
+    "loss": "AsymmetricLoss",
+    "loss_kw": {
+        "gamma_pos": 0,
+        "gamma_neg": 0.2,
+        "implementation": "deep-psp"
+    },
+    "monitor": "challenge_metric",
+    "eval_every": 20,
+    "cnn_name": "transformer",
+    "rnn_name": "none",
+    "attn_name": "none",
+    "input_len": 16000,
+    "input_len_tol": 3200,
+    "sig_slice_tol": 0.4,
+    "siglen": 16000,
+    "physionetOnly": True
+}
+2023-08-13 15:19:15,712 - TorchECG - INFO - 
+Starting training:
+------------------
+Epochs:          100
+Batch size:      8
+Learning rate:   0.0001
+Training size:   1004
+Validation size: 431
+Device:          cpu
+Optimizer:       adamw_amsgrad
+Dataset classes: ['N', 'A']
+-----------------------------------------
+
+2023-08-13 15:19:15,716 - TorchECG - INFO - Train epoch_0:
+--------------------------------------------------------------------------------------------------------------
+2023-08-13 15:19:42,991 - TorchECG - INFO - training configurations are as follows:
+{
+    "debug": True,
+    "final_model_name": None,
+    "log_step": 20,
+    "flooding_level": 0.0,
+    "early_stopping": {
+        "min_delta": 0.001,
+        "patience": 10
+    },
+    "log_dir": "logs",
+    "checkpoints": checkpoints,
+    "model_dir": None,
+    "working_dir": "",
+    "prefix": "TorchECG",
+    "DTYPE": DTYPE(STR='float32', NP=dtype('float32'), TORCH=torch.float32, INT=32),
+    "str_dtype": "float32",
+    "np_dtype": float32,
+    "dtype": torch.float32,
+    "device": cpu,
+    "eps": 1e-07,
+    "SEED": 42,
+    "RNG": Generator(PCG64),
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b5166549f20>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b5166549f20>, endpoint=True),
+    "set_seed": <function set_seed at 0x2b516691c160>,
+    "change_dtype": <function change_dtype at 0x2b516691c670>,
+    "classes": [
+        "N",
+        "A"
+    ],
+    "n_epochs": 100,
+    "batch_size": 8,
+    "optimizer": "adamw_amsgrad",
+    "momentum": 0.949,
+    "betas": [
+        0.9, 0.999
+    ],
+    "decay": 0.01,
+    "learning_rate": 0.0001,
+    "lr": 0.0001,
+    "lr_scheduler": "one_cycle",
+    "lr_step_size": 50,
+    "lr_gamma": 0.1,
+    "max_lr": 0.002,
+    "burn_in": 400,
+    "steps": [
+        5000, 10000
+    ],
+    "loss": "AsymmetricLoss",
+    "loss_kw": {
+        "gamma_pos": 0,
+        "gamma_neg": 0.2,
+        "implementation": "deep-psp"
+    },
+    "monitor": "challenge_metric",
+    "eval_every": 20,
+    "cnn_name": "transformer",
+    "rnn_name": "none",
+    "attn_name": "none",
+    "input_len": 16000,
+    "input_len_tol": 3200,
+    "sig_slice_tol": 0.4,
+    "siglen": 16000,
+    "physionetOnly": True
+}
+2023-08-13 15:19:44,435 - TorchECG - INFO - training configurations are as follows:
+{
+    "debug": True,
+    "final_model_name": None,
+    "log_step": 20,
+    "flooding_level": 0.0,
+    "early_stopping": {
+        "min_delta": 0.001,
+        "patience": 10
+    },
+    "log_dir": "logs",
+    "checkpoints": checkpoints,
+    "model_dir": None,
+    "working_dir": "",
+    "prefix": "TorchECG",
+    "DTYPE": DTYPE(STR='float32', NP=dtype('float32'), TORCH=torch.float32, INT=32),
+    "str_dtype": "float32",
+    "np_dtype": float32,
+    "dtype": torch.float32,
+    "device": cpu,
+    "eps": 1e-07,
+    "SEED": 42,
+    "RNG": Generator(PCG64),
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b5166549f20>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b5166549f20>, endpoint=True),
+    "set_seed": <function set_seed at 0x2b516691c160>,
+    "change_dtype": <function change_dtype at 0x2b516691c670>,
+    "classes": [
+        "N",
+        "A"
+    ],
+    "n_epochs": 100,
+    "batch_size": 8,
+    "optimizer": "adamw_amsgrad",
+    "momentum": 0.949,
+    "betas": [
+        0.9, 0.999
+    ],
+    "decay": 0.01,
+    "learning_rate": 0.0001,
+    "lr": 0.0001,
+    "lr_scheduler": "one_cycle",
+    "lr_step_size": 50,
+    "lr_gamma": 0.1,
+    "max_lr": 0.002,
+    "burn_in": 400,
+    "steps": [
+        5000, 10000
+    ],
+    "loss": "AsymmetricLoss",
+    "loss_kw": {
+        "gamma_pos": 0,
+        "gamma_neg": 0.2,
+        "implementation": "deep-psp"
+    },
+    "monitor": "challenge_metric",
+    "eval_every": 20,
+    "cnn_name": "transformer",
+    "rnn_name": "none",
+    "attn_name": "none",
+    "input_len": 16000,
+    "input_len_tol": 3200,
+    "sig_slice_tol": 0.4,
+    "siglen": 16000,
+    "physionetOnly": True
+}
+2023-08-13 15:19:46,027 - TorchECG - INFO - 
+Starting training:
+------------------
+Epochs:          100
+Batch size:      8
+Learning rate:   0.0001
+Training size:   1004
+Validation size: 431
+Device:          cpu
+Optimizer:       adamw_amsgrad
+Dataset classes: ['N', 'A']
+-----------------------------------------
+
+2023-08-13 15:19:46,029 - TorchECG - INFO - Train epoch_0:
+--------------------------------------------------------------------------------------------------------------
+2023-08-13 15:19:56,901 - TorchECG - INFO - training configurations are as follows:
+{
+    "debug": True,
+    "final_model_name": None,
+    "log_step": 20,
+    "flooding_level": 0.0,
+    "early_stopping": {
+        "min_delta": 0.001,
+        "patience": 10
+    },
+    "log_dir": "logs",
+    "checkpoints": checkpoints,
+    "model_dir": None,
+    "working_dir": "",
+    "prefix": "TorchECG",
+    "DTYPE": DTYPE(STR='float32', NP=dtype('float32'), TORCH=torch.float32, INT=32),
+    "str_dtype": "float32",
+    "np_dtype": float32,
+    "dtype": torch.float32,
+    "device": cpu,
+    "eps": 1e-07,
+    "SEED": 42,
+    "RNG": Generator(PCG64),
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b18741d4f20>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b18741d4f20>, endpoint=True),
+    "set_seed": <function set_seed at 0x2b18745a70d0>,
+    "change_dtype": <function change_dtype at 0x2b18745a75e0>,
+    "classes": [
+        "N",
+        "A"
+    ],
+    "n_epochs": 100,
+    "batch_size": 8,
+    "optimizer": "adamw_amsgrad",
+    "momentum": 0.949,
+    "betas": [
+        0.9, 0.999
+    ],
+    "decay": 0.01,
+    "learning_rate": 0.0001,
+    "lr": 0.0001,
+    "lr_scheduler": "one_cycle",
+    "lr_step_size": 50,
+    "lr_gamma": 0.1,
+    "max_lr": 0.002,
+    "burn_in": 400,
+    "steps": [
+        5000, 10000
+    ],
+    "loss": "AsymmetricLoss",
+    "loss_kw": {
+        "gamma_pos": 0,
+        "gamma_neg": 0.2,
+        "implementation": "deep-psp"
+    },
+    "monitor": "challenge_metric",
+    "eval_every": 20,
+    "cnn_name": "transformer",
+    "rnn_name": "none",
+    "attn_name": "none",
+    "input_len": 16000,
+    "input_len_tol": 3200,
+    "sig_slice_tol": 0.4,
+    "siglen": 16000,
+    "physionetOnly": True
+}
+2023-08-13 15:19:58,609 - TorchECG - INFO - training configurations are as follows:
+{
+    "debug": True,
+    "final_model_name": None,
+    "log_step": 20,
+    "flooding_level": 0.0,
+    "early_stopping": {
+        "min_delta": 0.001,
+        "patience": 10
+    },
+    "log_dir": "logs",
+    "checkpoints": checkpoints,
+    "model_dir": None,
+    "working_dir": "",
+    "prefix": "TorchECG",
+    "DTYPE": DTYPE(STR='float32', NP=dtype('float32'), TORCH=torch.float32, INT=32),
+    "str_dtype": "float32",
+    "np_dtype": float32,
+    "dtype": torch.float32,
+    "device": cpu,
+    "eps": 1e-07,
+    "SEED": 42,
+    "RNG": Generator(PCG64),
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b18741d4f20>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b18741d4f20>, endpoint=True),
+    "set_seed": <function set_seed at 0x2b18745a70d0>,
+    "change_dtype": <function change_dtype at 0x2b18745a75e0>,
+    "classes": [
+        "N",
+        "A"
+    ],
+    "n_epochs": 100,
+    "batch_size": 8,
+    "optimizer": "adamw_amsgrad",
+    "momentum": 0.949,
+    "betas": [
+        0.9, 0.999
+    ],
+    "decay": 0.01,
+    "learning_rate": 0.0001,
+    "lr": 0.0001,
+    "lr_scheduler": "one_cycle",
+    "lr_step_size": 50,
+    "lr_gamma": 0.1,
+    "max_lr": 0.002,
+    "burn_in": 400,
+    "steps": [
+        5000, 10000
+    ],
+    "loss": "AsymmetricLoss",
+    "loss_kw": {
+        "gamma_pos": 0,
+        "gamma_neg": 0.2,
+        "implementation": "deep-psp"
+    },
+    "monitor": "challenge_metric",
+    "eval_every": 20,
+    "cnn_name": "transformer",
+    "rnn_name": "none",
+    "attn_name": "none",
+    "input_len": 16000,
+    "input_len_tol": 3200,
+    "sig_slice_tol": 0.4,
+    "siglen": 16000,
+    "physionetOnly": True
+}
+2023-08-13 15:20:00,139 - TorchECG - INFO - 
+Starting training:
+------------------
+Epochs:          100
+Batch size:      8
+Learning rate:   0.0001
+Training size:   1004
+Validation size: 431
+Device:          cpu
+Optimizer:       adamw_amsgrad
+Dataset classes: ['N', 'A']
+-----------------------------------------
+
+2023-08-13 15:20:00,141 - TorchECG - INFO - Train epoch_0:
+--------------------------------------------------------------------------------------------------------------

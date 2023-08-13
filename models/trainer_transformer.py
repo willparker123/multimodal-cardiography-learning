@@ -39,7 +39,6 @@ TrainCfg.n_epochs = config.global_opts.epochs
 # TODO: automatic adjust batch size according to GPU capacity
 # https://stackoverflow.com/questions/45132809/how-to-select-batch-size-automatically-to-fit-gpu
 TrainCfg.batch_size = config.global_opts.batch_size
-# TrainCfg.max_batches = 500500
 
 # configs of optimizers and lr_schedulers
 TrainCfg.optimizer = "adamw_amsgrad"  # "sgd", "adam", "adamw"
@@ -152,6 +151,7 @@ class TransformerTrainer(BaseTrainer):
         train_dataset: Optional[Dataset] = None,
         val_dataset: Optional[Dataset] = None,
     ) -> None:
+        print("GHERE")
         """
         setup the dataloaders for training and validation
         Parameters
@@ -161,27 +161,25 @@ class TransformerTrainer(BaseTrainer):
         val_dataset: Dataset, optional,
             the validation dataset
         """
+        dataset = self.dataset_cls(#config=self.train_config, training=True, lazy=False
+                                    clip_length=config.global_opts.segment_length, 
+                                    ecg_sample_rate=config.global_opts.sample_rate_ecg,
+                                    pcg_sample_rate=config.global_opts.sample_rate_pcg,
+                                    verifyComplete=False)
+        if self.train_config.physionetOnly is not None and self.train_config.physionetOnly:
+            dataset = self.dataset_cls(clip_length=config.global_opts.segment_length, 
+                                        ecg_sample_rate=config.global_opts.sample_rate_ecg,
+                                        pcg_sample_rate=config.global_opts.sample_rate_pcg,
+                                        verifyComplete=False,
+                                        paths_ecgs=[outputpath+f'physionet/data_ecg_{config.global_opts.ecg_type}/'], 
+                                        paths_pcgs=[outputpath+f'physionet/data_pcg_{config.global_opts.pcg_type}/'], 
+                                        paths_csv=[outputpath+f'physionet/data_physionet_raw'])
         
-        dataset = self.dataset_cls(
-                #config=self.train_config, training=True, lazy=False
-                clip_length=config.global_opts.segment_length, 
-                                ecg_sample_rate=config.global_opts.sample_rate_ecg,
-                                pcg_sample_rate=config.global_opts.sample_rate_pcg,
-                                verifyComplete=False
-            ) if self.train_config.physionetOnly is not None and self.train_config.physionetOnly else self.dataset_cls(
-                clip_length=config.global_opts.segment_length, 
-                                ecg_sample_rate=config.global_opts.sample_rate_ecg,
-                                pcg_sample_rate=config.global_opts.sample_rate_pcg,
-                                verifyComplete=False,
-                            paths_ecgs=[outputpath+f'physionet/data_ecg_{config.global_opts.ecg_type}/'], 
-                            paths_pcgs=[outputpath+f'physionet/data_pcg_{config.global_opts.pcg_type}/'], 
-                            paths_csv=[outputpath+f'physionet/data_physionet_raw']
-            )
         train_len = math.floor(len(dataset)*config.global_opts.train_split)
         data_train, data_test = torch.utils.data.random_split(dataset, [train_len, len(dataset)-train_len], generator=torch.Generator().manual_seed(42)) 
         if train_dataset is None:
             data_train
-
+        
         if self.train_config.debug:
             val_train_dataset = data_train
         else:
@@ -189,7 +187,7 @@ class TransformerTrainer(BaseTrainer):
         if val_dataset is None:
             val_dataset = data_test
         print(f"len data_train, data_test: {len(data_train)} {len(data_test)}")
-        print(f"len val_dataset, val_train_dataset: {len(val_dataset)} {len(val_train_dataset)}")
+        print(f"len val_train_dataset, val_dataset: {len(val_train_dataset)} {len(val_dataset)}")
 
         # https://discuss.pytorch.org/t/guidelines-for-assigning-num-workers-to-dataloader/813/4
         num_workers = config.global_opts.number_of_processes
@@ -203,7 +201,15 @@ class TransformerTrainer(BaseTrainer):
             drop_last=False,
             collate_fn=collate_fn,
         )
-
+        #self.test_loader = DataLoader(
+        #    dataset=data_test,
+        #    batch_size=self.batch_size,
+        #    shuffle=True,
+        #    num_workers=num_workers,
+        #    pin_memory=True,
+        #    drop_last=False,
+        #    collate_fn=collate_fn,
+        #)
         if self.train_config.debug:
             self.val_train_loader = DataLoader(
                 dataset=val_train_dataset,
@@ -258,6 +264,7 @@ class TransformerTrainer(BaseTrainer):
         all_bin_preds = []
         all_labels = []
 
+        print(f"data_loader: {data_loader}")
         for signals, labels in data_loader:
             signals = signals.to(device=self.device, dtype=self.dtype)
             labels = labels.numpy()
@@ -359,6 +366,7 @@ def compute_accuracy(
         labels: ``(batch_size, class_count)`` tensor or array containing example labels
         preds: ``(batch_size, class_count)`` tensor or array containing model prediction
     """
+    raise ValueError(f"label pred: {labels} {preds}")
     assert len(labels) == len(preds)
     return float((labels == preds).sum()) / len(labels)
 
