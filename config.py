@@ -142,7 +142,7 @@ def load_config():
     parser.add_argument("-G",
                         "--enable-gpu",
                         default=True,
-                        action="store_true",
+                        action="store_false",
                         help="Enable GPU for pytorch; model training")
 
     # --- input
@@ -246,11 +246,11 @@ def load_config():
     parser.add_argument("--skip-spec-ecg", default=False, action="store_true", help="Skip Transform (spec / cwt) creation (data and img) for ECG")
     parser.add_argument("--skip-spec-pcg", default=False, action="store_true", help="Skip Transform (spec / cwt) creation (data and img) for PCG")
     parser.add_argument("--skip-spec-data", default=False, action="store_true", help="Skip Transform (spec / cwt) data [a0001.npz] creation")
-    parser.add_argument("--skip-spec-img", default=True, action="store_true", help="Skip Transform (spec / cwt) image [a0001.png] creation")
+    parser.add_argument("--skip-spec-img", default=True, action="store_false", help="Skip Transform (spec / cwt) image [a0001.png] creation")
     parser.add_argument("--skip-spec-parent", default=False, action="store_true", help="Skip Transform (spec / cwt) creation (data and img) for parent (segments are independent)")
     parser.add_argument("--skip-spec-seg", default=False, action="store_true", help="Skip Transform (spec / cwt) creation (data and img) for segments (parent/full sample is independent)")
     parser.add_argument("--save-qrs-hrs", default=False, action="store_true", help="Save QRS complex (with avg HR) plot for full sample")
-    parser.add_argument("--skip-existing", default=True, action="store_true", help="Skip existing complete samples (including segments) according to heirarchy [data_folder/a0001/0/]")
+    parser.add_argument("--skip-existing", default=True, action="store_false", help="Skip existing complete samples (including segments) according to heirarchy [data_folder/a0001/0/]")
 
     # --- video
     parser.add_argument('--resize',
@@ -291,7 +291,7 @@ def load_config():
                         default=2,
                         type=int,
                         help="How frequently to test the model on the validation set in number of epochs")
-    parser.add_argument("--opt-adam", action="store_true", help="Replaces SGD with Adam", default=True)
+    parser.add_argument("--opt-adam", action="store_false", help="Replaces SGD with Adam", default=True)
     parser.add_argument("--adam-amsgrad", action="store_true", help="Enables AMSGrad version of the Adam optimiser", default=False)
     parser.add_argument("--dropout",
                         default=0.1,
