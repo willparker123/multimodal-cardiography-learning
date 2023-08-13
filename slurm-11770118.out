@@ -1,0 +1,56 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"module"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "module"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+**** clean_data started: logging to "logs/log_e_stft.log" ****
+
+/mnt/storage/scratch/gg18045/.conda/envs/ecgpcg-381/lib/python3.8/site-packages/torchaudio/_internal/module_utils.py:99: UserWarning: Failed to import soundfile. 'soundfile' backend is not available.
+  warnings.warn("Failed to import soundfile. 'soundfile' backend is not available.")
+['b0002', 'ECGPCG0006', 0, 0.5, 5, 60000, 60000, 36, 3, 71.21443]
+['b0004', 'ECGPCG0008', 0, 0.5, 5, 60000, 60000, 37, 3, 73.536415]
+['b0011', 'ECGPCG0023', 0, 30.0, 5, 3600000, 3600000, 2096, 225, 70.00017]
+['b0006', 'ECGPCG0010', 0, 30.0, 2, 3600000, 3600000, 1892, 225, 63.108547]
+['b0001', 'ECGPCG0003', 0, 0.5, 2, 60000, 60000, 45, 3, 90.27033]
+['b0003', 'ECGPCG0007', 0, 0.5, 5, 60000, 60000, 38, 3, 75.034065]
+['b0005', 'ECGPCG0009', 0, 0.5, 5, 60000, 60000, 32, 3, 64.72777]
+['b0007', 'ECGPCG0011', 0, 30.0, 2, 3600000, 3600000, 2124, 225, 71.196335]
+['b0009', 'ECGPCG0015', 0, 30.0, 2, 3600000, 3600000, 2021, 225, 68.26936]
+['b0008', 'ECGPCG0013', 0, 30.0, 2, 3600000, 3600000, 1823, 225, 61.320366]
+['b0010', 'ECGPCG0016', 0, 30.0, 2, 3600000, 3600000, 2352, 225, 78.3968]
+['b0012', 'ECGPCG0040', 0, 0.5, 2, 60000, 60000, 46, 3, 91.58019]
+multiprocessing.pool.RemoteTraceback: 
+"""
+Traceback (most recent call last):
+  File "/mnt/storage/scratch/gg18045/.conda/envs/ecgpcg-381/lib/python3.8/multiprocessing/pool.py", line 125, in worker
+    result = (True, func(*args, **kwds))
+  File "/mnt/storage/scratch/gg18045/.conda/envs/ecgpcg-381/lib/python3.8/multiprocessing/pool.py", line 48, in mapstar
+    return list(map(*args))
+  File "./clean_data.py", line 247, in get_spectrogram_data
+    ecg_data = np.load(outputpath_+f'data_ecg_{config.global_opts.ecg_type}/{filename}/{filename}_{config.global_opts.ecg_type}.npz')
+  File "/mnt/storage/scratch/gg18045/.conda/envs/ecgpcg-381/lib/python3.8/site-packages/numpy/lib/npyio.py", line 405, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: 'data-after-TEST/ephnogram/data_ecg_stft/ECGPCG0006/ECGPCG0006_stft.npz'
+"""
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "./clean_data.py", line 768, in <module>
+    data_e, ratio_data_e = get_dataset(dataset="ephnogram", 
+  File "./clean_data.py", line 548, in get_dataset
+    data = clean_data(inputpath_data, inputpath_target, outputpath_folder, skipSegments=skipSegments, create_objects=create_objects, dataset=dataset, save_qrs_hrs_plot=save_qrs_hrs_plot, skipDataCSVAndFiles=skipDataCSVAndFiles, skipExisting=skipExisting, skipECGSpectrogram=skipECGSpectrogram, skipPCGSpectrogram=skipPCGSpectrogram, pool=pool, q=q, skipSpecData=skipSpecData, skipSpecImage=skipSpecImage, skipParent=skipParent)
+  File "./clean_data.py", line 521, in clean_data
+    results_ = pool.map(partial(get_spectrogram_data, dataset=dataset, reflen=reflen, inputpath_data=inputpath_data, outputpath_=outputpath_+dataset+'/', 
+  File "/mnt/storage/scratch/gg18045/.conda/envs/ecgpcg-381/lib/python3.8/multiprocessing/pool.py", line 364, in map
+    return self._map_async(func, iterable, mapstar, chunksize).get()
+  File "/mnt/storage/scratch/gg18045/.conda/envs/ecgpcg-381/lib/python3.8/multiprocessing/pool.py", line 768, in get
+    raise self._value
+FileNotFoundError: [Errno 2] No such file or directory: 'data-after-TEST/ephnogram/data_ecg_stft/ECGPCG0006/ECGPCG0006_stft.npz'

@@ -1,0 +1,150 @@
+Lmod has detected the following error: The following module(s) are unknown:
+"module"
+
+Please check the spelling or version number. Also try "module spider ..."
+It is also possible your cache file is out-of-date; it may help to try:
+  $ module --ignore_cache load "module"
+
+Also make sure that all modulefiles written in TCL start with the string
+#%Module
+
+
+
+**** clean_data started: logging to "logs/log_e_cwt.log" ****
+
+/mnt/storage/scratch/gg18045/.conda/envs/ecgpcg-381/lib/python3.8/site-packages/torchaudio/_internal/module_utils.py:99: UserWarning: Failed to import soundfile. 'soundfile' backend is not available.
+  warnings.warn("Failed to import soundfile. 'soundfile' backend is not available.")
+Warning: record sampling frequency (8000) does not match ecg_sample_rate (2000) - resampling to sample_rate
+self.qrs_inds with qrs_sample_radius=1000.0: [  391  1953  3533  5116  6665  8141  9536 10849 12139 13460 14831 16198
+ 17512 18780 20042 21339 22716 24100 25459 26761 28005 29246 30524 31872
+ 33284 34677 36001 37269 38546 39834 41150 42461 43740 44985 46235 47499
+ 48805 50103 51400 52632 53856 55092 56353 57636 59015]
+plot_qrs_peaks_and_hr: b0001
+Plot a signal with its peaks and heart rate - data-after-TEST/results/gqrs_peaks/b0001.png
+Warning: audio_sample_rate frequency (8000) does not match sample_rate (2000) - resampling to sample_rate
+SAVENAME AND FILENAME: 0 b0001 b0001
+Warning: record sampling frequency (8000) does not match ecg_sample_rate (2000) - resampling to sample_rate
+self.qrs_inds with qrs_sample_radius=1000.0: [    7  1359  2645  3885  5089  6296  7526  8800 10101 11390 12656 13929
+ 15217 16549 17902 19237 20498 23021 24294 25591 26880 28135 29350 30562
+ 31807 33127 34510 35885 37173 38412 39649 40893 42159 43415 44634 45814
+ 47000 48231 49585 51210 52782 54261 55655 57010 58358 59719]
+plot_qrs_peaks_and_hr: b0012
+Plot a signal with its peaks and heart rate - data-after-TEST/results/gqrs_peaks/b0012.png
+Warning: audio_sample_rate frequency (8000) does not match sample_rate (2000) - resampling to sample_rate
+SAVENAME AND FILENAME: 11 b0012 b0012
+Warning: record sampling frequency (8000) does not match ecg_sample_rate (2000) - resampling to sample_rate
+self.qrs_inds with qrs_sample_radius=1000.0: [  236  1708  3387  5127  6835  8611 10390 12052 13570 14956 16338 17849
+ 19718 21505 23202 24930 26636 28275 29968 31574 33166 34600 36020 37451
+ 39003 40632 42222 43775 45284 46918 48665 50454 52244 53875 55623 57410
+ 59242]
+plot_qrs_peaks_and_hr: b0004
+Plot a signal with its peaks and heart rate - data-after-TEST/results/gqrs_peaks/b0004.png
+Warning: audio_sample_rate frequency (8000) does not match sample_rate (2000) - resampling to sample_rate
+SAVENAME AND FILENAME: 3 b0004 b0004
+Warning: record sampling frequency (8000) does not match ecg_sample_rate (2000) - resampling to sample_rate
+self.qrs_inds with qrs_sample_radius=1000.0: [    1  1754  3353  4875  6336  7728  9059 10358 11657 13098 14817 16622
+ 18438 20232 21961 23644 25277 26976 28700 30325 31987 33660 35421 37102
+ 38758 40408 42070 43657 45359 46977 48481 50008 51526 53051 54571 56151
+ 57688 59266]
+plot_qrs_peaks_and_hr: b0003
+Plot a signal with its peaks and heart rate - data-after-TEST/results/gqrs_peaks/b0003.png
+Warning: audio_sample_rate frequency (8000) does not match sample_rate (2000) - resampling to sample_rate
+SAVENAME AND FILENAME: 2 b0003 b0003
+Warning: record sampling frequency (8000) does not match ecg_sample_rate (2000) - resampling to sample_rate
+self.qrs_inds with qrs_sample_radius=1000.0: [    1  1083  2566  3974  5409  7089  8720 10294 11868 13642 15571 17469
+ 19315 20975 22536 24115 25832 27673 29514 31245 32863 34585 36438 38324
+ 40127 41787 43326 44965 46780 48663 50466 52151 53871 55717 57586 59414]
+plot_qrs_peaks_and_hr: b0002
+Plot a signal with its peaks and heart rate - data-after-TEST/results/gqrs_peaks/b0002.png
+Warning: audio_sample_rate frequency (8000) does not match sample_rate (2000) - resampling to sample_rate
+SAVENAME AND FILENAME: 1 b0002 b0002
+Warning: record sampling frequency (8000) does not match ecg_sample_rate (2000) - resampling to sample_rate
+self.qrs_inds with qrs_sample_radius=1000.0: [   41  1843  3293  5222  7115  8975 10868 12811 14715 16798 18955 20879
+ 22690 24558 26496 28817 30579 31971 33944 36457 38321 39806 41698 43858
+ 45118 46837 48675 50502 52385 54466 56526 58493]
+plot_qrs_peaks_and_hr: b0005
+Plot a signal with its peaks and heart rate - data-after-TEST/results/gqrs_peaks/b0005.png
+Warning: audio_sample_rate frequency (8000) does not match sample_rate (2000) - resampling to sample_rate
+SAVENAME AND FILENAME: 4 b0005 b0005
+Warning: record sampling frequency (8000) does not match ecg_sample_rate (2000) - resampling to sample_rate
+self.qrs_inds with qrs_sample_radius=1000.0: [     89    1716    3416 ... 3597153 3598539 3599931]
+plot_qrs_peaks_and_hr: b0010
+Plot a signal with its peaks and heart rate - data-after-TEST/results/gqrs_peaks/b0010.png
+Warning: audio_sample_rate frequency (8000) does not match sample_rate (2000) - resampling to sample_rate
+SAVENAME AND FILENAME: 9 b0010 b0010
+Warning: record sampling frequency (8000) does not match ecg_sample_rate (2000) - resampling to sample_rate
+self.qrs_inds with qrs_sample_radius=1000.0: [     95    1722    3418 ... 3595214 3597079 3598854]
+plot_qrs_peaks_and_hr: b0011
+Plot a signal with its peaks and heart rate - data-after-TEST/results/gqrs_peaks/b0011.png
+Warning: audio_sample_rate frequency (8000) does not match sample_rate (2000) - resampling to sample_rate
+SAVENAME AND FILENAME: 10 b0011 b0011
+Warning: record sampling frequency (8000) does not match ecg_sample_rate (2000) - resampling to sample_rate
+self.qrs_inds with qrs_sample_radius=1000.0: [    982    2736    4636 ... 3594689 3596513 3598367]
+plot_qrs_peaks_and_hr: b0007
+Plot a signal with its peaks and heart rate - data-after-TEST/results/gqrs_peaks/b0007.png
+Warning: audio_sample_rate frequency (8000) does not match sample_rate (2000) - resampling to sample_rate
+SAVENAME AND FILENAME: 6 b0007 b0007
+Warning: record sampling frequency (8000) does not match ecg_sample_rate (2000) - resampling to sample_rate
+self.qrs_inds with qrs_sample_radius=1000.0: [    596    2369    4315 ... 3595122 3597140 3599126]
+plot_qrs_peaks_and_hr: b0009
+Plot a signal with its peaks and heart rate - data-after-TEST/results/gqrs_peaks/b0009.png
+Warning: audio_sample_rate frequency (8000) does not match sample_rate (2000) - resampling to sample_rate
+SAVENAME AND FILENAME: 8 b0009 b0009
+Warning: record sampling frequency (8000) does not match ecg_sample_rate (2000) - resampling to sample_rate
+self.qrs_inds with qrs_sample_radius=1000.0: [      0    1194    3115 ... 3595443 3597534 3599503]
+plot_qrs_peaks_and_hr: b0006
+Plot a signal with its peaks and heart rate - data-after-TEST/results/gqrs_peaks/b0006.png
+Warning: audio_sample_rate frequency (8000) does not match sample_rate (2000) - resampling to sample_rate
+SAVENAME AND FILENAME: 5 b0006 b0006
+Warning: record sampling frequency (8000) does not match ecg_sample_rate (2000) - resampling to sample_rate
+self.qrs_inds with qrs_sample_radius=1000.0: [    865    2531    4214 ... 3595128 3597300 3599696]
+plot_qrs_peaks_and_hr: b0008
+Plot a signal with its peaks and heart rate - data-after-TEST/results/gqrs_peaks/b0008.png
+Warning: audio_sample_rate frequency (8000) does not match sample_rate (2000) - resampling to sample_rate
+SAVENAME AND FILENAME: 7 b0008 b0008
+[0, 'b0001', 'ECGPCG0003', 0, 0.5, 2, 60000, 60000, 45, 3, 90.27033233642578]
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0001/b0001_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0001/0/b0001_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0001/1/b0001_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0001/2/b0001_seg_2_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0001/b0001_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0001/0/b0001_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0001/1/b0001_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0001/2/b0001_seg_2_cwt_spec.npz
+[3, 'b0004', 'ECGPCG0008', 0, 0.5, 5, 60000, 60000, 37, 3, 73.53641510009766]
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0004/b0004_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0004/0/b0004_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0004/1/b0004_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0004/2/b0004_seg_2_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0004/b0004_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0004/0/b0004_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0004/1/b0004_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0004/2/b0004_seg_2_cwt_spec.npz
+[2, 'b0003', 'ECGPCG0007', 0, 0.5, 5, 60000, 60000, 38, 3, 75.03406524658203]
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0003/b0003_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0003/0/b0003_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0003/1/b0003_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0003/2/b0003_seg_2_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0003/b0003_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0003/0/b0003_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0003/1/b0003_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0003/2/b0003_seg_2_cwt_spec.npz
+[4, 'b0005', 'ECGPCG0009', 0, 0.5, 5, 60000, 60000, 32, 3, 64.72776794433594]
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0005/b0005_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0005/0/b0005_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0005/1/b0005_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0005/2/b0005_seg_2_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0005/b0005_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0005/0/b0005_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0005/1/b0005_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0005/2/b0005_seg_2_cwt_spec.npz
+[1, 'b0002', 'ECGPCG0006', 0, 0.5, 5, 60000, 60000, 36, 3, 71.21443176269531]
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0002/b0002_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0002/0/b0002_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0002/1/b0002_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_ecg_cwt/b0002/2/b0002_seg_2_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0002/b0002_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0002/0/b0002_seg_0_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0002/1/b0002_seg_1_cwt_spec.npz
+Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0002/2/b0002_seg_2_cwt_spec.npz
+[7, 'b0008', 'ECGPCG0013', 0, 30.0, 2, 3600000, 3600000, 1823, 225, 61.32036590576172]

@@ -2,6 +2,7 @@ import torch
 from torch.utils.data.dataset import Dataset
 
 import numpy as np
+import sys, json
 import pandas as pd
 import config
 from config import global_opts, outputpath
@@ -93,15 +94,17 @@ class ECGPCGDataset(Dataset):
             ecg_paths_samples = []
             pcg_paths_samples = []
             if samples_in_directories:
-                dirs_ecg = next(os.walk(paths_ecgs[i]))[1]
+                dirs_ecg = os.listdir(paths_ecgs[i][:-1])
+                dirs_ecg = [f for f in dirs_ecg if os.path.isdir(paths_ecgs[i]+f)]
+                dirs_ecg = sorted(dirs_ecg)
+                print(f"Iterating over paths_ecgs: {paths_ecgs[i]}; found directories: \n{dirs_ecg}\n")
                 if not len(dirs_ecg) == len(self.dfs[i].index):
                     if verifyComplete:
                         raise ValueError(f"Error: Number of ECG directories does not match records in '{paths_csv[i]}.csv'")
-                    else:
-                        if f"{paths_ecgs[i]}{dir}" not in incomplete_x:
-                            incomplete_x.append(f"{paths_ecgs[i]}{dir}")
                 if data_type_ecg is not "video" and not no_pcg_paths:
-                    dirs_pcg = next(os.walk(paths_pcgs[i]))[1]
+                    dirs_pcg = os.listdir(paths_pcgs[i][:-1])
+                    dirs_pcg = [f for f in dirs_pcg if os.path.isdir(paths_pcgs[i]+f)]
+                    dirs_pcg = sorted(dirs_pcg)
                     if verifyComplete:
                         if not (len(dirs_ecg) == len(dirs_pcg)):
                             raise ValueError(f"Error: Number of ECG and PCG directories do not match")
@@ -111,7 +114,10 @@ class ECGPCGDataset(Dataset):
                     ecg_paths_sample_segments = []
                     pcg_paths_sample_segments = []
                     # Check segment direectories
-                    dirs_inner = next(os.walk(paths_ecgs[i]+f'{dir}/'))[1]
+                    dirs_inner = os.listdir(paths_ecgs[i]+f'{dir}')
+                    dirs_inner = [f for f in dirs_inner if os.path.isdir(paths_ecgs[i]+f'{dir}/'+f)]
+                    dirs_inner = sorted(dirs_inner)
+                    print(f"Iterating over inner directories inside {paths_ecgs[i]+f'{dir}'}; found directories: \n{dirs_inner}\n")
                     record = self.dfs[i].iloc[[j]]
                     seg_num = int(record['seg_num'])
                     if not len(dirs_inner) == seg_num:
@@ -129,7 +135,9 @@ class ECGPCGDataset(Dataset):
                                     incomplete_x.append(f"{paths_pcgs[i]}{dir}")
                                     incomplete_x_inds.append(f"{dir}")
                                 continue
-                        files_ecg = next(os.walk(paths_ecgs[i]+f'{dir}/{dir_inner}/'))[2]
+                        files_ecg = os.listdir(paths_ecgs[i]+f'{dir}/{dir_inner}')
+                        files_ecg = [f for f in files_ecg if os.path.isfile(paths_ecgs[i]+f'{dir}/{dir_inner}/'+f)]
+                        files_ecg = sorted(files_ecg)
                         if len(files_ecg) == 0:
                             if verifyComplete:
                                 raise ValueError(f"Error: no files found in directory '{paths_ecgs[i]}{dir}/{dir_inner}/'.")
@@ -154,7 +162,9 @@ class ECGPCGDataset(Dataset):
                                         incomplete_x.append(f"{paths_ecgs[i]}{dir}")
                                         incomplete_x_inds.append(f"{dir}")
                                     continue
-                            files_pcg = next(os.walk(paths_pcgs[i]+f'{dir}/{dir_inner}/'))[2]
+                            files_pcg = os.listdir(paths_pcgs[i]+f'{dir}/{dir_inner}')
+                            files_pcg = [f for f in files_pcg if os.path.isfile(paths_pcgs[i]+f'{dir}/{dir_inner}/'+f)]
+                            files_pcg = sorted(files_pcg)
                             if len(files_pcg) == 0:
                                 if verifyComplete:
                                     raise ValueError(f"Error: no files found in directory '{paths_pcgs[i]}{dir}/{dir_inner}/'.")
@@ -201,9 +211,11 @@ class ECGPCGDataset(Dataset):
                     if data_type_ecg is not "video" and not no_pcg_paths:
                         pcg_paths_samples.append(pcg_paths_sample_segments)
             else:
-                all_files_ecg = next(os.walk(paths_ecgs[i]))[2]
+                all_files_ecg = os.listdir(paths_ecgs[i][:-1])
+                all_files_ecg = [f for f in all_files_ecg if os.path.isfile(paths_ecgs[i]+f)]
+                all_files_ecg = sorted(all_files_ecg)
                 if len(all_files_ecg) == 0:
-                    raise ValueError(f"Error: no files found in directory '{paths_ecgs[i]}/'.")
+                    raise ValueError(f"Error: no files found in directory '{paths_ecgs[i]}'.")
                 for ind in len(self.dfs[i].index):
                     ecg_paths_sample_segments = []
                     pcg_paths_sample_segments = []
@@ -222,7 +234,8 @@ class ECGPCGDataset(Dataset):
                             raise ValueError(f"Error: Number of PCG files does not match records in '{paths_csv[i]}.csv'")
                     
                     if data_type_ecg is not "video" and not no_pcg_paths:
-                        all_files_pcg = next(os.walk(paths_pcgs[i]))[2]
+                        all_root_pcg, all_dirs_pcg, all_files_pcg = os.walk(paths_pcgs[i])
+                        all_files_pcg = sorted(all_files_pcg)
                         if len(all_files_pcg) == 0:
                             if verifyComplete:
                                 raise ValueError(f"Error: no files found in directory '{paths_pcgs[i]}/'.")
@@ -318,8 +331,8 @@ class ECGPCGDataset(Dataset):
                     d = c - int(self.df_data.iloc[[i]]['seg_num'])
                     return index - d - 1, i
                 
-    def __getitem__(self, index, print_df=True, print_short=False, parent_index=None, child_index=None):
-        print(f"AAAAAAAAAA: {index} {parent_index} {child_index}")
+    def getitem(self, index, print_df=True, print_short=False, parent_index=None, child_index=None):
+        print(f"__getitem__: index: {index}, parent_index: {parent_index}, child_index: {child_index}")
         if parent_index is not None and child_index is None or parent_index is None and child_index is not None:
             raise ValueError("Error: must provide both 'parent_index' (sample) and 'child_index' (segment) to override 'index'")
         if parent_index is not None and child_index is not None:
@@ -328,14 +341,13 @@ class ECGPCGDataset(Dataset):
             index_of_segment = child_index
             index_of_parent = parent_index
         else:
-            print(f"self.ecg_pathsself.ecg_paths: {len(self.ecg_paths)} {index}")
             filepath_ecg = list(sum(self.ecg_paths, []))[index]
-            print(f"index: {index} list(np.concatenate(self.pcg_paths).flat): {len(list(sum(self.pcg_paths, [])))} {len(list(sum(self.ecg_paths, [])))}")
             filepath_pcg = list(sum(self.pcg_paths, []))[index]
             index_of_segment, index_of_parent = self.get_child_and_parent_index(index)
         if self.no_pcg_paths:
             ecg, pcg = read_file(filepath_ecg, self.data_type_ecg, self.file_type_ecg, self.no_pcg_paths)
         else:
+            # list(loaded.keys(ecg)): ['data', 'signal', 'qrs', 'hrs']
             ecg = read_file(filepath_ecg, self.data_type_ecg, self.file_type_ecg)
             pcg = read_file(filepath_pcg, self.data_type_pcg, self.file_type_pcg)
 
@@ -347,14 +359,14 @@ class ECGPCGDataset(Dataset):
             if self.data_type_ecg == 'signal':
                 qrs = ecg['qrs']
                 hrs = ecg['hrs']
-                ecg_data = ecg['data']
-                pcg_data = pcg['data']
+                ecg_data = ecg['signal']
+                pcg_data = pcg['signal']
             elif self.data_type_ecg == 'spec':
                 ecg_d = np.load(filepath_ecg.replace('_spec', ''))
                 qrs = ecg_d['qrs']
                 hrs = ecg_d['hrs']
-                ecg_data = ecg['spec']
-                pcg_data = pcg['spec']
+                ecg_data = ecg['data']
+                pcg_data = pcg['data']
                 freqs_ecg = ecg['freqs']
                 times_ecg = ecg['times']
                 freqs_pcg = pcg['freqs']
@@ -374,8 +386,9 @@ class ECGPCGDataset(Dataset):
                         qrs = list(np.concatenate(self.qrs).flat)[index]
                     if not len(self.hrs) == 0:
                         hrs = list(np.concatenate(self.hrs).flat)[index]
-                ecg_data = ecg
-                pcg_data = pcg
+                #TODO not complete
+                ecg_data = ecg_data
+                pcg_data = pcg_data
         else:
             if len(self.qrs) == 0:
                 qrs = None
@@ -397,7 +410,7 @@ class ECGPCGDataset(Dataset):
         dict_ = self.df_data.iloc[index_of_parent].to_dict()
         
         if self.data_and_label_only:
-            out_dict = np.squeeze(ecg), int(self.labels.iloc[[index]]['label'])
+            out_dict = ecg_data, int(self.labels.iloc[[index_of_parent]]['label'])
         else:
             out_dict = dict_.copy()
             data_dict = {
@@ -423,6 +436,14 @@ class ECGPCGDataset(Dataset):
                 print(out_dict)
         return out_dict
 
+    def __getitem__(self, index, print_df=True, print_short=False, parent_index=None, child_index=None):
+        dataitem = self.getitem(index, print_df=print_df, print_short=print_short, parent_index=parent_index, child_index=child_index)
+        if self.data_and_label_only:
+            dataitem = np.expand_dims(dataitem[0], axis=0).astype(np.float32), np.expand_dims(dataitem[1], axis=0)
+        else:
+            dataitem = np.expand_dims(dataitem['ecg'], axis=0).astype(np.float32), np.expand_dims(int(dataitem['label'], axis=0))
+        return dataitem
+
     def get_segment_num(self, filename) -> int:
         """
         Gets number of segments the audio and video has been split into
@@ -432,10 +453,7 @@ class ECGPCGDataset(Dataset):
         return self.df_data.loc[self.df_data['filename']==filename]['seg_num'].values[0]
     
     def __len__(self) -> int:
-        c = 0
-        for p in self.ecg_paths:
-            c += len(p)
-        return c
+        return self.data_len
     
     def save_item(self, ind, outpath=outputpath+'physionet/', type_="ecg_log"):
         p = self.__getitem__(ind).out_dict['video_path']

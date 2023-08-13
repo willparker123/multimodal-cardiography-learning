@@ -185,6 +185,7 @@ def main():
         model = DP(model)
     model.to(device=device)
     
+    print("Initialising TransformerTrainer: Fused Physionet/Ephnogram dataset")
     trainer = TransformerTrainer(
         model=model,
         model_config=config_crnn_transformer,
@@ -192,6 +193,7 @@ def main():
         device=device,
         lazy=False,
     )
+    print("Initialising TransformerTrainer: Physionet dataset")
     trainer_physionet = TransformerTrainer(
         model=model,
         model_config=config_crnn_transformer,

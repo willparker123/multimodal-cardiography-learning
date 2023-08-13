@@ -179,7 +179,6 @@ def get_data_serial(data_list, inputpath_data, inputpath_target, ecg_sample_rate
     audio = Audio(filename=filename, filepath=inputpath_data)
     pcg = PCG(filename=filename, audio=audio, sample_rate=pcg_sample_rate, label=label, normalise=True, apply_filter=True)
     
-  
   seg_num = get_segment_num(ecg.sample_rate, int(len(ecg.signal)), sample_clip_len, factor=1)      
   if not create_objects:
     ecg_save_name = ecg.filename if ecg.savename == None else ecg.savename
