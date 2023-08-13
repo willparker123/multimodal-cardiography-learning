@@ -332,7 +332,7 @@ class ECGPCGDataset(Dataset):
                     return index - d - 1, i
                 
     def getitem(self, index, print_df=True, print_short=False, parent_index=None, child_index=None):
-        print(f"AAAAAAAAAA: {index} {parent_index} {child_index}")
+        print(f"__getitem__: index: {index}, parent_index: {parent_index}, child_index: {child_index}")
         if parent_index is not None and child_index is None or parent_index is None and child_index is not None:
             raise ValueError("Error: must provide both 'parent_index' (sample) and 'child_index' (segment) to override 'index'")
         if parent_index is not None and child_index is not None:

@@ -151,7 +151,6 @@ class TransformerTrainer(BaseTrainer):
         train_dataset: Optional[Dataset] = None,
         val_dataset: Optional[Dataset] = None,
     ) -> None:
-        print("GHERE")
         """
         setup the dataloaders for training and validation
         Parameters
@@ -262,7 +261,6 @@ class TransformerTrainer(BaseTrainer):
         all_bin_preds = []
         all_labels = []
 
-        print(f"data_loader: {data_loader}")
         for signals, labels in data_loader:
             signals = signals.to(device=self.device, dtype=self.dtype)
             labels = labels.numpy()
@@ -365,7 +363,6 @@ def compute_accuracy(
         labels: ``(batch_size, class_count)`` tensor or array containing example labels
         preds: ``(batch_size, class_count)`` tensor or array containing model prediction
     """
-    raise ValueError(f"label pred: {labels} {preds}")
     assert len(labels) == len(preds)
     return float((labels == preds).sum()) / len(labels)
 

@@ -2,7 +2,7 @@
 00
 000
 Initialising TransformerTrainer: Fused Physionet/Ephnogram dataset
-log file path: /mnt/storage/scratch/gg18045/multimodal-cardiography-learning/logs/TorchECG_08-13_16-12_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
+log file path: /mnt/storage/scratch/gg18045/multimodal-cardiography-learning/logs/TorchECG_08-13_16-31_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
 TorchECG - INFO - training configurations are as follows:
 {
     "debug": True,
@@ -26,10 +26,10 @@ TorchECG - INFO - training configurations are as follows:
     "eps": 1e-07,
     "SEED": 42,
     "RNG": Generator(PCG64),
-    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b8760e53f20>, replace=False, shuffle=False),
-    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b8760e53f20>, endpoint=True),
-    "set_seed": <function set_seed at 0x2b87612210d0>,
-    "change_dtype": <function change_dtype at 0x2b87612215e0>,
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b9d5e3019e0>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b9d5e3019e0>, endpoint=True),
+    "set_seed": <function set_seed at 0x2b9d5e30a8b0>,
+    "change_dtype": <function change_dtype at 0x2b9d5e350040>,
     "classes": [
         "N",
         "A"
@@ -2624,7 +2624,7 @@ ECGPCG DATASET LENGTH (EXISTING): 1435, TARGET LENGTH (INCLUDING MISSING/INCOMPL
 len data_train, data_test: 1004 431
 len val_train_dataset, val_dataset: 1004 431
 Initialising TransformerTrainer: Physionet dataset
-log file path: /mnt/storage/scratch/gg18045/multimodal-cardiography-learning/logs/TorchECG_08-13_16-12_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
+log file path: /mnt/storage/scratch/gg18045/multimodal-cardiography-learning/logs/TorchECG_08-13_16-31_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
 TorchECG - INFO - training configurations are as follows:
 {
     "debug": True,
@@ -2648,10 +2648,10 @@ TorchECG - INFO - training configurations are as follows:
     "eps": 1e-07,
     "SEED": 42,
     "RNG": Generator(PCG64),
-    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b8760e53f20>, replace=False, shuffle=False),
-    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b8760e53f20>, endpoint=True),
-    "set_seed": <function set_seed at 0x2b87612210d0>,
-    "change_dtype": <function change_dtype at 0x2b87612215e0>,
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b9d5e3019e0>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b9d5e3019e0>, endpoint=True),
+    "set_seed": <function set_seed at 0x2b9d5e30a8b0>,
+    "change_dtype": <function change_dtype at 0x2b9d5e350040>,
     "classes": [
         "N",
         "A"
@@ -5260,2896 +5260,1126 @@ Dataset classes: ['N', 'A']
 
 TorchECG - INFO - Train epoch_0:
 --------------------------------------------------------------------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 20: train/loss : nan
-Epoch 0 / Step 20: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 40: train/loss : nan
-Epoch 0 / Step 40: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 60: train/loss : nan
-Epoch 0 / Step 60: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 80: train/loss : nan
-Epoch 0 / Step 80: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 100: train/loss : nan
-Epoch 0 / Step 100: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 120: train/loss : nan
-Epoch 0 / Step 120: train/lr :   0.0001
---------------------------------------------------
-AAAAAAAAAA: 507 None None
-(array([-890., -917., -838., ...,  304.,  291.,  256.]), 1)
-AAAAAAAAAA: 1320 None None
-(array([1669., 1288., 1022., ...,  -37.,  -14.,    8.]), 1)
-AAAAAAAAAA: 480 None None
-(array([  265.,  -679., -1634., ...,   909.,   822.,   702.]), -1)
-AAAAAAAAAA: 1014 None None
-(array([  -1.,   18.,    8., ..., -163., -158., -134.]), 1)
-AAAAAAAAAA: 1142 None None
-(array([-119.,  -94., -117., ..., -380., -396., -449.]), -1)
-AAAAAAAAAA: 243 None None
-(array([ 908., 1928., 1946., ..., 1207., 1400., 1542.]), -1)
-AAAAAAAAAA: 792 None None
-(array([569., 667., 720., ..., 843., 722., 552.]), 1)
-AAAAAAAAAA: 1193 None None
-(array([-227.,  -95.,    6., ...,   76.,  329.,  484.]), 1)
-AAAAAAAAAA: 641 None None
-(array([1903., 3999., 3549., ..., -310., -260., -245.]), -1)
-AAAAAAAAAA: 164 None None
-(array([  364.,   459.,   507., ..., -2765.,  1047.,   167.]), 1)
-AAAAAAAAAA: 657 None None
-(array([ 24.,  18., -24., ..., 190., 213., 247.]), -1)
-AAAAAAAAAA: 193 None None
-(array([ 566., 1449., 1591., ..., 2254., 2347., 2374.]), 1)
-AAAAAAAAAA: 1433 None None
-(array([865., 828., 737., ..., 366., 368., 297.]), -1)
-AAAAAAAAAA: 1019 None None
-(array([389., 331., 277., ...,  97.,  93.,  98.]), 1)
-AAAAAAAAAA: 808 None None
-(array([ 794., 1552., 2138., ..., -821., -796., -860.]), -1)
-AAAAAAAAAA: 1082 None None
-(array([ 1794.,  1746.,  1761., ..., -1898., -1739., -1532.]), 1)
-AAAAAAAAAA: 330 None None
-(array([ 33.,  17.,  15., ..., 558., 564., 570.]), -1)
-AAAAAAAAAA: 269 None None
-(array([-473., -452., -471., ...,    9.,   81.,   49.]), 1)
-AAAAAAAAAA: 882 None None
-(array([ 365.,  280.,  258., ...,   69., -102., -318.]), 1)
-AAAAAAAAAA: 991 None None
-(array([3682., 4389., 4903., ...,  167.,  194.,  234.]), 1)
-AAAAAAAAAA: 112 None None
-(array([-130., -302., -260., ..., 4998., 3685., 2136.]), 1)
-AAAAAAAAAA: 1066 None None
-(array([ -62.,  -77., -102., ...,  139.,  111.,   75.]), -1)
-AAAAAAAAAA: 1173 None None
-(array([-306., -335., -339., ..., -295., -284., -303.]), 1)
-AAAAAAAAAA: 585 None None
-(array([ -66.,  -90., -120., ..., -194., -185., -212.]), 1)
-AAAAAAAAAA: 1312 None None
-(array([ 565., 1280., 1018., ..., -353., -419.,  -75.]), 1)
-AAAAAAAAAA: 478 None None
-(array([1636., 1615., 1501., ..., -673., -800., -892.]), 1)
-AAAAAAAAAA: 952 None None
-(array([ -244.,  -279.,  -267., ..., -2396., -2170., -1713.]), 1)
-AAAAAAAAAA: 161 None None
-(array([ 200.,  175.,  132., ..., 1996., 1221.,  409.]), 1)
-AAAAAAAAAA: 1416 None None
-(array([ 93., 186., 110., ..., 120., 123., 250.]), 1)
+AAAAAAAAAA: 971 None None
+(array([ 1317.,  2399.,  2020., ..., -3252., -3226., -3190.]), -1)
+AAAAAAAAAA: 1108 None None
+(array([16107., 32767., 28176., ..., -4364., -5463., -7590.]), 1)
+AAAAAAAAAA: 421 None None
+(array([-43., -29., -57., ..., 490., 423., 482.]), 1)
+AAAAAAAAAA: 969 None None
+(array([701., 818., 951., ..., 618., 575., 677.]), -1)
+AAAAAAAAAA: 923 None None
+(array([ 183.,  192.,  165., ..., 1797., 1800., 1699.]), 1)
+AAAAAAAAAA: 1145 None None
+(array([-5., 23., 21., ..., 43., 19., 13.]), 1)
+AAAAAAAAAA: 39 None None
+(array([ 791., 1619., 1147., ...,  830.,  842.,  860.]), -1)
 AAAAAAAAAA: 970 None None
 (array([ 672.,  866.,  762., ..., -372., -424., -395.]), -1)
-AAAAAAAAAA: 651 None None
-(array([ 37.,   6.,  26., ..., 262., 296., 299.]), -1)
-AAAAAAAAAA: 540 None None
-(array([4635., 4129., 3611., ..., -310., -498., -597.]), 1)
-AAAAAAAAAA: 1064 None None
-(array([ 47.,  82.,  98., ..., -19., -50., -74.]), -1)
-AAAAAAAAAA: 1316 None None
-(array([-2134., -5236., -5615., ...,  -855.,  -874.,  -904.]), 1)
-AAAAAAAAAA: 1024 None None
-(array([2777., 3168., 3625., ...,  337.,  314.,  293.]), -1)
-AAAAAAAAAA: 1191 None None
-(array([ -725.,  -525.,  -356., ..., -1074., -1097., -1110.]), 1)
-AAAAAAAAAA: 187 None None
-(array([1167., 1078.,  945., ..., -445., -589., -696.]), -1)
-AAAAAAAAAA: 426 None None
-(array([810., 710., 664., ..., 160., 126.,  88.]), 1)
-AAAAAAAAAA: 1137 None None
-(array([-1618., -1574., -1500., ...,   -18.,     5.,     9.]), 1)
-AAAAAAAAAA: 63 None None
-(array([1663., 4530., 5389., ..., 1150., 1071.,  994.]), 1)
-AAAAAAAAAA: 672 None None
-(array([-329., -355., -394., ..., -191., -241., -279.]), -1)
-AAAAAAAAAA: 501 None None
-(array([-689., -700., -717., ...,   67.,  105.,   54.]), 1)
-AAAAAAAAAA: 1331 None None
-(array([  120.,   315.,   349., ..., -1151., -1188., -1199.]), 1)
-AAAAAAAAAA: 297 None None
-(array([-220., -485., -459., ...,   89.,   76.,   14.]), 1)
-AAAAAAAAAA: 1258 None None
-(array([-258., -155.,  159., ..., -179., -256., -325.]), 1)
-AAAAAAAAAA: 530 None None
-(array([ 445.,  313.,  154., ..., -681., -710., -742.]), 1)
-AAAAAAAAAA: 643 None None
-(array([-2056., -2006., -1970., ...,   381.,   429.,   444.]), 1)
-AAAAAAAAAA: 10 None None
-(array([-234., -329., -395., ...,  124.,  169.,  220.]), 1)
-AAAAAAAAAA: 577 None None
-(array([725., 791., 866., ..., -14., 161., 177.]), 1)
-AAAAAAAAAA: 299 None None
-(array([-728., -768., -758., ...,  799.,  764.,  750.]), 1)
-AAAAAAAAAA: 413 None None
-(array([16649., 32767., 29086., ..., -1606., -1750., -1898.]), 1)
-AAAAAAAAAA: 1039 None None
-(array([-1589., -3061., -2368., ..., -1309., -1277., -1290.]), -1)
-AAAAAAAAAA: 560 None None
-(array([ -48., -151., -263., ..., 1736., 1738., 1666.]), 1)
-AAAAAAAAAA: 1182 None None
-(array([ -684., -1481., -1440., ...,   -38.,  -200.,  -416.]), 1)
-AAAAAAAAAA: 580 None None
-(array([1807., 3823., 3415., ...,  611.,  635.,  724.]), 1)
-AAAAAAAAAA: 416 None None
-(array([-117., -216., -189., ...,  106.,  108.,   65.]), -1)
-AAAAAAAAAA: 1371 None None
-(array([426., 319., 232., ..., -62.,   9.,  48.]), 1)
-AAAAAAAAAA: 1097 None None
-(array([ 6256., 12348.,  9844., ...,   202.,   142.,    73.]), -1)
-AAAAAAAAAA: 514 None None
-(array([-216., -489., -473., ...,   50.,   13.,   -3.]), 1)
-AAAAAAAAAA: 1424 None None
-(array([ 106.,  120.,  142., ..., -849., -848., -822.]), -1)
-AAAAAAAAAA: 565 None None
-(array([ 2341.,  2290.,  2242., ..., -3372., -3540., -3658.]), 1)
-AAAAAAAAAA: 1012 None None
-(array([ 46., 119., 111., ..., 187., 241., 256.]), 1)
-AAAAAAAAAA: 1006 None None
-(array([  237.,   177.,   122., ..., -1032.,  -904.,  -806.]), 1)
-AAAAAAAAAA: 499 None None
-(array([-1492., -1715., -1742., ...,  -196.,  -195.,  -206.]), 1)
-AAAAAAAAAA: 240 None None
-(array([ -73.,  -91., -112., ...,  160.,  137.,  101.]), -1)
-AAAAAAAAAA: 628 None None
-(array([  23., -116., -255., ...,    9.,  -15.,  -60.]), -1)
-AAAAAAAAAA: 285 None None
-(array([ 130.,  111.,   82., ..., 2738., 2807., 2814.]), -1)
-AAAAAAAAAA: 1427 None None
-(array([-457., -454., -485., ..., -402., -572., -611.]), -1)
-AAAAAAAAAA: 880 None None
-(array([-342., -233., -125., ...,  426.,  421.,  407.]), 1)
-AAAAAAAAAA: 649 None None
-(array([ -30., -118., -137., ..., -183., -133., -155.]), 1)
-AAAAAAAAAA: 1136 None None
-(array([ -768., -1481., -1187., ...,  -927., -1231., -1411.]), -1)
-AAAAAAAAAA: 603 None None
-(array([  15.,  747., 1460., ...,  954.,  950.,  965.]), 1)
-AAAAAAAAAA: 1426 None None
-(array([ 427.,  543.,  684., ..., -437., -487., -435.]), -1)
-AAAAAAAAAA: 227 None None
-(array([ 234.,  275.,  274., ..., -378., -363., -368.]), 1)
-AAAAAAAAAA: 859 None None
-(array([ 826.,  646.,  540., ..., -792., -873., -894.]), 1)
-AAAAAAAAAA: 410 None None
-(array([-111., -128., -130., ...,  186.,  156.,  115.]), 1)
-AAAAAAAAAA: 370 None None
-(array([-541., -457., -422., ...,    8.,  -60.,  -52.]), -1)
-AAAAAAAAAA: 745 None None
-(array([  588.,  1156.,   956., ..., -3179., -3176., -3069.]), 1)
-AAAAAAAAAA: 542 None None
-(array([-322., -357., -364., ...,  663.,  433.,  185.]), -1)
-AAAAAAAAAA: 1051 None None
-(array([   30.,   129.,   185., ..., -4629., -4439., -4071.]), 1)
-AAAAAAAAAA: 1364 None None
-(array([ -145.,  -374.,  -475., ..., -1251., -1164., -1042.]), 1)
-AAAAAAAAAA: 30 None None
-(array([ 12.,  74., -26., ...,  89.,  84.,  45.]), -1)
-AAAAAAAAAA: 513 None None
-(array([-369., -401., -421., ...,   78.,   81.,   87.]), 1)
-AAAAAAAAAA: 441 None None
-(array([-195., -198., -158., ...,  968., 1067., 1082.]), -1)
-AAAAAAAAAA: 351 None None
-(array([-11., -26., -38., ..., 191., 178., 230.]), 1)
-AAAAAAAAAA: 1346 None None
-(array([233., 208., 169., ..., 227., 225., 265.]), 1)
-AAAAAAAAAA: 287 None None
-(array([  12.,  -63., -227., ...,   30.,   75.,   91.]), -1)
-AAAAAAAAAA: 1391 None None
-(array([ 1124.,   -26., -1182., ...,  -161.,   -88.,   -10.]), 1)
-AAAAAAAAAA: 596 None None
-(array([-824., -836., -869., ..., 1608., 1568., 1535.]), 1)
-AAAAAAAAAA: 1190 None None
-(array([ -799., -1885., -2087., ..., -1384., -1201.,  -960.]), 1)
-AAAAAAAAAA: 821 None None
-(array([1235., 1182., 1163., ...,   23.,  -39., -125.]), -1)
-AAAAAAAAAA: 899 None None
-(array([  208.,   434.,   272., ..., -2918., -2758., -2626.]), -1)
-AAAAAAAAAA: 588 None None
-(array([2094., 2085., 2035., ..., -995., -898., -886.]), 1)
-AAAAAAAAAA: 1260 None None
-(array([-333., -430., -540., ..., -384., -538., -655.]), 1)
-AAAAAAAAAA: 117 None None
-(array([-403., -308.,  -89., ...,  990.,  826.,  723.]), 1)
-AAAAAAAAAA: 266 None None
-(array([ -969., -1038., -1102., ...,  8368.,  8185.,  8060.]), 1)
-AAAAAAAAAA: 562 None None
-(array([508., 292.,  92., ..., 600., 275.,  58.]), 1)
-AAAAAAAAAA: 1171 None None
-(array([534., 574., 566., ...,   2.,  73.,  79.]), 1)
-AAAAAAAAAA: 1376 None None
-(array([-148., -246., -160., ..., -268., -275., -285.]), 1)
-AAAAAAAAAA: 304 None None
-(array([160., 181., 179., ..., 365., 293., 246.]), -1)
-AAAAAAAAAA: 44 None None
-(array([-50.,  -4., -42., ..., -90., -45., -68.]), 1)
-AAAAAAAAAA: 1209 None None
-(array([-155., -313., -257., ..., -345., -356., -358.]), 1)
+AAAAAAAAAA: 1267 None None
+(array([ 148.,  122.,   90., ..., 7701., 8894., 9920.]), 1)
+AAAAAAAAAA: 988 None None
+(array([119., 157., 219., ..., 131., 106., 114.]), 1)
+AAAAAAAAAA: 1017 None None
+(array([1759., 1625., 1480., ...,  514.,  435.,  321.]), -1)
+AAAAAAAAAA: 755 None None
+(array([-339., -850., -979., ..., -390., -419., -445.]), -1)
+AAAAAAAAAA: 568 None None
+(array([ 374.,  448.,  496., ..., -211., -153.,  -87.]), -1)
+AAAAAAAAAA: 259 None None
+(array([ 186.,  328.,  375., ...,  -32., -162.,  -77.]), 1)
+AAAAAAAAAA: 478 None None
+(array([1636., 1615., 1501., ..., -673., -800., -892.]), 1)
+AAAAAAAAAA: 269 None None
+(array([-473., -452., -471., ...,    9.,   81.,   49.]), 1)
+AAAAAAAAAA: 650 None None
+(array([-136., -139.,  -62., ...,   37.,    5.,   34.]), -1)
+AAAAAAAAAA: 1178 None None
+(array([ 384.,  802.,  687., ..., 4480., 3375., 2263.]), -1)
+AAAAAAAAAA: 18 None None
+(array([1479., 1405., 1364., ...,  364.,  109.,   -4.]), 1)
+AAAAAAAAAA: 1408 None None
+(array([ 102.,  113.,   87., ...,  810.,  184., -399.]), -1)
+AAAAAAAAAA: 122 None None
+(array([-449., -525., -430., ..., -434., -261., -633.]), 1)
+AAAAAAAAAA: 1419 None None
+(array([   3.,   35.,   58., ..., 1368., 1274., 1126.]), 1)
+AAAAAAAAAA: 507 None None
+(array([-890., -917., -838., ...,  304.,  291.,  256.]), 1)
+AAAAAAAAAA: 1370 None None
+(array([-1371., -1161., -1039., ...,   664.,   566.,   493.]), 1)
+AAAAAAAAAA: 128 None None
+(array([1318.,  963.,  539., ...,  769.,  671.,  578.]), 1)
 AAAAAAAAAA: 4 None None
 (array([297., 728., 779., ..., 152., 156., 165.]), 1)
-AAAAAAAAAA: 980 None None
-(array([-136.,  -46.,   25., ...,  -17.,  -28.,  -77.]), 1)
-AAAAAAAAAA: 614 None None
-(array([1021., 1252., 1465., ...,  800.,  750.,  520.]), 1)
-AAAAAAAAAA: 477 None None
-(array([1038., 1330., 1536., ..., 1044., 1321., 1525.]), 1)
-AAAAAAAAAA: 390 None None
-(array([ -47.,  -13.,   -1., ..., -108., -129., -145.]), 1)
-AAAAAAAAAA: 15 None None
-(array([536., 554., 616., ..., 107., 142., 154.]), 1)
-AAAAAAAAAA: 1227 None None
-(array([  75.,   58.,  -85., ..., -119.,  -86.,  -45.]), 1)
+AAAAAAAAAA: 994 None None
+(array([  838.,   797.,   712., ..., -4277., -4489., -4638.]), 1)
+AAAAAAAAAA: 1414 None None
+(array([-416., -579., -399., ...,  186.,   99.,  246.]), 1)
+AAAAAAAAAA: 1194 None None
+(array([ -30., -107., -198., ..., -807., -877., -922.]), 1)
+AAAAAAAAAA: 1265 None None
+(array([-122.,  -97.,  -91., ..., -951., -813., -666.]), -1)
+AAAAAAAAAA: 594 None None
+(array([-249., -251., -281., ..., -220., -235., -242.]), 1)
+AAAAAAAAAA: 1062 None None
+(array([-346., -407., -421., ...,  317.,  371.,  411.]), -1)
+AAAAAAAAAA: 195 None None
+(array([-2453., -2327., -2198., ...,  2837.,  2542.,  2247.]), -1)
+AAAAAAAAAA: 469 None None
+(array([ 378.,  323.,  295., ..., -368., -341., -308.]), 1)
+AAAAAAAAAA: 386 None None
+(array([ 16.,  37.,  64., ..., 118.,  73.,  43.]), 1)
+AAAAAAAAAA: 499 None None
+(array([-1492., -1715., -1742., ...,  -196.,  -195.,  -206.]), 1)
+AAAAAAAAAA: 505 None None
+(array([ 439.,  559.,  683., ..., -617., -603., -590.]), 1)
+AAAAAAAAAA: 1225 None None
+(array([ 51., -11., -43., ..., 105., 138., 125.]), 1)
 AAAAAAAAAA: 271 None None
 (array([-400., -445., -524., ...,  113.,   59.,   71.]), 1)
-AAAAAAAAAA: 1103 None None
-(array([ -27.,   11.,   47., ...,  -98., -131., -130.]), 1)
-AAAAAAAAAA: 674 None None
-(array([ 164.,  174.,  153., ..., 1196., 1250., 1313.]), 1)
-AAAAAAAAAA: 529 None None
-(array([-142., -351., -347., ...,  631.,  603.,  555.]), 1)
-AAAAAAAAAA: 639 None None
-(array([-152., -235., -385., ...,   29.,   24.,   -4.]), -1)
-AAAAAAAAAA: 793 None None
-(array([ 420.,  245.,  118., ..., -645., -740., -845.]), 1)
-AAAAAAAAAA: 519 None None
-(array([ 140.,  273.,  198., ..., -149., -234., -134.]), 1)
-AAAAAAAAAA: 1016 None None
-(array([1306., 1344., 1453., ..., 2331., 2147., 1949.]), -1)
-AAAAAAAAAA: 1238 None None
-(array([-149., -156., -186., ...,  -81.,  -37.,   11.]), -1)
-AAAAAAAAAA: 666 None None
-(array([1815., 1852., 1940., ..., -520., -487., -439.]), 1)
-AAAAAAAAAA: 625 None None
-(array([-596., -428., -363., ..., -615., -639., -671.]), 1)
-AAAAAAAAAA: 1128 None None
-(array([-395., -907., -875., ...,  -14.,  -18.,  -11.]), 1)
-AAAAAAAAAA: 401 None None
-(array([-232., -224., -233., ...,  161.,  182.,  160.]), 1)
-AAAAAAAAAA: 606 None None
-(array([ -725.,  -639.,  -587., ..., -1194., -1200., -1194.]), -1)
-AAAAAAAAAA: 1044 None None
-(array([-577., -569., -631., ..., -220., -296., -380.]), 1)
-AAAAAAAAAA: 782 None None
-(array([-127., -144., -123., ...,  137.,  129.,  102.]), 1)
-AAAAAAAAAA: 997 None None
-(array([  14.,   67.,   77., ..., -247., -309., -379.]), 1)
-AAAAAAAAAA: 82 None None
-(array([  591.,  -294., -1886., ...,    16.,    -9.,    37.]), 1)
-AAAAAAAAAA: 589 None None
-(array([-781., -745., -710., ..., -516., -335., -158.]), 1)
-AAAAAAAAAA: 1053 None None
-(array([-1712., -1429., -1069., ...,  -956.,  -924.,  -808.]), -1)
+AAAAAAAAAA: 647 None None
+(array([-351., -222., -307., ...,   87.,  -12.,  -57.]), 1)
+AAAAAAAAAA: 1249 None None
+(array([ 97., 134., 127., ..., 144., 198., 295.]), 1)
+AAAAAAAAAA: 110 None None
+(array([ 448.,  393.,  344., ..., -969., -966., -974.]), -1)
+AAAAAAAAAA: 705 None None
+(array([-485., -444., -426., ...,  -57.,   14.,   63.]), -1)
+AAAAAAAAAA: 1215 None None
+(array([-1396., -1927., -2519., ...,   -37.,  -102.,  -103.]), 1)
+AAAAAAAAAA: 1242 None None
+(array([ 648.,  572.,  502., ..., -645., -697., -648.]), -1)
+AAAAAAAAAA: 63 None None
+(array([1663., 4530., 5389., ..., 1150., 1071.,  994.]), 1)
+AAAAAAAAAA: 907 None None
+(array([216., 185., 140., ..., -16.,  42., -29.]), 1)
+AAAAAAAAAA: 821 None None
+(array([1235., 1182., 1163., ...,   23.,  -39., -125.]), -1)
+AAAAAAAAAA: 1379 None None
+(array([ -54.,  -97., -135., ...,  176.,  141.,   97.]), 1)
+AAAAAAAAAA: 534 None None
+(array([510., 523., 521., ...,  70.,  83.,  94.]), 1)
+AAAAAAAAAA: 642 None None
+(array([ -214.,  -188.,  -146., ..., -1894., -2015., -2037.]), 1)
+AAAAAAAAAA: 86 None None
+(array([  1.,  10., -29., ..., 292., 326., 294.]), -1)
+AAAAAAAAAA: 150 None None
+(array([574., 563., 363., ..., 645., 692., 731.]), 1)
+AAAAAAAAAA: 75 None None
+(array([179., 212., 222., ..., 120.,  46., -41.]), 1)
+AAAAAAAAAA: 584 None None
+(array([532., 548., 523., ...,   2.,  -4.,  -4.]), 1)
+AAAAAAAAAA: 45 None None
+(array([-40., -32., -91., ..., -11., -36., -29.]), 1)
+AAAAAAAAAA: 291 None None
+(array([ 264.,  266.,  285., ..., -189., -164., -215.]), 1)
+AAAAAAAAAA: 1086 None None
+(array([  -14.,    69.,    10., ...,  -968., -1003.,  -941.]), 1)
+AAAAAAAAAA: 408 None None
+(array([2044., 2091., 2145., ...,  544.,  456.,  375.]), 1)
+AAAAAAAAAA: 672 None None
+(array([-329., -355., -394., ..., -191., -241., -279.]), -1)
+AAAAAAAAAA: 1057 None None
+(array([ 90.,  58.,   6., ..., -47., -61., -78.]), -1)
 AAAAAAAAAA: 1228 None None
 (array([ 14.,  49.,  74., ..., 130., 170., 206.]), 1)
+AAAAAAAAAA: 646 None None
+(array([ 207.,  138.,  108., ..., -195., -319., -272.]), 1)
+AAAAAAAAAA: 1433 None None
+(array([865., 828., 737., ..., 366., 368., 297.]), -1)
+AAAAAAAAAA: 1238 None None
+(array([-149., -156., -186., ...,  -81.,  -37.,   11.]), -1)
+AAAAAAAAAA: 614 None None
+(array([1021., 1252., 1465., ...,  800.,  750.,  520.]), 1)
+AAAAAAAAAA: 1004 None None
+(array([128., 132.,  57., ..., -87., -54., -15.]), 1)
+AAAAAAAAAA: 529 None None
+(array([-142., -351., -347., ...,  631.,  603.,  555.]), 1)
+AAAAAAAAAA: 208 None None
+(array([-104.,   55.,  255., ..., -311., -365., -434.]), 1)
+AAAAAAAAAA: 1381 None None
+(array([218., 203., 274., ..., 337., 299., 258.]), -1)
+AAAAAAAAAA: 784 None None
+(array([-53., -73., -71., ...,  22.,  30.,  82.]), 1)
+AAAAAAAAAA: 74 None None
+(array([ -551., -1011.,  -715., ...,    85.,   137.,   151.]), 1)
+AAAAAAAAAA: 619 None None
+(array([-526., -532., -577., ...,  160.,  122.,  146.]), 1)
+AAAAAAAAAA: 1350 None None
+(array([  45.,  111.,  134., ..., -604., -569., -552.]), 1)
+AAAAAAAAAA: 1092 None None
+(array([-668., -735., -677., ...,  392.,  415.,  465.]), -1)
+AAAAAAAAAA: 1280 None None
+(array([81., 75., 65., ...,  0.,  1., -1.]), 1)
+AAAAAAAAAA: 521 None None
+(array([-190., -420., -409., ...,  353.,  353.,  339.]), 1)
+AAAAAAAAAA: 884 None None
+(array([-194., -372., -422., ..., -569., -470., -331.]), 1)
+AAAAAAAAAA: 15 None None
+(array([536., 554., 616., ..., 107., 142., 154.]), 1)
+AAAAAAAAAA: 177 None None
+(array([ -45., -125.,  -94., ..., -430., -269.,  425.]), -1)
+AAAAAAAAAA: 1040 None None
+(array([-1218., -1076., -1069., ...,   168.,   336.,   363.]), -1)
+AAAAAAAAAA: 976 None None
+(array([134., 103., 146., ..., 349., 375., 438.]), 1)
+AAAAAAAAAA: 879 None None
+(array([  98.,   33.,  -38., ..., -673., -592., -461.]), 1)
+AAAAAAAAAA: 1252 None None
+(array([2020., 2164., 2275., ..., -351., -337., -341.]), -1)
+AAAAAAAAAA: 1301 None None
+(array([343., 279., 310., ..., 326., 383., 418.]), 1)
+AAAAAAAAAA: 490 None None
+(array([741., 843., 919., ..., 129., 107.,  58.]), -1)
+AAAAAAAAAA: 897 None None
+(array([286., 237., 201., ..., 123., 133., 124.]), -1)
+AAAAAAAAAA: 118 None None
+(array([  98.,  197.,  149., ..., -257., -291., -318.]), 1)
+AAAAAAAAAA: 21 None None
+(array([-694., -670., -622., ..., 8415., 6912., 5210.]), -1)
+AAAAAAAAAA: 144 None None
+(array([343., 825., 946., ..., 312., 345., 237.]), 1)
+AAAAAAAAAA: 11 None None
+(array([ 274.,  334.,  367., ..., -359., -425., -480.]), 1)
+AAAAAAAAAA: 858 None None
+(array([-613., -452., -353., ..., 1180., 1049.,  932.]), 1)
+AAAAAAAAAA: 484 None None
+(array([ 67., 132., 182., ..., 852., 884., 921.]), 1)
+AAAAAAAAAA: 1258 None None
+(array([-258., -155.,  159., ..., -179., -256., -325.]), 1)
+AAAAAAAAAA: 1164 None None
+(array([ 253.,  267.,  257., ..., -187., -157., -231.]), 1)
+AAAAAAAAAA: 1094 None None
+(array([-1131., -2238., -1353., ...,   606.,   564.,   507.]), -1)
+AAAAAAAAAA: 2 None None
+(array([ 158.,   88.,  152., ..., -368., -404., -400.]), 1)
+AAAAAAAAAA: 548 None None
+(array([ 201.,  281.,  335., ..., -345., -427., -459.]), -1)
+AAAAAAAAAA: 1005 None None
+(array([ 20., -32.,  50., ..., 213., 272., 264.]), 1)
+AAAAAAAAAA: 720 None None
+(array([-32., -20.,  47., ..., 199., 139.,  95.]), 1)
+AAAAAAAAAA: 1037 None None
+(array([  2215.,   2346.,   2474., ..., -13961., -13544., -12997.]), -1)
+AAAAAAAAAA: 1091 None None
+(array([1483., 3071., 2656., ...,  184., -203., -501.]), 1)
+AAAAAAAAAA: 129 None None
+(array([285., 679., 768., ..., 160., 231., 308.]), 1)
+AAAAAAAAAA: 213 None None
+(array([ -66., -104., -111., ...,  -73.,  -54.,  -36.]), 1)
+AAAAAAAAAA: 365 None None
+(array([ 586.,  455.,  406., ...,    2.,  -68., -134.]), -1)
+AAAAAAAAAA: 1059 None None
+(array([294., 268., 249., ..., 650., 543., 223.]), 1)
+AAAAAAAAAA: 407 None None
+(array([-389., -839., -801., ..., 2191., 2092., 2047.]), 1)
+AAAAAAAAAA: 338 None None
+(array([-455., -414., -373., ..., 1022.,  757.,  438.]), 1)
+AAAAAAAAAA: 294 None None
+(array([-595., -270.,   83., ...,  642.,  485.,  349.]), 1)
+AAAAAAAAAA: 145 None None
+(array([237., 122., 153., ..., 144., 183., 144.]), 1)
+AAAAAAAAAA: 1283 None None
+(array([ 36.,  68., -25., ..., 337., 396., 424.]), 1)
+AAAAAAAAAA: 528 None None
+(array([-270., -233., -295., ..., -307., -287., -276.]), 1)
+AAAAAAAAAA: 1066 None None
+(array([ -62.,  -77., -102., ...,  139.,  111.,   75.]), -1)
+AAAAAAAAAA: 1321 None None
+(array([  29.,   48.,   59., ..., -137.,  -72., -124.]), 1)
+AAAAAAAAAA: 778 None None
+(array([-1631., -1606., -1554., ...,   511.,   492.,   460.]), 1)
+AAAAAAAAAA: 997 None None
+(array([  14.,   67.,   77., ..., -247., -309., -379.]), 1)
+AAAAAAAAAA: 101 None None
+(array([ 197.,  172.,  149., ..., -899., -914., -918.]), 1)
+AAAAAAAAAA: 1422 None None
+(array([514., 552., 621., ..., 284., 288., 347.]), -1)
+AAAAAAAAAA: 1058 None None
+(array([ 83., 221., 259., ..., 344., 339., 322.]), -1)
+AAAAAAAAAA: 979 None None
+(array([  32.,   11.,  -19., ..., -166., -190., -165.]), 1)
+AAAAAAAAAA: 1023 None None
+(array([  34.,  -30.,  -85., ..., 1928., 2125., 2413.]), -1)
+AAAAAAAAAA: 952 None None
+(array([ -244.,  -279.,  -267., ..., -2396., -2170., -1713.]), 1)
+AAAAAAAAAA: 502 None None
+(array([  81.,   66.,  -37., ..., -661., -743., -932.]), 1)
+AAAAAAAAAA: 807 None None
+(array([  412.,   788.,   766., ..., -1641.,  -878.,   -44.]), 1)
+AAAAAAAAAA: 1399 None None
+(array([-3191., -7739., -8427., ..., -1053.,  -896.,  -988.]), 1)
+AAAAAAAAAA: 5 None None
+(array([ 158.,  154.,  151., ...,  -44.,  -94., -344.]), 1)
+AAAAAAAAAA: 694 None None
+(array([  20., -111., -205., ..., -247.,  -28.,  135.]), -1)
+AAAAAAAAAA: 1341 None None
+(array([-1679., -1723., -1723., ...,   268.,   254.,   254.]), 1)
+AAAAAAAAAA: 1107 None None
+(array([  633.,   581.,   548., ..., -2654., -2490., -2249.]), 1)
+AAAAAAAAAA: 1137 None None
+(array([-1618., -1574., -1500., ...,   -18.,     5.,     9.]), 1)
+AAAAAAAAAA: 324 None None
+(array([-1.000e+00, -6.700e+01, -4.400e+01, ...,  1.419e+03,  1.406e+03,
+        1.339e+03]), 1)
+AAAAAAAAAA: 106 None None
+(array([ -991., -1044.,  -995., ...,   666.,  1223.,  1766.]), 1)
+AAAAAAAAAA: 1365 None None
+(array([-954., -835., -757., ...,  789.,  779.,  686.]), 1)
+AAAAAAAAAA: 399 None None
+(array([ -672., -1387., -1210., ...,  -423.,  -443.,  -466.]), 1)
+AAAAAAAAAA: 340 None None
+(array([ 235.,  186.,  103., ..., -265., -230., -197.]), 1)
+AAAAAAAAAA: 216 None None
+(array([-237., -240., -245., ...,  704.,  700.,  667.]), 1)
+AAAAAAAAAA: 820 None None
+(array([-2690., -5295., -4220., ...,   734.,   923.,  1168.]), 1)
+AAAAAAAAAA: 577 None None
+(array([725., 791., 866., ..., -14., 161., 177.]), 1)
+AAAAAAAAAA: 973 None None
+(array([695., 671., 710., ..., -83., -60., -57.]), 1)
+AAAAAAAAAA: 958 None None
+(array([-1730., -1902., -2070., ...,  -447.,  -442.,  -449.]), -1)
+AAAAAAAAAA: 1424 None None
+(array([ 106.,  120.,  142., ..., -849., -848., -822.]), -1)
+AAAAAAAAAA: 684 None None
+(array([241., 292., 286., ..., 326., 198., 206.]), 1)
+AAAAAAAAAA: 453 None None
+(array([ 279.,  174.,  242., ..., -705., -759., -282.]), 1)
+AAAAAAAAAA: 843 None None
+(array([-327., -272., -206., ...,   72.,   98.,   82.]), 1)
+AAAAAAAAAA: 1376 None None
+(array([-148., -246., -160., ..., -268., -275., -285.]), 1)
+AAAAAAAAAA: 298 None None
+(array([  15.,  -51.,  -25., ..., -658., -671., -726.]), 1)
+AAAAAAAAAA: 143 None None
+(array([ 52.,  65.,  36., ..., 247., 182., 132.]), 1)
+AAAAAAAAAA: 1334 None None
+(array([ 367.,  426.,  479., ..., -273., -373., -529.]), 1)
+AAAAAAAAAA: 333 None None
+(array([-367., -357., -380., ...,  -73., -111., -138.]), 1)
+AAAAAAAAAA: 366 None None
+(array([-203., -261., -271., ..., -359., -410., -453.]), -1)
+AAAAAAAAAA: 865 None None
+(array([  341.,   612.,   410., ..., -5890., -3882., -1808.]), -1)
+AAAAAAAAAA: 474 None None
+(array([750., 769., 777., ..., 270., 128., 193.]), 1)
+AAAAAAAAAA: 776 None None
+(array([-436., -490., -559., ...,  -59.,  -64.,  -56.]), 1)
+AAAAAAAAAA: 588 None None
+(array([2094., 2085., 2035., ..., -995., -898., -886.]), 1)
+AAAAAAAAAA: 620 None None
+(array([ 127.,  120.,  135., ..., -273., -143.,   -2.]), 1)
+AAAAAAAAAA: 746 None None
+(array([-3009., -2830., -2794., ..., -1037., -1320., -1604.]), -1)
+AAAAAAAAAA: 960 None None
+(array([1219., 1146., 1049., ..., -402., -387., -160.]), 1)
+AAAAAAAAAA: 938 None None
+(array([ -42., -105.,  -96., ...,  -60.,  -20.,   46.]), -1)
+AAAAAAAAAA: 955 None None
+(array([-1187., -1114., -1045., ...,  1455.,  1512.,  1521.]), -1)
+AAAAAAAAAA: 1240 None None
+(array([  74.,   10.,    0., ..., -508., -592., -528.]), -1)
+AAAAAAAAAA: 59 None None
+(array([-32., -44., -42., ..., 482., 559., 636.]), 1)
+AAAAAAAAAA: 316 None None
+(array([ -975., -1032., -1051., ...,  1230.,  1104.,  1004.]), 1)
+AAAAAAAAAA: 1223 None None
+(array([ -9., -90., -41., ..., 253., 252., 241.]), 1)
+AAAAAAAAAA: 25 None None
+(array([-508., -604., -614., ...,  365.,  345.,  421.]), 1)
+AAAAAAAAAA: 782 None None
+(array([-127., -144., -123., ...,  137.,  129.,  102.]), 1)
+AAAAAAAAAA: 87 None None
+(array([248., 178., 183., ..., 196., 163., 127.]), 1)
+AAAAAAAAAA: 1014 None None
+(array([  -1.,   18.,    8., ..., -163., -158., -134.]), 1)
+AAAAAAAAAA: 1358 None None
+(array([ -24.,  -42.,  -53., ..., -387., -406., -398.]), 1)
+AAAAAAAAAA: 336 None None
+(array([-154.,  -34., -116., ...,  136.,    3.,  -34.]), 1)
+AAAAAAAAAA: 560 None None
+(array([ -48., -151., -263., ..., 1736., 1738., 1666.]), 1)
+AAAAAAAAAA: 607 None None
+(array([  -42.,    22.,   167., ..., -2967., -2761., -2261.]), -1)
+AAAAAAAAAA: 899 None None
+(array([  208.,   434.,   272., ..., -2918., -2758., -2626.]), -1)
+AAAAAAAAAA: 251 None None
+(array([  570.,   751.,  1018., ..., 10500., 10810., 10709.]), -1)
+AAAAAAAAAA: 886 None None
+(array([-497., -501., -481., ..., 1027.,  992.,  880.]), 1)
+AAAAAAAAAA: 1203 None None
+(array([-558., -710., -873., ..., -746., -644., -622.]), -1)
+AAAAAAAAAA: 849 None None
+(array([-326., -425., -241., ...,  531.,  519.,  473.]), 1)
+AAAAAAAAAA: 1391 None None
+(array([ 1124.,   -26., -1182., ...,  -161.,   -88.,   -10.]), 1)
+AAAAAAAAAA: 119 None None
+(array([-326., -362., -382., ...,   72.,   35.,   41.]), -1)
+AAAAAAAAAA: 65 None None
+(array([ -145.,  -269.,  -559., ..., -1139.,  -823.,   598.]), -1)
+AAAAAAAAAA: 155 None None
+(array([-1327., -2952., -2837., ..., -1125., -1089.,  -988.]), 1)
+AAAAAAAAAA: 1190 None None
+(array([ -799., -1885., -2087., ..., -1384., -1201.,  -960.]), 1)
+AAAAAAAAAA: 249 None None
+(array([ -316.,  1766.,  3267., ..., -8057., -8764., -9101.]), -1)
+AAAAAAAAAA: 1237 None None
+(array([ 145.,  183.,  225., ..., -102., -126., -138.]), -1)
+AAAAAAAAAA: 630 None None
+(array([ 182.,  441.,  429., ..., -519., -574., -620.]), -1)
+AAAAAAAAAA: 957 None None
+(array([ -374.,  -508.,  -600., ..., -1066., -1324., -1532.]), -1)
+AAAAAAAAAA: 1123 None None
+(array([ 465.,  458.,  415., ..., -763., -628., -517.]), 1)
+AAAAAAAAAA: 459 None None
+(array([-129., -144., -158., ...,  291.,  185.,  156.]), 1)
+AAAAAAAAAA: 1372 None None
+(array([ -693., -1853., -2169., ...,   403.,   281.,   182.]), 1)
+AAAAAAAAAA: 1359 None None
+(array([-417., -427., -416., ..., -219., -241., -242.]), 1)
+AAAAAAAAAA: 688 None None
+(array([ -87., -204., -195., ...,  253.,  238.,  193.]), -1)
+AAAAAAAAAA: 174 None None
+(array([ 100.,  341.,  504., ...,  750.,  131., -485.]), -1)
+AAAAAAAAAA: 205 None None
+(array([167., 120., 124., ..., 277., 221., 151.]), 1)
+AAAAAAAAAA: 1319 None None
+(array([ -371., -1004., -1100., ...,  2503.,  2258.,  1970.]), 1)
+AAAAAAAAAA: 608 None None
+(array([-1838., -1377.,  -998., ...,    46.,   -63.,  -174.]), 1)
+AAAAAAAAAA: 801 None None
+(array([-120., -135., -193., ...,  384.,  344.,  336.]), 1)
+AAAAAAAAAA: 621 None None
+(array([ 117.,  158.,  189., ..., -287., -454., -616.]), 1)
+AAAAAAAAAA: 305 None None
+(array([ 219.,  246.,  281., ..., -218., -209., -110.]), -1)
+AAAAAAAAAA: 636 None None
+(array([ 3911.,  3551.,  3177., ..., -3321., -3595., -3760.]), 1)
+AAAAAAAAAA: 198 None None
+(array([122., 121.,  89., ...,  40.,  92.,  66.]), 1)
+AAAAAAAAAA: 569 None None
+(array([-43.,  -8.,  27., ..., 306., 351., 424.]), -1)
+AAAAAAAAAA: 1193 None None
+(array([-227.,  -95.,    6., ...,   76.,  329.,  484.]), 1)
+AAAAAAAAAA: 1320 None None
+(array([1669., 1288., 1022., ...,  -37.,  -14.,    8.]), 1)
+AAAAAAAAAA: 1101 None None
+(array([ 23.,  66., 143., ..., 794., 750., 742.]), 1)
+AAAAAAAAAA: 591 None None
+(array([ 71.,  76.,  24., ..., 250., 232., 206.]), 1)
+AAAAAAAAAA: 864 None None
+(array([ 600.,  652.,  756., ..., 1748., 2599., 3460.]), -1)
+AAAAAAAAAA: 1031 None None
+(array([257., 259., 258., ...,  32.,  11.,   5.]), 1)
+AAAAAAAAAA: 983 None None
+(array([-409., -374., -374., ...,  469.,  542.,  680.]), 1)
+AAAAAAAAAA: 558 None None
+(array([-333., -288., -314., ..., -190., -307., -319.]), 1)
+AAAAAAAAAA: 228 None None
+(array([-304., -305., -273., ...,  159.,  202.,  211.]), 1)
+AAAAAAAAAA: 1277 None None
+(array([-439., -255., -289., ...,  217.,  436.,  419.]), 1)
+AAAAAAAAAA: 296 None None
+(array([453., 461., 478., ..., 877., 837., 772.]), 1)
+AAAAAAAAAA: 1233 None None
+(array([ -52.,  -90., -113., ...,  -89., -168., -170.]), 1)
+AAAAAAAAAA: 71 None None
+(array([-430., -666., -892., ...,  537.,  582.,  642.]), 1)
+AAAAAAAAAA: 893 None None
+(array([ 60.,  62., -67., ..., 942., 820., 632.]), 1)
+AAAAAAAAAA: 598 None None
+(array([-1235., -1026.,  -836., ...,  1573.,  1574.,  1558.]), 1)
+AAAAAAAAAA: 280 None None
+(array([  9.,  38.,  51., ..., 170., 147., 118.]), 1)
+AAAAAAAAAA: 1117 None None
+(array([-249., -147.,  -15., ...,  702.,  732.,  876.]), 1)
+AAAAAAAAAA: 1409 None None
+(array([ 277.,  616.,  504., ...,  -69.,  -88., -116.]), -1)
+AAAAAAAAAA: 1119 None None
+(array([-305., -298., -261., ..., -327., -430., -555.]), 1)
+AAAAAAAAAA: 806 None None
+(array([-174.,  -87.,  -67., ...,  209.,  -14., -452.]), 1)
+AAAAAAAAAA: 411 None None
+(array([102.,  73.,  86., ...,   9.,  47.,  57.]), 1)
+AAAAAAAAAA: 424 None None
+(array([182., 471., 459., ..., 622., 575., 442.]), 1)
+AAAAAAAAAA: 1418 None None
+(array([ 332.,  422.,  519., ..., -333., -220.,  -80.]), 1)
+AAAAAAAAAA: 97 None None
+(array([-1260., -1249., -1256., ...,    31.,   -13.,   -18.]), -1)
+AAAAAAAAAA: 828 None None
+(array([ 94.,  73., 106., ..., 144., 245., 285.]), 1)
+AAAAAAAAAA: 142 None None
+(array([71., 94., 94., ..., 46., 73., 56.]), 1)
+AAAAAAAAAA: 267 None None
+(array([7918., 7782., 7668., ...,  -39.,  -39.,  -33.]), 1)
+AAAAAAAAAA: 497 None None
+(array([-334., -430., -395., ...,  266.,  292.,  273.]), -1)
+AAAAAAAAAA: 1312 None None
+(array([ 565., 1280., 1018., ..., -353., -419.,  -75.]), 1)
+AAAAAAAAAA: 510 None None
+(array([159., 295., 230., ..., 306., 332., 352.]), 1)
+AAAAAAAAAA: 800 None None
+(array([158., 304., 281., ...,  77.,  12., -42.]), 1)
+AAAAAAAAAA: 942 None None
+(array([3926., 4060., 4128., ..., -284., -288., -298.]), -1)
+AAAAAAAAAA: 625 None None
+(array([-596., -428., -363., ..., -615., -639., -671.]), 1)
+AAAAAAAAAA: 422 None None
+(array([ 373.,  342.,  383., ..., -361., -341., -354.]), 1)
+AAAAAAAAAA: 768 None None
+(array([ 12., -18., -20., ..., 120., 146., 180.]), 1)
+AAAAAAAAAA: 977 None None
+(array([ 445.,  457.,  419., ..., -339., -420., -521.]), 1)
+AAAAAAAAAA: 1270 None None
+(array([527., 542., 591., ..., 105.,  36.,   2.]), -1)
+AAAAAAAAAA: 835 None None
+(array([-313., -677., -612., ...,  877.,  904.,  892.]), 1)
+AAAAAAAAAA: 640 None None
+(array([ -18.,  -29.,  -47., ..., -113., -103., -158.]), -1)
+AAAAAAAAAA: 946 None None
+(array([-159., -334., -273., ...,  281.,  298.,  310.]), 1)
+AAAAAAAAAA: 279 None None
+(array([4892., 4623., 4062., ..., -324., -208.,  -85.]), 1)
+AAAAAAAAAA: 1185 None None
+(array([-27277., -28646., -29170., ...,  27107.,  26167.,  18525.]), -1)
+AAAAAAAAAA: 266 None None
+(array([ -969., -1038., -1102., ...,  8368.,  8185.,  8060.]), 1)
+AAAAAAAAAA: 1045 None None
+(array([-491., -556., -618., ..., -993., -776., -634.]), 1)
+AAAAAAAAAA: 940 None None
+(array([ -29.,  -72.,  -67., ..., -227., -251., -238.]), 1)
+AAAAAAAAAA: 634 None None
+(array([ 171.,  116.,  139., ..., -225., -201., -171.]), 1)
+AAAAAAAAAA: 633 None None
+(array([-274., -582., -513., ...,  133.,  134.,  126.]), -1)
+AAAAAAAAAA: 1126 None None
+(array([  7068.,   -851.,  -6614., ..., -20331., -20674., -19736.]), 1)
+AAAAAAAAAA: 623 None None
+(array([-3338., -3045., -2746., ...,  1316.,  1283.,  1281.]), 1)
+AAAAAAAAAA: 628 None None
+(array([  23., -116., -255., ...,    9.,  -15.,  -60.]), -1)
+AAAAAAAAAA: 1390 None None
+(array([4056., 3152., 2241., ..., 4130., 3185., 2199.]), 1)
 AAAAAAAAAA: 683 None None
 (array([-2.584e+03, -2.492e+03, -2.359e+03, ...,  1.000e+00,  5.200e+01,
         1.290e+02]), 1)
-AAAAAAAAAA: 1261 None None
-(array([ -604., -1173.,  -958., ...,   -73.,   -50.,   -14.]), 1)
-AAAAAAAAAA: 587 None None
-(array([ 8732., 18776., 17215., ...,  2020.,  2042.,  2096.]), 1)
-AAAAAAAAAA: 706 None None
-(array([ 97., 127., 138., ..., 563., 596., 610.]), -1)
-AAAAAAAAAA: 254 None None
-(array([  64.,   64.,   99., ..., 1803., 1773., 1233.]), 1)
-AAAAAAAAAA: 661 None None
-(array([ -27.,  -75.,  -81., ..., 2206., 2349., 2474.]), 1)
-AAAAAAAAAA: 137 None None
-(array([168., 142.,  66., ..., -35., -33., -37.]), 1)
-AAAAAAAAAA: 350 None None
-(array([-13., -63., -25., ...,  -8., -34., -36.]), 1)
-AAAAAAAAAA: 1168 None None
-(array([  991.,   987.,   960., ...,  -911., -1041., -1168.]), -1)
-AAAAAAAAAA: 247 None None
-(array([-13124., -10107.,  -7259., ...,   6826.,   6384.,   5890.]), -1)
-AAAAAAAAAA: 60 None None
-(array([696., 727., 771., ...,  88.,  51.,  35.]), 1)
-AAAAAAAAAA: 198 None None
-(array([122., 121.,  89., ...,  40.,  92.,  66.]), 1)
-AAAAAAAAAA: 574 None None
-(array([397., 480., 568., ...,  98.,  86.,  89.]), 1)
-AAAAAAAAAA: 754 None None
-(array([-170., -174., -156., ..., -532., -501., -532.]), -1)
-AAAAAAAAAA: 216 None None
-(array([-237., -240., -245., ...,  704.,  700.,  667.]), 1)
-AAAAAAAAAA: 1358 None None
-(array([ -24.,  -42.,  -53., ..., -387., -406., -398.]), 1)
-AAAAAAAAAA: 1407 None None
-(array([-1464.,  -848.,   -26., ...,    86.,    99.,   128.]), -1)
-AAAAAAAAAA: 520 None None
-(array([-192., -132.,  -78., ...,  145.,   89.,  159.]), 1)
-AAAAAAAAAA: 115 None None
-(array([1460., 2661., 2639., ..., 1084., 1047., 1030.]), 1)
-AAAAAAAAAA: 940 None None
-(array([ -29.,  -72.,  -67., ..., -227., -251., -238.]), 1)
-AAAAAAAAAA: 774 None None
-(array([  28.,  -19.,  -16., ..., -523., -461., -421.]), 1)
-AAAAAAAAAA: 1117 None None
-(array([-249., -147.,  -15., ...,  702.,  732.,  876.]), 1)
-AAAAAAAAAA: 1402 None None
-(array([-528., -391., -299., ...,  329.,  250.,  153.]), 1)
-AAAAAAAAAA: 402 None None
-(array([ 129.,   92.,   38., ...,  -35., -101., -163.]), 1)
-AAAAAAAAAA: 1408 None None
-(array([ 102.,  113.,   87., ...,  810.,  184., -399.]), -1)
-AAAAAAAAAA: 908 None None
-(array([173., 314., 193., ..., 233., 241., 235.]), 1)
-AAAAAAAAAA: 1073 None None
-(array([313., 330., 380., ...,   7., -28., -54.]), -1)
-AAAAAAAAAA: 228 None None
-(array([-304., -305., -273., ...,  159.,  202.,  211.]), 1)
-AAAAAAAAAA: 990 None None
-(array([-8066., -7976., -7753., ...,   449.,  1670.,  2761.]), 1)
-AAAAAAAAAA: 633 None None
-(array([-274., -582., -513., ...,  133.,  134.,  126.]), -1)
-AAAAAAAAAA: 914 None None
-(array([ 146.,  142.,  150., ..., -727., -624., -455.]), 1)
-AAAAAAAAAA: 290 None None
-(array([ -6., -96., -35., ..., 234., 261., 256.]), -1)
-AAAAAAAAAA: 1141 None None
-(array([ 334.,  195.,  161., ..., -207., -127., -137.]), -1)
-AAAAAAAAAA: 98 None None
-(array([-54., -76., -93., ..., 243., 146.,  50.]), -1)
-AAAAAAAAAA: 685 None None
-(array([  -98.,  -135.,    12., ..., -2173., -2372., -2342.]), 1)
-AAAAAAAAAA: 1050 None None
-(array([ 261.,  440.,  543., ..., -460., -250., -164.]), 1)
-AAAAAAAAAA: 84 None None
-(array([1591., 1600., 1681., ..., -399., -363., -247.]), -1)
-AAAAAAAAAA: 428 None None
-(array([-202., -442., -433., ..., -297., -184., -222.]), 1)
-AAAAAAAAAA: 668 None None
-(array([-1138., -1194., -1240., ...,   437.,   425.,   395.]), 1)
-AAAAAAAAAA: 973 None None
-(array([695., 671., 710., ..., -83., -60., -57.]), 1)
-AAAAAAAAAA: 875 None None
-(array([  722.,   748.,   787., ..., -2405., -2322., -2195.]), 1)
-AAAAAAAAAA: 1324 None None
-(array([ 895.,  514.,   41., ..., 1169., 1139., 1119.]), 1)
-AAAAAAAAAA: 1059 None None
-(array([294., 268., 249., ..., 650., 543., 223.]), 1)
-AAAAAAAAAA: 638 None None
-(array([ 683.,  648.,  602., ..., -488., -276., -150.]), -1)
-AAAAAAAAAA: 424 None None
-(array([182., 471., 459., ..., 622., 575., 442.]), 1)
-AAAAAAAAAA: 561 None None
-(array([1585., 1411., 1135., ..., 1174.,  947.,  729.]), 1)
-AAAAAAAAAA: 277 None None
-(array([ -507., -1090.,  -660., ...,  -559.,  -360.,  -213.]), 1)
-AAAAAAAAAA: 1309 None None
-(array([ -535., -1077.,  -905., ...,  -439.,  -478.,  -486.]), 1)
-AAAAAAAAAA: 427 None None
-(array([  52.,  -23.,    2., ..., -261., -256., -254.]), 1)
-AAAAAAAAAA: 839 None None
-(array([  619.,   699.,   750., ..., -3091., -2609., -2031.]), 1)
-AAAAAAAAAA: 97 None None
-(array([-1260., -1249., -1256., ...,    31.,   -13.,   -18.]), -1)
-AAAAAAAAAA: 1027 None None
-(array([-749., -893., -974., ..., 3453., 3595., 3688.]), -1)
-AAAAAAAAAA: 132 None None
-(array([1362., 1177.,  946., ...,  187.,  279.,  320.]), -1)
-AAAAAAAAAA: 127 None None
-(array([ 127.,  101.,   47., ..., 2204., 2010., 1662.]), 1)
-AAAAAAAAAA: 1421 None None
-(array([ -469., -1053.,  -966., ...,   322.,   364.,   436.]), -1)
-AAAAAAAAAA: 677 None None
-(array([-219., -339., -183., ..., -308., -299., -287.]), 1)
-AAAAAAAAAA: 735 None None
-(array([ -153.,    11.,   246., ..., -2389., -2331., -2216.]), 1)
-AAAAAAAAAA: 1212 None None
-(array([-320., -404., -455., ...,  -87., -100., -137.]), 1)
-AAAAAAAAAA: 826 None None
-(array([-276., -286., -200., ...,  479.,  442.,  452.]), 1)
-AAAAAAAAAA: 1250 None None
-(array([ -65., -121.,  -93., ..., -623., -624., -618.]), 1)
-AAAAAAAAAA: 941 None None
-(array([-229., -240., -205., ..., 2821., 3428., 3750.]), -1)
-AAAAAAAAAA: 1093 None None
-(array([537., 617., 662., ..., 243., 289., 326.]), -1)
-AAAAAAAAAA: 897 None None
-(array([286., 237., 201., ..., 123., 133., 124.]), -1)
-AAAAAAAAAA: 807 None None
-(array([  412.,   788.,   766., ..., -1641.,  -878.,   -44.]), 1)
-AAAAAAAAAA: 647 None None
-(array([-351., -222., -307., ...,   87.,  -12.,  -57.]), 1)
-AAAAAAAAAA: 375 None None
-(array([-119., -101., -121., ...,  140.,  152.,  165.]), 1)
-AAAAAAAAAA: 278 None None
-(array([ -41.,   83.,  220., ..., 4020., 4604., 4825.]), 1)
-AAAAAAAAAA: 358 None None
-(array([-1022., -1067., -1090., ...,   406.,   584.,   715.]), -1)
-AAAAAAAAAA: 768 None None
-(array([ 12., -18., -20., ..., 120., 146., 180.]), 1)
-AAAAAAAAAA: 201 None None
-(array([1100.,  910.,  722., ..., 1235., 1340., 1460.]), 1)
-AAAAAAAAAA: 289 None None
-(array([ 97., 191., 268., ..., 914., 868., 823.]), -1)
-AAAAAAAAAA: 288 None None
-(array([111., 149., 175., ..., -30., -44.,  -1.]), -1)
-AAAAAAAAAA: 144 None None
-(array([343., 825., 946., ..., 312., 345., 237.]), 1)
-AAAAAAAAAA: 342 None None
-(array([162.,  55., -46., ..., 140., 153., 140.]), 1)
-AAAAAAAAAA: 539 None None
-(array([ 327., -165., -660., ..., 4675., 4855., 4870.]), 1)
-AAAAAAAAAA: 7 None None
-(array([-327., -320., -364., ...,  542.,  476.,  424.]), 1)
-AAAAAAAAAA: 915 None None
-(array([-362., -264., -297., ..., -303., -316., -287.]), 1)
-AAAAAAAAAA: 752 None None
-(array([-1403., -1421., -1119., ...,   230.,   231.,   311.]), -1)
-AAAAAAAAAA: 323 None None
-(array([69., 82., 74., ..., 56., 62., 73.]), 1)
-AAAAAAAAAA: 511 None None
-(array([370., 380., 393., ..., 181., 151., 132.]), 1)
-AAAAAAAAAA: 761 None None
-(array([1879., 1979., 1890., ..., -726., -681., -587.]), 1)
-AAAAAAAAAA: 103 None None
-(array([-293., -554., -398., ...,   37.,  -10., -144.]), 1)
-AAAAAAAAAA: 203 None None
-(array([1597., 1574., 1496., ..., -877., -716., -527.]), 1)
-AAAAAAAAAA: 1040 None None
-(array([-1218., -1076., -1069., ...,   168.,   336.,   363.]), -1)
-AAAAAAAAAA: 274 None None
-(array([ 213.,  232.,  227., ..., -298., -301., -276.]), 1)
-AAAAAAAAAA: 425 None None
-(array([ 412.,  241.,  194., ..., 1010.,  953.,  873.]), 1)
-AAAAAAAAAA: 907 None None
-(array([216., 185., 140., ..., -16.,  42., -29.]), 1)
-AAAAAAAAAA: 371 None None
-(array([ -82.,  -80.,  -95., ..., -736., -667., -667.]), -1)
-AAAAAAAAAA: 764 None None
-(array([ -78., -132., -180., ..., -333., -344., -377.]), 1)
-AAAAAAAAAA: 1338 None None
-(array([ -505.,  -404.,  -311., ..., -3779., -2883., -2230.]), 1)
-AAAAAAAAAA: 487 None None
-(array([-204.,  -62., -110., ..., -291., -315., -281.]), 1)
-AAAAAAAAAA: 205 None None
-(array([167., 120., 124., ..., 277., 221., 151.]), 1)
-AAAAAAAAAA: 43 None None
-(array([ 17., -22., -17., ..., -59., -78., -71.]), 1)
-AAAAAAAAAA: 16 None None
-(array([ 168.,  203.,  209., ..., 3579., 4485., 5208.]), 1)
-AAAAAAAAAA: 114 None None
-(array([-5231., -4532., -3601., ...,  -554.,  -504.,  -473.]), 1)
-AAAAAAAAAA: 1076 None None
-(array([ 119.,  179.,  237., ...,  -70., -144., -132.]), -1)
-AAAAAAAAAA: 862 None None
-(array([235., 235., 229., ..., 223., 217., 215.]), -1)
-AAAAAAAAAA: 1301 None None
-(array([343., 279., 310., ..., 326., 383., 418.]), 1)
-AAAAAAAAAA: 261 None None
-(array([-1448., -1440., -1485., ..., -3192., -3305., -3369.]), 1)
-AAAAAAAAAA: 945 None None
-(array([  6., 142., 237., ..., 853., 875., 904.]), 1)
-AAAAAAAAAA: 906 None None
-(array([ 39., 101., 152., ..., 326., 243., 296.]), 1)
-AAAAAAAAAA: 303 None None
-(array([ -946., -1586., -1208., ...,   166.,   154.,   156.]), -1)
-AAAAAAAAAA: 848 None None
-(array([-92.,  36., -64., ...,  34., -67.,  31.]), 1)
-AAAAAAAAAA: 157 None None
-(array([ -951., -1189., -1346., ...,  1723.,  1529.,  1460.]), 1)
-AAAAAAAAAA: 1164 None None
-(array([ 253.,  267.,  257., ..., -187., -157., -231.]), 1)
-AAAAAAAAAA: 1386 None None
-(array([-1114., -1042.,  -955., ...,    18.,    53.,    57.]), 1)
-AAAAAAAAAA: 1271 None None
-(array([165., 352., 273., ..., 141., 161., 190.]), -1)
-AAAAAAAAAA: 407 None None
-(array([-389., -839., -801., ..., 2191., 2092., 2047.]), 1)
-AAAAAAAAAA: 474 None None
-(array([750., 769., 777., ..., 270., 128., 193.]), 1)
-AAAAAAAAAA: 534 None None
-(array([510., 523., 521., ...,  70.,  83.,  94.]), 1)
-AAAAAAAAAA: 258 None None
-(array([295., 235., 320., ..., -95.,  14., 125.]), 1)
-AAAAAAAAAA: 400 None None
-(array([-463., -491., -509., ..., -238., -245., -214.]), 1)
-AAAAAAAAAA: 725 None None
-(array([-550., -748., -947., ..., -349., -439., -505.]), -1)
-AAAAAAAAAA: 527 None None
-(array([ -40.,  -63.,  -73., ..., -321., -320., -290.]), 1)
-AAAAAAAAAA: 1043 None None
-(array([ -50., -123.,  -76., ..., -481., -570., -602.]), -1)
-AAAAAAAAAA: 1045 None None
-(array([-491., -556., -618., ..., -993., -776., -634.]), 1)
-AAAAAAAAAA: 111 None None
-(array([ 354.,  731.,  673., ..., -389., -514., -179.]), -1)
-AAAAAAAAAA: 510 None None
-(array([159., 295., 230., ..., 306., 332., 352.]), 1)
-AAAAAAAAAA: 1108 None None
-(array([16107., 32767., 28176., ..., -4364., -5463., -7590.]), 1)
-AAAAAAAAAA: 1062 None None
-(array([-346., -407., -421., ...,  317.,  371.,  411.]), -1)
-AAAAAAAAAA: 921 None None
-(array([ 295.,  297.,  275., ..., 1138., 1092., 1021.]), 1)
-AAAAAAAAAA: 660 None None
-(array([  209.,   276.,   331., ..., -1379., -1368., -1335.]), 1)
-AAAAAAAAAA: 77 None None
-(array([722., 627., 559., ..., -46., -39.,  -6.]), 1)
-AAAAAAAAAA: 541 None None
-(array([-574., -675., -148., ..., -268., -250., -274.]), 1)
-AAAAAAAAAA: 969 None None
-(array([701., 818., 951., ..., 618., 575., 677.]), -1)
-AAAAAAAAAA: 222 None None
-(array([ -91., -134.,  -92., ...,   16.,   31.,   50.]), 1)
-AAAAAAAAAA: 1306 None None
-(array([1532., 2073., 2426., ..., -751., -740., -732.]), 1)
-AAAAAAAAAA: 546 None None
-(array([-2501., -2370., -2215., ...,  2340.,  2356.,  2357.]), -1)
-AAAAAAAAAA: 1153 None None
-(array([  527.,   552.,   554., ..., -2404., -2449., -2208.]), -1)
-AAAAAAAAAA: 788 None None
-(array([2357., 2181., 1963., ..., -401.,  159.,  557.]), 1)
-AAAAAAAAAA: 552 None None
-(array([204., 242., 269., ..., 699., 678., 689.]), 1)
-AAAAAAAAAA: 1327 None None
-(array([1073., 1988., 1531., ..., -906., -738., -678.]), 1)
-AAAAAAAAAA: 1255 None None
-(array([ 437.,  403.,  368., ..., -643., -633., -582.]), 1)
-AAAAAAAAAA: 829 None None
-(array([ 371.,  393.,  443., ..., -357., -324., -337.]), 1)
-AAAAAAAAAA: 610 None None
-(array([1023.,  826.,  699., ...,   23.,  170.,  373.]), 1)
-AAAAAAAAAA: 204 None None
-(array([ -16.,  -81., -123., ...,  185.,  163.,  184.]), 1)
-AAAAAAAAAA: 584 None None
-(array([532., 548., 523., ...,   2.,  -4.,  -4.]), 1)
-AAAAAAAAAA: 946 None None
-(array([-159., -334., -273., ...,  281.,  298.,  310.]), 1)
-AAAAAAAAAA: 1075 None None
-(array([-540., -453., -365., ...,  237.,  134.,  130.]), -1)
-AAAAAAAAAA: 995 None None
-(array([-4680., -4698., -4633., ...,  1047.,  1062.,  1094.]), 1)
-AAAAAAAAAA: 391 None None
-(array([137., 309., 226., ..., 160., 199., 276.]), 1)
+AAAAAAAAAA: 1044 None None
+(array([-577., -569., -631., ..., -220., -296., -380.]), 1)
 AAAAAAAAAA: 981 None None
 (array([327., 589., 512., ..., 161., 127., 145.]), 1)
-AAAAAAAAAA: 536 None None
-(array([ 176.,  185.,  158., ..., -163., -160., -148.]), 1)
-AAAAAAAAAA: 300 None None
-(array([ -974., -1778., -1200., ..., -2754., -2721., -2670.]), 1)
-AAAAAAAAAA: 1340 None None
-(array([  742.,   881.,   938., ..., -1439., -1528., -1614.]), 1)
-AAAAAAAAAA: 1216 None None
-(array([-128., -160., -171., ..., -644., -792., -897.]), 1)
-AAAAAAAAAA: 484 None None
-(array([ 67., 132., 182., ..., 852., 884., 921.]), 1)
-AAAAAAAAAA: 721 None None
-(array([ 105.,  -46.,   28., ..., -604., -766., -694.]), 1)
-AAAAAAAAAA: 142 None None
-(array([71., 94., 94., ..., 46., 73., 56.]), 1)
-AAAAAAAAAA: 1 None None
-(array([-15.,  23.,  48., ..., 233., 201., 157.]), 1)
-AAAAAAAAAA: 830 None None
-(array([-333., -341., -346., ..., -306., -389., -453.]), 1)
-AAAAAAAAAA: 460 None None
-(array([   73.,  -845., -1525., ...,    89.,    90.,    89.]), 1)
-AAAAAAAAAA: 662 None None
-(array([2576., 2668., 2688., ..., -517., -518., -553.]), 1)
-AAAAAAAAAA: 135 None None
-(array([ -13.,  -18.,  -43., ..., -174., -207., -206.]), 1)
-AAAAAAAAAA: 447 None None
-(array([ -125.,  -188.,  -246., ..., -7625., -7294., -6940.]), -1)
-AAAAAAAAAA: 1298 None None
-(array([1689., 1545., 1472., ..., 1452., 1640., 1771.]), 1)
-AAAAAAAAAA: 232 None None
-(array([-1507., -1533., -1583., ...,  1135.,  1432.,  1596.]), 1)
-AAAAAAAAAA: 716 None None
-(array([ 80., 218., 170., ..., 613., 671., 574.]), 1)
-AAAAAAAAAA: 1367 None None
-(array([-431., -556., -490., ..., -429., -604., -708.]), 1)
-AAAAAAAAAA: 1018 None None
-(array([138., 282., 211., ..., 549., 490., 435.]), -1)
-AAAAAAAAAA: 803 None None
-(array([-315., -306., -288., ...,  272.,  334.,  346.]), 1)
-AAAAAAAAAA: 563 None None
-(array([ -794., -1673., -1505., ...,  -685.,  -953., -1407.]), 1)
-AAAAAAAAAA: 1022 None None
-(array([231., 416., 289., ..., 263., 207., 123.]), 1)
-AAAAAAAAAA: 171 None None
-(array([   3.,   -1.,   30., ...,   83.,  -81., -261.]), 1)
-AAAAAAAAAA: 346 None None
-(array([ -100.,  -156.,   -36., ..., -1004.,  -954.,  -953.]), 1)
-AAAAAAAAAA: 663 None None
-(array([-556., -583., -552., ...,  789.,  868., 1055.]), 1)
-AAAAAAAAAA: 722 None None
-(array([-542., -443., -408., ..., -174., -548., -677.]), 1)
-AAAAAAAAAA: 76 None None
-(array([-120., -187., -239., ..., 1069.,  952.,  856.]), 1)
-AAAAAAAAAA: 75 None None
-(array([179., 212., 222., ..., 120.,  46., -41.]), 1)
-AAAAAAAAAA: 1167 None None
-(array([940., 940., 917., ..., 851., 898., 950.]), -1)
-AAAAAAAAAA: 1287 None None
-(array([ 810.,  739.,  736., ..., 1007.,  956.,  874.]), 1)
-AAAAAAAAAA: 1351 None None
-(array([-505., -430., -371., ..., -198.,  -95.,  -50.]), -1)
-AAAAAAAAAA: 525 None None
-(array([-199., -395., -327., ...,  -61.,  -26.,  -20.]), 1)
-AAAAAAAAAA: 960 None None
-(array([1219., 1146., 1049., ..., -402., -387., -160.]), 1)
-AAAAAAAAAA: 909 None None
-(array([ 205.,  189.,  176., ..., -408., -417., -426.]), 1)
-AAAAAAAAAA: 1360 None None
-(array([ 17.,  38., 116., ..., 319., 335., 267.]), 1)
-AAAAAAAAAA: 65 None None
-(array([ -145.,  -269.,  -559., ..., -1139.,  -823.,   598.]), -1)
-AAAAAAAAAA: 876 None None
-(array([-2024., -1879., -1684., ...,  -160.,  -149.,  -123.]), 1)
-AAAAAAAAAA: 1343 None None
-(array([ 244.,  425.,  304., ..., -317., -291., -235.]), 1)
-AAAAAAAAAA: 1110 None None
-(array([-2915., -4629., -3901., ..., -2693.,  2011.,  7843.]), 1)
-AAAAAAAAAA: 636 None None
-(array([ 3911.,  3551.,  3177., ..., -3321., -3595., -3760.]), 1)
-AAAAAAAAAA: 1384 None None
-(array([ 202.,  454.,  426., ..., -455., -423., -397.]), -1)
-AAAAAAAAAA: 1186 None None
-(array([ 39.,  69., -39., ..., 174., 146., 113.]), -1)
-AAAAAAAAAA: 983 None None
-(array([-409., -374., -374., ...,  469.,  542.,  680.]), 1)
-AAAAAAAAAA: 597 None None
-(array([ 1484.,  1442.,  1404., ..., -1804., -1638., -1452.]), 1)
-AAAAAAAAAA: 219 None None
-(array([-197., -225., -256., ...,   93.,   -8.,  -77.]), 1)
-AAAAAAAAAA: 634 None None
-(array([ 171.,  116.,  139., ..., -225., -201., -171.]), 1)
-AAAAAAAAAA: 273 None None
-(array([ 68.,  25., -36., ..., 142., 173., 209.]), 1)
-AAAAAAAAAA: 1365 None None
-(array([-954., -835., -757., ...,  789.,  779.,  686.]), 1)
-AAAAAAAAAA: 438 None None
-(array([  78.,  168.,  188., ..., 3221., 3282., 3020.]), 1)
-AAAAAAAAAA: 691 None None
-(array([1404., 1512., 1633., ...,  492.,  437.,  321.]), -1)
-AAAAAAAAAA: 611 None None
-(array([ 10.,  59.,  85., ..., 165., 148., 131.]), 1)
-AAAAAAAAAA: 1418 None None
-(array([ 332.,  422.,  519., ..., -333., -220.,  -80.]), 1)
-AAAAAAAAAA: 398 None None
-(array([ 89., 171.,  76., ..., 775., 781., 860.]), 1)
-AAAAAAAAAA: 889 None None
-(array([ 366.,  326.,  318., ..., -310., -168.,  -83.]), -1)
-AAAAAAAAAA: 1394 None None
-(array([398., 386., 356., ...,  -2.,  -4., -11.]), 1)
-AAAAAAAAAA: 784 None None
-(array([-53., -73., -71., ...,  22.,  30.,  82.]), 1)
-AAAAAAAAAA: 1266 None None
-(array([383., 752., 555., ..., 265., 229., 181.]), -1)
-AAAAAAAAAA: 356 None None
-(array([ 413.,  718.,  456., ...,  140.,  -69., -162.]), 1)
-AAAAAAAAAA: 435 None None
-(array([-318., -238., -191., ..., 1185., 1770., 1486.]), 1)
-AAAAAAAAAA: 1401 None None
-(array([ 842.,  847.,  964., ..., -557., -607., -545.]), 1)
-AAAAAAAAAA: 1101 None None
-(array([ 23.,  66., 143., ..., 794., 750., 742.]), 1)
-AAAAAAAAAA: 369 None None
-(array([-270., -260., -252., ..., -446., -476., -450.]), -1)
-AAAAAAAAAA: 1010 None None
-(array([ 79., 109., 155., ..., 913., 868., 823.]), -1)
-AAAAAAAAAA: 483 None None
-(array([-244., -172., -121., ..., -162., -103.,   -6.]), 1)
-AAAAAAAAAA: 66 None None
-(array([-200., -508., -590., ...,  151.,  142.,  163.]), -1)
-AAAAAAAAAA: 373 None None
-(array([-174., -176., -181., ...,   41.,   22.,   11.]), 1)
-AAAAAAAAAA: 605 None None
-(array([ 392.,  365.,  325., ..., -972., -902., -823.]), -1)
-AAAAAAAAAA: 31 None None
-(array([ -51., -116., -169., ..., -260., -249., -254.]), -1)
-AAAAAAAAAA: 494 None None
-(array([-111.,  -82.,  -44., ..., 1573., 1528., 1471.]), -1)
-AAAAAAAAAA: 1267 None None
-(array([ 148.,  122.,   90., ..., 7701., 8894., 9920.]), 1)
-AAAAAAAAAA: 878 None None
-(array([811., 782., 748., ..., 234., 197., 135.]), 1)
-AAAAAAAAAA: 1071 None None
-(array([4484., 4171., 3851., ..., -517., -503., -455.]), 1)
-AAAAAAAAAA: 58 None None
-(array([-263., -282., -286., ...,  -15.,  -25.,  -28.]), 1)
-AAAAAAAAAA: 646 None None
-(array([ 207.,  138.,  108., ..., -195., -319., -272.]), 1)
-AAAAAAAAAA: 1381 None None
-(array([218., 203., 274., ..., 337., 299., 258.]), -1)
-AAAAAAAAAA: 1345 None None
-(array([ 77., 127.,  63., ..., 301., 272., 257.]), 1)
-AAAAAAAAAA: 1254 None None
-(array([-328., -676., -529., ...,  519.,  530.,  491.]), -1)
-AAAAAAAAAA: 1106 None None
-(array([894., 851., 793., ..., 859., 771., 697.]), 1)
-AAAAAAAAAA: 158 None None
-(array([1485., 1408., 1314., ...,  201., -298., -431.]), 1)
-AAAAAAAAAA: 939 None None
-(array([  84.,  136.,  179., ...,   16.,  -64., -140.]), 1)
-AAAAAAAAAA: 170 None None
-(array([ 797.,  757.,  742., ...,  993., 1033.,  919.]), 1)
-AAAAAAAAAA: 680 None None
-(array([-150., -151., -148., ...,   81.,   99.,  110.]), 1)
-AAAAAAAAAA: 336 None None
-(array([-154.,  -34., -116., ...,  136.,    3.,  -34.]), 1)
-AAAAAAAAAA: 399 None None
-(array([ -672., -1387., -1210., ...,  -423.,  -443.,  -466.]), 1)
-AAAAAAAAAA: 1226 None None
-(array([104., 149., 110., ..., 390., 287., 292.]), 1)
-AAAAAAAAAA: 340 None None
-(array([ 235.,  186.,  103., ..., -265., -230., -197.]), 1)
-AAAAAAAAAA: 579 None None
-(array([-1198., -1127., -1130., ...,   -61.,   -29.,   -37.]), 1)
-AAAAAAAAAA: 160 None None
-(array([-5302., -5522., -5469., ...,    68.,   149.,   222.]), 1)
-AAAAAAAAAA: 1297 None None
-(array([2569., 5364., 4744., ..., 1880., 1879., 1764.]), 1)
-AAAAAAAAAA: 221 None None
-(array([ -40., -116., -130., ..., -269., -202., -186.]), 1)
-AAAAAAAAAA: 1333 None None
-(array([-279., -170.,  -68., ...,  164.,  239.,  308.]), 1)
-AAAAAAAAAA: 231 None None
-(array([  436.,   506.,   575., ..., -1285., -1394., -1432.]), 1)
-AAAAAAAAAA: 54 None None
-(array([  981.,  2013.,  2372., ..., -4940., -4506., -3729.]), 1)
-AAAAAAAAAA: 686 None None
-(array([-2243., -2061., -1852., ...,   989.,  1036.,  1041.]), -1)
-AAAAAAAAAA: 618 None None
-(array([  42.,  114.,  140., ..., -330., -357., -404.]), 1)
-AAAAAAAAAA: 720 None None
-(array([-32., -20.,  47., ..., 199., 139.,  95.]), 1)
-AAAAAAAAAA: 189 None None
-(array([ -503., -1068.,  -996., ...,  -351.,  -321.,  -233.]), -1)
-AAAAAAAAAA: 864 None None
-(array([ 600.,  652.,  756., ..., 1748., 2599., 3460.]), -1)
-AAAAAAAAAA: 1009 None None
-(array([289., 280., 286., ...,  25.,  44.,  63.]), -1)
-AAAAAAAAAA: 1234 None None
-(array([  -48.,    51.,   158., ..., -1766., -1609., -1573.]), 1)
-AAAAAAAAAA: 1414 None None
-(array([-416., -579., -399., ...,  186.,   99.,  246.]), 1)
-AAAAAAAAAA: 1129 None None
-(array([   8.,   17.,   36., ..., -155., -126., -101.]), 1)
-AAAAAAAAAA: 496 None None
-(array([ -77., -400., -675., ..., -187., -226., -328.]), -1)
-AAAAAAAAAA: 40 None None
-(array([795., 743., 679., ..., 463., 356., 335.]), -1)
-AAAAAAAAAA: 298 None None
-(array([  15.,  -51.,  -25., ..., -658., -671., -726.]), 1)
-AAAAAAAAAA: 1163 None None
-(array([-335., -617., -546., ...,  300.,  282.,  297.]), -1)
-AAAAAAAAAA: 1326 None None
-(array([-4479., -3935., -3385., ..., -1163., -1189., -1169.]), 1)
-AAAAAAAAAA: 312 None None
-(array([ 363.,  289.,  255., ..., -249.,   26.,  296.]), -1)
-AAAAAAAAAA: 1334 None None
-(array([ 367.,  426.,  479., ..., -273., -373., -529.]), 1)
-AAAAAAAAAA: 450 None None
-(array([ 122.,  147.,   26., ..., -679., -579., -779.]), -1)
-AAAAAAAAAA: 869 None None
-(array([-123., -307., -320., ...,  -43.,  -49.,  -19.]), 1)
-AAAAAAAAAA: 51 None None
-(array([ -896.,  -856., -1031., ...,    13.,    47.,    52.]), 1)
-AAAAAAAAAA: 1317 None None
-(array([-942., -968., -992., ...,  136.,  -19., -167.]), 1)
-AAAAAAAAAA: 1133 None None
-(array([ 655.,  790.,  855., ..., -195., -249., -318.]), 1)
-AAAAAAAAAA: 1350 None None
-(array([  45.,  111.,  134., ..., -604., -569., -552.]), 1)
-AAAAAAAAAA: 467 None None
-(array([ 628., 1168.,  851., ...,  411.,  452.,  486.]), 1)
-AAAAAAAAAA: 785 None None
-(array([ 80., 124., 114., ..., 158., 150., 164.]), 1)
-AAAAAAAAAA: 1341 None None
-(array([-1679., -1723., -1723., ...,   268.,   254.,   254.]), 1)
-AAAAAAAAAA: 110 None None
-(array([ 448.,  393.,  344., ..., -969., -966., -974.]), -1)
-AAAAAAAAAA: 1187 None None
-(array([ 171.,   87.,   44., ..., -330., -351., -370.]), 1)
-AAAAAAAAAA: 1037 None None
-(array([  2215.,   2346.,   2474., ..., -13961., -13544., -12997.]), -1)
-AAAAAAAAAA: 1074 None None
-(array([ -57., -100., -108., ..., -723., -682., -619.]), -1)
-AAAAAAAAAA: 568 None None
-(array([ 374.,  448.,  496., ..., -211., -153.,  -87.]), -1)
-AAAAAAAAAA: 1052 None None
-(array([ -737., -1583., -1387., ..., -2176., -2077., -1958.]), 1)
-AAAAAAAAAA: 333 None None
-(array([-367., -357., -380., ...,  -73., -111., -138.]), 1)
-AAAAAAAAAA: 734 None None
-(array([ 784., 1093., 1432., ..., -781., -564., -275.]), 1)
-AAAAAAAAAA: 39 None None
-(array([ 791., 1619., 1147., ...,  830.,  842.,  860.]), -1)
-AAAAAAAAAA: 705 None None
-(array([-485., -444., -426., ...,  -57.,   14.,   63.]), -1)
-AAAAAAAAAA: 571 None None
-(array([ 12.,  50., 120., ..., 195., 232., 283.]), -1)
-AAAAAAAAAA: 421 None None
-(array([-43., -29., -57., ..., 490., 423., 482.]), 1)
-AAAAAAAAAA: 986 None None
-(array([-235., -233., -249., ..., -526., -486., -369.]), 1)
-AAAAAAAAAA: 1425 None None
-(array([-119., -204.,  -81., ...,   79.,  192.,  293.]), -1)
-AAAAAAAAAA: 874 None None
-(array([-2135., -2107., -2164., ...,   644.,   657.,   705.]), 1)
-AAAAAAAAAA: 1196 None None
-(array([487., 468., 465., ...,  36.,  47.,  85.]), -1)
-AAAAAAAAAA: 850 None None
-(array([ 429.,  403.,  384., ..., 1345., 1343., 1338.]), 1)
-AAAAAAAAAA: 1032 None None
-(array([  730.,  1565.,  1436., ..., -1182., -1149., -1141.]), 1)
-AAAAAAAAAA: 1178 None None
-(array([ 384.,  802.,  687., ..., 4480., 3375., 2263.]), -1)
-AAAAAAAAAA: 879 None None
-(array([  98.,   33.,  -38., ..., -673., -592., -461.]), 1)
-AAAAAAAAAA: 442 None None
-(array([ 435.,  918.,  827., ..., 7527., 7528., 7407.]), -1)
-AAAAAAAAAA: 396 None None
-(array([-2288., -2240., -2194., ...,   245.,   140.,   115.]), 1)
-AAAAAAAAAA: 751 None None
-(array([  602.,  1149.,   839., ...,  -573.,  -637., -1046.]), -1)
-AAAAAAAAAA: 776 None None
-(array([-436., -490., -559., ...,  -59.,  -64.,  -56.]), 1)
-AAAAAAAAAA: 386 None None
-(array([ 16.,  37.,  64., ..., 118.,  73.,  43.]), 1)
-AAAAAAAAAA: 283 None None
-(array([-228., -164.,  -74., ..., -403., -457., -417.]), 1)
-AAAAAAAAAA: 1080 None None
-(array([342., 749., 709., ...,   5., -14., -36.]), 1)
-AAAAAAAAAA: 280 None None
-(array([  9.,  38.,  51., ..., 170., 147., 118.]), 1)
-AAAAAAAAAA: 1359 None None
-(array([-417., -427., -416., ..., -219., -241., -242.]), 1)
-AAAAAAAAAA: 884 None None
-(array([-194., -372., -422., ..., -569., -470., -331.]), 1)
-AAAAAAAAAA: 452 None None
-(array([180.,  58., 245., ..., 402., 252., 374.]), 1)
-AAAAAAAAAA: 974 None None
-(array([   24.,    58.,   117., ..., -2864., -2013., -1143.]), 1)
-AAAAAAAAAA: 894 None None
-(array([ 471.,  285.,  153., ..., 1535., 1345., 1254.]), 1)
-AAAAAAAAAA: 1263 None None
-(array([   83.,   214.,   223., ..., -3826., -3697., -3437.]), 1)
-AAAAAAAAAA: 156 None None
-(array([-899., -817., -689., ..., -277., -398., -584.]), 1)
-AAAAAAAAAA: 1111 None None
-(array([11716., 13693., 12653., ..., -2798., -3891., -2153.]), 1)
-AAAAAAAAAA: 1339 None None
-(array([-42., -38.,  50., ..., 115., 332., 550.]), 1)
-AAAAAAAAAA: 870 None None
-(array([  -1.,   46.,   59., ..., -132.,  -74.,  -50.]), 1)
-AAAAAAAAAA: 444 None None
-(array([ 866., 1059., 1266., ..., -429., -386., -324.]), 1)
-AAAAAAAAAA: 593 None None
-(array([ 892.,  892.,  900., ..., -281., -267., -275.]), 1)
-AAAAAAAAAA: 1329 None None
-(array([ 155.,  313.,  434., ..., -422., -469., -488.]), 1)
-AAAAAAAAAA: 246 None None
-(array([ 1.5000e+02,  8.0000e+00, -3.8300e+02, ..., -2.0827e+04,
-       -1.8672e+04, -1.6063e+04]), -1)
-AAAAAAAAAA: 392 None None
-(array([ 276.,  313.,  339., ..., -159., -189., -248.]), 1)
-AAAAAAAAAA: 1417 None None
-(array([ -837., -1822., -1736., ...,   171.,   229.,   264.]), 1)
-AAAAAAAAAA: 780 None None
-(array([-565., -580., -581., ...,  617.,  510.,  349.]), 1)
-AAAAAAAAAA: 1169 None None
-(array([-1273., -1381., -1468., ...,  1212.,  1262.,  1261.]), -1)
-AAAAAAAAAA: 1231 None None
-(array([ 745., 1546., 1294., ...,  272.,  247.,  263.]), 1)
-AAAAAAAAAA: 1087 None None
-(array([ 16.,  19., -10., ..., 308., 332., 215.]), 1)
-AAAAAAAAAA: 682 None None
-(array([  848.,   831.,   873., ..., -2734., -2806., -2758.]), 1)
-AAAAAAAAAA: 348 None None
-(array([-194., -131.,  -96., ...,  -90.,  -19.,   28.]), 1)
-AAAAAAAAAA: 353 None None
-(array([1530., 1856., 2145., ..., -608., -487., -345.]), 1)
-AAAAAAAAAA: 893 None None
-(array([ 60.,  62., -67., ..., 942., 820., 632.]), 1)
-AAAAAAAAAA: 352 None None
-(array([ -84., -188., -239., ...,  477.,  829., 1208.]), 1)
-AAAAAAAAAA: 1149 None None
-(array([286., 229., 181., ..., 807., 841., 870.]), 1)
-AAAAAAAAAA: 1281 None None
-(array([ -6., -38., -63., ..., 537., 655., 731.]), 1)
-AAAAAAAAAA: 994 None None
-(array([  838.,   797.,   712., ..., -4277., -4489., -4638.]), 1)
-AAAAAAAAAA: 607 None None
-(array([  -42.,    22.,   167., ..., -2967., -2761., -2261.]), -1)
-AAAAAAAAAA: 999 None None
-(array([ 395.,  398.,  508., ..., -482., -548., -668.]), 1)
-AAAAAAAAAA: 388 None None
-(array([191., 175., 191., ...,  58.,  48.,  85.]), 1)
-AAAAAAAAAA: 294 None None
-(array([-595., -270.,   83., ...,  642.,  485.,  349.]), 1)
-AAAAAAAAAA: 1176 None None
-(array([ 65.,  93.,  34., ..., -19.,  12.,  20.]), -1)
-AAAAAAAAAA: 36 None None
-(array([ -96., -106., -110., ..., -218., -197., -214.]), -1)
-AAAAAAAAAA: 1244 None None
-(array([  23.,  121.,  251., ..., -618., -587., -500.]), -1)
-AAAAAAAAAA: 265 None None
-(array([ 348.,  321.,  296., ..., -839., -880., -912.]), 1)
-AAAAAAAAAA: 791 None None
-(array([ 10.,  12.,   1., ..., 253., 366., 482.]), 1)
-AAAAAAAAAA: 1203 None None
-(array([-558., -710., -873., ..., -746., -644., -622.]), -1)
-AAAAAAAAAA: 364 None None
-(array([-397.,   71.,  214., ...,  935.,  819.,  691.]), 1)
-AAAAAAAAAA: 1096 None None
-(array([678., 642., 574., ..., 183., 245., 212.]), -1)
-AAAAAAAAAA: 955 None None
-(array([-1187., -1114., -1045., ...,  1455.,  1512.,  1521.]), -1)
-AAAAAAAAAA: 684 None None
-(array([241., 292., 286., ..., 326., 198., 206.]), 1)
-AAAAAAAAAA: 934 None None
-(array([ -512.,  -521.,  -483., ...,  -549., -1103., -1658.]), 1)
-AAAAAAAAAA: 251 None None
-(array([  570.,   751.,  1018., ..., 10500., 10810., 10709.]), -1)
-AAAAAAAAAA: 262 None None
-(array([-3409., -3248., -3172., ...,   162.,    81.,    48.]), 1)
-AAAAAAAAAA: 500 None None
-(array([-166., -100.,  -45., ..., -630., -645., -646.]), 1)
-AAAAAAAAAA: 866 None None
-(array([ 313., 2430., 4480., ...,  -77.,  -35.,  -11.]), 1)
-AAAAAAAAAA: 490 None None
-(array([741., 843., 919., ..., 129., 107.,  58.]), -1)
-AAAAAAAAAA: 196 None None
-(array([ 1952.,  1656.,  1304., ..., -6473., -5402., -4214.]), -1)
-AAAAAAAAAA: 965 None None
-(array([ 385.,  413.,  461., ..., 2691., 2757., 2734.]), 1)
-AAAAAAAAAA: 225 None None
-(array([-106., -152., -136., ..., 1127.,  763.,  396.]), 1)
-AAAAAAAAAA: 316 None None
-(array([ -975., -1032., -1051., ...,  1230.,  1104.,  1004.]), 1)
-AAAAAAAAAA: 119 None None
-(array([-326., -362., -382., ...,   72.,   35.,   41.]), -1)
-AAAAAAAAAA: 1246 None None
-(array([-229., -430., -360., ..., -284., -269., -157.]), -1)
-AAAAAAAAAA: 724 None None
-(array([-335., -583., -382., ...,  315.,   20., -256.]), 1)
-AAAAAAAAAA: 11 None None
-(array([ 274.,  334.,  367., ..., -359., -425., -480.]), 1)
-AAAAAAAAAA: 1288 None None
-(array([ 806.,  725.,  600., ..., -428., -426., -364.]), 1)
-AAAAAAAAAA: 521 None None
-(array([-190., -420., -409., ...,  353.,  353.,  339.]), 1)
-AAAAAAAAAA: 1215 None None
-(array([-1396., -1927., -2519., ...,   -37.,  -102.,  -103.]), 1)
-AAAAAAAAAA: 1308 None None
-(array([ 781.,  628.,  494., ..., -743., -673., -677.]), 1)
-AAAAAAAAAA: 41 None None
-(array([  357.,   215.,   104., ..., -2820., -1713.,  -488.]), -1)
-AAAAAAAAAA: 52 None None
-(array([  22.,   33.,  -29., ..., -860., -945., -908.]), 1)
-AAAAAAAAAA: 783 None None
-(array([ 83., 171., 117., ..., -70., -50., -68.]), 1)
-AAAAAAAAAA: 885 None None
-(array([-185.,  -58.,  120., ..., -300., -405., -492.]), 1)
-AAAAAAAAAA: 384 None None
-(array([ 264.,  284.,  331., ..., -134., -212., -283.]), 1)
-AAAAAAAAAA: 827 None None
-(array([199., 420., 405., ...,  20.,  79.,  53.]), 1)
-AAAAAAAAAA: 59 None None
-(array([-32., -44., -42., ..., 482., 559., 636.]), 1)
-AAAAAAAAAA: 1310 None None
-(array([-487., -494., -510., ...,  -10.,   -9.,   -4.]), 1)
-AAAAAAAAAA: 777 None None
-(array([  -80.,   -66.,  -102., ..., -1452., -1549., -1613.]), 1)
-AAAAAAAAAA: 1223 None None
-(array([ -9., -90., -41., ..., 253., 252., 241.]), 1)
-AAAAAAAAAA: 168 None None
-(array([1155., 1199., 1277., ...,  293.,  289.,  302.]), 1)
-AAAAAAAAAA: 1420 None None
-(array([-361., -708., -583., ..., -443., -495., -572.]), 1)
-AAAAAAAAAA: 694 None None
-(array([  20., -111., -205., ..., -247.,  -28.,  135.]), -1)
-AAAAAAAAAA: 1025 None None
-(array([-1135., -1923.,  -964., ...,  -937., -1015., -1095.]), -1)
-AAAAAAAAAA: 535 None None
-(array([125., 132., 143., ..., 176., 170., 189.]), 1)
-AAAAAAAAAA: 245 None None
-(array([-956., -896., -761., ...,  501.,  526.,  411.]), -1)
-AAAAAAAAAA: 1237 None None
-(array([ 145.,  183.,  225., ..., -102., -126., -138.]), -1)
-AAAAAAAAAA: 101 None None
-(array([ 197.,  172.,  149., ..., -899., -914., -918.]), 1)
-AAAAAAAAAA: 703 None None
-(array([120., 130.,  70., ..., 216., 203., 201.]), 1)
-AAAAAAAAAA: 188 None None
-(array([-754., -826., -889., ..., 1183., 1093., 1059.]), -1)
-AAAAAAAAAA: 1390 None None
-(array([4056., 3152., 2241., ..., 4130., 3185., 2199.]), 1)
-AAAAAAAAAA: 335 None None
-(array([ 251.,  520.,  402., ..., -131., -154.,  -96.]), 1)
-AAAAAAAAAA: 572 None None
-(array([311., 341., 329., ..., 117., 168., 188.]), 1)
-AAAAAAAAAA: 1232 None None
-(array([336., 382., 270., ..., -37.,   0.,  19.]), 1)
-AAAAAAAAAA: 532 None None
-(array([ -668.,  -638.,  -585., ..., -2425., -2435., -2418.]), 1)
-AAAAAAAAAA: 755 None None
-(array([-339., -850., -979., ..., -390., -419., -445.]), -1)
-AAAAAAAAAA: 987 None None
-(array([-322., -238., -189., ...,   34.,   40.,   98.]), 1)
-AAAAAAAAAA: 1068 None None
-(array([   17., -1084., -1049., ...,  -470.,  -402.,  -317.]), -1)
-AAAAAAAAAA: 2 None None
-(array([ 158.,   88.,  152., ..., -368., -404., -400.]), 1)
-AAAAAAAAAA: 360 None None
-(array([-242., -391., -154., ...,  315.,  281.,  212.]), -1)
-AAAAAAAAAA: 621 None None
-(array([ 117.,  158.,  189., ..., -287., -454., -616.]), 1)
-AAAAAAAAAA: 1353 None None
-(array([ 753.,  825.,  898., ..., -658., -645., -632.]), -1)
-AAAAAAAAAA: 1377 None None
-(array([-314., -308., -327., ...,  -91., -138., -128.]), 1)
-AAAAAAAAAA: 1121 None None
-(array([5338., 4697., 3941., ..., -183.,  -31.,  110.]), 1)
-AAAAAAAAAA: 324 None None
-(array([-1.000e+00, -6.700e+01, -4.400e+01, ...,  1.419e+03,  1.406e+03,
-        1.339e+03]), 1)
-AAAAAAAAAA: 417 None None
-(array([  15.,  -34., -186., ...,  517.,  490.,  464.]), 1)
-AAAAAAAAAA: 1392 None None
-(array([151., 291., 224., ..., -72., -39.,  -5.]), 1)
-AAAAAAAAAA: 1092 None None
-(array([-668., -735., -677., ...,  392.,  415.,  465.]), -1)
-AAAAAAAAAA: 206 None None
-(array([  100.,   186.,   207., ...,  -569.,  -804., -1096.]), 1)
-AAAAAAAAAA: 1268 None None
-(array([-3292., -6647., -5310., ...,  -141.,  -115.,  -147.]), 1)
-AAAAAAAAAA: 292 None None
-(array([-200., -157., -133., ...,  142.,  163.,  141.]), 1)
-AAAAAAAAAA: 200 None None
-(array([ 4902., 10353.,  8999., ...,  1662.,  1449.,  1297.]), 1)
-AAAAAAAAAA: 457 None None
-(array([624., 656., 720., ..., 200., 128.,  42.]), -1)
-AAAAAAAAAA: 237 None None
-(array([-243., -337., -128., ...,  -34.,  -26.,  -13.]), 1)
-AAAAAAAAAA: 321 None None
-(array([  48.,   38.,   44., ..., -787., -561., -365.]), 1)
-AAAAAAAAAA: 106 None None
-(array([ -991., -1044.,  -995., ...,   666.,  1223.,  1766.]), 1)
-AAAAAAAAAA: 923 None None
-(array([ 183.,  192.,  165., ..., 1797., 1800., 1699.]), 1)
-AAAAAAAAAA: 961 None None
-(array([-226., -282., -202., ..., -127., -121., -108.]), 1)
-AAAAAAAAAA: 988 None None
-(array([119., 157., 219., ..., 131., 106., 114.]), 1)
-AAAAAAAAAA: 461 None None
-(array([  76.,   82.,   80., ..., -559., -496., -426.]), 1)
-AAAAAAAAAA: 1160 None None
-(array([ 64.,  83., 130., ..., 101., 105., 104.]), -1)
-AAAAAAAAAA: 50 None None
-(array([ 268.,  495.,  434., ..., -437., -651., -685.]), 1)
-AAAAAAAAAA: 849 None None
-(array([-326., -425., -241., ...,  531.,  519.,  473.]), 1)
-AAAAAAAAAA: 547 None None
-(array([151., 337., 339., ...,  28.,  18., 109.]), -1)
-AAAAAAAAAA: 796 None None
-(array([ -82., -122.,  -98., ...,  133.,  112.,   66.]), 1)
-AAAAAAAAAA: 45 None None
-(array([-40., -32., -91., ..., -11., -36., -29.]), 1)
-AAAAAAAAAA: 1105 None None
-(array([-3139., -2708., -2277., ...,   914.,   927.,   926.]), 1)
-AAAAAAAAAA: 992 None None
-(array([ 273.,  286.,  319., ..., -461., -434., -422.]), 1)
-AAAAAAAAAA: 938 None None
-(array([ -42., -105.,  -96., ...,  -60.,  -20.,   46.]), -1)
-AAAAAAAAAA: 92 None None
-(array([   7., -108., -236., ..., 3871., 3571., 3233.]), -1)
-AAAAAAAAAA: 817 None None
-(array([233., 231., 265., ..., 227., 241., 185.]), 1)
-AAAAAAAAAA: 1172 None None
-(array([ 201.,  210.,  269., ..., -296., -283., -318.]), 1)
-AAAAAAAAAA: 55 None None
-(array([-2962., -2260., -1619., ...,   547.,   692.,   824.]), -1)
-AAAAAAAAAA: 609 None None
-(array([-306., -416., -496., ..., 1597., 1367., 1197.]), 1)
-AAAAAAAAAA: 518 None None
-(array([ 12.,  93.,  24., ..., 134., 134., 224.]), 1)
-AAAAAAAAAA: 553 None None
-(array([110., 221., 229., ..., -77., -41., -15.]), 1)
-AAAAAAAAAA: 314 None None
-(array([-493., -862., -745., ...,  376.,  354.,  316.]), 1)
-AAAAAAAAAA: 1372 None None
-(array([ -693., -1853., -2169., ...,   403.,   281.,   182.]), 1)
-AAAAAAAAAA: 1251 None None
-(array([-626., -638., -630., ..., 1313., 1575., 1815.]), -1)
-AAAAAAAAAA: 93 None None
-(array([ -816., -1635., -1339., ..., -1098., -1074., -1047.]), -1)
-AAAAAAAAAA: 696 None None
-(array([ 535., 1111.,  842., ..., -152., -154., -163.]), -1)
-AAAAAAAAAA: 497 None None
-(array([-334., -430., -395., ...,  266.,  292.,  273.]), -1)
-AAAAAAAAAA: 454 None None
-(array([-312., -672., -688., ..., -463., -515., -545.]), 1)
-AAAAAAAAAA: 548 None None
-(array([ 201.,  281.,  335., ..., -345., -427., -459.]), -1)
-AAAAAAAAAA: 1242 None None
-(array([ 648.,  572.,  502., ..., -645., -697., -648.]), -1)
-AAAAAAAAAA: 1399 None None
-(array([-3191., -7739., -8427., ..., -1053.,  -896.,  -988.]), 1)
-AAAAAAAAAA: 38 None None
-(array([-1006.,  -534.,  -448., ...,  -579.,  -550.,  -495.]), -1)
-AAAAAAAAAA: 186 None None
-(array([-1122.,  -930.,  -757., ...,  1489.,  1375.,  1247.]), -1)
-AAAAAAAAAA: 1349 None None
-(array([ 101.,  140.,  158., ..., -289., -325., -306.]), 1)
-AAAAAAAAAA: 470 None None
-(array([-288., -276., -235., ...,  439.,  447.,  458.]), 1)
-AAAAAAAAAA: 898 None None
-(array([145., 143., 150., ..., 137.,  83.,  43.]), -1)
-AAAAAAAAAA: 1423 None None
-(array([355., 401., 397., ...,  64.,  45.,  91.]), -1)
-AAAAAAAAAA: 502 None None
-(array([  81.,   66.,  -37., ..., -661., -743., -932.]), 1)
-AAAAAAAAAA: 249 None None
-(array([ -316.,  1766.,  3267., ..., -8057., -8764., -9101.]), -1)
-AAAAAAAAAA: 526 None None
-(array([ 26.,  68., 126., ...,  -1., -32., -36.]), 1)
-AAAAAAAAAA: 802 None None
-(array([ 260.,  255.,  192., ..., -329., -305., -321.]), 1)
-AAAAAAAAAA: 57 None None
-(array([ 213.,  338.,   87., ..., -209., -222., -253.]), -1)
-AAAAAAAAAA: 786 None None
-(array([ 174.,  185.,  200., ..., -242., -148.,  117.]), 1)
-AAAAAAAAAA: 238 None None
-(array([   8.,  -31.,    4., ..., -214., -245., -192.]), 1)
-AAAAAAAAAA: 503 None None
-(array([-1165., -1304., -1257., ...,   715.,   700.,   674.]), 1)
-AAAAAAAAAA: 1370 None None
-(array([-1371., -1161., -1039., ...,   664.,   566.,   493.]), 1)
-AAAAAAAAAA: 1270 None None
-(array([527., 542., 591., ..., 105.,  36.,   2.]), -1)
-AAAAAAAAAA: 411 None None
-(array([102.,  73.,  86., ...,   9.,  47.,  57.]), 1)
-AAAAAAAAAA: 124 None None
-(array([ 864., 1043., 1009., ...,  311.,  351.,  611.]), 1)
-AAAAAAAAAA: 1107 None None
-(array([  633.,   581.,   548., ..., -2654., -2490., -2249.]), 1)
-AAAAAAAAAA: 495 None None
-(array([458., 971., 820., ..., 993., 655., 251.]), -1)
-AAAAAAAAAA: 1412 None None
-(array([  63.,   36.,   45., ...,  954., 1063., 1100.]), 1)
-AAAAAAAAAA: 1013 None None
-(array([262., 229., 207., ...,  12.,  11.,  24.]), 1)
-AAAAAAAAAA: 954 None None
-(array([ -528.,  -432.,  -322., ..., -1211., -1256., -1239.]), -1)
-AAAAAAAAAA: 341 None None
-(array([-127.,  -39.,  -18., ...,  417.,  321.,  242.]), 1)
-AAAAAAAAAA: 208 None None
-(array([-104.,   55.,  255., ..., -311., -365., -434.]), 1)
-AAAAAAAAAA: 1023 None None
-(array([  34.,  -30.,  -85., ..., 1928., 2125., 2413.]), -1)
-AAAAAAAAAA: 26 None None
-(array([410., 424., 444., ...,  47.,  35., -33.]), 1)
-AAAAAAAAAA: 147 None None
-(array([-483., -299.,  -92., ..., -959., -803., -661.]), 1)
-AAAAAAAAAA: 1020 None None
-(array([102.,  89.,  78., ..., 267., 240., 264.]), 1)
-AAAAAAAAAA: 458 None None
-(array([  41.,  107.,  102., ...,  -64.,  -86., -108.]), -1)
-AAAAAAAAAA: 440 None None
-(array([1673., 1535., 1430., ..., -159., -164., -189.]), -1)
-AAAAAAAAAA: 852 None None
-(array([307., 425., 407., ..., 491., 459., 171.]), 1)
-AAAAAAAAAA: 1253 None None
-(array([-340., -332., -313., ..., 1801., 1950., 2126.]), -1)
-AAAAAAAAAA: 1194 None None
-(array([ -30., -107., -198., ..., -807., -877., -922.]), 1)
-AAAAAAAAAA: 1410 None None
-(array([-127., -115., -119., ...,  -86.,  -63.,  -54.]), 1)
-AAAAAAAAAA: 279 None None
-(array([4892., 4623., 4062., ..., -324., -208.,  -85.]), 1)
-AAAAAAAAAA: 1197 None None
-(array([   87.,   100.,   120., ..., -1580., -1344., -1174.]), -1)
-AAAAAAAAAA: 28 None None
-(array([-218., -147., -169., ...,  411.,  304.,  455.]), -1)
-AAAAAAAAAA: 1104 None None
-(array([-1075., -2112., -1697., ..., -4124., -3892., -3538.]), 1)
-AAAAAAAAAA: 1017 None None
-(array([1759., 1625., 1480., ...,  514.,  435.,  321.]), -1)
-AAAAAAAAAA: 1224 None None
-(array([263., 220., 236., ..., 128., 127.,  62.]), 1)
-AAAAAAAAAA: 47 None None
-(array([ 3602.,  3764.,  3856., ..., -2686., -2565., -2295.]), 1)
-AAAAAAAAAA: 310 None None
-(array([-197., -199., -201., ...,  254.,  282.,  210.]), -1)
-AAAAAAAAAA: 1243 None None
-(array([ -42.,  165.,  465., ..., -234., -178.,  -41.]), -1)
-AAAAAAAAAA: 1000 None None
-(array([ -397.,  -786.,  -629., ...,  -885., -1002.,  -779.]), 1)
-AAAAAAAAAA: 654 None None
-(array([  96.,   23.,   94., ..., 1058., 1192., 1309.]), -1)
-AAAAAAAAAA: 971 None None
-(array([ 1317.,  2399.,  2020., ..., -3252., -3226., -3190.]), -1)
-AAAAAAAAAA: 667 None None
-(array([ -389.,  -341.,  -268., ...,  -897.,  -981., -1050.]), 1)
-AAAAAAAAAA: 1114 None None
-(array([-288., -663., -669., ...,  264.,  319.,  362.]), 1)
-AAAAAAAAAA: 537 None None
-(array([ -579., -1719., -2055., ..., -1927., -1768., -1561.]), 1)
-AAAAAAAAAA: 729 None None
-(array([ -95., -115.,   15., ..., -140., -263., -359.]), 1)
-AAAAAAAAAA: 1278 None None
-(array([ 597.,  659.,  798., ..., -718., -482., -512.]), 1)
-AAAAAAAAAA: 1116 None None
-(array([ 622.,  670.,  692., ..., -166., -213., -250.]), 1)
-AAAAAAAAAA: 806 None None
-(array([-174.,  -87.,  -67., ...,  209.,  -14., -452.]), 1)
-AAAAAAAAAA: 194 None None
-(array([ 2358.,  2282.,  2125., ..., -2860., -2739., -2594.]), -1)
-AAAAAAAAAA: 122 None None
-(array([-449., -525., -430., ..., -434., -261., -633.]), 1)
-AAAAAAAAAA: 822 None None
-(array([-152., -117.,   35., ..., -563., -688., -752.]), -1)
-AAAAAAAAAA: 87 None None
-(array([248., 178., 183., ..., 196., 163., 127.]), 1)
-AAAAAAAAAA: 242 None None
-(array([-290., -275., -275., ...,   10.,   24.,   29.]), -1)
-AAAAAAAAAA: 697 None None
-(array([-162., -128., -121., ...,  361.,  351.,  395.]), 1)
-AAAAAAAAAA: 74 None None
-(array([ -551., -1011.,  -715., ...,    85.,   137.,   151.]), 1)
-AAAAAAAAAA: 1235 None None
-(array([124., 301., 304., ..., 548., 447., 329.]), 1)
-AAAAAAAAAA: 1126 None None
-(array([  7068.,   -851.,  -6614., ..., -20331., -20674., -19736.]), 1)
-AAAAAAAAAA: 217 None None
-(array([-2573., -5220., -4403., ...,  -574.,  -397.,  -335.]), 1)
-AAAAAAAAAA: 1236 None None
-(array([ 191.,   42.,  -99., ..., -144.,  -76.,   44.]), -1)
-AAAAAAAAAA: 349 None None
-(array([ 78., 128., 172., ..., 268., 251., 212.]), 1)
-AAAAAAAAAA: 842 None None
-(array([-167., -337., -326., ..., -434., -415., -361.]), 1)
-AAAAAAAAAA: 382 None None
-(array([ 410.,  457.,  501., ..., 3396., 2629., 2190.]), -1)
-AAAAAAAAAA: 1162 None None
-(array([-36., -60., -80., ...,  95.,  99., 102.]), -1)
-AAAAAAAAAA: 763 None None
-(array([ -96., -242., -237., ...,   43.,    3.,  -22.]), 1)
-AAAAAAAAAA: 1398 None None
-(array([1335., 1229., 1134., ..., -565., -422., -261.]), 1)
-AAAAAAAAAA: 286 None None
-(array([-20., -71., -43., ..., 190.,  79.,  20.]), -1)
-AAAAAAAAAA: 1292 None None
-(array([-155., -316., -418., ..., -374., -152.,   73.]), 1)
-AAAAAAAAAA: 528 None None
-(array([-270., -233., -295., ..., -307., -287., -276.]), 1)
-AAAAAAAAAA: 758 None None
-(array([ 806.,  747.,  672., ..., -320., -318., -323.]), 1)
-AAAAAAAAAA: 888 None None
-(array([ 745., 1567., 1391., ...,  318.,  338.,  378.]), 1)
-AAAAAAAAAA: 1130 None None
-(array([-50.,  -5.,  69., ...,  89., 120., 118.]), 1)
-AAAAAAAAAA: 88 None None
-(array([148., 230., 226., ..., -97., -63., -75.]), 1)
-AAAAAAAAAA: 619 None None
-(array([-526., -532., -577., ...,  160.,  122.,  146.]), 1)
-AAAAAAAAAA: 911 None None
-(array([ -48.,  -54.,  -22., ..., -356., -330., -280.]), 1)
-AAAAAAAAAA: 927 None None
-(array([-310., -342., -397., ...,   63.,   45.,   20.]), 1)
-AAAAAAAAAA: 631 None None
-(array([-566., -545., -454., ..., -717., -750., -784.]), -1)
-AAAAAAAAAA: 1249 None None
-(array([ 97., 134., 127., ..., 144., 198., 295.]), 1)
-AAAAAAAAAA: 545 None None
-(array([ -351.,  -343.,  -381., ..., -2650., -2630., -2597.]), -1)
-AAAAAAAAAA: 409 None None
-(array([-105., -192., -138., ...,  -85., -102., -100.]), 1)
-AAAAAAAAAA: 916 None None
-(array([ -73., -107., -106., ...,    3., -285., -724.]), 1)
-AAAAAAAAAA: 750 None None
-(array([-3415., -3495., -3554., ...,  1618.,  1618.,  1648.]), -1)
-AAAAAAAAAA: 627 None None
-(array([3225., 3498., 3497., ...,  436.,  303.,  163.]), -1)
-AAAAAAAAAA: 865 None None
-(array([  341.,   612.,   410., ..., -5890., -3882., -1808.]), -1)
-AAAAAAAAAA: 673 None None
-(array([-32.,  17., 104., ..., 152., 153., 171.]), -1)
-AAAAAAAAAA: 1385 None None
-(array([ -394.,  -357.,  -319., ..., -1205., -1183., -1158.]), 1)
-AAAAAAAAAA: 812 None None
-(array([ -73., -115.,  -89., ...,  724.,  887.,  937.]), 1)
-AAAAAAAAAA: 715 None None
-(array([ 99.,  32.,  51., ...,  57., 138., 108.]), 1)
-AAAAAAAAAA: 53 None None
-(array([-900., -924., -928., ..., -816., -946., -967.]), 1)
-AAAAAAAAAA: 139 None None
-(array([-337., -334., -348., ...,  386.,  368.,  377.]), 1)
-AAAAAAAAAA: 5 None None
-(array([ 158.,  154.,  151., ...,  -44.,  -94., -344.]), 1)
-AAAAAAAAAA: 1081 None None
-(array([ -67.,  -87., -103., ..., 2064., 1904., 1839.]), 1)
-AAAAAAAAAA: 1079 None None
-(array([714., 683., 655., ..., 188., 176., 201.]), 1)
-AAAAAAAAAA: 1200 None None
-(array([ 330.,  307.,  300., ..., -791., -797., -606.]), 1)
-AAAAAAAAAA: 592 None None
-(array([160.,  89.,   9., ..., 802., 840., 870.]), 1)
-AAAAAAAAAA: 818 None None
-(array([ 175.,  162.,  115., ..., -206., -143., -105.]), 1)
-AAAAAAAAAA: 920 None None
-(array([118., 249., 300., ..., 227., 265., 266.]), 1)
-AAAAAAAAAA: 604 None None
-(array([ 982., 1031., 1051., ...,  446.,  414.,  399.]), -1)
-AAAAAAAAAA: 742 None None
-(array([ 317.,  305.,  297., ..., -212., -173., -126.]), 1)
-AAAAAAAAAA: 272 None None
-(array([433., 931., 859., ..., 114.,  86., 109.]), 1)
-AAAAAAAAAA: 1035 None None
-(array([-157., -134., -133., ..., -352., -338., -304.]), 1)
-AAAAAAAAAA: 640 None None
-(array([ -18.,  -29.,  -47., ..., -113., -103., -158.]), -1)
-AAAAAAAAAA: 977 None None
-(array([ 445.,  457.,  419., ..., -339., -420., -521.]), 1)
-AAAAAAAAAA: 1252 None None
-(array([2020., 2164., 2275., ..., -351., -337., -341.]), -1)
-AAAAAAAAAA: 1357 None None
-(array([175., 146., 151., ...,   0.,  -4.,  -3.]), 1)
-AAAAAAAAAA: 972 None None
-(array([-3025., -2744., -2274., ...,   643.,   640.,   646.]), 1)
-AAAAAAAAAA: 1198 None None
-(array([ -25., -144., -271., ...,  225.,  221.,  233.]), -1)
-AAAAAAAAAA: 27 None None
-(array([-134., -225., -278., ..., -118., -221., -125.]), 1)
-AAAAAAAAAA: 234 None None
-(array([ -594.,  -633.,  -647., ..., -3555., -3111., -2658.]), 1)
-AAAAAAAAAA: 18 None None
-(array([1479., 1405., 1364., ...,  364.,  109.,   -4.]), 1)
-AAAAAAAAAA: 964 None None
-(array([ 37.,  64.,  38., ..., 251., 314., 353.]), 1)
-AAAAAAAAAA: 1397 None None
-(array([-318., -352., -298., ..., 1640., 1560., 1464.]), 1)
-AAAAAAAAAA: 175 None None
-(array([-1111., -1701., -2257., ...,  -620.,  -615.,  -606.]), -1)
-AAAAAAAAAA: 811 None None
-(array([ -81., -133.,  -83., ...,  -96., -101., -122.]), 1)
-AAAAAAAAAA: 230 None None
-(array([-27., -13., -80., ..., 377., 345., 427.]), 1)
-AAAAAAAAAA: 459 None None
-(array([-129., -144., -158., ...,  291.,  185.,  156.]), 1)
-AAAAAAAAAA: 1233 None None
-(array([ -52.,  -90., -113., ...,  -89., -168., -170.]), 1)
-AAAAAAAAAA: 0 None None
-(array([ -69., -135., -104., ...,  -66., -110.,   -9.]), 1)
-AAAAAAAAAA: 1060 None None
-(array([  50., -165., -251., ..., -523., -419., -344.]), 1)
-AAAAAAAAAA: 1057 None None
-(array([ 90.,  58.,   6., ..., -47., -61., -78.]), -1)
-AAAAAAAAAA: 226 None None
-(array([  72., -228., -455., ...,  183.,  194.,  222.]), 1)
-AAAAAAAAAA: 659 None None
-(array([-208., -205., -160., ...,   22.,   89.,  143.]), 1)
-AAAAAAAAAA: 1229 None None
-(array([234., 262., 291., ..., 248., 238., 246.]), 1)
-AAAAAAAAAA: 701 None None
-(array([ 435.,  587.,  625., ..., -334.,  351.,  977.]), 1)
-AAAAAAAAAA: 291 None None
-(array([ 264.,  266.,  285., ..., -189., -164., -215.]), 1)
-AAAAAAAAAA: 769 None None
-(array([ 184.,  153.,  179., ..., -129., -147., -125.]), 1)
-AAAAAAAAAA: 698 None None
-(array([317., 260., 293., ..., -35., -20., -49.]), 1)
-AAAAAAAAAA: 492 None None
-(array([311., 398., 440., ..., 960., 868., 769.]), -1)
-AAAAAAAAAA: 129 None None
-(array([285., 679., 768., ..., 160., 231., 308.]), 1)
-AAAAAAAAAA: 120 None None
-(array([  23.,   37.,   26., ..., -207., -160., -132.]), -1)
-AAAAAAAAAA: 1380 None None
-(array([ 555., 1348., 1420., ...,  226.,  188.,  197.]), 1)
-AAAAAAAAAA: 903 None None
-(array([380., 380., 393., ..., 132., 160.,  60.]), 1)
-AAAAAAAAAA: 524 None None
-(array([ 414.,  418.,  410., ...,  957., 1027., 1101.]), 1)
-AAAAAAAAAA: 1379 None None
-(array([ -54.,  -97., -135., ...,  176.,  141.,   97.]), 1)
-AAAAAAAAAA: 108 None None
-(array([-1153., -1156., -1106., ...,   784.,   789.,   584.]), -1)
-AAAAAAAAAA: 1280 None None
-(array([81., 75., 65., ...,  0.,  1., -1.]), 1)
-AAAAAAAAAA: 900 None None
-(array([-2356., -2236., -2001., ...,  -290.,  -258.,  -284.]), 1)
-AAAAAAAAAA: 118 None None
-(array([  98.,  197.,  149., ..., -257., -291., -318.]), 1)
-AAAAAAAAAA: 1112 None None
-(array([  91.,  317.,  428., ..., -125., -146.,  -97.]), 1)
-AAAAAAAAAA: 357 None None
-(array([ -168.,   -95.,   -64., ..., -1191., -1113., -1049.]), -1)
-AAAAAAAAAA: 670 None None
-(array([-10.,  23.,  42., ..., 399., 394., 395.]), -1)
-AAAAAAAAAA: 853 None None
-(array([ 1018.,  2118.,  1788., ..., -2875., -3038., -3156.]), 1)
-AAAAAAAAAA: 1279 None None
-(array([-284., -590., -565., ...,   72.,   82.,   97.]), 1)
-AAAAAAAAAA: 153 None None
-(array([-114., -114., -133., ...,  -77.,  -71.,  -74.]), 1)
-AAAAAAAAAA: 17 None None
-(array([1097., 2557., 2726., ...,  977., 1311., 1359.]), 1)
-AAAAAAAAAA: 623 None None
-(array([-3338., -3045., -2746., ...,  1316.,  1283.,  1281.]), 1)
-AAAAAAAAAA: 366 None None
-(array([-203., -261., -271., ..., -359., -410., -453.]), -1)
-AAAAAAAAAA: 184 None None
-(array([244., 196., 212., ...,  53.,  13.,  34.]), 1)
-AAAAAAAAAA: 966 None None
-(array([2434., 2089., 1632., ..., -285., -279., -284.]), 1)
-AAAAAAAAAA: 669 None None
-(array([ 498.,  999.,  904., ..., -108.,  -76.,  -46.]), 1)
-AAAAAAAAAA: 837 None None
-(array([-276., -208., -111., ...,  556.,  567.,  598.]), -1)
-AAAAAAAAAA: 387 None None
-(array([ 98., 200., 159., ..., 158., 189., 171.]), 1)
-AAAAAAAAAA: 689 None None
-(array([139.,  83.,  53., ..., -21., -29., -19.]), 1)
-AAAAAAAAAA: 337 None None
-(array([-131., -165., -246., ..., -290., -392., -376.]), 1)
-AAAAAAAAAA: 207 None None
-(array([-1347., -1462., -1505., ...,  -513.,  -414.,  -256.]), 1)
-AAAAAAAAAA: 1375 None None
-(array([ 71.,  10., -78., ..., 167., 171., 145.]), 1)
-AAAAAAAAAA: 702 None None
-(array([1744., 2285., 2748., ...,  165.,  133.,  165.]), 1)
-AAAAAAAAAA: 1313 None None
-(array([-125.,   77.,  209., ..., 1240., 1226., 1336.]), 1)
-AAAAAAAAAA: 223 None None
-(array([ 49.,  34.,  75., ..., 383., 199.,  93.]), 1)
-AAAAAAAAAA: 91 None None
-(array([1603., 1669., 1972., ...,  363.,  226.,  122.]), -1)
-AAAAAAAAAA: 105 None None
-(array([ -55.,  -42.,  -62., ...,  -36., -471., -751.]), 1)
-AAAAAAAAAA: 1304 None None
-(array([-2816., -2636., -1556., ...,  1861.,  1388.,   933.]), 1)
-AAAAAAAAAA: 828 None None
-(array([ 94.,  73., 106., ..., 144., 245., 285.]), 1)
-AAAAAAAAAA: 820 None None
-(array([-2690., -5295., -4220., ...,   734.,   923.,  1168.]), 1)
-AAAAAAAAAA: 904 None None
-(array([73., 66., 15., ..., 23., 22., -8.]), 1)
-AAAAAAAAAA: 1265 None None
-(array([-122.,  -97.,  -91., ..., -951., -813., -666.]), -1)
-AAAAAAAAAA: 302 None None
-(array([1302.,  947.,  302., ..., -945., -882., -909.]), -1)
-AAAAAAAAAA: 248 None None
-(array([5317., 4652., 3951., ...,  829., 1117., 1477.]), -1)
-AAAAAAAAAA: 1183 None None
-(array([  183.,   278.,   -44., ...,   -87.,  -465., -1036.]), 1)
-AAAAAAAAAA: 167 None None
-(array([ 509.,  915.,  651., ..., 1071., 1033., 1139.]), 1)
-AAAAAAAAAA: 591 None None
-(array([ 71.,  76.,  24., ..., 250., 232., 206.]), 1)
-AAAAAAAAAA: 1145 None None
-(array([-5., 23., 21., ..., 43., 19., 13.]), 1)
-AAAAAAAAAA: 69 None None
-(array([ -81.,  -39.,    5., ..., -516., -549., -605.]), 1)
-AAAAAAAAAA: 845 None None
-(array([-448., -432., -428., ...,  214.,  201.,  183.]), 1)
-AAAAAAAAAA: 1088 None None
-(array([226., 487., 556., ..., 356., 385., 390.]), 1)
-AAAAAAAAAA: 1277 None None
-(array([-439., -255., -289., ...,  217.,  436.,  419.]), 1)
-AAAAAAAAAA: 690 None None
-(array([-1644., -3633., -3488., ...,  1367.,  1321.,  1316.]), 1)
-AAAAAAAAAA: 1348 None None
-(array([-221., -322., -417., ...,  -48.,   14.,   63.]), 1)
-AAAAAAAAAA: 1429 None None
-(array([-291., -635., -598., ...,  720.,  797.,  878.]), -1)
-AAAAAAAAAA: 332 None None
-(array([-260., -205., -190., ..., -361., -373., -350.]), 1)
-AAAAAAAAAA: 637 None None
-(array([ 22.,  44.,  30., ..., 760., 761., 723.]), 1)
-AAAAAAAAAA: 176 None None
-(array([-582., -564., -483., ...,   96.,  170.,  254.]), -1)
-AAAAAAAAAA: 154 None None
-(array([ -49.,  -54.,  -13., ...,  -78.,  -95., -120.]), 1)
-AAAAAAAAAA: 825 None None
-(array([-362., -279., -283., ..., -446., -400., -399.]), 1)
-AAAAAAAAAA: 174 None None
-(array([ 100.,  341.,  504., ...,  750.,  131., -485.]), -1)
-AAAAAAAAAA: 1406 None None
-(array([ -142.,    15.,    89., ..., -2270., -2151., -1918.]), -1)
-AAAAAAAAAA: 886 None None
-(array([-497., -501., -481., ..., 1027.,  992.,  880.]), 1)
-AAAAAAAAAA: 381 None None
-(array([-1600., -1726., -1749., ...,   222.,   301.,   358.]), -1)
-AAAAAAAAAA: 276 None None
-(array([  120.,    45.,  -289., ...,  -833.,   -49., -1155.]), 1)
-AAAAAAAAAA: 1189 None None
-(array([ 236.,  307.,  259., ...,  -80., -104.,  -54.]), 1)
-AAAAAAAAAA: 620 None None
-(array([ 127.,  120.,  135., ..., -273., -143.,   -2.]), 1)
-AAAAAAAAAA: 843 None None
-(array([-327., -272., -206., ...,   72.,   98.,   82.]), 1)
-AAAAAAAAAA: 1005 None None
-(array([ 20., -32.,  50., ..., 213., 272., 264.]), 1)
-AAAAAAAAAA: 152 None None
-(array([   1.,  -10.,   71., ...,  -63.,  -82., -101.]), 1)
-AAAAAAAAAA: 1069 None None
-(array([ -268.,  -162.,  -114., ..., -3881., -3022., -3323.]), 1)
-AAAAAAAAAA: 393 None None
-(array([-254., -291., -276., ...,  -52.,  -56.,   -7.]), 1)
-AAAAAAAAAA: 430 None None
-(array([ 479.,  487.,  463., ..., -328., -395., -467.]), 1)
-AAAAAAAAAA: 1206 None None
-(array([ 540.,  339.,  304., ..., 3338., 3432., 3314.]), 1)
-AAAAAAAAAA: 1042 None None
-(array([-824., -223.,  472., ..., -824., -861., -761.]), -1)
-AAAAAAAAAA: 858 None None
-(array([-613., -452., -353., ..., 1180., 1049.,  932.]), 1)
-AAAAAAAAAA: 255 None None
-(array([  296.,  -802., -1865., ..., -2044., -2214., -2315.]), 1)
-AAAAAAAAAA: 199 None None
-(array([  95.,   95.,  124., ...,  -91., -141., -208.]), 1)
-AAAAAAAAAA: 1036 None None
-(array([ 293.,  549.,  384., ..., 1763., 1946., 2013.]), 1)
-AAAAAAAAAA: 1091 None None
-(array([1483., 3071., 2656., ...,  184., -203., -501.]), 1)
-AAAAAAAAAA: 778 None None
-(array([-1631., -1606., -1554., ...,   511.,   492.,   460.]), 1)
-AAAAAAAAAA: 33 None None
-(array([-318., -367., -326., ...,  -32.,   18.,   36.]), 1)
-AAAAAAAAAA: 831 None None
-(array([110., 217., 218., ..., 247., 153., 125.]), 1)
-AAAAAAAAAA: 1185 None None
-(array([-27277., -28646., -29170., ...,  27107.,  26167.,  18525.]), -1)
-AAAAAAAAAA: 1011 None None
-(array([ 2677., -6923.,   785., ...,   -85.,   -15.,    23.]), -1)
-AAAAAAAAAA: 1004 None None
-(array([128., 132.,  57., ..., -87., -54., -15.]), 1)
-AAAAAAAAAA: 508 None None
-(array([232., 199., 212., ..., 672., 578., 524.]), 1)
-AAAAAAAAAA: 948 None None
-(array([-492., -441., -406., ..., -480., -545., -639.]), 1)
-AAAAAAAAAA: 692 None None
-(array([ 151.,  -50., -247., ..., 1026., 1037., 1006.]), -1)
-AAAAAAAAAA: 406 None None
-(array([-551., -508., -435., ...,  -78., -108., -105.]), 1)
-AAAAAAAAAA: 80 None None
-(array([130., 119., 142., ...,  74., 109., 129.]), 1)
-AAAAAAAAAA: 48 None None
-(array([-2128., -1854., -1579., ...,   709.,   576.,   449.]), 1)
-AAAAAAAAAA: 772 None None
-(array([-166., -140., -172., ...,  225.,  191.,  200.]), 1)
-AAAAAAAAAA: 67 None None
-(array([201., 180., 220., ..., -33.,  25.,   4.]), 1)
-AAAAAAAAAA: 967 None None
-(array([ 3951., 12565., 15757., ...,  -241.,  -252.,  -200.]), 1)
-AAAAAAAAAA: 737 None None
-(array([ 392., 1226., 1744., ..., -965., -890., -822.]), 1)
-AAAAAAAAAA: 113 None None
-(array([  558., -1087., -2610., ..., -6248., -6128., -5754.]), 1)
-AAAAAAAAAA: 250 None None
-(array([-9218., -8970., -8417., ...,   481.,   524.,   531.]), -1)
-AAAAAAAAAA: 481 None None
-(array([504., 242.,  17., ..., 241., 265., 308.]), -1)
-AAAAAAAAAA: 315 None None
-(array([ 228.,  485.,  530., ..., -927., -941., -981.]), 1)
-AAAAAAAAAA: 1409 None None
-(array([ 277.,  616.,  504., ...,  -69.,  -88., -116.]), -1)
-AAAAAAAAAA: 630 None None
-(array([ 182.,  441.,  429., ..., -519., -574., -620.]), -1)
-AAAAAAAAAA: 695 None None
-(array([ 235.,  334.,  355., ..., 2177., 2101., 1886.]), -1)
-AAAAAAAAAA: 522 None None
-(array([326., 321., 322., ..., 367., 392., 420.]), 1)
-AAAAAAAAAA: 177 None None
-(array([ -45., -125.,  -94., ..., -430., -269.,  425.]), -1)
-AAAAAAAAAA: 1276 None None
-(array([1447., 1416., 1338., ..., -509., -483., -348.]), 1)
-AAAAAAAAAA: 653 None None
-(array([-210., -449., -396., ...,   98.,  138.,  106.]), -1)
-AAAAAAAAAA: 1134 None None
-(array([ -223.,  -380.,  -201., ..., -2590., -2969., -3311.]), 1)
-AAAAAAAAAA: 594 None None
-(array([-249., -251., -281., ..., -220., -235., -242.]), 1)
-AAAAAAAAAA: 25 None None
-(array([-508., -604., -614., ...,  365.,  345.,  421.]), 1)
-AAAAAAAAAA: 465 None None
-(array([-2218., -2342., -2450., ..., -7594., -6831., -6156.]), 1)
-AAAAAAAAAA: 6 None None
-(array([-126., -306., -265., ..., -269., -309., -290.]), 1)
-AAAAAAAAAA: 213 None None
-(array([ -66., -104., -111., ...,  -73.,  -54.,  -36.]), 1)
-AAAAAAAAAA: 558 None None
-(array([-333., -288., -314., ..., -190., -307., -319.]), 1)
-AAAAAAAAAA: 569 None None
-(array([-43.,  -8.,  27., ..., 306., 351., 424.]), -1)
-AAAAAAAAAA: 1125 None None
-(array([ 5141.,  5044.,  4882., ..., 28790., 24230., 16196.]), 1)
-AAAAAAAAAA: 1089 None None
-(array([ 342.,  396.,  446., ..., -615., -591., -494.]), 1)
-AAAAAAAAAA: 1269 None None
-(array([-123., -127., -163., ...,  372.,  430.,  479.]), -1)
-AAAAAAAAAA: 376 None None
-(array([ -10.,  -24.,  -14., ..., -139., -164., -198.]), 1)
-AAAAAAAAAA: 233 None None
-(array([ -15.,  -36.,  122., ..., -247., -448., -484.]), 1)
-AAAAAAAAAA: 13 None None
-(array([ -55.,  -97.,  -87., ..., 4181., 4323., 4433.]), 1)
-AAAAAAAAAA: 1347 None None
-(array([ 86., 164., 144., ..., 292., 106., -67.]), 1)
-AAAAAAAAAA: 259 None None
-(array([ 186.,  328.,  375., ...,  -32., -162.,  -77.]), 1)
-AAAAAAAAAA: 957 None None
-(array([ -374.,  -508.,  -600., ..., -1066., -1324., -1532.]), -1)
-AAAAAAAAAA: 415 None None
-(array([ 3069.,  3310.,  3431., ..., -1325.,   699.,  2528.]), -1)
-AAAAAAAAAA: 485 None None
-(array([960., 975., 956., ...,  15.,   2., -28.]), 1)
-AAAAAAAAAA: 756 None None
-(array([-446., -448., -414., ...,  104.,   56.,   20.]), 1)
-AAAAAAAAAA: 150 None None
-(array([574., 563., 363., ..., 645., 692., 731.]), 1)
-AAAAAAAAAA: 1058 None None
-(array([ 83., 221., 259., ..., 344., 339., 322.]), -1)
-AAAAAAAAAA: 732 None None
-(array([ 459.,  567.,  690., ...,   94., -388., -734.]), 1)
-AAAAAAAAAA: 1119 None None
-(array([-305., -298., -261., ..., -327., -430., -555.]), 1)
-AAAAAAAAAA: 347 None None
-(array([-922., -863., -745., ..., -363., -313., -243.]), 1)
-AAAAAAAAAA: 319 None None
-(array([-110., -105., -121., ...,  348.,  367.,  415.]), -1)
-AAAAAAAAAA: 329 None None
-(array([53., 39., 36., ..., 16., 34., 18.]), -1)
-AAAAAAAAAA: 64 None None
-(array([ 895.,  702.,  483., ..., -318., -263., -195.]), -1)
-AAAAAAAAAA: 86 None None
-(array([  1.,  10., -29., ..., 292., 326., 294.]), -1)
-AAAAAAAAAA: 468 None None
-(array([504., 520., 525., ..., 388., 388., 397.]), 1)
-AAAAAAAAAA: 650 None None
-(array([-136., -139.,  -62., ...,   37.,    5.,   34.]), -1)
-AAAAAAAAAA: 476 None None
-(array([-187., -158., -207., ...,  285.,  586.,  835.]), 1)
-AAAAAAAAAA: 799 None None
-(array([ 474.,  426.,  471., ..., -144., -162., -220.]), 1)
-AAAAAAAAAA: 1003 None None
-(array([-237., -473., -400., ...,   62.,  149.,  162.]), -1)
-AAAAAAAAAA: 49 None None
-(array([323., 167., -24., ..., 796., 917., 804.]), 1)
-AAAAAAAAAA: 1213 None None
-(array([-1061., -2264., -2095., ...,   614.,   594.,   560.]), 1)
-AAAAAAAAAA: 929 None None
-(array([-188., -163., -151., ...,  215.,  223.,  174.]), 1)
-AAAAAAAAAA: 1034 None None
-(array([-446., -422., -382., ..., -204., -167., -176.]), 1)
-AAAAAAAAAA: 846 None None
-(array([  413.,   844.,   692., ..., -1956., -1928., -1900.]), 1)
-AAAAAAAAAA: 149 None None
-(array([-442., -333., -246., ...,  552.,  596.,  664.]), 1)
-AAAAAAAAAA: 1415 None None
-(array([192., 164., 153., ..., 186., 149., 180.]), 1)
-AAAAAAAAAA: 581 None None
-(array([  751.,   761.,   844., ..., -1263., -1177., -1159.]), -1)
-AAAAAAAAAA: 1337 None None
-(array([-2682., -2062., -1745., ...,  -515.,  -532.,  -526.]), 1)
-AAAAAAAAAA: 924 None None
-(array([ 751., 1263.,  627., ...,  491.,  620.,  657.]), 1)
-AAAAAAAAAA: 505 None None
-(array([ 439.,  559.,  683., ..., -617., -603., -590.]), 1)
-AAAAAAAAAA: 145 None None
-(array([237., 122., 153., ..., 144., 183., 144.]), 1)
-AAAAAAAAAA: 70 None None
-(array([ 975., 2017., 1739., ...,  -35., -131., -284.]), 1)
-AAAAAAAAAA: 383 None None
-(array([283., 595., 515., ..., 248., 251., 269.]), -1)
-AAAAAAAAAA: 688 None None
-(array([ -87., -204., -195., ...,  253.,  238.,  193.]), -1)
-AAAAAAAAAA: 1211 None None
-(array([ -75.,  -83., -109., ..., -202., -238., -295.]), 1)
-AAAAAAAAAA: 143 None None
-(array([ 52.,  65.,  36., ..., 247., 182., 132.]), 1)
-AAAAAAAAAA: 1354 None None
-(array([-605., -571., -558., ...,  413.,  275.,  157.]), -1)
-AAAAAAAAAA: 311 None None
-(array([219., 180., 194., ..., 392., 383., 412.]), -1)
-AAAAAAAAAA: 1086 None None
-(array([  -14.,    69.,    10., ...,  -968., -1003.,  -941.]), 1)
-AAAAAAAAAA: 1307 None None
-(array([-752., -766., -739., ..., 1263., 1115.,  962.]), 1)
-AAAAAAAAAA: 1273 None None
-(array([-52.,  -8.,  19., ...,  54.,  51.,  25.]), 1)
-AAAAAAAAAA: 1070 None None
-(array([-3980., -4925., -5196., ...,  4407.,  4425.,  4419.]), 1)
-AAAAAAAAAA: 56 None None
-(array([  948.,  1040.,  1096., ..., -7558., -7888., -8058.]), -1)
-AAAAAAAAAA: 102 None None
-(array([-918., -898., -904., ..., -104., -118., -160.]), 1)
-AAAAAAAAAA: 1028 None None
-(array([   18.,     2.,   -33., ..., -1040., -1247., -1430.]), -1)
-AAAAAAAAAA: 1222 None None
-(array([ 1497.,  1376.,  -977., ..., 18397., 14063., 12549.]), 1)
-AAAAAAAAAA: 296 None None
-(array([453., 461., 478., ..., 877., 837., 772.]), 1)
-AAAAAAAAAA: 881 None None
-(array([207., 442., 437., ..., 643., 567., 461.]), 1)
-AAAAAAAAAA: 85 None None
-(array([-131.,  -40.,   35., ..., 5209., 5552., 5806.]), -1)
-AAAAAAAAAA: 1155 None None
-(array([189., 312., 155., ..., 399., 408., 407.]), -1)
-AAAAAAAAAA: 128 None None
-(array([1318.,  963.,  539., ...,  769.,  671.,  578.]), 1)
-AAAAAAAAAA: 658 None None
-(array([ 253.,  237.,  274., ..., -187., -194., -174.]), 1)
-AAAAAAAAAA: 159 None None
-(array([ -280.,  -531.,  -431., ..., -3400., -4037., -4762.]), 1)
-AAAAAAAAAA: 488 None None
-(array([  56.,  170.,  223., ..., 1106., 1159., 1196.]), 1)
-AAAAAAAAAA: 1123 None None
-(array([ 465.,  458.,  415., ..., -763., -628., -517.]), 1)
-AAAAAAAAAA: 385 None None
-(array([-386., -444., -537., ...,  -76.,  -62.,  -19.]), 1)
-AAAAAAAAAA: 202 None None
-(array([1463., 1496., 1467., ..., 1494., 1586., 1601.]), 1)
-AAAAAAAAAA: 728 None None
-(array([-522., -682., -871., ...,  427.,  522.,  639.]), 1)
-AAAAAAAAAA: 479 None None
-(array([ 460.,  942.,  842., ..., 2174., 1781., 1108.]), 1)
-AAAAAAAAAA: 408 None None
-(array([2044., 2091., 2145., ...,  544.,  456.,  375.]), 1)
-AAAAAAAAAA: 586 None None
-(array([-181., -186., -198., ...,   -2.,    4.,   31.]), 1)
-AAAAAAAAAA: 942 None None
-(array([3926., 4060., 4128., ..., -284., -288., -298.]), -1)
-AAAAAAAAAA: 976 None None
-(array([134., 103., 146., ..., 349., 375., 438.]), 1)
-AAAAAAAAAA: 1240 None None
-(array([  74.,   10.,    0., ..., -508., -592., -528.]), -1)
-AAAAAAAAAA: 1157 None None
-(array([-185., -174., -158., ...,  403.,  361.,  344.]), -1)
-AAAAAAAAAA: 1378 None None
-(array([-155., -106., -137., ...,  118.,   60.,   16.]), 1)
-AAAAAAAAAA: 1332 None None
-(array([-1203., -1126., -1005., ...,  -635.,  -519.,  -398.]), 1)
-AAAAAAAAAA: 305 None None
-(array([ 219.,  246.,  281., ..., -218., -209., -110.]), -1)
-AAAAAAAAAA: 835 None None
-(array([-313., -677., -612., ...,  877.,  904.,  892.]), 1)
-AAAAAAAAAA: 517 None None
-(array([ -18., -171., -124., ...,  -90.,   -4.,  -25.]), 1)
-AAAAAAAAAA: 1210 None None
-(array([-338., -341., -303., ...,  -53.,  -58.,  -69.]), 1)
-AAAAAAAAAA: 1428 None None
-(array([-652., -666., -686., ...,  473.,  484.,  446.]), -1)
-AAAAAAAAAA: 268 None None
-(array([-267., -542., -425., ..., -373., -431., -444.]), 1)
-AAAAAAAAAA: 600 None None
-(array([ -381.,  -461.,  -558., ..., -1174., -1053.,  -955.]), 1)
-AAAAAAAAAA: 744 None None
-(array([   63.,    70.,    86., ..., -1177., -1110., -1039.]), 1)
-AAAAAAAAAA: 275 None None
-(array([-295., -282., -253., ..., -165., -208., -163.]), 1)
-AAAAAAAAAA: 72 None None
-(array([ 679.,  718.,  718., ..., -474., -389., -284.]), 1)
-AAAAAAAAAA: 652 None None
-(array([292., 238., 274., ..., 448., 560., 544.]), -1)
-AAAAAAAAAA: 1314 None None
-(array([1237., 1311., 1247., ..., -216., -137.,  -91.]), 1)
-AAAAAAAAAA: 857 None None
-(array([  13.,   69.,   77., ..., -970., -871., -759.]), -1)
-AAAAAAAAAA: 1041 None None
-(array([  380.,   406.,   380., ..., -3818., -2683., -1732.]), -1)
-AAAAAAAAAA: 81 None None
-(array([-301., -740., -737., ..., 1133., 1722., 1526.]), 1)
-AAAAAAAAAA: 678 None None
-(array([-274., -228., -210., ...,   50.,   56.,   44.]), 1)
-AAAAAAAAAA: 613 None None
-(array([ -724., -1536., -1406., ...,   462.,   626.,   818.]), 1)
-AAAAAAAAAA: 1225 None None
-(array([ 51., -11., -43., ..., 105., 138., 125.]), 1)
-AAAAAAAAAA: 917 None None
-(array([ -981., -1315., -1473., ...,   -42.,  -114.,  -115.]), 1)
-AAAAAAAAAA: 1321 None None
-(array([  29.,   48.,   59., ..., -137.,  -72., -124.]), 1)
-AAAAAAAAAA: 635 None None
-(array([-152., -120., -105., ..., 3997., 4175., 4103.]), 1)
-AAAAAAAAAA: 372 None None
-(array([-208., -408., -333., ..., -157., -166., -171.]), -1)
-AAAAAAAAAA: 679 None None
-(array([  53.,   46.,   31., ...,  -97., -123., -155.]), 1)
-AAAAAAAAAA: 190 None None
-(array([-211., -152.,  -76., ..., -192., -197., -209.]), 1)
-AAAAAAAAAA: 1422 None None
-(array([514., 552., 621., ..., 284., 288., 347.]), -1)
-AAAAAAAAAA: 615 None None
-(array([-123., -199., -211., ..., -353., -260., -241.]), 1)
-AAAAAAAAAA: 746 None None
-(array([-3009., -2830., -2794., ..., -1037., -1320., -1604.]), -1)
-AAAAAAAAAA: 141 None None
-(array([ 31.,  19.,  50., ..., -51., -10.,  52.]), 1)
-AAAAAAAAAA: 564 None None
-(array([-1536., -1828., -2000., ...,  2171.,  2266.,  2308.]), 1)
-AAAAAAAAAA: 166 None None
-(array([  306., -4323.,   209., ..., -2757.,  7275., -9443.]), 1)
 AAAAAAAAAA: 361 None None
 (array([148., 154.,  92., ..., -89., -49., -70.]), 1)
-AAAAAAAAAA: 453 None None
-(array([ 279.,  174.,  242., ..., -705., -759., -282.]), 1)
-AAAAAAAAAA: 338 None None
-(array([-455., -414., -373., ..., 1022.,  757.,  438.]), 1)
-AAAAAAAAAA: 71 None None
-(array([-430., -666., -892., ...,  537.,  582.,  642.]), 1)
-AAAAAAAAAA: 475 None None
-(array([  54.,  156.,  206., ..., -161., -147., -168.]), 1)
-AAAAAAAAAA: 306 None None
-(array([  -3.,  105.,  158., ..., 2765., 1815.,  945.]), -1)
-AAAAAAAAAA: 978 None None
-(array([ 62., 129., 108., ...,  -9.,   9.,  34.]), 1)
-AAAAAAAAAA: 270 None None
-(array([ 130.,  144.,  154., ..., -236., -255., -332.]), 1)
-AAAAAAAAAA: 665 None None
-(array([ 497., 1042.,  884., ..., 1684., 1714., 1748.]), 1)
-AAAAAAAAAA: 872 None None
-(array([329., 293., 278., ...,  66., 125., 114.]), 1)
-AAAAAAAAAA: 181 None None
-(array([ 29.,  55.,  93., ..., 167., 155., 164.]), 1)
-AAAAAAAAAA: 191 None None
-(array([-203., -247., -289., ..., -188., -173., -137.]), 1)
-AAAAAAAAAA: 996 None None
-(array([250., 459., 304., ...,   8.,  66.,  40.]), 1)
-AAAAAAAAAA: 801 None None
-(array([-120., -135., -193., ...,  384.,  344.,  336.]), 1)
-AAAAAAAAAA: 951 None None
-(array([-301., -238., -206., ...,  -84., -113., -178.]), 1)
-AAAAAAAAAA: 1159 None None
-(array([-13., -65., -80., ..., -51., -10.,  28.]), -1)
-AAAAAAAAAA: 616 None None
-(array([-165., -168., -100., ..., -254., -282., -274.]), 1)
-AAAAAAAAAA: 68 None None
-(array([  27.,   -9.,    8., ..., -137., -124., -107.]), 1)
-AAAAAAAAAA: 979 None None
-(array([  32.,   11.,  -19., ..., -166., -190., -165.]), 1)
-AAAAAAAAAA: 42 None None
-(array([-39., -80., -88., ...,  39.,  72.,  30.]), -1)
-AAAAAAAAAA: 1219 None None
-(array([ -999., -1012., -1063., ...,   -14.,    30.,    11.]), 1)
-AAAAAAAAAA: 648 None None
-(array([-219., -252., -269., ..., -356., -353., -298.]), 1)
-AAAAAAAAAA: 506 None None
-(array([ -260.,  -491.,  -320., ...,  -970., -1004.,  -942.]), 1)
-AAAAAAAAAA: 549 None None
-(array([-471., -621., -579., ...,  128.,  105.,   28.]), -1)
-AAAAAAAAAA: 873 None None
-(array([   -8.,   -81.,   -87., ..., -2012., -2069., -2081.]), 1)
-AAAAAAAAAA: 1389 None None
-(array([-1724., -1757., -1778., ...,  6303.,  5651.,  4897.]), 1)
-AAAAAAAAAA: 985 None None
-(array([ -903., -1880., -1693., ...,  -296.,  -262.,  -312.]), 1)
-AAAAAAAAAA: 469 None None
-(array([ 378.,  323.,  295., ..., -368., -341., -308.]), 1)
-AAAAAAAAAA: 814 None None
-(array([-915., -881., -891., ...,  267.,  337.,  400.]), -1)
-AAAAAAAAAA: 930 None None
-(array([166., 153., 150., ..., 315., 341., 408.]), 1)
-AAAAAAAAAA: 1061 None None
-(array([-205., -436., -392., ..., -525., -568., -434.]), 1)
-AAAAAAAAAA: 331 None None
-(array([ 540., 1041.,  865., ..., -319., -324., -268.]), -1)
-AAAAAAAAAA: 1054 None None
-(array([-734., -540., -427., ..., 3016., 2607., 2118.]), -1)
-AAAAAAAAAA: 195 None None
-(array([-2453., -2327., -2198., ...,  2837.,  2542.,  2247.]), -1)
-AAAAAAAAAA: 601 None None
-(array([-870., -779., -718., ..., 1306., 1447., 1547.]), 1)
-AAAAAAAAAA: 1007 None None
-(array([  90.,  185.,  155., ..., -286., -449., -663.]), 1)
-AAAAAAAAAA: 422 None None
-(array([ 373.,  342.,  383., ..., -361., -341., -354.]), 1)
+AAAAAAAAAA: 903 None None
+(array([380., 380., 393., ..., 132., 160.,  60.]), 1)
+AAAAAAAAAA: 1278 None None
+(array([ 597.,  659.,  798., ..., -718., -482., -512.]), 1)
+AAAAAAAAAA: 190 None None
+(array([-211., -152.,  -76., ..., -192., -197., -209.]), 1)
+AAAAAAAAAA: 520 None None
+(array([-192., -132.,  -78., ...,  145.,   89.,  159.]), 1)
 AAAAAAAAAA: 578 None None
 (array([  234.,   242.,   256., ..., -1274., -1223., -1206.]), 1)
-AAAAAAAAAA: 953 None None
-(array([1352., 2473., 1659., ..., -587., -598., -590.]), 1)
-AAAAAAAAAA: 550 None None
-(array([  30.,   -8.,  -45., ...,  813., 1153., 1331.]), -1)
-AAAAAAAAAA: 958 None None
-(array([-1730., -1902., -2070., ...,  -447.,  -442.,  -449.]), -1)
-AAAAAAAAAA: 1344 None None
-(array([-206., -147., -130., ..., -395., -337., -264.]), 1)
-AAAAAAAAAA: 1175 None None
-(array([57., 31.,  6., ..., 98., 83., 92.]), -1)
-AAAAAAAAAA: 922 None None
-(array([936., 838., 722., ..., 278., 235., 241.]), 1)
-AAAAAAAAAA: 789 None None
-(array([ 991., 1200., 1256., ...,  247.,  220.,  173.]), 1)
-AAAAAAAAAA: 169 None None
-(array([291., 320., 323., ..., 885., 843., 813.]), 1)
-AAAAAAAAAA: 1202 None None
-(array([-376., -728., -572., ..., -155., -281., -422.]), 1)
-AAAAAAAAAA: 959 None None
-(array([-112., -125.,   43., ..., 1607., 1449., 1316.]), -1)
-AAAAAAAAAA: 877 None None
-(array([-447., -959., -885., ...,  852.,  846.,  839.]), 1)
-AAAAAAAAAA: 1305 None None
-(array([  77.,  190.,   65., ...,   79.,  533., 1086.]), 1)
-AAAAAAAAAA: 432 None None
-(array([-496., -937., -692., ...,  166.,  145.,   46.]), 1)
-AAAAAAAAAA: 642 None None
-(array([ -214.,  -188.,  -146., ..., -1894., -2015., -2037.]), 1)
-AAAAAAAAAA: 1083 None None
-(array([ 71., 105.,  88., ...,   1.,  21., -30.]), 1)
-AAAAAAAAAA: 1147 None None
-(array([710., 871., 476., ...,  33.,  20.,  13.]), 1)
-AAAAAAAAAA: 1239 None None
-(array([-379., -738., -645., ...,   71.,   96.,   37.]), -1)
-AAAAAAAAAA: 598 None None
-(array([-1235., -1026.,  -836., ...,  1573.,  1574.,  1558.]), 1)
-AAAAAAAAAA: 1296 None None
-(array([141., 153., 133., ...,  54.,  10., -30.]), 1)
-AAAAAAAAAA: 155 None None
-(array([-1327., -2952., -2837., ..., -1125., -1089.,  -988.]), 1)
-AAAAAAAAAA: 1419 None None
-(array([   3.,   35.,   58., ..., 1368., 1274., 1126.]), 1)
-AAAAAAAAAA: 773 None None
-(array([169., 179., 164., ...,   0.,  35., -10.]), 1)
-AAAAAAAAAA: 182 None None
-(array([ 127.,  171.,  171., ..., -253., -279., -132.]), 1)
-AAAAAAAAAA: 800 None None
-(array([158., 304., 281., ...,  77.,  12., -42.]), 1)
-AAAAAAAAAA: 962 None None
-(array([ -95.,  -96.,  -95., ..., 3205., 3406., 3534.]), 1)
-AAAAAAAAAA: 1098 None None
-(array([ 29., -15.,  -9., ..., 440., 162., -61.]), -1)
-AAAAAAAAAA: 1072 None None
-(array([126., 222., 196., ..., 198., 184., 229.]), 1)
-AAAAAAAAAA: 433 None None
-(array([  57.,  -38.,  -36., ..., -489., -453., -487.]), 1)
-AAAAAAAAAA: 1283 None None
-(array([ 36.,  68., -25., ..., 337., 396., 424.]), 1)
-AAAAAAAAAA: 824 None None
-(array([1748., 1388., 1086., ..., -309., -342., -298.]), 1)
-AAAAAAAAAA: 78 None None
-(array([ -61., -124.,  -60., ...,  216.,  218.,  206.]), 1)
-AAAAAAAAAA: 833 None None
-(array([-60., -65., -41., ...,  -5.,  -3., -45.]), 1)
-AAAAAAAAAA: 1430 None None
-(array([ 935.,  983., 1028., ...,  329.,  288.,  252.]), -1)
-AAAAAAAAAA: 608 None None
-(array([-1838., -1377.,  -998., ...,    46.,   -63.,  -174.]), 1)
-AAAAAAAAAA: 211 None None
-(array([ 110.,  116.,  140., ..., -153., -133., -118.]), 1)
-AAAAAAAAAA: 730 None None
-(array([-383., -392., -361., ..., -312., -394., -459.]), 1)
-AAAAAAAAAA: 1318 None None
-(array([-240., -305., -342., ..., 1112.,  898.,  647.]), 1)
-AAAAAAAAAA: 1241 None None
-(array([-807., -780., -473., ...,  849.,  788.,  714.]), -1)
-AAAAAAAAAA: 1002 None None
-(array([-3442., -2612., -1773., ...,   398.,   383.,   437.]), -1)
-AAAAAAAAAA: 718 None None
-(array([-438., -503., -422., ...,  976.,  968.,  914.]), 1)
-AAAAAAAAAA: 1109 None None
-(array([-12665., -18175., -24911., ...,   -914.,   6256.,   9571.]), 1)
+AAAAAAAAAA: 467 None None
+(array([ 628., 1168.,  851., ...,  411.,  452.,  486.]), 1)
+AAAAAAAAAA: 113 None None
+(array([  558., -1087., -2610., ..., -6248., -6128., -5754.]), 1)
+AAAAAAAAAA: 28 None None
+(array([-218., -147., -169., ...,  411.,  304.,  455.]), -1)
+AAAAAAAAAA: 1093 None None
+(array([537., 617., 662., ..., 243., 289., 326.]), -1)
+AAAAAAAAAA: 894 None None
+(array([ 471.,  285.,  153., ..., 1535., 1345., 1254.]), 1)
+AAAAAAAAAA: 702 None None
+(array([1744., 2285., 2748., ...,  165.,  133.,  165.]), 1)
 AAAAAAAAAA: 434 None None
 (array([  97.,  167.,   50., ..., -410., -401., -339.]), 1)
-AAAAAAAAAA: 146 None None
-(array([   60.,   176.,    89., ..., -1093.,  -905.,  -751.]), 1)
-AAAAAAAAAA: 214 None None
-(array([ 444.,  808.,  535., ..., -121.,  -91., -143.]), 1)
-AAAAAAAAAA: 815 None None
-(array([  464.,   504.,   574., ..., -1065., -1328., -1437.]), -1)
-AAAAAAAAAA: 1291 None None
-(array([504., 443., 441., ..., 530., 317.,  44.]), 1)
-AAAAAAAAAA: 797 None None
-(array([   56.,    84.,    20., ..., -1423., -1381., -1422.]), 1)
+AAAAAAAAAA: 1206 None None
+(array([ 540.,  339.,  304., ..., 3338., 3432., 3314.]), 1)
+AAAAAAAAAA: 734 None None
+(array([ 784., 1093., 1432., ..., -781., -564., -275.]), 1)
+AAAAAAAAAA: 889 None None
+(array([ 366.,  326.,  318., ..., -310., -168.,  -83.]), -1)
+AAAAAAAAAA: 406 None None
+(array([-551., -508., -435., ...,  -78., -108., -105.]), 1)
+AAAAAAAAAA: 1348 None None
+(array([-221., -322., -417., ...,  -48.,   14.,   63.]), 1)
+AAAAAAAAAA: 627 None None
+(array([3225., 3498., 3497., ...,  436.,  303.,  163.]), -1)
+AAAAAAAAAA: 677 None None
+(array([-219., -339., -183., ..., -308., -299., -287.]), 1)
+AAAAAAAAAA: 716 None None
+(array([ 80., 218., 170., ..., 613., 671., 574.]), 1)
+AAAAAAAAAA: 530 None None
+(array([ 445.,  313.,  154., ..., -681., -710., -742.]), 1)
+AAAAAAAAAA: 81 None None
+(array([-301., -740., -737., ..., 1133., 1722., 1526.]), 1)
+AAAAAAAAAA: 203 None None
+(array([1597., 1574., 1496., ..., -877., -716., -527.]), 1)
+AAAAAAAAAA: 1172 None None
+(array([ 201.,  210.,  269., ..., -296., -283., -318.]), 1)
+AAAAAAAAAA: 372 None None
+(array([-208., -408., -333., ..., -157., -166., -171.]), -1)
+AAAAAAAAAA: 680 None None
+(array([-150., -151., -148., ...,   81.,   99.,  110.]), 1)
+AAAAAAAAAA: 715 None None
+(array([ 99.,  32.,  51., ...,  57., 138., 108.]), 1)
+AAAAAAAAAA: 869 None None
+(array([-123., -307., -320., ...,  -43.,  -49.,  -19.]), 1)
+AAAAAAAAAA: 61 None None
+(array([ -61.,    6.,  199., ...,  686.,  906., 1106.]), 1)
+AAAAAAAAAA: 1186 None None
+(array([ 39.,  69., -39., ..., 174., 146., 113.]), -1)
+AAAAAAAAAA: 204 None None
+(array([ -16.,  -81., -123., ...,  185.,  163.,  184.]), 1)
+AAAAAAAAAA: 43 None None
+(array([ 17., -22., -17., ..., -59., -78., -71.]), 1)
+AAAAAAAAAA: 1016 None None
+(array([1306., 1344., 1453., ..., 2331., 2147., 1949.]), -1)
+AAAAAAAAAA: 1246 None None
+(array([-229., -430., -360., ..., -284., -269., -157.]), -1)
+AAAAAAAAAA: 1097 None None
+(array([ 6256., 12348.,  9844., ...,   202.,   142.,    73.]), -1)
+AAAAAAAAAA: 635 None None
+(array([-152., -120., -105., ..., 3997., 4175., 4103.]), 1)
+AAAAAAAAAA: 17 None None
+(array([1097., 2557., 2726., ...,  977., 1311., 1359.]), 1)
+AAAAAAAAAA: 586 None None
+(array([-181., -186., -198., ...,   -2.,    4.,   31.]), 1)
+AAAAAAAAAA: 92 None None
+(array([   7., -108., -236., ..., 3871., 3571., 3233.]), -1)
+AAAAAAAAAA: 1426 None None
+(array([ 427.,  543.,  684., ..., -437., -487., -435.]), -1)
+AAAAAAAAAA: 416 None None
+(array([-117., -216., -189., ...,  106.,  108.,   65.]), -1)
+AAAAAAAAAA: 1337 None None
+(array([-2682., -2062., -1745., ...,  -515.,  -532.,  -526.]), 1)
+AAAAAAAAAA: 1260 None None
+(array([-333., -430., -540., ..., -384., -538., -655.]), 1)
+AAAAAAAAAA: 1421 None None
+(array([ -469., -1053.,  -966., ...,   322.,   364.,   436.]), -1)
+AAAAAAAAAA: 537 None None
+(array([ -579., -1719., -2055., ..., -1927., -1768., -1561.]), 1)
+AAAAAAAAAA: 1008 None None
+(array([ -891., -1114., -1324., ...,   309.,   294.,   283.]), -1)
+AAAAAAAAAA: 637 None None
+(array([ 22.,  44.,  30., ..., 760., 761., 723.]), 1)
+AAAAAAAAAA: 824 None None
+(array([1748., 1388., 1086., ..., -309., -342., -298.]), 1)
+AAAAAAAAAA: 1407 None None
+(array([-1464.,  -848.,   -26., ...,    86.,    99.,   128.]), -1)
+AAAAAAAAAA: 1072 None None
+(array([126., 222., 196., ..., 198., 184., 229.]), 1)
+AAAAAAAAAA: 732 None None
+(array([ 459.,  567.,  690., ...,   94., -388., -734.]), 1)
+AAAAAAAAAA: 764 None None
+(array([ -78., -132., -180., ..., -333., -344., -377.]), 1)
+AAAAAAAAAA: 1128 None None
+(array([-395., -907., -875., ...,  -14.,  -18.,  -11.]), 1)
+AAAAAAAAAA: 273 None None
+(array([ 68.,  25., -36., ..., 142., 173., 209.]), 1)
+AAAAAAAAAA: 1106 None None
+(array([894., 851., 793., ..., 859., 771., 697.]), 1)
+AAAAAAAAAA: 1344 None None
+(array([-206., -147., -130., ..., -395., -337., -264.]), 1)
+AAAAAAAAAA: 1304 None None
+(array([-2816., -2636., -1556., ...,  1861.,  1388.,   933.]), 1)
+AAAAAAAAAA: 342 None None
+(array([162.,  55., -46., ..., 140., 153., 140.]), 1)
+AAAAAAAAAA: 300 None None
+(array([ -974., -1778., -1200., ..., -2754., -2721., -2670.]), 1)
+AAAAAAAAAA: 939 None None
+(array([  84.,  136.,  179., ...,   16.,  -64., -140.]), 1)
+AAAAAAAAAA: 105 None None
+(array([ -55.,  -42.,  -62., ...,  -36., -471., -751.]), 1)
+AAAAAAAAAA: 909 None None
+(array([ 205.,  189.,  176., ..., -408., -417., -426.]), 1)
+AAAAAAAAAA: 450 None None
+(array([ 122.,  147.,   26., ..., -679., -579., -779.]), -1)
+AAAAAAAAAA: 312 None None
+(array([ 363.,  289.,  255., ..., -249.,   26.,  296.]), -1)
+AAAAAAAAAA: 927 None None
+(array([-310., -342., -397., ...,   63.,   45.,   20.]), 1)
+AAAAAAAAAA: 1187 None None
+(array([ 171.,   87.,   44., ..., -330., -351., -370.]), 1)
+AAAAAAAAAA: 532 None None
+(array([ -668.,  -638.,  -585., ..., -2425., -2435., -2418.]), 1)
+AAAAAAAAAA: 818 None None
+(array([ 175.,  162.,  115., ..., -206., -143., -105.]), 1)
+AAAAAAAAAA: 80 None None
+(array([130., 119., 142., ...,  74., 109., 129.]), 1)
+AAAAAAAAAA: 550 None None
+(array([  30.,   -8.,  -45., ...,  813., 1153., 1331.]), -1)
+AAAAAAAAAA: 58 None None
+(array([-263., -282., -286., ...,  -15.,  -25.,  -28.]), 1)
+AAAAAAAAAA: 127 None None
+(array([ 127.,  101.,   47., ..., 2204., 2010., 1662.]), 1)
+AAAAAAAAAA: 728 None None
+(array([-522., -682., -871., ...,  427.,  522.,  639.]), 1)
+AAAAAAAAAA: 480 None None
+(array([  265.,  -679., -1634., ...,   909.,   822.,   702.]), -1)
+AAAAAAAAAA: 1176 None None
+(array([ 65.,  93.,  34., ..., -19.,  12.,  20.]), -1)
+AAAAAAAAAA: 737 None None
+(array([ 392., 1226., 1744., ..., -965., -890., -822.]), 1)
+AAAAAAAAAA: 274 None None
+(array([ 213.,  232.,  227., ..., -298., -301., -276.]), 1)
+AAAAAAAAAA: 56 None None
+(array([  948.,  1040.,  1096., ..., -7558., -7888., -8058.]), -1)
+AAAAAAAAAA: 665 None None
+(array([ 497., 1042.,  884., ..., 1684., 1714., 1748.]), 1)
+AAAAAAAAAA: 1297 None None
+(array([2569., 5364., 4744., ..., 1880., 1879., 1764.]), 1)
+AAAAAAAAAA: 1035 None None
+(array([-157., -134., -133., ..., -352., -338., -304.]), 1)
+AAAAAAAAAA: 230 None None
+(array([-27., -13., -80., ..., 377., 345., 427.]), 1)
+AAAAAAAAAA: 596 None None
+(array([-824., -836., -869., ..., 1608., 1568., 1535.]), 1)
+AAAAAAAAAA: 112 None None
+(array([-130., -302., -260., ..., 4998., 3685., 2136.]), 1)
+AAAAAAAAAA: 703 None None
+(array([120., 130.,  70., ..., 216., 203., 201.]), 1)
+AAAAAAAAAA: 470 None None
+(array([-288., -276., -235., ...,  439.,  447.,  458.]), 1)
+AAAAAAAAAA: 877 None None
+(array([-447., -959., -885., ...,  852.,  846.,  839.]), 1)
+AAAAAAAAAA: 278 None None
+(array([ -41.,   83.,  220., ..., 4020., 4604., 4825.]), 1)
+AAAAAAAAAA: 908 None None
+(array([173., 314., 193., ..., 233., 241., 235.]), 1)
+AAAAAAAAAA: 585 None None
+(array([ -66.,  -90., -120., ..., -194., -185., -212.]), 1)
+AAAAAAAAAA: 1212 None None
+(array([-320., -404., -455., ...,  -87., -100., -137.]), 1)
+AAAAAAAAAA: 756 None None
+(array([-446., -448., -414., ...,  104.,   56.,   20.]), 1)
+AAAAAAAAAA: 980 None None
+(array([-136.,  -46.,   25., ...,  -17.,  -28.,  -77.]), 1)
+AAAAAAAAAA: 496 None None
+(array([ -77., -400., -675., ..., -187., -226., -328.]), -1)
+AAAAAAAAAA: 833 None None
+(array([-60., -65., -41., ...,  -5.,  -3., -45.]), 1)
+AAAAAAAAAA: 1401 None None
+(array([ 842.,  847.,  964., ..., -557., -607., -545.]), 1)
+AAAAAAAAAA: 1273 None None
+(array([-52.,  -8.,  19., ...,  54.,  51.,  25.]), 1)
+AAAAAAAAAA: 898 None None
+(array([145., 143., 150., ..., 137.,  83.,  43.]), -1)
+AAAAAAAAAA: 991 None None
+(array([3682., 4389., 4903., ...,  167.,  194.,  234.]), 1)
 AAAAAAAAAA: 902 None None
 (array([  0.,   2.,   1., ..., 350., 348., 346.]), 1)
-AAAAAAAAAA: 1319 None None
-(array([ -371., -1004., -1100., ...,  2503.,  2258.,  1970.]), 1)
+AAAAAAAAAA: 319 None None
+(array([-110., -105., -121., ...,  348.,  367.,  415.]), -1)
+AAAAAAAAAA: 613 None None
+(array([ -724., -1536., -1406., ...,   462.,   626.,   818.]), 1)
+AAAAAAAAAA: 542 None None
+(array([-322., -357., -364., ...,  663.,  433.,  185.]), -1)
+AAAAAAAAAA: 917 None None
+(array([ -981., -1315., -1473., ...,   -42.,  -114.,  -115.]), 1)
+AAAAAAAAAA: 669 None None
+(array([ 498.,  999.,  904., ..., -108.,  -76.,  -46.]), 1)
+AAAAAAAAAA: 789 None None
+(array([ 991., 1200., 1256., ...,  247.,  220.,  173.]), 1)
+AAAAAAAAAA: 785 None None
+(array([ 80., 124., 114., ..., 158., 150., 164.]), 1)
 AAAAAAAAAA: 1220 None None
 (array([ 3.000e+00, -4.000e+01, -5.800e+01, ..., -2.885e+03, -3.243e+03,
        -3.543e+03]), 1)
-AAAAAAAAAA: 224 None None
-(array([-189., -545., -902., ...,  453.,  320.,  410.]), 1)
-AAAAAAAAAA: 1031 None None
-(array([257., 259., 258., ...,  32.,  11.,   5.]), 1)
-AAAAAAAAAA: 1008 None None
-(array([ -891., -1114., -1324., ...,   309.,   294.,   283.]), -1)
-AAAAAAAAAA: 61 None None
-(array([ -61.,    6.,  199., ...,  686.,  906., 1106.]), 1)
-AAAAAAAAAA: 632 None None
-(array([-828., -809., -770., ..., -313., -194.,  -98.]), -1)
-AAAAAAAAAA: 762 None None
-(array([ -411.,  -358.,  -280., ..., -2366., -2323., -2200.]), 1)
-AAAAAAAAAA: 1325 None None
-(array([ 1075.,  1041.,   962., ..., -5998., -5515., -5018.]), 1)
-AAAAAAAAAA: 1094 None None
-(array([-1131., -2238., -1353., ...,   606.,   564.,   507.]), -1)
-AAAAAAAAAA: 1063 None None
-(array([ 440.,  464.,  503., ...,  -61.,  -98., -126.]), -1)
-AAAAAAAAAA: 919 None None
-(array([1003.,  895., 1052., ...,  380.,  310.,  401.]), 1)
-AAAAAAAAAA: 464 None None
-(array([ 2147.,  3521.,  1812., ..., -1734., -1908., -2070.]), 1)
-AAAAAAAAAA: 1154 None None
-(array([-1815., -1486., -1283., ...,  5970.,  5196.,  4175.]), -1)
-AAAAAAAAAA: 21 None None
-(array([-694., -670., -622., ..., 8415., 6912., 5210.]), -1)
-AAAAAAAAAA: 267 None None
-(array([7918., 7782., 7668., ...,  -39.,  -39.,  -33.]), 1)
-AAAAAAAAAA: 365 None None
-(array([ 586.,  455.,  406., ...,    2.,  -68., -134.]), -1)
-data_loader: <torch.utils.data.dataloader.DataLoader object at 0x2b876c113c10>
-AAAAAAAAAA: 542 None None
-(array([-322., -357., -364., ...,  663.,  433.,  185.]), -1)
-AAAAAAAAAA: 127 None None
-(array([ 127.,  101.,   47., ..., 2204., 2010., 1662.]), 1)
-AAAAAAAAAA: 785 None None
-(array([ 80., 124., 114., ..., 158., 150., 164.]), 1)
-AAAAAAAAAA: 370 None None
-(array([-541., -457., -422., ...,    8.,  -60.,  -52.]), -1)
-AAAAAAAAAA: 1103 None None
-(array([ -27.,   11.,   47., ...,  -98., -131., -130.]), 1)
-AAAAAAAAAA: 866 None None
-(array([ 313., 2430., 4480., ...,  -77.,  -35.,  -11.]), 1)
-AAAAAAAAAA: 1375 None None
-(array([ 71.,  10., -78., ..., 167., 171., 145.]), 1)
-AAAAAAAAAA: 1014 None None
-(array([  -1.,   18.,    8., ..., -163., -158., -134.]), 1)
-AAAAAAAAAA: 954 None None
-(array([ -528.,  -432.,  -322., ..., -1211., -1256., -1239.]), -1)
-AAAAAAAAAA: 839 None None
-(array([  619.,   699.,   750., ..., -3091., -2609., -2031.]), 1)
-AAAAAAAAAA: 904 None None
-(array([73., 66., 15., ..., 23., 22., -8.]), 1)
-AAAAAAAAAA: 914 None None
-(array([ 146.,  142.,  150., ..., -727., -624., -455.]), 1)
-AAAAAAAAAA: 5 None None
-(array([ 158.,  154.,  151., ...,  -44.,  -94., -344.]), 1)
-AAAAAAAAAA: 995 None None
-(array([-4680., -4698., -4633., ...,  1047.,  1062.,  1094.]), 1)
-AAAAAAAAAA: 584 None None
-(array([532., 548., 523., ...,   2.,  -4.,  -4.]), 1)
-AAAAAAAAAA: 672 None None
-(array([-329., -355., -394., ..., -191., -241., -279.]), -1)
-AAAAAAAAAA: 1253 None None
-(array([-340., -332., -313., ..., 1801., 1950., 2126.]), -1)
-AAAAAAAAAA: 375 None None
-(array([-119., -101., -121., ...,  140.,  152.,  165.]), 1)
-AAAAAAAAAA: 992 None None
-(array([ 273.,  286.,  319., ..., -461., -434., -422.]), 1)
-AAAAAAAAAA: 763 None None
-(array([ -96., -242., -237., ...,   43.,    3.,  -22.]), 1)
-AAAAAAAAAA: 118 None None
-(array([  98.,  197.,  149., ..., -257., -291., -318.]), 1)
-AAAAAAAAAA: 198 None None
-(array([122., 121.,  89., ...,  40.,  92.,  66.]), 1)
-AAAAAAAAAA: 1314 None None
-(array([1237., 1311., 1247., ..., -216., -137.,  -91.]), 1)
-AAAAAAAAAA: 619 None None
-(array([-526., -532., -577., ...,  160.,  122.,  146.]), 1)
-AAAAAAAAAA: 84 None None
-(array([1591., 1600., 1681., ..., -399., -363., -247.]), -1)
-AAAAAAAAAA: 822 None None
-(array([-152., -117.,   35., ..., -563., -688., -752.]), -1)
-AAAAAAAAAA: 684 None None
-(array([241., 292., 286., ..., 326., 198., 206.]), 1)
-AAAAAAAAAA: 1185 None None
-(array([-27277., -28646., -29170., ...,  27107.,  26167.,  18525.]), -1)
-AAAAAAAAAA: 941 None None
-(array([-229., -240., -205., ..., 2821., 3428., 3750.]), -1)
-AAAAAAAAAA: 1041 None None
-(array([  380.,   406.,   380., ..., -3818., -2683., -1732.]), -1)
-AAAAAAAAAA: 1241 None None
-(array([-807., -780., -473., ...,  849.,  788.,  714.]), -1)
-AAAAAAAAAA: 762 None None
-(array([ -411.,  -358.,  -280., ..., -2366., -2323., -2200.]), 1)
-AAAAAAAAAA: 614 None None
-(array([1021., 1252., 1465., ...,  800.,  750.,  520.]), 1)
-AAAAAAAAAA: 1081 None None
-(array([ -67.,  -87., -103., ..., 2064., 1904., 1839.]), 1)
-AAAAAAAAAA: 1045 None None
-(array([-491., -556., -618., ..., -993., -776., -634.]), 1)
-AAAAAAAAAA: 1058 None None
-(array([ 83., 221., 259., ..., 344., 339., 322.]), -1)
-AAAAAAAAAA: 1376 None None
-(array([-148., -246., -160., ..., -268., -275., -285.]), 1)
-AAAAAAAAAA: 735 None None
-(array([ -153.,    11.,   246., ..., -2389., -2331., -2216.]), 1)
-AAAAAAAAAA: 424 None None
-(array([182., 471., 459., ..., 622., 575., 442.]), 1)
-AAAAAAAAAA: 1024 None None
-(array([2777., 3168., 3625., ...,  337.,  314.,  293.]), -1)
-AAAAAAAAAA: 955 None None
-(array([-1187., -1114., -1045., ...,  1455.,  1512.,  1521.]), -1)
-AAAAAAAAAA: 383 None None
-(array([283., 595., 515., ..., 248., 251., 269.]), -1)
-AAAAAAAAAA: 481 None None
-(array([504., 242.,  17., ..., 241., 265., 308.]), -1)
-AAAAAAAAAA: 593 None None
-(array([ 892.,  892.,  900., ..., -281., -267., -275.]), 1)
-AAAAAAAAAA: 386 None None
-(array([ 16.,  37.,  64., ..., 118.,  73.,  43.]), 1)
-AAAAAAAAAA: 541 None None
-(array([-574., -675., -148., ..., -268., -250., -274.]), 1)
-AAAAAAAAAA: 597 None None
-(array([ 1484.,  1442.,  1404., ..., -1804., -1638., -1452.]), 1)
-AAAAAAAAAA: 1075 None None
-(array([-540., -453., -365., ...,  237.,  134.,  130.]), -1)
-AAAAAAAAAA: 411 None None
-(array([102.,  73.,  86., ...,   9.,  47.,  57.]), 1)
-AAAAAAAAAA: 505 None None
-(array([ 439.,  559.,  683., ..., -617., -603., -590.]), 1)
-AAAAAAAAAA: 789 None None
-(array([ 991., 1200., 1256., ...,  247.,  220.,  173.]), 1)
-AAAAAAAAAA: 884 None None
-(array([-194., -372., -422., ..., -569., -470., -331.]), 1)
-AAAAAAAAAA: 521 None None
-(array([-190., -420., -409., ...,  353.,  353.,  339.]), 1)
-AAAAAAAAAA: 1331 None None
-(array([  120.,   315.,   349., ..., -1151., -1188., -1199.]), 1)
-AAAAAAAAAA: 980 None None
-(array([-136.,  -46.,   25., ...,  -17.,  -28.,  -77.]), 1)
-AAAAAAAAAA: 333 None None
-(array([-367., -357., -380., ...,  -73., -111., -138.]), 1)
-AAAAAAAAAA: 545 None None
-(array([ -351.,  -343.,  -381., ..., -2650., -2630., -2597.]), -1)
-AAAAAAAAAA: 821 None None
-(array([1235., 1182., 1163., ...,   23.,  -39., -125.]), -1)
-AAAAAAAAAA: 302 None None
-(array([1302.,  947.,  302., ..., -945., -882., -909.]), -1)
-AAAAAAAAAA: 752 None None
-(array([-1403., -1421., -1119., ...,   230.,   231.,   311.]), -1)
-AAAAAAAAAA: 1233 None None
-(array([ -52.,  -90., -113., ...,  -89., -168., -170.]), 1)
-AAAAAAAAAA: 527 None None
-(array([ -40.,  -63.,  -73., ..., -321., -320., -290.]), 1)
-AAAAAAAAAA: 1298 None None
-(array([1689., 1545., 1472., ..., 1452., 1640., 1771.]), 1)
-AAAAAAAAAA: 201 None None
-(array([1100.,  910.,  722., ..., 1235., 1340., 1460.]), 1)
-AAAAAAAAAA: 1164 None None
-(array([ 253.,  267.,  257., ..., -187., -157., -231.]), 1)
-AAAAAAAAAA: 1128 None None
-(array([-395., -907., -875., ...,  -14.,  -18.,  -11.]), 1)
-AAAAAAAAAA: 987 None None
-(array([-322., -238., -189., ...,   34.,   40.,   98.]), 1)
-AAAAAAAAAA: 259 None None
-(array([ 186.,  328.,  375., ...,  -32., -162.,  -77.]), 1)
-AAAAAAAAAA: 690 None None
-(array([-1644., -3633., -3488., ...,  1367.,  1321.,  1316.]), 1)
-AAAAAAAAAA: 1414 None None
-(array([-416., -579., -399., ...,  186.,   99.,  246.]), 1)
-AAAAAAAAAA: 632 None None
-(array([-828., -809., -770., ..., -313., -194.,  -98.]), -1)
-AAAAAAAAAA: 1358 None None
-(array([ -24.,  -42.,  -53., ..., -387., -406., -398.]), 1)
-AAAAAAAAAA: 15 None None
-(array([536., 554., 616., ..., 107., 142., 154.]), 1)
-AAAAAAAAAA: 946 None None
-(array([-159., -334., -273., ...,  281.,  298.,  310.]), 1)
-AAAAAAAAAA: 508 None None
-(array([232., 199., 212., ..., 672., 578., 524.]), 1)
-AAAAAAAAAA: 1064 None None
-(array([ 47.,  82.,  98., ..., -19., -50., -74.]), -1)
-AAAAAAAAAA: 204 None None
-(array([ -16.,  -81., -123., ...,  185.,  163.,  184.]), 1)
-AAAAAAAAAA: 677 None None
-(array([-219., -339., -183., ..., -308., -299., -287.]), 1)
-AAAAAAAAAA: 589 None None
-(array([-781., -745., -710., ..., -516., -335., -158.]), 1)
-AAAAAAAAAA: 548 None None
-(array([ 201.,  281.,  335., ..., -345., -427., -459.]), -1)
-AAAAAAAAAA: 530 None None
-(array([ 445.,  313.,  154., ..., -681., -710., -742.]), 1)
-AAAAAAAAAA: 184 None None
-(array([244., 196., 212., ...,  53.,  13.,  34.]), 1)
-AAAAAAAAAA: 159 None None
-(array([ -280.,  -531.,  -431., ..., -3400., -4037., -4762.]), 1)
-AAAAAAAAAA: 112 None None
-(array([-130., -302., -260., ..., 4998., 3685., 2136.]), 1)
-AAAAAAAAAA: 653 None None
-(array([-210., -449., -396., ...,   98.,  138.,  106.]), -1)
-AAAAAAAAAA: 682 None None
-(array([  848.,   831.,   873., ..., -2734., -2806., -2758.]), 1)
-AAAAAAAAAA: 145 None None
-(array([237., 122., 153., ..., 144., 183., 144.]), 1)
-AAAAAAAAAA: 923 None None
-(array([ 183.,  192.,  165., ..., 1797., 1800., 1699.]), 1)
-AAAAAAAAAA: 329 None None
-(array([53., 39., 36., ..., 16., 34., 18.]), -1)
-AAAAAAAAAA: 393 None None
-(array([-254., -291., -276., ...,  -52.,  -56.,   -7.]), 1)
-AAAAAAAAAA: 1380 None None
-(array([ 555., 1348., 1420., ...,  226.,  188.,  197.]), 1)
-AAAAAAAAAA: 407 None None
-(array([-389., -839., -801., ..., 2191., 2092., 2047.]), 1)
-AAAAAAAAAA: 1397 None None
-(array([-318., -352., -298., ..., 1640., 1560., 1464.]), 1)
-AAAAAAAAAA: 401 None None
-(array([-232., -224., -233., ...,  161.,  182.,  160.]), 1)
-AAAAAAAAAA: 1297 None None
-(array([2569., 5364., 4744., ..., 1880., 1879., 1764.]), 1)
-AAAAAAAAAA: 811 None None
-(array([ -81., -133.,  -83., ...,  -96., -101., -122.]), 1)
-AAAAAAAAAA: 969 None None
-(array([701., 818., 951., ..., 618., 575., 677.]), -1)
-AAAAAAAAAA: 1063 None None
-(array([ 440.,  464.,  503., ...,  -61.,  -98., -126.]), -1)
-AAAAAAAAAA: 323 None None
-(array([69., 82., 74., ..., 56., 62., 73.]), 1)
-AAAAAAAAAA: 885 None None
-(array([-185.,  -58.,  120., ..., -300., -405., -492.]), 1)
-AAAAAAAAAA: 300 None None
-(array([ -974., -1778., -1200., ..., -2754., -2721., -2670.]), 1)
-AAAAAAAAAA: 1228 None None
-(array([ 14.,  49.,  74., ..., 130., 170., 206.]), 1)
-AAAAAAAAAA: 1153 None None
-(array([  527.,   552.,   554., ..., -2404., -2449., -2208.]), -1)
 AAAAAAAAAA: 678 None None
 (array([-274., -228., -210., ...,   50.,   56.,   44.]), 1)
-AAAAAAAAAA: 586 None None
-(array([-181., -186., -198., ...,   -2.,    4.,   31.]), 1)
-AAAAAAAAAA: 122 None None
-(array([-449., -525., -430., ..., -434., -261., -633.]), 1)
-AAAAAAAAAA: 357 None None
-(array([ -168.,   -95.,   -64., ..., -1191., -1113., -1049.]), -1)
-AAAAAAAAAA: 280 None None
-(array([  9.,  38.,  51., ..., 170., 147., 118.]), 1)
-AAAAAAAAAA: 194 None None
-(array([ 2358.,  2282.,  2125., ..., -2860., -2739., -2594.]), -1)
-AAAAAAAAAA: 745 None None
-(array([  588.,  1156.,   956., ..., -3179., -3176., -3069.]), 1)
-AAAAAAAAAA: 31 None None
-(array([ -51., -116., -169., ..., -260., -249., -254.]), -1)
-AAAAAAAAAA: 630 None None
-(array([ 182.,  441.,  429., ..., -519., -574., -620.]), -1)
-AAAAAAAAAA: 1196 None None
-(array([487., 468., 465., ...,  36.,  47.,  85.]), -1)
-AAAAAAAAAA: 746 None None
-(array([-3009., -2830., -2794., ..., -1037., -1320., -1604.]), -1)
-AAAAAAAAAA: 311 None None
-(array([219., 180., 194., ..., 392., 383., 412.]), -1)
-AAAAAAAAAA: 227 None None
-(array([ 234.,  275.,  274., ..., -378., -363., -368.]), 1)
-AAAAAAAAAA: 1091 None None
-(array([1483., 3071., 2656., ...,  184., -203., -501.]), 1)
-AAAAAAAAAA: 1073 None None
-(array([313., 330., 380., ...,   7., -28., -54.]), -1)
-AAAAAAAAAA: 1351 None None
-(array([-505., -430., -371., ..., -198.,  -95.,  -50.]), -1)
-AAAAAAAAAA: 1409 None None
-(array([ 277.,  616.,  504., ...,  -69.,  -88., -116.]), -1)
-AAAAAAAAAA: 441 None None
-(array([-195., -198., -158., ...,  968., 1067., 1082.]), -1)
-AAAAAAAAAA: 754 None None
-(array([-170., -174., -156., ..., -532., -501., -532.]), -1)
-AAAAAAAAAA: 81 None None
-(array([-301., -740., -737., ..., 1133., 1722., 1526.]), 1)
-AAAAAAAAAA: 608 None None
-(array([-1838., -1377.,  -998., ...,    46.,   -63.,  -174.]), 1)
-AAAAAAAAAA: 1123 None None
-(array([ 465.,  458.,  415., ..., -763., -628., -517.]), 1)
-AAAAAAAAAA: 454 None None
-(array([-312., -672., -688., ..., -463., -515., -545.]), 1)
-AAAAAAAAAA: 406 None None
-(array([-551., -508., -435., ...,  -78., -108., -105.]), 1)
-AAAAAAAAAA: 246 None None
-(array([ 1.5000e+02,  8.0000e+00, -3.8300e+02, ..., -2.0827e+04,
-       -1.8672e+04, -1.6063e+04]), -1)
-AAAAAAAAAA: 74 None None
-(array([ -551., -1011.,  -715., ...,    85.,   137.,   151.]), 1)
-AAAAAAAAAA: 965 None None
-(array([ 385.,  413.,  461., ..., 2691., 2757., 2734.]), 1)
-AAAAAAAAAA: 1106 None None
-(array([894., 851., 793., ..., 859., 771., 697.]), 1)
-AAAAAAAAAA: 189 None None
-(array([ -503., -1068.,  -996., ...,  -351.,  -321.,  -233.]), -1)
-AAAAAAAAAA: 966 None None
-(array([2434., 2089., 1632., ..., -285., -279., -284.]), 1)
-AAAAAAAAAA: 86 None None
-(array([  1.,  10., -29., ..., 292., 326., 294.]), -1)
-AAAAAAAAAA: 782 None None
-(array([-127., -144., -123., ...,  137.,  129.,  102.]), 1)
-AAAAAAAAAA: 900 None None
-(array([-2356., -2236., -2001., ...,  -290.,  -258.,  -284.]), 1)
-AAAAAAAAAA: 483 None None
-(array([-244., -172., -121., ..., -162., -103.,   -6.]), 1)
-AAAAAAAAAA: 102 None None
-(array([-918., -898., -904., ..., -104., -118., -160.]), 1)
-AAAAAAAAAA: 1240 None None
-(array([  74.,   10.,    0., ..., -508., -592., -528.]), -1)
-AAAAAAAAAA: 587 None None
-(array([ 8732., 18776., 17215., ...,  2020.,  2042.,  2096.]), 1)
-AAAAAAAAAA: 477 None None
-(array([1038., 1330., 1536., ..., 1044., 1321., 1525.]), 1)
-AAAAAAAAAA: 288 None None
-(array([111., 149., 175., ..., -30., -44.,  -1.]), -1)
-AAAAAAAAAA: 391 None None
-(array([137., 309., 226., ..., 160., 199., 276.]), 1)
-AAAAAAAAAA: 1200 None None
-(array([ 330.,  307.,  300., ..., -791., -797., -606.]), 1)
-AAAAAAAAAA: 291 None None
-(array([ 264.,  266.,  285., ..., -189., -164., -215.]), 1)
-AAAAAAAAAA: 729 None None
-(array([ -95., -115.,   15., ..., -140., -263., -359.]), 1)
-AAAAAAAAAA: 1244 None None
-(array([  23.,  121.,  251., ..., -618., -587., -500.]), -1)
-AAAAAAAAAA: 433 None None
-(array([  57.,  -38.,  -36., ..., -489., -453., -487.]), 1)
-AAAAAAAAAA: 49 None None
-(array([323., 167., -24., ..., 796., 917., 804.]), 1)
-AAAAAAAAAA: 1260 None None
-(array([-333., -430., -540., ..., -384., -538., -655.]), 1)
-AAAAAAAAAA: 958 None None
-(array([-1730., -1902., -2070., ...,  -447.,  -442.,  -449.]), -1)
-AAAAAAAAAA: 219 None None
-(array([-197., -225., -256., ...,   93.,   -8.,  -77.]), 1)
-AAAAAAAAAA: 1062 None None
-(array([-346., -407., -421., ...,  317.,  371.,  411.]), -1)
-AAAAAAAAAA: 187 None None
-(array([1167., 1078.,  945., ..., -445., -589., -696.]), -1)
-AAAAAAAAAA: 930 None None
-(array([166., 153., 150., ..., 315., 341., 408.]), 1)
-AAAAAAAAAA: 1236 None None
-(array([ 191.,   42.,  -99., ..., -144.,  -76.,   44.]), -1)
-AAAAAAAAAA: 618 None None
-(array([  42.,  114.,  140., ..., -330., -357., -404.]), 1)
-AAAAAAAAAA: 230 None None
-(array([-27., -13., -80., ..., 377., 345., 427.]), 1)
-AAAAAAAAAA: 561 None None
-(array([1585., 1411., 1135., ..., 1174.,  947.,  729.]), 1)
-AAAAAAAAAA: 1234 None None
-(array([  -48.,    51.,   158., ..., -1766., -1609., -1573.]), 1)
-AAAAAAAAAA: 808 None None
-(array([ 794., 1552., 2138., ..., -821., -796., -860.]), -1)
-AAAAAAAAAA: 1011 None None
-(array([ 2677., -6923.,   785., ...,   -85.,   -15.,    23.]), -1)
-AAAAAAAAAA: 88 None None
-(array([148., 230., 226., ..., -97., -63., -75.]), 1)
-AAAAAAAAAA: 196 None None
-(array([ 1952.,  1656.,  1304., ..., -6473., -5402., -4214.]), -1)
-AAAAAAAAAA: 150 None None
-(array([574., 563., 363., ..., 645., 692., 731.]), 1)
-AAAAAAAAAA: 52 None None
-(array([  22.,   33.,  -29., ..., -860., -945., -908.]), 1)
-AAAAAAAAAA: 510 None None
-(array([159., 295., 230., ..., 306., 332., 352.]), 1)
-AAAAAAAAAA: 1216 None None
-(array([-128., -160., -171., ..., -644., -792., -897.]), 1)
-AAAAAAAAAA: 833 None None
-(array([-60., -65., -41., ...,  -5.,  -3., -45.]), 1)
-AAAAAAAAAA: 324 None None
-(array([-1.000e+00, -6.700e+01, -4.400e+01, ...,  1.419e+03,  1.406e+03,
-        1.339e+03]), 1)
-AAAAAAAAAA: 1426 None None
-(array([ 427.,  543.,  684., ..., -437., -487., -435.]), -1)
-AAAAAAAAAA: 826 None None
-(array([-276., -286., -200., ...,  479.,  442.,  452.]), 1)
-AAAAAAAAAA: 141 None None
-(array([ 31.,  19.,  50., ..., -51., -10.,  52.]), 1)
-AAAAAAAAAA: 732 None None
-(array([ 459.,  567.,  690., ...,   94., -388., -734.]), 1)
-AAAAAAAAAA: 1093 None None
-(array([537., 617., 662., ..., 243., 289., 326.]), -1)
-AAAAAAAAAA: 1291 None None
-(array([504., 443., 441., ..., 530., 317.,  44.]), 1)
-AAAAAAAAAA: 1288 None None
-(array([ 806.,  725.,  600., ..., -428., -426., -364.]), 1)
-AAAAAAAAAA: 365 None None
-(array([ 586.,  455.,  406., ...,    2.,  -68., -134.]), -1)
-AAAAAAAAAA: 195 None None
-(array([-2453., -2327., -2198., ...,  2837.,  2542.,  2247.]), -1)
-AAAAAAAAAA: 881 None None
-(array([207., 442., 437., ..., 643., 567., 461.]), 1)
-AAAAAAAAAA: 306 None None
-(array([  -3.,  105.,  158., ..., 2765., 1815.,  945.]), -1)
-AAAAAAAAAA: 157 None None
-(array([ -951., -1189., -1346., ...,  1723.,  1529.,  1460.]), 1)
-AAAAAAAAAA: 385 None None
-(array([-386., -444., -537., ...,  -76.,  -62.,  -19.]), 1)
-AAAAAAAAAA: 1173 None None
-(array([-306., -335., -339., ..., -295., -284., -303.]), 1)
-AAAAAAAAAA: 1399 None None
-(array([-3191., -7739., -8427., ..., -1053.,  -896.,  -988.]), 1)
-AAAAAAAAAA: 870 None None
-(array([  -1.,   46.,   59., ..., -132.,  -74.,  -50.]), 1)
-AAAAAAAAAA: 877 None None
-(array([-447., -959., -885., ...,  852.,  846.,  839.]), 1)
-AAAAAAAAAA: 1384 None None
-(array([ 202.,  454.,  426., ..., -455., -423., -397.]), -1)
-AAAAAAAAAA: 351 None None
-(array([-11., -26., -38., ..., 191., 178., 230.]), 1)
-AAAAAAAAAA: 827 None None
-(array([199., 420., 405., ...,  20.,  79.,  53.]), 1)
-AAAAAAAAAA: 290 None None
-(array([ -6., -96., -35., ..., 234., 261., 256.]), -1)
-AAAAAAAAAA: 13 None None
-(array([ -55.,  -97.,  -87., ..., 4181., 4323., 4433.]), 1)
-AAAAAAAAAA: 831 None None
-(array([110., 217., 218., ..., 247., 153., 125.]), 1)
-AAAAAAAAAA: 1198 None None
-(array([ -25., -144., -271., ...,  225.,  221.,  233.]), -1)
-AAAAAAAAAA: 70 None None
-(array([ 975., 2017., 1739., ...,  -35., -131., -284.]), 1)
-AAAAAAAAAA: 1137 None None
-(array([-1618., -1574., -1500., ...,   -18.,     5.,     9.]), 1)
-AAAAAAAAAA: 720 None None
-(array([-32., -20.,  47., ..., 199., 139.,  95.]), 1)
-AAAAAAAAAA: 806 None None
-(array([-174.,  -87.,  -67., ...,  209.,  -14., -452.]), 1)
-AAAAAAAAAA: 274 None None
-(array([ 213.,  232.,  227., ..., -298., -301., -276.]), 1)
-AAAAAAAAAA: 1410 None None
-(array([-127., -115., -119., ...,  -86.,  -63.,  -54.]), 1)
-AAAAAAAAAA: 304 None None
-(array([160., 181., 179., ..., 365., 293., 246.]), -1)
-AAAAAAAAAA: 459 None None
-(array([-129., -144., -158., ...,  291.,  185.,  156.]), 1)
-AAAAAAAAAA: 1427 None None
-(array([-457., -454., -485., ..., -402., -572., -611.]), -1)
-AAAAAAAAAA: 1365 None None
-(array([-954., -835., -757., ...,  789.,  779.,  686.]), 1)
-AAAAAAAAAA: 231 None None
-(array([  436.,   506.,   575., ..., -1285., -1394., -1432.]), 1)
-AAAAAAAAAA: 1238 None None
-(array([-149., -156., -186., ...,  -81.,  -37.,   11.]), -1)
-AAAAAAAAAA: 665 None None
-(array([ 497., 1042.,  884., ..., 1684., 1714., 1748.]), 1)
-AAAAAAAAAA: 1354 None None
-(array([-605., -571., -558., ...,  413.,  275.,  157.]), -1)
-AAAAAAAAAA: 886 None None
-(array([-497., -501., -481., ..., 1027.,  992.,  880.]), 1)
-AAAAAAAAAA: 1194 None None
-(array([ -30., -107., -198., ..., -807., -877., -922.]), 1)
-AAAAAAAAAA: 1325 None None
-(array([ 1075.,  1041.,   962., ..., -5998., -5515., -5018.]), 1)
-AAAAAAAAAA: 668 None None
-(array([-1138., -1194., -1240., ...,   437.,   425.,   395.]), 1)
-AAAAAAAAAA: 158 None None
-(array([1485., 1408., 1314., ...,  201., -298., -431.]), 1)
-AAAAAAAAAA: 842 None None
-(array([-167., -337., -326., ..., -434., -415., -361.]), 1)
-AAAAAAAAAA: 57 None None
-(array([ 213.,  338.,   87., ..., -209., -222., -253.]), -1)
-AAAAAAAAAA: 1415 None None
-(array([192., 164., 153., ..., 186., 149., 180.]), 1)
-AAAAAAAAAA: 33 None None
-(array([-318., -367., -326., ...,  -32.,   18.,   36.]), 1)
-AAAAAAAAAA: 1117 None None
-(array([-249., -147.,  -15., ...,  702.,  732.,  876.]), 1)
-AAAAAAAAAA: 1114 None None
-(array([-288., -663., -669., ...,  264.,  319.,  362.]), 1)
-AAAAAAAAAA: 387 None None
-(array([ 98., 200., 159., ..., 158., 189., 171.]), 1)
-AAAAAAAAAA: 30 None None
-(array([ 12.,  74., -26., ...,  89.,  84.,  45.]), -1)
-AAAAAAAAAA: 479 None None
-(array([ 460.,  942.,  842., ..., 2174., 1781., 1108.]), 1)
-AAAAAAAAAA: 1229 None None
-(array([234., 262., 291., ..., 248., 238., 246.]), 1)
-AAAAAAAAAA: 1223 None None
-(array([ -9., -90., -41., ..., 253., 252., 241.]), 1)
-AAAAAAAAAA: 585 None None
-(array([ -66.,  -90., -120., ..., -194., -185., -212.]), 1)
-AAAAAAAAAA: 830 None None
-(array([-333., -341., -346., ..., -306., -389., -453.]), 1)
+AAAAAAAAAA: 648 None None
+(array([-219., -252., -269., ..., -356., -353., -298.]), 1)
+AAAAAAAAAA: 444 None None
+(array([ 866., 1059., 1266., ..., -429., -386., -324.]), 1)
+AAAAAAAAAA: 661 None None
+(array([ -27.,  -75.,  -81., ..., 2206., 2349., 2474.]), 1)
+AAAAAAAAAA: 310 None None
+(array([-197., -199., -201., ...,  254.,  282.,  210.]), -1)
+AAAAAAAAAA: 1052 None None
+(array([ -737., -1583., -1387., ..., -2176., -2077., -1958.]), 1)
+AAAAAAAAAA: 934 None None
+(array([ -512.,  -521.,  -483., ...,  -549., -1103., -1658.]), 1)
+AAAAAAAAAA: 485 None None
+(array([960., 975., 956., ...,  15.,   2., -28.]), 1)
+AAAAAAAAAA: 1 None None
+(array([-15.,  23.,  48., ..., 233., 201., 157.]), 1)
 AAAAAAAAAA: 1326 None None
 (array([-4479., -3935., -3385., ..., -1163., -1189., -1169.]), 1)
-AAAAAAAAAA: 1074 None None
-(array([ -57., -100., -108., ..., -723., -682., -619.]), -1)
-AAAAAAAAAA: 783 None None
-(array([ 83., 171., 117., ..., -70., -50., -68.]), 1)
-AAAAAAAAAA: 494 None None
-(array([-111.,  -82.,  -44., ..., 1573., 1528., 1471.]), -1)
-AAAAAAAAAA: 1088 None None
-(array([226., 487., 556., ..., 356., 385., 390.]), 1)
-AAAAAAAAAA: 1004 None None
-(array([128., 132.,  57., ..., -87., -54., -15.]), 1)
-AAAAAAAAAA: 132 None None
-(array([1362., 1177.,  946., ...,  187.,  279.,  320.]), -1)
-AAAAAAAAAA: 447 None None
-(array([ -125.,  -188.,  -246., ..., -7625., -7294., -6940.]), -1)
-AAAAAAAAAA: 101 None None
-(array([ 197.,  172.,  149., ..., -899., -914., -918.]), 1)
-AAAAAAAAAA: 1169 None None
-(array([-1273., -1381., -1468., ...,  1212.,  1262.,  1261.]), -1)
-AAAAAAAAAA: 953 None None
-(array([1352., 2473., 1659., ..., -587., -598., -590.]), 1)
-AAAAAAAAAA: 171 None None
-(array([   3.,   -1.,   30., ...,   83.,  -81., -261.]), 1)
-AAAAAAAAAA: 305 None None
-(array([ 219.,  246.,  281., ..., -218., -209., -110.]), -1)
 AAAAAAAAAA: 1022 None None
 (array([231., 416., 289., ..., 263., 207., 123.]), 1)
-AAAAAAAAAA: 174 None None
-(array([ 100.,  341.,  504., ...,  750.,  131., -485.]), -1)
-AAAAAAAAAA: 657 None None
-(array([ 24.,  18., -24., ..., 190., 213., 247.]), -1)
-AAAAAAAAAA: 129 None None
-(array([285., 679., 768., ..., 160., 231., 308.]), 1)
-AAAAAAAAAA: 945 None None
-(array([  6., 142., 237., ..., 853., 875., 904.]), 1)
-AAAAAAAAAA: 919 None None
-(array([1003.,  895., 1052., ...,  380.,  310.,  401.]), 1)
-AAAAAAAAAA: 105 None None
-(array([ -55.,  -42.,  -62., ...,  -36., -471., -751.]), 1)
-AAAAAAAAAA: 999 None None
-(array([ 395.,  398.,  508., ..., -482., -548., -668.]), 1)
-AAAAAAAAAA: 835 None None
-(array([-313., -677., -612., ...,  877.,  904.,  892.]), 1)
-AAAAAAAAAA: 149 None None
-(array([-442., -333., -246., ...,  552.,  596.,  664.]), 1)
-AAAAAAAAAA: 1061 None None
-(array([-205., -436., -392., ..., -525., -568., -434.]), 1)
-AAAAAAAAAA: 666 None None
-(array([1815., 1852., 1940., ..., -520., -487., -439.]), 1)
-AAAAAAAAAA: 942 None None
-(array([3926., 4060., 4128., ..., -284., -288., -298.]), -1)
-AAAAAAAAAA: 996 None None
-(array([250., 459., 304., ...,   8.,  66.,  40.]), 1)
-AAAAAAAAAA: 36 None None
-(array([ -96., -106., -110., ..., -218., -197., -214.]), -1)
-AAAAAAAAAA: 467 None None
-(array([ 628., 1168.,  851., ...,  411.,  452.,  486.]), 1)
-AAAAAAAAAA: 801 None None
-(array([-120., -135., -193., ...,  384.,  344.,  336.]), 1)
-AAAAAAAAAA: 283 None None
-(array([-228., -164.,  -74., ..., -403., -457., -417.]), 1)
-AAAAAAAAAA: 874 None None
-(array([-2135., -2107., -2164., ...,   644.,   657.,   705.]), 1)
-AAAAAAAAAA: 53 None None
-(array([-900., -924., -928., ..., -816., -946., -967.]), 1)
-AAAAAAAAAA: 199 None None
-(array([  95.,   95.,  124., ...,  -91., -141., -208.]), 1)
-AAAAAAAAAA: 525 None None
-(array([-199., -395., -327., ...,  -61.,  -26.,  -20.]), 1)
-AAAAAAAAAA: 1340 None None
-(array([  742.,   881.,   938., ..., -1439., -1528., -1614.]), 1)
-AAAAAAAAAA: 1010 None None
-(array([ 79., 109., 155., ..., 913., 868., 823.]), -1)
-AAAAAAAAAA: 1334 None None
-(array([ 367.,  426.,  479., ..., -273., -373., -529.]), 1)
-AAAAAAAAAA: 837 None None
-(array([-276., -208., -111., ...,  556.,  567.,  598.]), -1)
-AAAAAAAAAA: 501 None None
-(array([-689., -700., -717., ...,   67.,  105.,   54.]), 1)
-AAAAAAAAAA: 1433 None None
-(array([865., 828., 737., ..., 366., 368., 297.]), -1)
-AAAAAAAAAA: 1136 None None
-(array([ -768., -1481., -1187., ...,  -927., -1231., -1411.]), -1)
-AAAAAAAAAA: 613 None None
-(array([ -724., -1536., -1406., ...,   462.,   626.,   818.]), 1)
-AAAAAAAAAA: 251 None None
-(array([  570.,   751.,  1018., ..., 10500., 10810., 10709.]), -1)
-AAAAAAAAAA: 758 None None
-(array([ 806.,  747.,  672., ..., -320., -318., -323.]), 1)
-AAAAAAAAAA: 298 None None
-(array([  15.,  -51.,  -25., ..., -658., -671., -726.]), 1)
-AAAAAAAAAA: 788 None None
-(array([2357., 2181., 1963., ..., -401.,  159.,  557.]), 1)
-AAAAAAAAAA: 591 None None
-(array([ 71.,  76.,  24., ..., 250., 232., 206.]), 1)
-AAAAAAAAAA: 1378 None None
-(array([-155., -106., -137., ...,  118.,   60.,   16.]), 1)
-AAAAAAAAAA: 400 None None
-(array([-463., -491., -509., ..., -238., -245., -214.]), 1)
-AAAAAAAAAA: 303 None None
-(array([ -946., -1586., -1208., ...,   166.,   154.,   156.]), -1)
-AAAAAAAAAA: 1407 None None
-(array([-1464.,  -848.,   -26., ...,    86.,    99.,   128.]), -1)
-AAAAAAAAAA: 225 None None
-(array([-106., -152., -136., ..., 1127.,  763.,  396.]), 1)
-AAAAAAAAAA: 960 None None
-(array([1219., 1146., 1049., ..., -402., -387., -160.]), 1)
-AAAAAAAAAA: 807 None None
-(array([  412.,   788.,   766., ..., -1641.,  -878.,   -44.]), 1)
-AAAAAAAAAA: 1402 None None
-(array([-528., -391., -299., ...,  329.,  250.,  153.]), 1)
 AAAAAAAAAA: 211 None None
 (array([ 110.,  116.,  140., ..., -153., -133., -118.]), 1)
-AAAAAAAAAA: 553 None None
-(array([110., 221., 229., ..., -77., -41., -15.]), 1)
-AAAAAAAAAA: 250 None None
-(array([-9218., -8970., -8417., ...,   481.,   524.,   531.]), -1)
-AAAAAAAAAA: 1308 None None
-(array([ 781.,  628.,  494., ..., -743., -673., -677.]), 1)
-AAAAAAAAAA: 82 None None
-(array([  591.,  -294., -1886., ...,    16.,    -9.,    37.]), 1)
-AAAAAAAAAA: 399 None None
-(array([ -672., -1387., -1210., ...,  -423.,  -443.,  -466.]), 1)
-AAAAAAAAAA: 537 None None
-(array([ -579., -1719., -2055., ..., -1927., -1768., -1561.]), 1)
-AAAAAAAAAA: 983 None None
-(array([-409., -374., -374., ...,  469.,  542.,  680.]), 1)
-AAAAAAAAAA: 705 None None
-(array([-485., -444., -426., ...,  -57.,   14.,   63.]), -1)
-AAAAAAAAAA: 1141 None None
-(array([ 334.,  195.,  161., ..., -207., -127., -137.]), -1)
-AAAAAAAAAA: 340 None None
-(array([ 235.,  186.,  103., ..., -265., -230., -197.]), 1)
-AAAAAAAAAA: 1379 None None
-(array([ -54.,  -97., -135., ...,  176.,  141.,   97.]), 1)
-AAAAAAAAAA: 981 None None
-(array([327., 589., 512., ..., 161., 127., 145.]), 1)
-AAAAAAAAAA: 1092 None None
-(array([-668., -735., -677., ...,  392.,  415.,  465.]), -1)
-AAAAAAAAAA: 577 None None
-(array([725., 791., 866., ..., -14., 161., 177.]), 1)
-AAAAAAAAAA: 1343 None None
-(array([ 244.,  425.,  304., ..., -317., -291., -235.]), 1)
-AAAAAAAAAA: 564 None None
-(array([-1536., -1828., -2000., ...,  2171.,  2266.,  2308.]), 1)
-AAAAAAAAAA: 484 None None
-(array([ 67., 132., 182., ..., 852., 884., 921.]), 1)
-AAAAAAAAAA: 147 None None
-(array([-483., -299.,  -92., ..., -959., -803., -661.]), 1)
-AAAAAAAAAA: 432 None None
-(array([-496., -937., -692., ...,  166.,  145.,   46.]), 1)
-AAAAAAAAAA: 42 None None
-(array([-39., -80., -88., ...,  39.,  72.,  30.]), -1)
-AAAAAAAAAA: 207 None None
-(array([-1347., -1462., -1505., ...,  -513.,  -414.,  -256.]), 1)
-AAAAAAAAAA: 1273 None None
-(array([-52.,  -8.,  19., ...,  54.,  51.,  25.]), 1)
-AAAAAAAAAA: 312 None None
-(array([ 363.,  289.,  255., ..., -249.,   26.,  296.]), -1)
-AAAAAAAAAA: 1133 None None
-(array([ 655.,  790.,  855., ..., -195., -249., -318.]), 1)
-AAAAAAAAAA: 560 None None
-(array([ -48., -151., -263., ..., 1736., 1738., 1666.]), 1)
-AAAAAAAAAA: 182 None None
-(array([ 127.,  171.,  171., ..., -253., -279., -132.]), 1)
-AAAAAAAAAA: 1251 None None
-(array([-626., -638., -630., ..., 1313., 1575., 1815.]), -1)
-AAAAAAAAAA: 1389 None None
-(array([-1724., -1757., -1778., ...,  6303.,  5651.,  4897.]), 1)
-AAAAAAAAAA: 1105 None None
-(array([-3139., -2708., -2277., ...,   914.,   927.,   926.]), 1)
-AAAAAAAAAA: 990 None None
-(array([-8066., -7976., -7753., ...,   449.,  1670.,  2761.]), 1)
-AAAAAAAAAA: 425 None None
-(array([ 412.,  241.,  194., ..., 1010.,  953.,  873.]), 1)
-AAAAAAAAAA: 223 None None
-(array([ 49.,  34.,  75., ..., 383., 199.,  93.]), 1)
-AAAAAAAAAA: 600 None None
-(array([ -381.,  -461.,  -558., ..., -1174., -1053.,  -955.]), 1)
-AAAAAAAAAA: 1391 None None
-(array([ 1124.,   -26., -1182., ...,  -161.,   -88.,   -10.]), 1)
-AAAAAAAAAA: 604 None None
-(array([ 982., 1031., 1051., ...,  446.,  414.,  399.]), -1)
-AAAAAAAAAA: 1232 None None
-(array([336., 382., 270., ..., -37.,   0.,  19.]), 1)
-AAAAAAAAAA: 1125 None None
-(array([ 5141.,  5044.,  4882., ..., 28790., 24230., 16196.]), 1)
-AAAAAAAAAA: 578 None None
-(array([  234.,   242.,   256., ..., -1274., -1223., -1206.]), 1)
-AAAAAAAAAA: 338 None None
-(array([-455., -414., -373., ..., 1022.,  757.,  438.]), 1)
-AAAAAAAAAA: 529 None None
-(array([-142., -351., -347., ...,  631.,  603.,  555.]), 1)
-AAAAAAAAAA: 916 None None
-(array([ -73., -107., -106., ...,    3., -285., -724.]), 1)
-AAAAAAAAAA: 814 None None
-(array([-915., -881., -891., ...,  267.,  337.,  400.]), -1)
-AAAAAAAAAA: 1155 None None
-(array([189., 312., 155., ..., 399., 408., 407.]), -1)
-AAAAAAAAAA: 488 None None
-(array([  56.,  170.,  223., ..., 1106., 1159., 1196.]), 1)
-AAAAAAAAAA: 517 None None
-(array([ -18., -171., -124., ...,  -90.,   -4.,  -25.]), 1)
-AAAAAAAAAA: 817 None None
-(array([233., 231., 265., ..., 227., 241., 185.]), 1)
-AAAAAAAAAA: 511 None None
-(array([370., 380., 393., ..., 181., 151., 132.]), 1)
-AAAAAAAAAA: 997 None None
-(array([  14.,   67.,   77., ..., -247., -309., -379.]), 1)
-AAAAAAAAAA: 27 None None
-(array([-134., -225., -278., ..., -118., -221., -125.]), 1)
-AAAAAAAAAA: 1324 None None
-(array([ 895.,  514.,   41., ..., 1169., 1139., 1119.]), 1)
+AAAAAAAAAA: 331 None None
+(array([ 540., 1041.,  865., ..., -319., -324., -268.]), -1)
+AAAAAAAAAA: 1239 None None
+(array([-379., -738., -645., ...,   71.,   96.,   37.]), -1)
+AAAAAAAAAA: 1216 None None
+(array([-128., -160., -171., ..., -644., -792., -897.]), 1)
+AAAAAAAAAA: 953 None None
+(array([1352., 2473., 1659., ..., -587., -598., -590.]), 1)
+AAAAAAAAAA: 393 None None
+(array([-254., -291., -276., ...,  -52.,  -56.,   -7.]), 1)
+AAAAAAAAAA: 1071 None None
+(array([4484., 4171., 3851., ..., -517., -503., -455.]), 1)
+AAAAAAAAAA: 176 None None
+(array([-582., -564., -483., ...,   96.,  170.,  254.]), -1)
+AAAAAAAAAA: 611 None None
+(array([ 10.,  59.,  85., ..., 165., 148., 131.]), 1)
+AAAAAAAAAA: 571 None None
+(array([ 12.,  50., 120., ..., 195., 232., 283.]), -1)
+AAAAAAAAAA: 547 None None
+(array([151., 337., 339., ...,  28.,  18., 109.]), -1)
+AAAAAAAAAA: 476 None None
+(array([-187., -158., -207., ...,  285.,  586.,  835.]), 1)
+AAAAAAAAAA: 1130 None None
+(array([-50.,  -5.,  69., ...,  89., 120., 118.]), 1)
+AAAAAAAAAA: 50 None None
+(array([ 268.,  495.,  434., ..., -437., -651., -685.]), 1)
+AAAAAAAAAA: 1136 None None
+(array([ -768., -1481., -1187., ...,  -927., -1231., -1411.]), -1)
+AAAAAAAAAA: 900 None None
+(array([-2356., -2236., -2001., ...,  -290.,  -258.,  -284.]), 1)
+AAAAAAAAAA: 500 None None
+(array([-166., -100.,  -45., ..., -630., -645., -646.]), 1)
+AAAAAAAAAA: 124 None None
+(array([ 864., 1043., 1009., ...,  311.,  351.,  611.]), 1)
+AAAAAAAAAA: 222 None None
+(array([ -91., -134.,  -92., ...,   16.,   31.,   50.]), 1)
+AAAAAAAAAA: 441 None None
+(array([-195., -198., -158., ...,  968., 1067., 1082.]), -1)
+AAAAAAAAAA: 668 None None
+(array([-1138., -1194., -1240., ...,   437.,   425.,   395.]), 1)
+AAAAAAAAAA: 541 None None
+(array([-574., -675., -148., ..., -268., -250., -274.]), 1)
+AAAAAAAAAA: 922 None None
+(array([936., 838., 722., ..., 278., 235., 241.]), 1)
+AAAAAAAAAA: 1235 None None
+(array([124., 301., 304., ..., 548., 447., 329.]), 1)
+AAAAAAAAAA: 1287 None None
+(array([ 810.,  739.,  736., ..., 1007.,  956.,  874.]), 1)
+AAAAAAAAAA: 603 None None
+(array([  15.,  747., 1460., ...,  954.,  950.,  965.]), 1)
+AAAAAAAAAA: 51 None None
+(array([ -896.,  -856., -1031., ...,    13.,    47.,    52.]), 1)
+AAAAAAAAAA: 690 None None
+(array([-1644., -3633., -3488., ...,  1367.,  1321.,  1316.]), 1)
+AAAAAAAAAA: 651 None None
+(array([ 37.,   6.,  26., ..., 262., 296., 299.]), -1)
+AAAAAAAAAA: 115 None None
+(array([1460., 2661., 2639., ..., 1084., 1047., 1030.]), 1)
+AAAAAAAAAA: 181 None None
+(array([ 29.,  55.,  93., ..., 167., 155., 164.]), 1)
 AAAAAAAAAA: 972 None None
 (array([-3025., -2744., -2274., ...,   643.,   640.,   646.]), 1)
-AAAAAAAAAA: 161 None None
-(array([ 200.,  175.,  132., ..., 1996., 1221.,  409.]), 1)
-AAAAAAAAAA: 1254 None None
-(array([-328., -676., -529., ...,  519.,  530.,  491.]), -1)
-AAAAAAAAAA: 465 None None
-(array([-2218., -2342., -2450., ..., -7594., -6831., -6156.]), 1)
-AAAAAAAAAA: 1119 None None
-(array([-305., -298., -261., ..., -327., -430., -555.]), 1)
-AAAAAAAAAA: 409 None None
-(array([-105., -192., -138., ...,  -85., -102., -100.]), 1)
-AAAAAAAAAA: 487 None None
-(array([-204.,  -62., -110., ..., -291., -315., -281.]), 1)
-AAAAAAAAAA: 550 None None
-(array([  30.,   -8.,  -45., ...,  813., 1153., 1331.]), -1)
+AAAAAAAAAA: 1010 None None
+(array([ 79., 109., 155., ..., 913., 868., 823.]), -1)
+AAAAAAAAAA: 425 None None
+(array([ 412.,  241.,  194., ..., 1010.,  953.,  873.]), 1)
+AAAAAAAAAA: 1333 None None
+(array([-279., -170.,  -68., ...,  164.,  239.,  308.]), 1)
 AAAAAAAAAA: 188 None None
 (array([-754., -826., -889., ..., 1183., 1093., 1059.]), -1)
-AAAAAAAAAA: 1083 None None
-(array([ 71., 105.,  88., ...,   1.,  21., -30.]), 1)
-AAAAAAAAAA: 1429 None None
-(array([-291., -635., -598., ...,  720.,  797.,  878.]), -1)
-AAAAAAAAAA: 784 None None
-(array([-53., -73., -71., ...,  22.,  30.,  82.]), 1)
-AAAAAAAAAA: 1250 None None
-(array([ -65., -121.,  -93., ..., -623., -624., -618.]), 1)
-AAAAAAAAAA: 330 None None
-(array([ 33.,  17.,  15., ..., 558., 564., 570.]), -1)
-AAAAAAAAAA: 416 None None
-(array([-117., -216., -189., ...,  106.,  108.,   65.]), -1)
-AAAAAAAAAA: 299 None None
-(array([-728., -768., -758., ...,  799.,  764.,  750.]), 1)
-AAAAAAAAAA: 238 None None
-(array([   8.,  -31.,    4., ..., -214., -245., -192.]), 1)
+AAAAAAAAAA: 1308 None None
+(array([ 781.,  628.,  494., ..., -743., -673., -677.]), 1)
+AAAAAAAAAA: 948 None None
+(array([-492., -441., -406., ..., -480., -545., -639.]), 1)
+AAAAAAAAAA: 1175 None None
+(array([57., 31.,  6., ..., 98., 83., 92.]), -1)
+AAAAAAAAAA: 170 None None
+(array([ 797.,  757.,  742., ...,  993., 1033.,  919.]), 1)
+AAAAAAAAAA: 268 None None
+(array([-267., -542., -425., ..., -373., -431., -444.]), 1)
+AAAAAAAAAA: 769 None None
+(array([ 184.,  153.,  179., ..., -129., -147., -125.]), 1)
+AAAAAAAAAA: 381 None None
+(array([-1600., -1726., -1749., ...,   222.,   301.,   358.]), -1)
+AAAAAAAAAA: 321 None None
+(array([  48.,   38.,   44., ..., -787., -561., -365.]), 1)
+AAAAAAAAAA: 1251 None None
+(array([-626., -638., -630., ..., 1313., 1575., 1815.]), -1)
+AAAAAAAAAA: 610 None None
+(array([1023.,  826.,  699., ...,   23.,  170.,  373.]), 1)
+AAAAAAAAAA: 974 None None
+(array([   24.,    58.,   117., ..., -2864., -2013., -1143.]), 1)
+AAAAAAAAAA: 153 None None
+(array([-114., -114., -133., ...,  -77.,  -71.,  -74.]), 1)
+AAAAAAAAAA: 1028 None None
+(array([   18.,     2.,   -33., ..., -1040., -1247., -1430.]), -1)
+AAAAAAAAAA: 52 None None
+(array([  22.,   33.,  -29., ..., -860., -945., -908.]), 1)
 AAAAAAAAAA: 1149 None None
 (array([286., 229., 181., ..., 807., 841., 870.]), 1)
-AAAAAAAAAA: 384 None None
-(array([ 264.,  284.,  331., ..., -134., -212., -283.]), 1)
-AAAAAAAAAA: 872 None None
-(array([329., 293., 278., ...,  66., 125., 114.]), 1)
-AAAAAAAAAA: 1006 None None
-(array([  237.,   177.,   122., ..., -1032.,  -904.,  -806.]), 1)
-AAAAAAAAAA: 392 None None
-(array([ 276.,  313.,  339., ..., -159., -189., -248.]), 1)
-AAAAAAAAAA: 1313 None None
-(array([-125.,   77.,  209., ..., 1240., 1226., 1336.]), 1)
+AAAAAAAAAA: 914 None None
+(array([ 146.,  142.,  150., ..., -727., -624., -455.]), 1)
+AAAAAAAAAA: 698 None None
+(array([317., 260., 293., ..., -35., -20., -49.]), 1)
+AAAAAAAAAA: 1384 None None
+(array([ 202.,  454.,  426., ..., -455., -423., -397.]), -1)
+AAAAAAAAAA: 519 None None
+(array([ 140.,  273.,  198., ..., -149., -234., -134.]), 1)
+AAAAAAAAAA: 1182 None None
+(array([ -684., -1481., -1440., ...,   -38.,  -200.,  -416.]), 1)
+AAAAAAAAAA: 1034 None None
+(array([-446., -422., -382., ..., -204., -167., -176.]), 1)
+AAAAAAAAAA: 1027 None None
+(array([-749., -893., -974., ..., 3453., 3595., 3688.]), -1)
+AAAAAAAAAA: 815 None None
+(array([  464.,   504.,   574., ..., -1065., -1328., -1437.]), -1)
+AAAAAAAAAA: 85 None None
+(array([-131.,  -40.,   35., ..., 5209., 5552., 5806.]), -1)
+AAAAAAAAAA: 1269 None None
+(array([-123., -127., -163., ...,  372.,  430.,  479.]), -1)
+AAAAAAAAAA: 234 None None
+(array([ -594.,  -633.,  -647., ..., -3555., -3111., -2658.]), 1)
+AAAAAAAAAA: 697 None None
+(array([-162., -128., -121., ...,  361.,  351.,  395.]), 1)
+AAAAAAAAAA: 1243 None None
+(array([ -42.,  165.,  465., ..., -234., -178.,  -41.]), -1)
+AAAAAAAAAA: 231 None None
+(array([  436.,   506.,   575., ..., -1285., -1394., -1432.]), 1)
+AAAAAAAAAA: 189 None None
+(array([ -503., -1068.,  -996., ...,  -351.,  -321.,  -233.]), -1)
+AAAAAAAAAA: 182 None None
+(array([ 127.,  171.,  171., ..., -253., -279., -132.]), 1)
+AAAAAAAAAA: 199 None None
+(array([  95.,   95.,  124., ...,  -91., -141., -208.]), 1)
+AAAAAAAAAA: 995 None None
+(array([-4680., -4698., -4633., ...,  1047.,  1062.,  1094.]), 1)
+AAAAAAAAAA: 225 None None
+(array([-106., -152., -136., ..., 1127.,  763.,  396.]), 1)
+AAAAAAAAAA: 593 None None
+(array([ 892.,  892.,  900., ..., -281., -267., -275.]), 1)
+AAAAAAAAAA: 156 None None
+(array([-899., -817., -689., ..., -277., -398., -584.]), 1)
+AAAAAAAAAA: 763 None None
+(array([ -96., -242., -237., ...,   43.,    3.,  -22.]), 1)
+AAAAAAAAAA: 663 None None
+(array([-556., -583., -552., ...,  789.,  868., 1055.]), 1)
+AAAAAAAAAA: 592 None None
+(array([160.,  89.,   9., ..., 802., 840., 870.]), 1)
+AAAAAAAAAA: 761 None None
+(array([1879., 1979., 1890., ..., -726., -681., -587.]), 1)
+AAAAAAAAAA: 468 None None
+(array([504., 520., 525., ..., 388., 388., 397.]), 1)
+AAAAAAAAAA: 1276 None None
+(array([1447., 1416., 1338., ..., -509., -483., -348.]), 1)
+AAAAAAAAAA: 959 None None
+(array([-112., -125.,   43., ..., 1607., 1449., 1316.]), -1)
+AAAAAAAAAA: 1428 None None
+(array([-652., -666., -686., ...,  473.,  484.,  446.]), -1)
+AAAAAAAAAA: 166 None None
+(array([  306., -4323.,   209., ..., -2757.,  7275., -9443.]), 1)
+AAAAAAAAAA: 206 None None
+(array([  100.,   186.,   207., ...,  -569.,  -804., -1096.]), 1)
+AAAAAAAAAA: 1346 None None
+(array([233., 208., 169., ..., 227., 225., 265.]), 1)
+AAAAAAAAAA: 501 None None
+(array([-689., -700., -717., ...,   67.,  105.,   54.]), 1)
+AAAAAAAAAA: 1098 None None
+(array([ 29., -15.,  -9., ..., 440., 162., -61.]), -1)
+AAAAAAAAAA: 383 None None
+(array([283., 595., 515., ..., 248., 251., 269.]), -1)
+AAAAAAAAAA: 792 None None
+(array([569., 667., 720., ..., 843., 722., 552.]), 1)
+AAAAAAAAAA: 1281 None None
+(array([ -6., -38., -63., ..., 537., 655., 731.]), 1)
 AAAAAAAAAA: 1266 None None
 (array([383., 752., 555., ..., 265., 229., 181.]), -1)
-AAAAAAAAAA: 41 None None
-(array([  357.,   215.,   104., ..., -2820., -1713.,  -488.]), -1)
-AAAAAAAAAA: 336 None None
-(array([-154.,  -34., -116., ...,  136.,    3.,  -34.]), 1)
-AAAAAAAAAA: 1219 None None
-(array([ -999., -1012., -1063., ...,   -14.,    30.,    11.]), 1)
-AAAAAAAAAA: 730 None None
-(array([-383., -392., -361., ..., -312., -394., -459.]), 1)
-AAAAAAAAAA: 703 None None
-(array([120., 130.,  70., ..., 216., 203., 201.]), 1)
-AAAAAAAAAA: 87 None None
-(array([248., 178., 183., ..., 196., 163., 127.]), 1)
-AAAAAAAAAA: 277 None None
-(array([ -507., -1090.,  -660., ...,  -559.,  -360.,  -213.]), 1)
-AAAAAAAAAA: 40 None None
-(array([795., 743., 679., ..., 463., 356., 335.]), -1)
-AAAAAAAAAA: 689 None None
-(array([139.,  83.,  53., ..., -21., -29., -19.]), 1)
-AAAAAAAAAA: 1032 None None
-(array([  730.,  1565.,  1436., ..., -1182., -1149., -1141.]), 1)
-AAAAAAAAAA: 146 None None
-(array([   60.,   176.,    89., ..., -1093.,  -905.,  -751.]), 1)
-AAAAAAAAAA: 1134 None None
-(array([ -223.,  -380.,  -201., ..., -2590., -2969., -3311.]), 1)
-AAAAAAAAAA: 685 None None
-(array([  -98.,  -135.,    12., ..., -2173., -2372., -2342.]), 1)
-AAAAAAAAAA: 1263 None None
-(array([   83.,   214.,   223., ..., -3826., -3697., -3437.]), 1)
-AAAAAAAAAA: 1317 None None
-(array([-942., -968., -992., ...,  136.,  -19., -167.]), 1)
-AAAAAAAAAA: 818 None None
-(array([ 175.,  162.,  115., ..., -206., -143., -105.]), 1)
-AAAAAAAAAA: 410 None None
-(array([-111., -128., -130., ...,  186.,  156.,  115.]), 1)
-AAAAAAAAAA: 888 None None
-(array([ 745., 1567., 1391., ...,  318.,  338.,  378.]), 1)
-AAAAAAAAAA: 233 None None
-(array([ -15.,  -36.,  122., ..., -247., -448., -484.]), 1)
-AAAAAAAAAA: 119 None None
-(array([-326., -362., -382., ...,   72.,   35.,   41.]), -1)
-AAAAAAAAAA: 641 None None
-(array([1903., 3999., 3549., ..., -310., -260., -245.]), -1)
-AAAAAAAAAA: 64 None None
-(array([ 895.,  702.,  483., ..., -318., -263., -195.]), -1)
-AAAAAAAAAA: 269 None None
-(array([-473., -452., -471., ...,    9.,   81.,   49.]), 1)
-AAAAAAAAAA: 1171 None None
-(array([534., 574., 566., ...,   2.,  73.,  79.]), 1)
-AAAAAAAAAA: 470 None None
-(array([-288., -276., -235., ...,  439.,  447.,  458.]), 1)
-AAAAAAAAAA: 680 None None
-(array([-150., -151., -148., ...,   81.,   99.,  110.]), 1)
-AAAAAAAAAA: 755 None None
-(array([-339., -850., -979., ..., -390., -419., -445.]), -1)
-AAAAAAAAAA: 1338 None None
-(array([ -505.,  -404.,  -311., ..., -3779., -2883., -2230.]), 1)
-AAAAAAAAAA: 1044 None None
-(array([-577., -569., -631., ..., -220., -296., -380.]), 1)
-AAAAAAAAAA: 415 None None
-(array([ 3069.,  3310.,  3431., ..., -1325.,   699.,  2528.]), -1)
-AAAAAAAAAA: 1341 None None
-(array([-1679., -1723., -1723., ...,   268.,   254.,   254.]), 1)
-AAAAAAAAAA: 1418 None None
-(array([ 332.,  422.,  519., ..., -333., -220.,  -80.]), 1)
-AAAAAAAAAA: 346 None None
-(array([ -100.,  -156.,   -36., ..., -1004.,  -954.,  -953.]), 1)
-AAAAAAAAAA: 1145 None None
-(array([-5., 23., 21., ..., 43., 19., 13.]), 1)
-AAAAAAAAAA: 506 None None
-(array([ -260.,  -491.,  -320., ...,  -970., -1004.,  -942.]), 1)
-AAAAAAAAAA: 1345 None None
-(array([ 77., 127.,  63., ..., 301., 272., 257.]), 1)
-AAAAAAAAAA: 880 None None
-(array([-342., -233., -125., ...,  426.,  421.,  407.]), 1)
-AAAAAAAAAA: 1089 None None
-(array([ 342.,  396.,  446., ..., -615., -591., -494.]), 1)
-AAAAAAAAAA: 1202 None None
-(array([-376., -728., -572., ..., -155., -281., -422.]), 1)
-AAAAAAAAAA: 869 None None
-(array([-123., -307., -320., ...,  -43.,  -49.,  -19.]), 1)
-AAAAAAAAAA: 670 None None
-(array([-10.,  23.,  42., ..., 399., 394., 395.]), -1)
-AAAAAAAAAA: 142 None None
-(array([71., 94., 94., ..., 46., 73., 56.]), 1)
-AAAAAAAAAA: 47 None None
-(array([ 3602.,  3764.,  3856., ..., -2686., -2565., -2295.]), 1)
-AAAAAAAAAA: 865 None None
-(array([  341.,   612.,   410., ..., -5890., -3882., -1808.]), -1)
-AAAAAAAAAA: 1003 None None
-(array([-237., -473., -400., ...,   62.,  149.,  162.]), -1)
-AAAAAAAAAA: 243 None None
-(array([ 908., 1928., 1946., ..., 1207., 1400., 1542.]), -1)
-AAAAAAAAAA: 160 None None
-(array([-5302., -5522., -5469., ...,    68.,   149.,   222.]), 1)
-AAAAAAAAAA: 879 None None
-(array([  98.,   33.,  -38., ..., -673., -592., -461.]), 1)
-AAAAAAAAAA: 65 None None
-(array([ -145.,  -269.,  -559., ..., -1139.,  -823.,   598.]), -1)
-AAAAAAAAAA: 1283 None None
-(array([ 36.,  68., -25., ..., 337., 396., 424.]), 1)
-AAAAAAAAAA: 921 None None
-(array([ 295.,  297.,  275., ..., 1138., 1092., 1021.]), 1)
-AAAAAAAAAA: 164 None None
-(array([  364.,   459.,   507., ..., -2765.,  1047.,   167.]), 1)
-AAAAAAAAAA: 924 None None
-(array([ 751., 1263.,  627., ...,  491.,  620.,  657.]), 1)
-AAAAAAAAAA: 915 None None
-(array([-362., -264., -297., ..., -303., -316., -287.]), 1)
-AAAAAAAAAA: 203 None None
-(array([1597., 1574., 1496., ..., -877., -716., -527.]), 1)
-AAAAAAAAAA: 662 None None
-(array([2576., 2668., 2688., ..., -517., -518., -553.]), 1)
-AAAAAAAAAA: 528 None None
-(array([-270., -233., -295., ..., -307., -287., -276.]), 1)
+AAAAAAAAAA: 1068 None None
+(array([   17., -1084., -1049., ...,  -470.,  -402.,  -317.]), -1)
+AAAAAAAAAA: 986 None None
+(array([-235., -233., -249., ..., -526., -486., -369.]), 1)
+AAAAAAAAAA: 735 None None
+(array([ -153.,    11.,   246., ..., -2389., -2331., -2216.]), 1)
+AAAAAAAAAA: 999 None None
+(array([ 395.,  398.,  508., ..., -482., -548., -668.]), 1)
+AAAAAAAAAA: 1013 None None
+(array([262., 229., 207., ...,  12.,  11.,  24.]), 1)
+AAAAAAAAAA: 1427 None None
+(array([-457., -454., -485., ..., -402., -572., -611.]), -1)
+AAAAAAAAAA: 447 None None
+(array([ -125.,  -188.,  -246., ..., -7625., -7294., -6940.]), -1)
+AAAAAAAAAA: 285 None None
+(array([ 130.,  111.,   82., ..., 2738., 2807., 2814.]), -1)
+AAAAAAAAAA: 667 None None
+(array([ -389.,  -341.,  -268., ...,  -897.,  -981., -1050.]), 1)
+AAAAAAAAAA: 242 None None
+(array([-290., -275., -275., ...,   10.,   24.,   29.]), -1)
+AAAAAAAAAA: 88 None None
+(array([148., 230., 226., ..., -97., -63., -75.]), 1)
 AAAAAAAAAA: 1210 None None
 (array([-338., -341., -303., ...,  -53.,  -58.,  -69.]), 1)
-AAAAAAAAAA: 1097 None None
-(array([ 6256., 12348.,  9844., ...,   202.,   142.,    73.]), -1)
-AAAAAAAAAA: 1337 None None
-(array([-2682., -2062., -1745., ...,  -515.,  -532.,  -526.]), 1)
-AAAAAAAAAA: 579 None None
-(array([-1198., -1127., -1130., ...,   -61.,   -29.,   -37.]), 1)
-AAAAAAAAAA: 893 None None
-(array([ 60.,  62., -67., ..., 942., 820., 632.]), 1)
-AAAAAAAAAA: 540 None None
-(array([4635., 4129., 3611., ..., -310., -498., -597.]), 1)
-AAAAAAAAAA: 208 None None
-(array([-104.,   55.,  255., ..., -311., -365., -434.]), 1)
-AAAAAAAAAA: 973 None None
-(array([695., 671., 710., ..., -83., -60., -57.]), 1)
-AAAAAAAAAA: 991 None None
-(array([3682., 4389., 4903., ...,  167.,  194.,  234.]), 1)
-AAAAAAAAAA: 1111 None None
-(array([11716., 13693., 12653., ..., -2798., -3891., -2153.]), 1)
+AAAAAAAAAA: 1173 None None
+(array([-306., -335., -339., ..., -295., -284., -303.]), 1)
+AAAAAAAAAA: 853 None None
+(array([ 1018.,  2118.,  1788., ..., -2875., -3038., -3156.]), 1)
+AAAAAAAAAA: 387 None None
+(array([ 98., 200., 159., ..., 158., 189., 171.]), 1)
+AAAAAAAAAA: 1345 None None
+(array([ 77., 127.,  63., ..., 301., 272., 257.]), 1)
+AAAAAAAAAA: 1324 None None
+(array([ 895.,  514.,   41., ..., 1169., 1139., 1119.]), 1)
+AAAAAAAAAA: 829 None None
+(array([ 371.,  393.,  443., ..., -357., -324., -337.]), 1)
+AAAAAAAAAA: 1159 None None
+(array([-13., -65., -80., ..., -51., -10.,  28.]), -1)
+AAAAAAAAAA: 432 None None
+(array([-496., -937., -692., ...,  166.,  145.,   46.]), 1)
+AAAAAAAAAA: 616 None None
+(array([-165., -168., -100., ..., -254., -282., -274.]), 1)
+AAAAAAAAAA: 465 None None
+(array([-2218., -2342., -2450., ..., -7594., -6831., -6156.]), 1)
+AAAAAAAAAA: 370 None None
+(array([-541., -457., -422., ...,    8.,  -60.,  -52.]), -1)
+AAAAAAAAAA: 802 None None
+(array([ 260.,  255.,  192., ..., -329., -305., -321.]), 1)
+AAAAAAAAAA: 920 None None
+(array([118., 249., 300., ..., 227., 265., 266.]), 1)
+AAAAAAAAAA: 954 None None
+(array([ -528.,  -432.,  -322., ..., -1211., -1256., -1239.]), -1)
+AAAAAAAAAA: 1003 None None
+(array([-237., -473., -400., ...,   62.,  149.,  162.]), -1)
+AAAAAAAAAA: 1060 None None
+(array([  50., -165., -251., ..., -523., -419., -344.]), 1)
+AAAAAAAAAA: 67 None None
+(array([201., 180., 220., ..., -33.,  25.,   4.]), 1)
+AAAAAAAAAA: 1415 None None
+(array([192., 164., 153., ..., 186., 149., 180.]), 1)
+AAAAAAAAAA: 653 None None
+(array([-210., -449., -396., ...,   98.,  138.,  106.]), -1)
+AAAAAAAAAA: 243 None None
+(array([ 908., 1928., 1946., ..., 1207., 1400., 1542.]), -1)
+AAAAAAAAAA: 114 None None
+(array([-5231., -4532., -3601., ...,  -554.,  -504.,  -473.]), 1)
+AAAAAAAAAA: 356 None None
+(array([ 413.,  718.,  456., ...,  140.,  -69., -162.]), 1)
+AAAAAAAAAA: 237 None None
+(array([-243., -337., -128., ...,  -34.,  -26.,  -13.]), 1)
+AAAAAAAAAA: 859 None None
+(array([ 826.,  646.,  540., ..., -792., -873., -894.]), 1)
+AAAAAAAAAA: 1331 None None
+(array([  120.,   315.,   349., ..., -1151., -1188., -1199.]), 1)
+AAAAAAAAAA: 1296 None None
+(array([141., 153., 133., ...,  54.,  10., -30.]), 1)
+AAAAAAAAAA: 827 None None
+(array([199., 420., 405., ...,  20.,  79.,  53.]), 1)
+AAAAAAAAAA: 1316 None None
+(array([-2134., -5236., -5615., ...,  -855.,  -874.,  -904.]), 1)
+AAAAAAAAAA: 605 None None
+(array([ 392.,  365.,  325., ..., -972., -902., -823.]), -1)
+AAAAAAAAAA: 1082 None None
+(array([ 1794.,  1746.,  1761., ..., -1898., -1739., -1532.]), 1)
+AAAAAAAAAA: 842 None None
+(array([-167., -337., -326., ..., -434., -415., -361.]), 1)
+AAAAAAAAAA: 352 None None
+(array([ -84., -188., -239., ...,  477.,  829., 1208.]), 1)
+AAAAAAAAAA: 160 None None
+(array([-5302., -5522., -5469., ...,    68.,   149.,   222.]), 1)
+AAAAAAAAAA: 1063 None None
+(array([ 440.,  464.,  503., ...,  -61.,  -98., -126.]), -1)
+AAAAAAAAAA: 169 None None
+(array([291., 320., 323., ..., 885., 843., 813.]), 1)
+AAAAAAAAAA: 1074 None None
+(array([ -57., -100., -108., ..., -723., -682., -619.]), -1)
+AAAAAAAAAA: 1351 None None
+(array([-505., -430., -371., ..., -198.,  -95.,  -50.]), -1)
+AAAAAAAAAA: 290 None None
+(array([ -6., -96., -35., ..., 234., 261., 256.]), -1)
+AAAAAAAAAA: 390 None None
+(array([ -47.,  -13.,   -1., ..., -108., -129., -145.]), 1)
+AAAAAAAAAA: 945 None None
+(array([  6., 142., 237., ..., 853., 875., 904.]), 1)
+AAAAAAAAAA: 597 None None
+(array([ 1484.,  1442.,  1404., ..., -1804., -1638., -1452.]), 1)
+AAAAAAAAAA: 69 None None
+(array([ -81.,  -39.,    5., ..., -516., -549., -605.]), 1)
+AAAAAAAAAA: 721 None None
+(array([ 105.,  -46.,   28., ..., -604., -766., -694.]), 1)
+AAAAAAAAAA: 1224 None None
+(array([263., 220., 236., ..., 128., 127.,  62.]), 1)
+AAAAAAAAAA: 48 None None
+(array([-2128., -1854., -1579., ...,   709.,   576.,   449.]), 1)
+AAAAAAAAAA: 674 None None
+(array([ 164.,  174.,  153., ..., 1196., 1250., 1313.]), 1)
+AAAAAAAAAA: 248 None None
+(array([5317., 4652., 3951., ...,  829., 1117., 1477.]), -1)
+AAAAAAAAAA: 1155 None None
+(array([189., 312., 155., ..., 399., 408., 407.]), -1)
+AAAAAAAAAA: 745 None None
+(array([  588.,  1156.,   956., ..., -3179., -3176., -3069.]), 1)
+AAAAAAAAAA: 751 None None
+(array([  602.,  1149.,   839., ...,  -573.,  -637., -1046.]), -1)
+AAAAAAAAAA: 1385 None None
+(array([ -394.,  -357.,  -319., ..., -1205., -1183., -1158.]), 1)
+AAAAAAAAAA: 1314 None None
+(array([1237., 1311., 1247., ..., -216., -137.,  -91.]), 1)
+AAAAAAAAAA: 1318 None None
+(array([-240., -305., -342., ..., 1112.,  898.,  647.]), 1)
+AAAAAAAAAA: 587 None None
+(array([ 8732., 18776., 17215., ...,  2020.,  2042.,  2096.]), 1)
+AAAAAAAAAA: 921 None None
+(array([ 295.,  297.,  275., ..., 1138., 1092., 1021.]), 1)
+AAAAAAAAAA: 1198 None None
+(array([ -25., -144., -271., ...,  225.,  221.,  233.]), -1)
+AAAAAAAAAA: 1053 None None
+(array([-1712., -1429., -1069., ...,  -956.,  -924.,  -808.]), -1)
+AAAAAAAAAA: 488 None None
+(array([  56.,  170.,  223., ..., 1106., 1159., 1196.]), 1)
+AAAAAAAAAA: 1430 None None
+(array([ 935.,  983., 1028., ...,  329.,  288.,  252.]), -1)
+AAAAAAAAAA: 906 None None
+(array([ 39., 101., 152., ..., 326., 243., 296.]), 1)
+AAAAAAAAAA: 1169 None None
+(array([-1273., -1381., -1468., ...,  1212.,  1262.,  1261.]), -1)
+AAAAAAAAAA: 1089 None None
+(array([ 342.,  396.,  446., ..., -615., -591., -494.]), 1)
+AAAAAAAAAA: 93 None None
+(array([ -816., -1635., -1339., ..., -1098., -1074., -1047.]), -1)
+AAAAAAAAAA: 660 None None
+(array([  209.,   276.,   331., ..., -1379., -1368., -1335.]), 1)
+AAAAAAAAAA: 1229 None None
+(array([234., 262., 291., ..., 248., 238., 246.]), 1)
+AAAAAAAAAA: 1000 None None
+(array([ -397.,  -786.,  -629., ...,  -885., -1002.,  -779.]), 1)
+AAAAAAAAAA: 132 None None
+(array([1362., 1177.,  946., ...,  187.,  279.,  320.]), -1)
+AAAAAAAAAA: 186 None None
+(array([-1122.,  -930.,  -757., ...,  1489.,  1375.,  1247.]), -1)
+AAAAAAAAAA: 265 None None
+(array([ 348.,  321.,  296., ..., -839., -880., -912.]), 1)
+AAAAAAAAAA: 157 None None
+(array([ -951., -1189., -1346., ...,  1723.,  1529.,  1460.]), 1)
+AAAAAAAAAA: 1191 None None
+(array([ -725.,  -525.,  -356., ..., -1074., -1097., -1110.]), 1)
+AAAAAAAAAA: 1197 None None
+(array([   87.,   100.,   120., ..., -1580., -1344., -1174.]), -1)
+AAAAAAAAAA: 341 None None
+(array([-127.,  -39.,  -18., ...,  417.,  321.,  242.]), 1)
+AAAAAAAAAA: 857 None None
+(array([  13.,   69.,   77., ..., -970., -871., -759.]), -1)
+AAAAAAAAAA: 475 None None
+(array([  54.,  156.,  206., ..., -161., -147., -168.]), 1)
+AAAAAAAAAA: 524 None None
+(array([ 414.,  418.,  410., ...,  957., 1027., 1101.]), 1)
+AAAAAAAAAA: 1367 None None
+(array([-431., -556., -490., ..., -429., -604., -708.]), 1)
+AAAAAAAAAA: 609 None None
+(array([-306., -416., -496., ..., 1597., 1367., 1197.]), 1)
+AAAAAAAAAA: 930 None None
+(array([166., 153., 150., ..., 315., 341., 408.]), 1)
+AAAAAAAAAA: 1375 None None
+(array([ 71.,  10., -78., ..., 167., 171., 145.]), 1)
+AAAAAAAAAA: 258 None None
+(array([295., 235., 320., ..., -95.,  14., 125.]), 1)
+AAAAAAAAAA: 315 None None
+(array([ 228.,  485.,  530., ..., -927., -941., -981.]), 1)
+AAAAAAAAAA: 415 None None
+(array([ 3069.,  3310.,  3431., ..., -1325.,   699.,  2528.]), -1)
+AAAAAAAAAA: 200 None None
+(array([ 4902., 10353.,  8999., ...,  1662.,  1449.,  1297.]), 1)
+AAAAAAAAAA: 812 None None
+(array([ -73., -115.,  -89., ...,  724.,  887.,  937.]), 1)
