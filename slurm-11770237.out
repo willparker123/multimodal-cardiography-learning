@@ -60,3 +60,5 @@ Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0001/0/b0001_seg_0_cwt_spe
 Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0001/1/b0001_seg_1_cwt_spec.npz
 Saving image: data-after-TEST/ephnogram/data_pcg_cwt/b0001/2/b0001_seg_2_cwt_spec.npz
 [7, 'b0008', 'ECGPCG0013', 0, 1800.0, 2, 3600000, 3600000, 1823, 225, 61.32036590576172]
+slurmstepd: error: *** JOB 11770237 ON compute239 CANCELLED AT 2023-08-14T10:25:16 DUE TO TIME LIMIT ***
+slurmstepd: error: Detected 1 oom-kill event(s) in StepId=11770237.batch. Some of your processes may have been killed by the cgroup out-of-memory handler.

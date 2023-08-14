@@ -293,7 +293,7 @@ class TransformerTrainer(BaseTrainer):
             label_tensor = []
             print(f"labels: {labels} {np.shape(labels)}")
             print(f"labels_: {labels_} {np.shape(labels_)}")
-            for ind, l in enumerate([labels_] if labels_.ndim==0 else labels_):
+            for ind, l in enumerate(labels_ if labels_.ndim==0 else labels_):
                 label_tensor.append([l, 1 if l==0 else 0])
             label_tensor = torch.from_numpy(np.array(label_tensor)).type(torch.float32)#[np.squeeze(labels), np.squeeze(labels)]
             print(f"labels {np.shape(label_tensor)} {label_tensor}")
