@@ -160,3 +160,77 @@ Epoch 0 / Step 40: train/lr :   0.0001
 Epoch 0 / Step 60: train/loss : 0.0817
 Epoch 0 / Step 60: train/lr :   0.0001
 --------------------------------------------------
+2023-08-14 04:41:11,902 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 80: train/loss : 0.0462
+Epoch 0 / Step 80: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 04:41:40,372 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 100: train/loss : 0.5134
+Epoch 0 / Step 100: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 04:42:10,851 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 120: train/loss : 0.3938
+Epoch 0 / Step 120: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 04:42:42,071 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 140: train/loss : 0.4080
+Epoch 0 / Step 140: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 04:43:09,904 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 160: train/loss : 0.5688
+Epoch 0 / Step 160: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 04:43:38,026 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 180: train/loss : 0.3899
+Epoch 0 / Step 180: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 04:44:00,415 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 200: train/loss : 0.7194
+Epoch 0 / Step 200: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 04:44:22,372 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 220: train/loss : 0.5515
+Epoch 0 / Step 220: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 04:44:43,557 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 240: train/loss : 0.2381
+Epoch 0 / Step 240: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 04:46:23,724 - TorchECG - DEBUG - all_scalar_preds.shape = (1962, 2), all_labels.shape = (1962, 1)
+2023-08-14 04:46:23,725 - TorchECG - INFO - 
+----------------------------------------------
+scalar prediction:    [0.59, 0.41]
+binary prediction:    [0]
+labels:               [0]
+predicted classes:    [0]
+label classes:        [0]
+----------------------------------------------
+
+2023-08-14 04:46:23,725 - TorchECG - INFO - 
+----------------------------------------------
+scalar prediction:    [0.645, 0.355]
+binary prediction:    [0]
+labels:               [0]
+predicted classes:    [0]
+label classes:        [0]
+----------------------------------------------
+
+2023-08-14 04:46:29,176 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 246: train/auroc :            nan
+Epoch 0 / Step 246: train/auprc :            0.2813
+Epoch 0 / Step 246: train/accuracy :         0.7161
+Epoch 0 / Step 246: train/f_measure :        0.4680
+Epoch 0 / Step 246: train/f_beta_measure :   0.3784
+Epoch 0 / Step 246: train/g_beta_measure :   0.1904
+Epoch 0 / Step 246: train/challenge_metric : 0.3356
+--------------------------------------------------
