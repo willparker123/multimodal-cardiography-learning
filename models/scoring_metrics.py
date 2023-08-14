@@ -63,11 +63,11 @@ def evaluate_scores_detailed(
     weights = [1.0, 1.0]
 
     _truth = np.array(truth)
-    print(f"SCOREMET1: {np.shape(truth)} {truth} ")
+    print(f"TRUTH: {np.shape(truth)} {truth}")
     _binary_pred = np.array(binary_pred)
-    print(f"SCOREMET2: {np.shape(binary_pred)} {binary_pred} ")
+    print(f"BINARY_PREDS: {np.shape(binary_pred)} {binary_pred}")
     _scalar_pred = np.array(scalar_pred)
-    print(f"SCOREMET3: {np.shape(scalar_pred)} {scalar_pred} ")
+    print(f"SCALAR_PREDS: {np.shape(scalar_pred)} {scalar_pred}")
 
     print("- AUROC and AUPRC...")
     auroc, auprc, auroc_classes, auprc_classes = compute_auc(_truth, _scalar_pred, classes=classes)
