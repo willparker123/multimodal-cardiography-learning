@@ -88,7 +88,7 @@ An example of a raw ECG amplitude plot - the first segment of the first sample o
 ![a0001_seg_0_pcg_audio_resampled.png](https://github.com/willparker123/multimodal-cardiography-learning/blob/main/res/inpaper/a0001_seg_0_pcg_audio_resampled.png?raw=true)  
 An example of a raw audio plot of a PCG - the first segment of the first sample of the Physionet dataset (8 seconds, 24fps)  
 
-![a0001_seg_0_stft.png](https://github.com/willparker123/multimodal-cardiography-learning/blob/main/res/inpaper/a0001_seg_0_stft.png?raw=true)  
+![ecg_a0001_seg_0_spec_magma_stft.png](https://github.com/willparker123/multimodal-cardiography-learning/blob/main/res/inpaper/ecg_a0001_seg_0_spec_magma_stft.png?raw=true)  
 An example of a STFT transform applied to an ECG - the first segment of the first sample of the Physionet dataset (8 seconds, 24fps)  
 
 ![ecg_a0001_seg_0_spec_morlet_magma_cwt.png](https://github.com/willparker123/multimodal-cardiography-learning/blob/main/res/inpaper/ecg_a0001_seg_0_spec_morlet_magma_cwt.png?raw=true)  
