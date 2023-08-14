@@ -7,8 +7,13 @@ The combined MM-ECGPCG dataset in the paper combines these two base datasets, ta
 
 ## Environment
 
-The paper's code (this repo) runs on Python 3.8.1 due to a dependency
+The paper's code (this repo) runs on Python 3.8.1 due to a dependency issue. It may work on 3.11.4, but this has *not* been tested - the instructions for creating and installing the environment are inside "environment_notes.txt", including those for making a pip/conda environment in 3.11.4 (**again, not tested - please use 3.8.1**) and creating a virtual environment from 
 
+* "requirements_3.8.1_linux.txt" for Pip on Linux
+* "requirements_3.8.1_windows.txt" for Pip on Windows 
+* "environment_3.8.1_linux.yml" for Conda on Linux
+
+The only difference between the Windows and Linux environments is that "psutil" and "pywin32" are needed on Windows, and "resource" on Linux.
 
 ## Data Cleaning
 
@@ -60,7 +65,45 @@ The resampled raw data (before any pre-processing; filtering, thresholding and t
   
 ## MM-ECGPCG Dataset
 
+The data framework can create the following transforms, using various configuration arguments (argparse); there are too many to list here, so please clone the repo and take a look or explore for yourself! In 'main.py' there are examples of the workflow of the data framework and pre-processing pipeline (using the 'data_sample()' function), and provides the code samples which were used to create the plots in the paper.
+
+```
+--skip-existing : bool
+    This command line argument skips existing files for data or data transform (STFT/MFCC/CWT) - where
+        the last segment's data and transform ("_spec.npz") file exists in the directory heirarchy.
+
+$ python clean_data.py --skip-existing
+    
+    Create the fused Physionet-Ephnogram dataset using the data processing framework
+
+
+$ python clean_data.py --skip-existing --inputpath-physionet-data "data-before/physionet-data/training-a" --inputpath-physionet-labels "data-before/physionet-data/training-a" --skip-ephnogram
+
+    Create only the Physionet dataset using the data processing framework
+```
+
+![a0001_seg_0.png](https://github.com/willparker123/multimodal-cardiography-learning/blob/main/res/inpaper/a0001_seg_0.png?raw=true)  
+An example of a raw ECG amplitude plot - the first segment of the first sample of the Physionet dataset (8 seconds, 24fps)  
+
+![a0001_seg_0_pcg_audio_resampled.png](https://github.com/willparker123/multimodal-cardiography-learning/blob/main/res/inpaper/a0001_seg_0_pcg_audio_resampled.png?raw=true)  
+An example of a raw audio plot of a PCG - the first segment of the first sample of the Physionet dataset (8 seconds, 24fps)  
+
+![a0001_seg_0_stft.png](https://github.com/willparker123/multimodal-cardiography-learning/blob/main/res/readme/a0001_seg_0_stft.png?raw=true)  
+An example of a STFT transform applied to an ECG - the first segment of the first sample of the Physionet dataset (8 seconds, 24fps)  
+
+![ecg_a0001_seg_0_spec_morlet_magma_cwt.png](https://github.com/willparker123/multimodal-cardiography-learning/blob/main/res/readme/ecg_a0001_seg_0_spec_morlet_magma_cwt.png?raw=true)  
+An example of a CWT transform applied to an ECG with a Morlet wavelet - the first segment of the first sample of the Physionet dataset (8 seconds, 24fps)  
+
+![ecg_a0001_seg_0_spec_magma_stft_log.png](https://github.com/willparker123/multimodal-cardiography-learning/blob/main/res/readme/a0001_seg_0.png?raw=true)  
+An example of a log-Mel MFCC transform applied to a PCG - the first segment of the first sample of the Physionet dataset (8 seconds, 24fps)
+  
 ## Model + Training
+
+The model that was implemented was the ECG-CRNN from the Python package [torch_ecg]() with transformer configuration; it is a CRNN-Transformer designed for ECG. This package also supports other models previously used for ECG analysis including RNNs, ResNet, VGG and RR-LSTM.
+
+```
+$ python main.py    [runs model training and evaluation with all defaults]
+```
 
 
 ## Avobjects - LWT-Net on ECG Video [INCOMPLETE]
