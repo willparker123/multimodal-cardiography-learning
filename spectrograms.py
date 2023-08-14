@@ -196,7 +196,7 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
         transformed_sig = spec_transform(signal)
         spec = transformed_sig
         if transform_type.endswith("log"):
-            spec = spec.detach().numpy().log2()
+            spec = np.log2(spec.detach().numpy())
         else:
             spec = spec.detach().numpy()
         if normalise: #normalise to [0, 1]
@@ -303,8 +303,8 @@ def create_spectrogram(filepath, filename, sr, normalise_factor=None, savename=N
             signal = torch.from_numpy(signal)
         signal = signal.float()
         spec = spec_transform(signal)
-        if transform_type.endswith("log"):
-            spec = spec.log2().detach().numpy()
+        if transform_type.endswith("logmel"):
+            spec = np.log2(spec.detach().numpy())
         else:
             spec = spec.detach().numpy()
         if normalise: #normalise to [0, 1]

@@ -521,7 +521,7 @@ def clean_data(inputpath_data, inputpath_target, outputpath_, sample_clip_len=co
                               sample_clip_len=config.global_opts.segment_length, ecg_sample_rate=config.global_opts.sample_rate_ecg, pcg_sample_rate=config.global_opts.sample_rate_pcg,
                               skipECGSpectrogram = skipECGSpectrogram, skipPCGSpectrogram = skipPCGSpectrogram, 
                               skipSegments= skipSegments, balance_diff=NORMAL_SEG_SAMPLE_EXCESS, create_objects=create_objects, q=q, 
-                              skipSpecData=skipSpecData, skipSpecImage=skipSpecImage, skipParent=skipParent, skipExisting=skipExisting), full_list)
+                              skipSpecData=skipSpecData, skipSpecImage=skipSpecImage, skipParent=skipParent, skipExisting=skipExisting, window_ecg=config.window_ecg, window_pcg=config.window_pcg), full_list)
   if not skipSegments and create_objects:
     for r in results_:
       ecg_segments_all.append(r[0])
@@ -588,7 +588,47 @@ def get_total_num_segments(datapath=config.outputpath):
   data_p, data_e = get_both_dataframes(datapath)
   a = list(map(lambda x: int(x), data_p['seg_num'].tolist()[1:]))
   b = list(map(lambda x: int(x), data_e['seg_num'].tolist()[1:]))
-  return sum(a), sum(b)
+  return len(a), sum(a),len(b), sum(b)
+
+def get_abnormal_normal_samples(datapath=config.outputpath):
+  data_p, data_e = get_both_dataframes(datapath)
+  a_p = []
+  a_e = []
+  n_p = []
+  n_e = []
+  labels_p = data_p['label'].tolist()[1:]
+  for i, d in enumerate(data_p['seg_num'].tolist()[1:]):
+    if int(labels_p[i]) == 1:
+      a_p.append(int(d))
+    else:
+      n_p.append(int(d))
+  labels_e = data_e['label'].tolist()[1:]
+  for i, d in enumerate(data_e['seg_num'].tolist()[1:]):
+    if int(labels_e[i]) == 1:
+      a_e.append(int(d))
+    else:
+      n_e.append(int(d))
+  return len(a_p), len(a_e), len(n_p), len(n_e)
+
+def get_abnormal_normal_segments(datapath=config.outputpath):
+  data_p, data_e = get_both_dataframes(datapath)
+  a_p = 0
+  a_e = 0
+  n_p = 0
+  n_e = 0
+  labels_p = data_p['label'].tolist()[1:]
+  for i, d in enumerate(data_p['seg_num'].tolist()[1:]):
+    if int(labels_p[i]) == 1:
+      a_p += int(d)
+    else:
+      n_p += int(d)
+  labels_e = data_e['label'].tolist()[1:]
+  for i, d in enumerate(data_e['seg_num'].tolist()[1:]):
+    if int(labels_e[i]) == 1:
+      a_e += int(d)
+    else:
+      n_e += int(d)
+  return a_p, a_e, n_p, n_e
 
 def create_histograms_data_values_distribution(outputpath_=config.outputpath, q=None):
   data_p, data_e = get_both_dataframes(outputpath_)
@@ -784,13 +824,16 @@ if __name__ == "__main__":
  )
   write_to_logger("*** Cleaning and Postprocessing Data [3/3] ***", pool, manager_q)
   if config.global_opts.skip_physionet or config.global_opts.skip_ephnogram:
-    num_data_p, num_data_e = get_total_num_segments(config.outputpath)
+    num_data_p, num_data_seg_p, num_data_e, num_data_seg_e = get_total_num_segments(config.outputpath)
+    num_a_p, num_a_e, num_n_p, num_n_e = get_abnormal_normal_segments(config.outputpath)
     hists, signal_stats = create_histograms_data_values_distribution(config.outputpath, manager_q)
   write_to_logger(f"Range of values in each dataset (Created from Histogram and Quartiles): {signal_stats}", pool, manager_q)
-  if not config.global_opts.skip_physionet:
-    write_to_logger(f"Number of Physionet segments ({config.global_opts.segment_length}s): {num_data_p}", pool, manager_q)
-  if not config.global_opts.skip_ephnogram:
-    write_to_logger(f"Number of Ephnogram segments ({config.global_opts.segment_length}s): {num_data_e}", pool, manager_q)
+  write_to_logger(f"Number of Physionet samples: {num_data_p}", pool, manager_q)
+  write_to_logger(f"Number of Physionet segments ({config.global_opts.segment_length}s): {num_data_seg_p}", pool, manager_q)
+  write_to_logger(f"Number of Normal:Abnormal Physionet samples: {num_n_p}:{num_a_p}", pool, manager_q)
+  write_to_logger(f"Number of Ephnogram samples: {num_data_e}", pool, manager_q)
+  write_to_logger(f"Number of Ephnogram segments ({config.global_opts.segment_length}s): {num_data_seg_e}", pool, manager_q)
+  write_to_logger(f"Number of Normal:Abnormal Ephnogram samples: {num_n_e}:{num_a_e}", pool, manager_q)
   write_to_logger("*** Done - all Data cleaned ***", pool, manager_q)
   
   manager_q.put('#DONE#')  # all workers are done, we close the output file

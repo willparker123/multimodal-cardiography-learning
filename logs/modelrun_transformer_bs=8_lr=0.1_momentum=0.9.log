@@ -1,5 +1,5 @@
 Initialising TransformerTrainer: Fused Physionet/Ephnogram dataset
-log file path: /mnt/storage/scratch/gg18045/multimodal-cardiography-learning/logs/TorchECG_08-13_22-29_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
+log file path: /mnt/storage/scratch/gg18045/multimodal-cardiography-learning/logs/TorchECG_08-14_04-39_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
 TorchECG - INFO - training configurations are as follows:
 {
     "debug": True,
@@ -23,10 +23,10 @@ TorchECG - INFO - training configurations are as follows:
     "eps": 1e-07,
     "SEED": 42,
     "RNG": Generator(PCG64),
-    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b04b46e89e0>, replace=False, shuffle=False),
-    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b04b46e89e0>, endpoint=True),
-    "set_seed": <function set_seed at 0x2b04b46f0af0>,
-    "change_dtype": <function change_dtype at 0x2b04b4739040>,
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b86dc19a900>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b86dc19a900>, endpoint=True),
+    "set_seed": <function set_seed at 0x2b86dc1a2a60>,
+    "change_dtype": <function change_dtype at 0x2b86dc1b1040>,
     "classes": [
         "N",
         "A"
@@ -1364,7 +1364,7 @@ ECGPCG DATASET LENGTH (EXISTING): 2803, TARGET LENGTH (INCLUDING MISSING/INCOMPL
 len data_train, data_test: 1962 841
 len val_train_dataset, val_dataset: 1962 841
 Initialising TransformerTrainer: Physionet dataset
-log file path: /mnt/storage/scratch/gg18045/multimodal-cardiography-learning/logs/TorchECG_08-13_22-29_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
+log file path: /mnt/storage/scratch/gg18045/multimodal-cardiography-learning/logs/TorchECG_08-14_04-39_ECG_CRNN_adamw_amsgrad_LR_0.0001_BS_8_resnet_nature_comm_bottle_neck.txt
 TorchECG - INFO - training configurations are as follows:
 {
     "debug": True,
@@ -1388,10 +1388,10 @@ TorchECG - INFO - training configurations are as follows:
     "eps": 1e-07,
     "SEED": 42,
     "RNG": Generator(PCG64),
-    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b04b46e89e0>, replace=False, shuffle=False),
-    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b04b46e89e0>, endpoint=True),
-    "set_seed": <function set_seed at 0x2b04b46f0af0>,
-    "change_dtype": <function change_dtype at 0x2b04b4739040>,
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b86dc19a900>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b86dc19a900>, endpoint=True),
+    "set_seed": <function set_seed at 0x2b86dc1a2a60>,
+    "change_dtype": <function change_dtype at 0x2b86dc1b1040>,
     "classes": [
         "N",
         "A"
@@ -4001,61 +4001,16 @@ TorchECG - INFO - Train epoch_0:
 --------------------------------------------------------------------------------------------------------------
 TorchECG - INFO - Train Metrics:
 --------------------------------------------------
-Epoch 0 / Step 20: train/loss : 0.2364
+Epoch 0 / Step 20: train/loss : 0.4692
 Epoch 0 / Step 20: train/lr :   0.0001
 --------------------------------------------------
 TorchECG - INFO - Train Metrics:
 --------------------------------------------------
-Epoch 0 / Step 40: train/loss : 0.7558
+Epoch 0 / Step 40: train/loss : 0.6589
 Epoch 0 / Step 40: train/lr :   0.0001
 --------------------------------------------------
 TorchECG - INFO - Train Metrics:
 --------------------------------------------------
-Epoch 0 / Step 60: train/loss : 0.7174
+Epoch 0 / Step 60: train/loss : 0.0817
 Epoch 0 / Step 60: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 80: train/loss : 0.0770
-Epoch 0 / Step 80: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 100: train/loss : 0.1944
-Epoch 0 / Step 100: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 120: train/loss : 0.3234
-Epoch 0 / Step 120: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 140: train/loss : 0.4611
-Epoch 0 / Step 140: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 160: train/loss : 0.3379
-Epoch 0 / Step 160: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 180: train/loss : 0.3046
-Epoch 0 / Step 180: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 200: train/loss : 0.4448
-Epoch 0 / Step 200: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 220: train/loss : 0.3282
-Epoch 0 / Step 220: train/lr :   0.0001
---------------------------------------------------
-TorchECG - INFO - Train Metrics:
---------------------------------------------------
-Epoch 0 / Step 240: train/loss : 0.3577
-Epoch 0 / Step 240: train/lr :   0.0001
 --------------------------------------------------

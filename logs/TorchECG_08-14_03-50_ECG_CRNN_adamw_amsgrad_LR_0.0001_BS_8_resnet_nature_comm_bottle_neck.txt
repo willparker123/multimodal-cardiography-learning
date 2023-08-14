@@ -1,0 +1,236 @@
+2023-08-14 03:50:58,287 - TorchECG - INFO - training configurations are as follows:
+{
+    "debug": True,
+    "final_model_name": None,
+    "log_step": 20,
+    "flooding_level": 0.0,
+    "early_stopping": {
+        "min_delta": 0.001,
+        "patience": 10
+    },
+    "log_dir": "logs",
+    "checkpoints": checkpoints,
+    "model_dir": None,
+    "working_dir": "",
+    "prefix": "TorchECG",
+    "DTYPE": DTYPE(STR='float32', NP=dtype('float32'), TORCH=torch.float32, INT=32),
+    "str_dtype": "float32",
+    "np_dtype": float32,
+    "dtype": torch.float32,
+    "device": cpu,
+    "eps": 1e-07,
+    "SEED": 42,
+    "RNG": Generator(PCG64),
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b30a314c900>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b30a314c900>, endpoint=True),
+    "set_seed": <function set_seed at 0x2b30a3154a60>,
+    "change_dtype": <function change_dtype at 0x2b30a3163040>,
+    "classes": [
+        "N",
+        "A"
+    ],
+    "n_epochs": 100,
+    "batch_size": 8,
+    "optimizer": "adamw_amsgrad",
+    "momentum": 0.949,
+    "betas": [
+        0.9, 0.999
+    ],
+    "decay": 0.01,
+    "learning_rate": 0.0001,
+    "lr": 0.0001,
+    "lr_scheduler": "one_cycle",
+    "lr_step_size": 50,
+    "lr_gamma": 0.1,
+    "max_lr": 0.002,
+    "burn_in": 400,
+    "steps": [
+        5000, 10000
+    ],
+    "loss": "AsymmetricLoss",
+    "loss_kw": {
+        "gamma_pos": 0,
+        "gamma_neg": 0.2,
+        "implementation": "deep-psp"
+    },
+    "monitor": "challenge_metric",
+    "eval_every": 20,
+    "cnn_name": "transformer",
+    "rnn_name": "none",
+    "attn_name": "none",
+    "input_len": 16000,
+    "input_len_tol": 3200,
+    "sig_slice_tol": 0.4,
+    "siglen": 16000,
+    "physionetOnly": False
+}
+2023-08-14 03:50:59,257 - TorchECG - INFO - training configurations are as follows:
+{
+    "debug": True,
+    "final_model_name": None,
+    "log_step": 20,
+    "flooding_level": 0.0,
+    "early_stopping": {
+        "min_delta": 0.001,
+        "patience": 10
+    },
+    "log_dir": "logs",
+    "checkpoints": checkpoints,
+    "model_dir": None,
+    "working_dir": "",
+    "prefix": "TorchECG",
+    "DTYPE": DTYPE(STR='float32', NP=dtype('float32'), TORCH=torch.float32, INT=32),
+    "str_dtype": "float32",
+    "np_dtype": float32,
+    "dtype": torch.float32,
+    "device": cpu,
+    "eps": 1e-07,
+    "SEED": 42,
+    "RNG": Generator(PCG64),
+    "RNG_sample": functools.partial(<built-in method choice of numpy.random._generator.Generator object at 0x2b30a314c900>, replace=False, shuffle=False),
+    "RNG_randint": functools.partial(<built-in method integers of numpy.random._generator.Generator object at 0x2b30a314c900>, endpoint=True),
+    "set_seed": <function set_seed at 0x2b30a3154a60>,
+    "change_dtype": <function change_dtype at 0x2b30a3163040>,
+    "classes": [
+        "N",
+        "A"
+    ],
+    "n_epochs": 100,
+    "batch_size": 8,
+    "optimizer": "adamw_amsgrad",
+    "momentum": 0.949,
+    "betas": [
+        0.9, 0.999
+    ],
+    "decay": 0.01,
+    "learning_rate": 0.0001,
+    "lr": 0.0001,
+    "lr_scheduler": "one_cycle",
+    "lr_step_size": 50,
+    "lr_gamma": 0.1,
+    "max_lr": 0.002,
+    "burn_in": 400,
+    "steps": [
+        5000, 10000
+    ],
+    "loss": "AsymmetricLoss",
+    "loss_kw": {
+        "gamma_pos": 0,
+        "gamma_neg": 0.2,
+        "implementation": "deep-psp"
+    },
+    "monitor": "challenge_metric",
+    "eval_every": 20,
+    "cnn_name": "transformer",
+    "rnn_name": "none",
+    "attn_name": "none",
+    "input_len": 16000,
+    "input_len_tol": 3200,
+    "sig_slice_tol": 0.4,
+    "siglen": 16000,
+    "physionetOnly": True
+}
+2023-08-14 03:51:00,633 - TorchECG - INFO - 
+Starting training:
+------------------
+Epochs:          100
+Batch size:      8
+Learning rate:   0.0001
+Training size:   1962
+Validation size: 841
+Device:          cpu
+Optimizer:       adamw_amsgrad
+Dataset classes: ['N', 'A']
+-----------------------------------------
+
+2023-08-14 03:51:00,637 - TorchECG - INFO - Train epoch_0:
+--------------------------------------------------------------------------------------------------------------
+2023-08-14 03:51:36,452 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 20: train/loss : 0.6248
+Epoch 0 / Step 20: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 03:52:18,583 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 40: train/loss : 0.6072
+Epoch 0 / Step 40: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 03:52:49,410 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 60: train/loss : 0.1207
+Epoch 0 / Step 60: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 03:53:18,193 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 80: train/loss : 0.2358
+Epoch 0 / Step 80: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 03:53:48,110 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 100: train/loss : 0.3529
+Epoch 0 / Step 100: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 03:54:16,550 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 120: train/loss : 0.8913
+Epoch 0 / Step 120: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 03:54:45,518 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 140: train/loss : 1.0328
+Epoch 0 / Step 140: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 03:55:17,028 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 160: train/loss : 0.7232
+Epoch 0 / Step 160: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 03:55:56,858 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 180: train/loss : 0.3338
+Epoch 0 / Step 180: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 03:56:27,837 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 200: train/loss : 0.2375
+Epoch 0 / Step 200: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 03:56:49,902 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 220: train/loss : 0.3729
+Epoch 0 / Step 220: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 03:57:11,720 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 240: train/loss : 0.5363
+Epoch 0 / Step 240: train/lr :   0.0001
+--------------------------------------------------
+2023-08-14 03:58:51,516 - TorchECG - DEBUG - all_scalar_preds.shape = (1962, 2), all_labels.shape = (1962, 1)
+2023-08-14 03:58:51,518 - TorchECG - INFO - 
+----------------------------------------------
+scalar prediction:    [0.51, 0.49]
+binary prediction:    [0]
+labels:               [0]
+predicted classes:    [0]
+label classes:        [0]
+----------------------------------------------
+
+2023-08-14 03:58:51,518 - TorchECG - INFO - 
+----------------------------------------------
+scalar prediction:    [0.537, 0.463]
+binary prediction:    [0]
+labels:               [0]
+predicted classes:    [0]
+label classes:        [0]
+----------------------------------------------
+
+2023-08-14 03:58:57,218 - TorchECG - INFO - Train Metrics:
+--------------------------------------------------
+Epoch 0 / Step 246: train/auroc :            nan
+Epoch 0 / Step 246: train/auprc :            0.3397
+Epoch 0 / Step 246: train/accuracy :         0.6305
+Epoch 0 / Step 246: train/f_measure :        0.0268
+Epoch 0 / Step 246: train/f_beta_measure :   0.0170
+Epoch 0 / Step 246: train/g_beta_measure :   0.0069
+Epoch 0 / Step 246: train/challenge_metric : 0.0137
+--------------------------------------------------

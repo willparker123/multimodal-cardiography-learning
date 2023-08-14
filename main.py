@@ -63,11 +63,11 @@ def data_sample(outputfolderpath="samples-TEST", dataset="physionet", filename="
     ecg_segments = ecg.get_segments(config.global_opts.segment_length, normalise=ecg.normalise)
     pcg_segments = pcg.get_segments(config.global_opts.segment_length, normalise=pcg.normalise)
     create_new_folder(outputfolderpath)
-    spectrogram = Spectrogram(ecg.filename, savename='ecg_'+ecg.filename+f'_spec_{wavelet_ecg+"_" if transform_type_ecg.startswith("cwt") else ""}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
+    spectrogram = Spectrogram(ecg.filename, savename='ecg_'+ecg.filename if ecg.savename == None else ecg.savename+f'_spec_{wavelet_ecg+"_" if transform_type_ecg.startswith("cwt") else ""}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_ecg, transform_type=transform_type_ecg,
                                                     signal=ecg.signal, window=window_ecg, window_size=config.spec_win_size_ecg, NFFT=config.global_opts.nfft_ecg, hop_length=config.global_opts.hop_length_ecg, 
                                                     outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', 
                                                     normalise=True, start_time=0, wavelet_function=wavelet_ecg, colormap=colormap, save_img=True, show_axis_labels=True, show_legend=True, show_title=True, just_image=False)
-    spectrogram_pcg = Spectrogram(filename, savename='pcg_'+filename+f'_spec_{wavelet_pcg+"_" if transform_type_pcg.startswith("cwt") else ""}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, transform_type=transform_type_pcg,
+    spectrogram_pcg = Spectrogram(filename, savename='pcg_'+filename if sn == None else sn+f'_spec_{wavelet_pcg+"_" if transform_type_pcg.startswith("cwt") else ""}_{colormap_suffix}', filepath=outputpath_, sample_rate=config.global_opts.sample_rate_pcg, transform_type=transform_type_pcg,
                                   signal=pcg.signal, window=window_pcg, window_size=config.spec_win_size_pcg, NFFT=config.global_opts.nfft_pcg, hop_length=config.global_opts.hop_length_pcg, NMels=config.global_opts.nmels,
                                   outpath_np=outputpath_+f'/', outpath_png=outputpath_+f'/', normalise=True, start_time=0, wavelet_function=wavelet_pcg, colormap=colormap, save_img=True, show_axis_labels=True, show_legend=True, show_title=True, just_image=False)
     for index_e, seg in enumerate(ecg_segments):
@@ -84,11 +84,11 @@ def main():
     np.random.seed(1)
     device = initialise_gpu(config.global_opts.gpu_id, config.global_opts.enable_gpu)
     torch.cuda.empty_cache()
+    #dataset = ECGPCGDataset(clip_length=config.global_opts.segment_length, 
+    #                        ecg_sample_rate=config.global_opts.sample_rate_ecg,
+    #                        pcg_sample_rate=config.global_opts.sample_rate_pcg,
+    #                        verifyComplete=False)
     dataset = ECGPCGDataset(clip_length=config.global_opts.segment_length, 
-                            ecg_sample_rate=config.global_opts.sample_rate_ecg,
-                            pcg_sample_rate=config.global_opts.sample_rate_pcg,
-                            verifyComplete=False)
-    dataset_physionet = ECGPCGDataset(clip_length=config.global_opts.segment_length, 
                             ecg_sample_rate=config.global_opts.sample_rate_ecg,
                             pcg_sample_rate=config.global_opts.sample_rate_pcg,
                             verifyComplete=False,
@@ -268,9 +268,12 @@ if __name__ == '__main__':
     #            os.remove(outputpath+f'ephnogram/data_pcg_{config.global_opts.pcg_type}/'+f'{dir}/{d}/'+v)
     
     # Samples in the paper
-        #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="stft", transform_type_pcg="stft_mel", colormap="magma", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_)
+        #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="stft", transform_type_pcg="stft_logmel", colormap="magma", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_)
         #data_sample(filename="a0007", outputfolderpath="samples/a0007", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="ricker", wavelet_pcg="ricker", colormap="magma", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_)
-        #data_sample(filename="ECGPCG0003", outputfolderpath="samples/b0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", wavelet_ecg="morlet", wavelet_pcg="morlet", colormap="magma", dataset="ephnogram", inputpath_data=config.input_ephnogram_data_folderpath_, inputpath_target=config.input_ephnogram_target_folderpath_)
+        #data_sample(filename="ECGPCG0003", outputfolderpath="samples/b0001", label=0, transform_type_ecg="cwt", index_ephnogram=1, transform_type_pcg="cwt", wavelet_ecg="morlet", wavelet_pcg="morlet", colormap="magma", dataset="ephnogram", inputpath_data=config.input_ephnogram_data_folderpath_, inputpath_target=config.input_ephnogram_target_folderpath_)
+        #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="stft_log", transform_type_pcg="stft_mel", colormap="magma", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_)
+        #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", colormap="magma", wavelet_ecg="ricker", wavelet_pcg="ricker", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_)
+        #data_sample(filename="a0001", outputfolderpath="samples/a0001", label=0, transform_type_ecg="cwt", transform_type_pcg="cwt", colormap="magma", wavelet_ecg="morlet", wavelet_pcg="morlet", inputpath_data=config.input_physionet_data_folderpath_, inputpath_target=config.input_physionet_target_folderpath_)
     
     # UNUSED sample examples
         #data_sample(filename="a0315", outputfolderpath="samples/a0315", label=1)
