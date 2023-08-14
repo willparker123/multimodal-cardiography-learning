@@ -198,8 +198,8 @@ class TransformerTrainer(BaseTrainer):
         print(f"len data_train, data_test: {len(data_train)} {len(data_test)}")
         print(f"len val_train_dataset, val_dataset: {len(val_train_dataset)} {len(val_dataset)}")
         create_new_folder(self.log_file_path)
-        f_log_metrics = open(self.log_file_path+'/'+f"{self.log_file_name}.txt", "w")
-        with open(self.log_file_path+'/'+f"{self.log_file_name}.txt" , "r+") as f_log_metrics:
+        f_log_metrics = open(self.log_file_path+'/'+f"{self.log_file_name}_{'physionet' if self.train_config.physionetOnly else 'fused'}.txt", "w")
+        with open(self.log_file_path+'/'+f"{self.log_file_name}_{'physionet' if self.train_config.physionetOnly else 'fused'}.txt" , "r+") as f_log_metrics:
             f_log_metrics.write("** Logging model metrics / scores (Accuracy, Precision) **"+"\n")
         # https://discuss.pytorch.org/t/guidelines-for-assigning-num-workers-to-dataloader/813/4
         num_workers = config.global_opts.number_of_processes
@@ -287,10 +287,27 @@ class TransformerTrainer(BaseTrainer):
             # Forward pass, get our logits
             criterion = nn.CrossEntropyLoss()
             logits = self.model(signals)
-            print(f"logits {np.shape(logits)} {logits}")
-            print(f"labels {np.shape(torch.from_numpy(labels))} {torch.from_numpy(labels.squeeze())}")
+            print(f"logits {np.shape(logits.squeeze())} {logits}")
             # Calculate the loss with the logits and the labels
-            loss = criterion(logits, torch.from_numpy(labels.squeeze()))
+            labels_ = np.squeeze(labels)
+            label_tensor = []
+            print(f"labels: {labels} {np.shape(labels)}")
+            print(f"labels_: {labels_} {np.shape(labels_)}")
+            for ind, l in enumerate([labels_] if labels_.ndim==0 else labels_):
+                label_tensor.append([l, 1 if l==0 else 0])
+            label_tensor = torch.from_numpy(np.array(label_tensor)).type(torch.float32)#[np.squeeze(labels), np.squeeze(labels)]
+            print(f"labels {np.shape(label_tensor)} {label_tensor}")
+            # change to shape (batch_size, num_classes)
+            #
+            #[[-5.2956, -5.1500],
+            #[-5.2953, -5.1498],
+            #[-5.2957, -5.1502],
+            #[ 0.8483,  1.2542],
+            #[ 0.7994,  1.6990],
+            #[ 0.9555,  1.4433],
+            #[ 0.7003,  1.0155],
+            #[ 0.6836,  1.4417]]
+            loss = criterion(logits.squeeze(), label_tensor)
             prob = nnf.softmax(logits, dim=1)
             top_p, top_class = prob.topk(1, dim = 1)
             pred = top_class
@@ -343,6 +360,8 @@ class TransformerTrainer(BaseTrainer):
             truth=all_labels,
             scalar_pred=all_scalar_preds,
             binary_pred=all_bin_preds,
+            physionet_only=self.train_config.physionetOnly,
+            epoch=self.epoch
         )
         eval_res = dict(
             auroc=auroc,
@@ -354,9 +373,8 @@ class TransformerTrainer(BaseTrainer):
             challenge_metric=challenge_metric,
         )
 
-        f_log_metrics.write(f"Logging model metrics / scores (Accuracy, Precision): {self.log_file_path+'/'+f'{self.log_file_name}.txt'}"+"\n")
-        with open(self.log_file_path+'/'+f"{self.log_file_name}.txt" , "r+") as f_log_metrics:
-            f_log_metrics.write(f"[EPOCH {self.current_epoch} / {self.n_epochs}]\n{json.dumps(dict)}\n\n")
+        with open(self.log_file_path+'/'+f"{self.log_file_name}_{'physionet' if self.train_config.physionetOnly else 'fused'}.txt" , "r+") as f_log_metrics:
+            f_log_metrics.write(f"[EPOCH {self.epoch} / {self.n_epochs}]\n{json.dumps(eval_res, default=lambda o: o.__dict__)}\n\n")
         # in case possible memeory leakage?
         del all_scalar_preds, all_bin_preds, all_labels
 

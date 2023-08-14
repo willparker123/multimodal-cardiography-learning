@@ -1,0 +1,33 @@
+[22414] Output Path: data-after-TEST
+[22414] Input Path (Physionet) Data: data-before/physionet-data/training-a
+[22414] Input Path (Physionet) Labels: data-before/physionet-data/training-a/REFERENCE.csv
+[22414] Input Path (Ephnogram) Data: data-before/ephnogram-data/WFDB
+[22414] Input Path (Ephnogram) Labels: data-before/ephnogram-data/ECGPCGSpreadsheet.csv
+[22414] ****************MMTF-ECGPCGNet*****************
+[22414] ***          ECGPCG Data Cleaning           ***
+[22414] ***********************************************
+[22414] *** OPTIONS:                               ***
+[22414]         RAM usage: 40.0%
+[22414]         Number of Processes: 30   [Available: 30]
+[22414]         GPU Enabled: True  GPU ID: 0
+[22414]         Google Drive Enabled (unprocessed dataset storage): False
+[22414]  UNUSED Tensorflow Enabled: False
+[22414] ***********************************************
+[22414] Attempting to set RAM usage to 40.0%
+[22414] *** Cleaning and Postprocessing Data [3/3] ***
+[22414] Range of values in each dataset (Created from Histogram and Quartiles):             name  ...                                          highest_5
+0  physionet_ecg  ...  [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...
+1  physionet_pcg  ...  [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...
+2  ephnogram_ecg  ...  [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...
+3  ephnogram_pcg  ...  [0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, ...
+
+[4 rows x 8 columns]
+[22414] Number of Physionet samples: 409
+[22414] Number of Physionet segments (8s): 1435
+[22414] Number of Normal:Abnormal Physionet samples: 399:1036
+[22414] Number of Ephnogram samples: 12
+[22414] Number of Ephnogram segments (8s): 1368
+[22414] Number of Normal:Abnormal Ephnogram samples: 1368:0
+[22414] *** Done - all Data cleaned ***
+#DONE#
+killed

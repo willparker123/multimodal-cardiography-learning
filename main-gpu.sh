@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
 #SBATCH --partition gpu
-#SBATCH --time 2:00:00
+#SBATCH --account=cosc024002
+#SBATCH --time 12:00:00
 #SBATCH --mem 64GB
 #SBATCH --gres gpu:1
-#SBATCH --job-name cleandata
+#SBATCH --job-name train_model
 #SBATCH --nodes 1
 #SBATCH --ntasks-per-node 28
 #SBATCH --export=NONE

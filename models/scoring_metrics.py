@@ -106,7 +106,7 @@ def evaluate_scores_detailed(
 
 
 def evaluate_scores(
-    classes: List[str], truth: Sequence, binary_pred: Sequence, scalar_pred: Sequence
+    classes: List[str], truth: Sequence, binary_pred: Sequence, scalar_pred: Sequence, physionet_only=False, epoch=0
 ) -> Tuple[Union[float, np.ndarray]]:
     """
     simplified version of `evaluate_scores_detailed`,
@@ -145,7 +145,7 @@ def evaluate_scores(
     ) = evaluate_scores_detailed(classes, truth, binary_pred, scalar_pred)
     print(f"classes: {classes}")
     confusion_matrix = compute_confusion_matrices(truth, binary_pred, classes)
-    confusion_matrix_img = plot_confusion_matrix(confusion_matrix=np.squeeze(confusion_matrix), display_labels=classes, savename=f"confusion_matrix_ecg_{config.global_opts.ecg_type}_pcg_{config.global_opts.pcg_type}")
+    confusion_matrix_img = plot_confusion_matrix(confusion_matrix=confusion_matrix[0], display_labels=classes, savename=f"confusion_matrix_ecg_{config.global_opts.ecg_type}_pcg_{config.global_opts.pcg_type}_{'physionet' if physionet_only else 'fused'}_epoch_{epoch}")
     
     return (
         auroc,
@@ -157,15 +157,15 @@ def evaluate_scores(
         challenge_metric,
     )
 
-def plot_confusion_matrix(confusion_matrix, display_labels=['N', 'A'], save_folder=config.global_opts.outputpath+'confusion_matricies/', savename=None, show=False):
+def plot_confusion_matrix(confusion_matrix, display_labels=['N', 'A'], save_folder=config.global_opts.outputpath+'/results/confusion_matricies/', savename=None, show=False):
     create_new_folder(save_folder)
     fig, ax = plt.subplots(figsize=(7.5, 7.5))
     ax.matshow(confusion_matrix, cmap=plt.cm.Blues, alpha=0.3)
     for i in range(confusion_matrix.shape[0]):
         for j in range(confusion_matrix.shape[1]):
             ax.text(x=j, y=i,s=confusion_matrix[i, j], va='center', ha='center', size='xx-large')
-    ax.set_xticklabels(display_labels)
-    ax.set_yticklabels(display_labels)
+    ax.set_xticklabels(['']+display_labels)
+    ax.set_yticklabels(['']+display_labels)
     plt.xlabel('Prediction Label', fontsize=18)
     plt.ylabel('Actual Label', fontsize=18)
     plt.title('Confusion Matrix', fontsize=18)
