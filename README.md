@@ -15,7 +15,7 @@ The paper's code (this repo) runs on Python 3.8.1 due to a dependency issue. It 
 
 The only difference between the Windows and Linux environments is that "psutil" and "pywin32" are needed on Windows, and "resource" on Linux.
 
-## Data Cleaning
+## Data Cleaning (clean_data.py)
 
 The data cleaning process begins by reading all source files from the two existing datasets (Ephnogram / Physionet), sample-by-sample. The files are transformed, split into segments and saved into directories inside a common root folder named after the transformation process for each sample ('data_{transformation_type}'). For exmaple, the ECG from the first segment of the first sample would be saved into 'data_ecg_cwt/a0001/0' and the PCG 'data_pcg_cwt/a0001/0' where 'data_ecg_cwt'  The data cleaning process is detailed in the paper.
 
@@ -49,7 +49,7 @@ The original Ephnogram and Physionet (as the paper / implementation refers to th
 The location of the labels (.csv) and raw pre-processed data can be configured in config.py or using argparse (key arguments is in this README, the rest can be viewed in config.py) and will be needed to create the new .csv files containing metadata information used in the MMECGPCGNet model as well as for future applications, as well as using the naming conventions of this project.
 
 
-### Data cleaning, naming conventions
+### Data cleaning, naming conventions + file heirarchy (data-before / data-after)
 
 The resampled raw data (before any pre-processing; filtering, thresholding and transformation) is saved as .npz files before the rest of the data framework augments the data. This data renamed and saved with a new filename (savename) and in a directory heirarchy which follows the convention:  
 
@@ -63,7 +63,7 @@ The resampled raw data (before any pre-processing; filtering, thresholding and t
   
 **<sup><sub>Spectrogram data (after all pre-processing including transforms) follows the same convention, with '_spec' as a suffix to the filename (e.g. "data-after/physionet/data_ecg_cwt/a0001/0/a0001_seg_0_cwt_spec.npz").**
   
-## MM-ECGPCG Dataset
+## Data Framework (clean_data.py)
 
 The data framework can create the following transforms, using various configuration arguments (argparse); there are too many to list here, so please clone the repo and take a look or explore for yourself! In 'main.py' there are examples of the workflow of the data framework and pre-processing pipeline (using the 'data_sample()' function), and provides the code samples which were used to create the plots in the paper.
 
@@ -97,7 +97,11 @@ An example of a CWT transform applied to an ECG with a Morlet wavelet - the firs
 ![ecg_a0001_seg_0_spec_magma_stft_log.png](https://github.com/willparker123/multimodal-cardiography-learning/blob/main/res/inpaper/a0001_seg_0.png?raw=true)  
 An example of a log-Mel MFCC transform applied to a PCG - the first segment of the first sample of the Physionet dataset (8 seconds, 24fps)
   
-## Model + Training
+## MM-ECGPCG Dataset (dataset.py)
+
+The multimodal dataset is created before model training in ;main.py', inside the Dataloader (see next section). It has its own configuration settings and works with a generic number of datasets - it can combine a third dataset when one becomes available using the "ecg_paths", "pcg_path" and "csv_paths" constructor arguments.
+
+## Model + Training (models / main.py)
 
 The model that was implemented was the ECG-CRNN from the Python package [torch_ecg]() with transformer configuration; it is a CRNN-Transformer designed for ECG. This package also supports other models previously used for ECG analysis including RNNs, ResNet, VGG and RR-LSTM.
 
@@ -105,6 +109,7 @@ The model that was implemented was the ECG-CRNN from the Python package [torch_e
 $ python main.py    [runs model training and evaluation with all defaults]
 ```
 
+The Pytorch DataLoaders and Datasets are in the 'models' folder - the ECG CRNN-Transformer model used in the paper for training is inside 'models/trainer_transformer.py' and 'models/trainer_mmecgpcgvitnet.py' is the unfinished MM model. The default log/checkpoint path is in 'logs' and the default log filename is "log.txt".
 
 ## Avobjects - LWT-Net on ECG Video [INCOMPLETE]
 
